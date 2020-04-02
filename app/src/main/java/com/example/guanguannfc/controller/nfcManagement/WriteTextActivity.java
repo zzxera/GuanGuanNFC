@@ -1,4 +1,4 @@
-package com.example.guanguannfc.controller.nfcManagement;
+package com.ricky.nfc.activity;
 
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.ricky.nfc.R;
-import com.example.guanguannfc.controller.BaseNfcActivity;
+import com.ricky.nfc.base.BaseNfcActivity;
 
 import java.nio.charset.Charset;
 import java.util.Locale;
