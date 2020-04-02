@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+    android:id="@+id/all"
+    android:title="全部"
+    ></item>
+    <item
+        android:id="@+id/work"
+        android:title="工作"
+        ></item>
+    <item
+        android:id="@+id/study"
+        android:title="学习"
+        ></item>
+    <item
+        android:id="@+id/eat"
+        android:title="吃饭"
+        ></item>
+
+    <item
+        android:id="@+id/sleep"
+        android:title="睡觉"
+        ></item>
+    <item
+        android:id="@+id/play"
+        android:title="娱乐"
+        ></item>
+</menu>
