@@ -1,5 +1,6 @@
 package com.example.guanguannfc.view.data;
 
+
 import android.app.DatePickerDialog;
 import android.content.ClipData;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.view.management.Boxmanagement;
 
 import java.util.Calendar;
 
@@ -182,7 +184,7 @@ public class Data extends AppCompatActivity {
                 break;
             case R.id.button_manage:
                 Intent intent = new Intent();
-                intent.setClass(Data.this,Boxmanagement.class);
+                intent.setClass(Data.this, Boxmanagement.class);
                 startActivity(intent);
                 break;
 

@@ -79,8 +79,9 @@
             android:layout_height="fill_parent"
             android:gravity="center"
             android:onClick="Displaygoods"
-            android:onlongClick="Changebox"
             android:text="时间管理"></Button>
+        <!--android:onlongClick="Changebox"-->
+
 
         <Button
             android:id="@+id/Button2"
