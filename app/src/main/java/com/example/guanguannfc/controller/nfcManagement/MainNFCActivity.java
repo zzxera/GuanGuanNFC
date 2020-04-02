@@ -1,4 +1,4 @@
-package com.ricky.nfc;
+package com.example.guanguannfc.controller.nfcManagement;
 
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -8,15 +8,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.ricky.nfc.activity.ReadMUActivity;
-import com.ricky.nfc.activity.ReadTextActivity;
-import com.ricky.nfc.activity.ReadUriActivity;
-import com.ricky.nfc.activity.RunAppActivity;
-import com.ricky.nfc.activity.RunUrlActivity;
-import com.ricky.nfc.activity.WriteMUActivity;
-import com.ricky.nfc.activity.WriteTextActivity;
-import com.ricky.nfc.activity.WriteUriActivity;
-import com.ricky.nfc.base.BaseNfcActivity;
+
+import com.example.guanguannfc.R;
+
+
+//import com.ricky.nfc.activity.ReadMUActivity;
+//import com.ricky.nfc.activity.ReadTextActivity;
+//import com.ricky.nfc.activity.ReadUriActivity;
+//import com.ricky.nfc.activity.RunAppActivity;
+//import com.ricky.nfc.activity.RunUrlActivity;
+//import com.ricky.nfc.activity.WriteMUActivity;
+//import com.ricky.nfc.activity.WriteTextActivity;
+//import com.ricky.nfc.activity.WriteUriActivity;
+//import com.ricky.nfc.base.BaseNfcActivity;
 
 public class MainNFCActivity extends BaseNfcActivity {
     private TextView ifo_NFC;

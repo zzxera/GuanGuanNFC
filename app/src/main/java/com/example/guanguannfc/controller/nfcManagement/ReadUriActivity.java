@@ -1,4 +1,4 @@
-package com.ricky.nfc.activity;
+package  com.example.guanguannfc.controller.nfcManagement;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,9 +12,9 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.ricky.nfc.R;
-import com.ricky.nfc.base.BaseNfcActivity;
-import com.ricky.nfc.tools.UriPrefix;
+import  com.example.guanguannfc.R;
+//import com.ricky.nfc.base.BaseNfcActivity;
+//import com.ricky.nfc.tools.UriPrefix;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package com.ricky.nfc.activity;
+package  com.example.guanguannfc.controller.nfcManagement;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,8 +11,10 @@ import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.ricky.nfc.R;
-import com.ricky.nfc.base.BaseNfcActivity;
+import  com.example.guanguannfc.R;
+
+
+//import com.ricky.nfc.base.BaseNfcActivity;
 
 public class RunUrlActivity extends BaseNfcActivity {
     @Override

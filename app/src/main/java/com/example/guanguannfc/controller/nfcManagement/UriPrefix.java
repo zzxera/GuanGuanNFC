@@ -1,4 +1,5 @@
-package com.ricky.nfc.tools;
+//package com.ricky.nfc.tools;
+package  com.example.guanguannfc.controller.nfcManagement;
 
 import java.util.HashMap;
 import java.util.Map;
