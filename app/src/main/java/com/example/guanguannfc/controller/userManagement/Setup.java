@@ -1,4 +1,4 @@
 package com.example.guanguannfc.controller.userManagement;
 
-public class Test {
+public class Setup {
 }

@@ -1,7 +1,25 @@
 <resources>
-    <string name="app_name">管管</string>
+
+
+    
+    <string name="str_run_app">自动打开短信界面</string>
+    <string name="str_run_url">自动打开百度页面</string>
+    <string name="str_read_text">读NFC标签中的文本数据</string>
+    <string name="str_write_text">写NFC标签中的文本数据</string>
+    <string name="str_read_uri">读NFC标签中的Uri数据</string>
+    <string name="str_write_uri">写NFC标签中的Uri数据</string>
+    <string name="str_read_mu">读NFC标签非NDEF格式的数据</string>
+    <string name="str_write_mu">写NFC标签非NDEF格式的数据</string>
+
+    <string name="app_name">GuanGuanNFC</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+
+    
     <string name="no_mean">Ut luctus velit egestas purusfeugiat , sit amet sodales ligulaante Nam non felis quam .maximus sapien eget nuncrutrum ligula commodo maximusllvinar . Donec auctor lorem nedui fringilla , a molestie ex cursorbi laoreet pretium felis inposuere . </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
