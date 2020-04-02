@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.data.Data">
+
+    <TextView
+        android:id="@+id/text_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="数据展示"
+        android:textSize="16sp"
+        android:onClick="click"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="80dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp"
+        ></TextView>
+
+    <TextView
+        android:id="@+id/text_allact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="所有活动"
+        android:textSize="16sp"
+        android:onClick="click"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp"
+        ></TextView>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_show"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="34dp"
+
+        >
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:text="数据展示"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+
+            android:background="@color/colorbBlack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/text_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="时间"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView1"
+            android:layout_marginTop="10dp"
+
+            ></TextView>
+
+
+        <Spinner
+            android:id="@+id/spinner_time"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/times"
+            android:overlapAnchor="false"
+
+
+            app:layout_constraintStart_toEndOf="@+id/text_time"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toBottomOf="@id/textView1"
+            android:layout_marginTop="10dp"
+            ></Spinner>
+
+        <TextView
+            android:id="@+id/text_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="显示方式"
+            android:textSize="16sp"
+
+            app:layout_constraintStart_toEndOf="@+id/spinner_time"
+            app:layout_constraintTop_toTopOf="@+id/text_time"
+
+
+            ></TextView>
+
+
+        <Spinner
+            android:id="@+id/spinner_type"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/types"
+            android:overlapAnchor="false"
+
+
+            app:layout_constraintStart_toEndOf="@+id/text_type"
+            app:layout_constraintTop_toTopOf="@+id/spinner_time"
+            android:layout_marginStart="5dp"
+            ></Spinner>
+        oo
+
+        <ListView
+            android:id="@+id/listview_actlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:entries="@array/actlists"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_time"></ListView>
+
+
+        <WebView
+            android:id="@+id/webview_acts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="@+id/listview_actlist"
+            app:layout_constraintStart_toStartOf="parent"
+
+            ></WebView>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:background="@color/colorbBlack"
+            android:gravity="center"
+            android:text="数据展示"
+
+            android:textColor="@color/colorWhite"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listview_actlist"
+            android:layout_marginTop="20dp"
+            ></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_mean"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            android:layout_marginTop="10dp"
+            ></TextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_allact"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@+id/layout_show"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <TextView
+            android:id="@+id/text_acttype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="类型"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+
+            ></TextView>
+
+
+        <Spinner
+            android:id="@+id/spinner_acttype"
+            android:layout_width="98dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/acttype"
+            android:overlapAnchor="false"
+
+
+            app:layout_constraintStart_toEndOf="@+id/text_acttype"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            ></Spinner>
+
+        <TextView
+            android:id="@+id/text_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="显示方式"
+            android:textSize="16sp"
+
+            app:layout_constraintStart_toEndOf="@+id/spinner_acttype"
+            app:layout_constraintTop_toTopOf="@+id/text_acttype"
+
+
+            ></TextView>
+
+
+        <Spinner
+            android:id="@+id/spinner_sort"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/sort"
+            android:overlapAnchor="false"
+
+            app:layout_constraintStart_toEndOf="@+id/text_sort"
+            app:layout_constraintTop_toTopOf="@+id/spinner_acttype"
+            android:layout_marginStart="5dp"
+            ></Spinner>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_acttype"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/colorlight"
+            >
+            <TextView
+                android:id="@+id/text_type1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="活动类型"
+                android:textColor="@color/colorgray"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/text_act1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="吃饭"
+                android:textColor="@color/colorbBlack"
+                android:textSize="20sp"
+                android:layout_below="@+id/text_type1"
+                android:layout_alignLeft="@+id/text_type1"
+                android:layout_marginTop="10dp"
+                ></TextView>
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020-03-08"
+                android:textColor="@color/colorgray"
+                android:layout_below="@+id/text_act1"
+                android:layout_alignLeft="@+id/text_act1"
+                android:layout_marginTop="10dp"
+                ></TextView>
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="13:40:10-13:55:25"
+                android:textColor="@color/colorgray"
+                android:layout_marginEnd="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/text_long"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0h15m15s"
+                android:textColor="@color/colorRed"
+                android:textSize="20sp"
+                android:layout_below="@+id/text_time"
+                android:layout_alignEnd="@+id/text_time"
+                android:layout_marginTop="10dp"
+                ></TextView>
+            <TextView
+                android:id="@+id/text_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="同类活动排名第9"
+                android:textColor="@color/colorgray"
+                android:layout_alignEnd="@+id/text_time"
+                android:layout_below="@+id/text_long"
+                android:layout_marginTop="10dp"
+                ></TextView>
+
+        </RelativeLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_chosetime"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/text_zdy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自定义"
+            android:textColor="@color/colorbBlack"
+
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="开始日期"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_zdy"></TextView>
+
+        <Button
+            android:id="@+id/button_starttime"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:onClick="click"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:text="2020-03-20"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/textView"></Button>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+            android:text="结束日期"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/button_starttime"></TextView>
+
+        <Button
+            android:id="@+id/button_endtime"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="2020-03-28"
+            android:onClick="click"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            android:layout_marginTop="10dp"
+            ></Button>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_marginTop="20dp"
+            android:text="活动类型"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/button_endtime"></TextView>
+
+        <Button
+            android:id="@+id/button_acttype"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="全部"
+            android:onClick="click"
+
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            android:layout_marginTop="10dp"
+            ></Button>
+
+        <Button
+            android:id="@+id/button_time_confirm"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/button_fillet"
+            android:backgroundTint="@color/colorDark"
+            android:onClick="click"
+
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/button_acttype"
+            android:layout_marginTop="40dp"
+            ></Button>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_person"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/img_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_launcher_background"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            ></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UserName"
+            android:textColor="@color/colorbBlack"
+            android:textSize="18dp"
+
+
+            app:layout_constraintStart_toEndOf="@+id/img_head"
+            app:layout_constraintTop_toTopOf="@+id/img_head"
+            android:layout_marginStart="10dp"
+            ></TextView>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/personset"
+
+
+            app:layout_constraintTop_toBottomOf="@+id/img_head"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            ></ListView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button_personset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个人设置"
+        android:onClick="click"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_show"
+        android:layout_marginStart="30dp"
+        ></Button>
+
+    <Button
+        android:id="@+id/button_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:onClick="click"
+
+        android:text="管理页面"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_show"></Button>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/frag_data"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="500dp"-->
+<!--        android:visibility="invisible"-->
+
+<!--        android:layout_marginTop="34dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"></LinearLayout>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

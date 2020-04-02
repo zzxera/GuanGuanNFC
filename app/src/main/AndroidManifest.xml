@@ -8,6 +8,30 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"></application>
+        android:theme="@style/AppTheme">
+        <activity android:name=".view.management.Boxmanagement"></activity>
+        <activity android:name=".view.management.Changebox"></activity>
+        <activity android:name=".view.management.Addgoods"></activity>
+        <activity android:name=".view.management.Timemanagement"></activity>
+        <activity android:name=".view.management.Changeactivity"></activity>
+        <activity android:name=".view.management.Addbox"></activity>
+        <activity android:name=".view.management.Changename"></activity>
+        <activity android:name=".view.management.Displaygoods"></activity>
+        <activity android:name=".view.management.Searchgoods"></activity>
+        <activity android:name=".view.management.Boxtip"></activity>
+        <activity android:name=".view.management.Addactivity"></activity>
+
+        <activity android:name=".view.data.Data"></activity>
+        <activity android:name=".view.loginAndLogon.Forgetkey" />
+        <activity android:name=".view.loginAndLogon.LogAndSign">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+    </application>
 
 </manifest>
