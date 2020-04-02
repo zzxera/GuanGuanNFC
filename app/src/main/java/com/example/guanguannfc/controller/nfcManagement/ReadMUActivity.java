@@ -20,6 +20,7 @@ public class ReadMUActivity extends BaseNfcActivity {
 
     @Override
     public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         String[] techList = tag.getTechList();
         boolean haveMifareUltralight = false;
