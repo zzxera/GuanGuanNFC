@@ -1,13 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.guanguannfc">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.guanguannfc"
+    >
+
+    <uses-permission android:name="android.permission.NFC" />
+    <!-- 要求当前设备必须要有NFC芯片 -->
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"></application>
+
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true" 
+
+        
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".controller.nfcManagement.MainNFCActivity">
+
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />                <!-- 添加这一条默认设置，能拦截当前页面所有扫描NFC的配置 -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".controller.nfcManagement.RunAppActivity"
+            android:launchMode="singleTop"
+            android:label="@string/str_run_app"/>
+        <activity android:name=".controller.nfcManagement.RunUrlActivity"
+            android:launchMode="singleTop"
+            android:label="@string/str_run_url"/>
+        <activity android:name=".controller.nfcManagement.ReadTextActivity"
+            android:launchMode="singleTop"
+            android:label="@string/str_read_text"/>
+        <activity android:name=".controller.nfcManagement.WriteTextActivity"
+            android:launchMode="singleTop"
+            android:label="@string/str_write_text"/>
+        <activity android:name=".controller.nfcManagement.ReadUriActivity"
+            android:launchMode="singleTop"
+            android:label="@string/str_read_uri"/>
+        <activity android:name=".controller.nfcManagement.WriteUriActivity"
+            android:launchMode="singleTop"
+            android:label="@string/str_write_uri"/>
+        <activity android:name=".controller.nfcManagement.ReadMUActivity"
+            android:launchMode="singleTop"
+            android:label="@string/str_read_mu"/>
+        <activity android:name=".controller.nfcManagement.WriteMUActivity"
+            android:launchMode="singleTop"
+            android:label="@string/str_write_mu"/>
+        
+        <activity android:name=".controller.dataVisualization.echarttest"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+  
+  
+  
+        <activity android:name=".view.management.Boxmanagement"></activity>
+        <activity android:name=".view.management.Changebox"></activity>
+        <activity android:name=".view.management.Addgoods"></activity>
+        <activity android:name=".view.management.Timemanagement"></activity>
+        <activity android:name=".view.management.Changeactivity"></activity>
+        <activity android:name=".view.management.Addbox"></activity>
+        <activity android:name=".view.management.Changename"></activity>
+        <activity android:name=".view.management.Displaygoods"></activity>
+        <activity android:name=".view.management.Searchgoods"></activity>
+        <activity android:name=".view.management.Boxtip"></activity>
+        <activity android:name=".view.management.Addactivity"></activity>
+
+        <activity android:name=".view.loginAndLogon.Forgetkey" ></activity>
+        <activity android:name=".view.data.Data"></activity>
+        <activity android:name=".view.loginAndLogon.LogAndSign">
+
+
+        </activity>
+    </application>
+
+        
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
 
 </manifest>
