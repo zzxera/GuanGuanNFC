@@ -1,4 +1,4 @@
-package com.ricky.nfc.activity;
+package com.example.guanguannfc.controller.nfcManagement;
 
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -9,8 +9,8 @@ import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.ricky.nfc.R;
-import com.ricky.nfc.base.BaseNfcActivity;
-import com.ricky.nfc.tools.UriPrefix;
+import com.example.guanguannfc.controller.BaseNfcActivity;
+import com.example.guanguannfc.controller.UriPrefix;
 
 public class WriteUriActivity extends BaseNfcActivity {
     private String mUri = "http://www.baidu.com";
