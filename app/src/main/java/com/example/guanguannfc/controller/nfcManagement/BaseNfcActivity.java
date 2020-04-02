@@ -1,9 +1,11 @@
-package com.ricky.nfc.base;
+package com.example.guanguannfc.controller.nfcManagement;
 
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
+
 /**
  * Description:
  * 子类在onNewIntent方法中进行NFC标签相关操作。

@@ -1,4 +1,4 @@
-package com.ricky.nfc.activity;
+package com.example.guanguannfc.controller.nfcManagement;
 
 import android.content.Intent;
 import android.nfc.NfcAdapter;
