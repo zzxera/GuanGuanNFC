@@ -51,6 +51,7 @@ public class LogAndSign extends AppCompatActivity {
 
 
 
+
         }
 
     }
