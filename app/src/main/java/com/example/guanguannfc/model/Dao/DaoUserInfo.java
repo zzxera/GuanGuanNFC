@@ -13,6 +13,9 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 用户信息表操作类
+ */
 public class DaoUserInfo {
     private final GuanSQLHelper mDataBaseHelper;
 
