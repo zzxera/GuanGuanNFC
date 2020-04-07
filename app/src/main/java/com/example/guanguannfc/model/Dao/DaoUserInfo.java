@@ -13,6 +13,9 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 用户信息表操作类
+ */
 public class DaoUserInfo {
     private final GuanSQLHelper mDataBaseHelper;
 
@@ -21,6 +24,7 @@ public class DaoUserInfo {
         mDataBaseHelper=new GuanSQLHelper(context);
 
     }
+    //插入一个用户：需要给定用户名和密码
     public void insert(String username,String password){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="insert into " + GuanContract.UserInfo.TABLE_NAME+ "(user_name,password,created_time,updated_time) values(?,?,?,?)";
@@ -31,6 +35,7 @@ public class DaoUserInfo {
         db.close();
 
     }
+    //删除一个用户：需要给定用户名
     public void delete(String username){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql = "delete from " + GuanContract.UserInfo.TABLE_NAME + " where user_name=?";
@@ -38,6 +43,7 @@ public class DaoUserInfo {
         db.close();
 
     }
+    //更新密码：需要给定用户名和密码
     public void update(String username,String newPassword){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="update " + GuanContract.UserInfo.TABLE_NAME + " set password=? , updated_time=? where user_name=?";
@@ -48,7 +54,7 @@ public class DaoUserInfo {
         db.close();
 
     }
-    //登录查询
+    //登录查询：需要给定用户名和密码
     public boolean loadQuery(String username,String password){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="select * from " + GuanContract.UserInfo.TABLE_NAME + " where user_name=? and password=?";
@@ -60,7 +66,7 @@ public class DaoUserInfo {
             return false;
         }
     }
-    //注册查询
+    //注册查询用户名是否存在：需要给定用户名
     public boolean registrationQuery(String username){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="select * from " + GuanContract.UserInfo.TABLE_NAME + " where user_name=?";
