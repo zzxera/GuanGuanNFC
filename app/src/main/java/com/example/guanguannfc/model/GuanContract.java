@@ -7,6 +7,7 @@ public class GuanContract {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "guan.db";
     private static final String TEXT_TYPE = " TEXT";
+    private static final String INT_TYPE = " INTEGER";
     private static final String COMMA_SEP = " ,";
 
     private GuanContract(){}
@@ -22,8 +23,8 @@ public class GuanContract {
                 UserInfo._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 UserInfo.COLUMN_USER_NAME + TEXT_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_PASSWORD + TEXT_TYPE + COMMA_SEP +
-                UserInfo.COLUMN_CREATED_TIME + TEXT_TYPE + COMMA_SEP +
-                UserInfo.COLUMN_UPDATED_TIME + TEXT_TYPE + " )";
+                UserInfo.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                UserInfo.COLUMN_UPDATED_TIME + INT_TYPE + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + UserInfo.TABLE_NAME;
     }
@@ -37,8 +38,8 @@ public class GuanContract {
                 + ActivityType.TABLE_NAME + " (" +
                 ActivityType._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 ActivityType.COLUMN_ACT_TYPE + TEXT_TYPE + COMMA_SEP +
-                ActivityType.COLUMN_CREATED_TIME + TEXT_TYPE + COMMA_SEP +
-                ActivityType.COLUMN_UPDATED_TIME + TEXT_TYPE + " )";
+                ActivityType.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                ActivityType.COLUMN_UPDATED_TIME + INT_TYPE + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + ActivityType.TABLE_NAME;
     }
@@ -54,12 +55,15 @@ public class GuanContract {
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + Activity.TABLE_NAME + " (" +
                 Activity._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
-                Activity.COLUMN_USER_ID + TEXT_TYPE + COMMA_SEP +
-                Activity.COLUMN_NFC + TEXT_TYPE + COMMA_SEP +
-                Activity.COLUMN_TYPE_ID + TEXT_TYPE + COMMA_SEP +
+                Activity.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
+                Activity.COLUMN_NFC + INT_TYPE + COMMA_SEP +
+                Activity.COLUMN_TYPE_ID + INT_TYPE + COMMA_SEP +
                 Activity.COLUMN_ACT_NAME + TEXT_TYPE + COMMA_SEP +
-                Activity.COLUMN_CREATED_TIME + TEXT_TYPE + COMMA_SEP +
-                Activity.COLUMN_UPDATED_TIME + TEXT_TYPE + " )";
+                Activity.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                Activity.COLUMN_UPDATED_TIME + INT_TYPE +
+                " FOREIGN KEY (" + Activity.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")" +
+                " FOREIGN KEY (" + Activity.COLUMN_TYPE_ID + ") REFERENCES " + ActivityType.TABLE_NAME + "(" + ActivityType._ID + ")"
+                + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + Activity.TABLE_NAME;
     }
@@ -74,11 +78,13 @@ public class GuanContract {
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + ActSta.TABLE_NAME + " (" +
                 ActSta._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
-                ActSta.COLUMN_ACT_ID + TEXT_TYPE + COMMA_SEP +
-                ActSta.COLUMN_START_TIME + TEXT_TYPE + COMMA_SEP +
-                ActSta.COLUMN_END_TIME + TEXT_TYPE + COMMA_SEP +
-                ActSta.COLUMN_CREATED_TIME + TEXT_TYPE + COMMA_SEP +
-                ActSta.COLUMN_UPDATED_TIME + TEXT_TYPE + " )";
+                ActSta.COLUMN_ACT_ID + INT_TYPE + COMMA_SEP +
+                ActSta.COLUMN_START_TIME + INT_TYPE + COMMA_SEP +
+                ActSta.COLUMN_END_TIME + INT_TYPE + COMMA_SEP +
+                ActSta.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                ActSta.COLUMN_UPDATED_TIME + INT_TYPE +
+                " FOREIGN KEY (" + ActSta.COLUMN_ACT_ID + ") REFERENCES " + Activity.TABLE_NAME + "(" + Activity._ID + ")"
+                + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + ActSta.TABLE_NAME;
     }
@@ -94,12 +100,14 @@ public class GuanContract {
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + Box.TABLE_NAME + " (" +
                 Box._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
-                Box.COLUMN_USER_ID + TEXT_TYPE + COMMA_SEP +
-                Box.COLUMN_NFC + TEXT_TYPE + COMMA_SEP +
+                Box.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
+                Box.COLUMN_NFC + INT_TYPE + COMMA_SEP +
                 Box.COLUMN_BOX_NAME + TEXT_TYPE + COMMA_SEP +
                 Box.COLUMN_BOX_POS + TEXT_TYPE + COMMA_SEP +
-                Box.COLUMN_CREATED_TIME + TEXT_TYPE + COMMA_SEP +
-                Box.COLUMN_UPDATED_TIME + TEXT_TYPE + " )";
+                Box.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                Box.COLUMN_UPDATED_TIME + INT_TYPE +
+                " FOREIGN KEY (" + Box.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")"
+                + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + Box.TABLE_NAME;
     }
@@ -114,11 +122,13 @@ public class GuanContract {
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + BoxContent.TABLE_NAME + " (" +
                 BoxContent._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
-                BoxContent.COLUMN_BOX_ID + TEXT_TYPE + COMMA_SEP +
+                BoxContent.COLUMN_BOX_ID + INT_TYPE + COMMA_SEP +
                 BoxContent.COLUMN_THING_NAME + TEXT_TYPE + COMMA_SEP +
-                BoxContent.COLUMN_THING_NUM + TEXT_TYPE + COMMA_SEP +
-                BoxContent.COLUMN_CREATED_TIME + TEXT_TYPE + COMMA_SEP +
-                BoxContent.COLUMN_UPDATED_TIME + TEXT_TYPE + " )";
+                BoxContent.COLUMN_THING_NUM + INT_TYPE + COMMA_SEP +
+                BoxContent.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                BoxContent.COLUMN_UPDATED_TIME + INT_TYPE +
+                " FOREIGN KEY (" + BoxContent.COLUMN_BOX_ID + ") REFERENCES " + Box.TABLE_NAME + "(" + Box._ID + ")"
+                + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + BoxContent.TABLE_NAME;
     }
