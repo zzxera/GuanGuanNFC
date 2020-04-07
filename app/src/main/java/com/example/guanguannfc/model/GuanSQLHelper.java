@@ -3,11 +3,20 @@ package com.example.guanguannfc.model;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class GuanSQLHelper extends SQLiteOpenHelper {
 
     public GuanSQLHelper(Context context){
         super(context, GuanContract.DATABASE_NAME, null, GuanContract.DATABASE_VERSION);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db){
+        super.onOpen(db);
+        if (!db.isReadOnly()){
+            db.execSQL("PRAGMA foreign_keys = ON;");
+        }
     }
 
     @Override
