@@ -21,7 +21,11 @@
         
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".controller.nfcManagement.MainNFCActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />                <!-- 添加这一条默认设置，能拦截当前页面所有扫描NFC的配置 -->
                 <category android:name="android.intent.category.DEFAULT" />
@@ -54,11 +58,7 @@
         
         <activity android:name=".controller.dataVisualization.echarttest"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
   
