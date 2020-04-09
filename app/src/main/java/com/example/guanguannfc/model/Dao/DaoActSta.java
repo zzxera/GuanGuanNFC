@@ -21,18 +21,17 @@ public class DaoActSta {
 
     }
     //插入整条数据：需要给定活动ID、开始活动时间、结束活动时间
-    public void insert(String act_ID,String start_time,String end_time){
+    public void insert(Integer act_ID,Integer start_time,Integer end_time){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="insert into " + GuanContract.ActSta.TABLE_NAME+ "(act_ID,start_time,end_time,created_time,updated_time) values(?,?,?,?,?)";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss ");
         Date date = new Date();
-        String currentTime = simpleDateFormat.format(date);
+        long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{act_ID,start_time,end_time,currentTime,currentTime});
         db.close();
 
     }
     //根据活动ID删除和该活动所有时间记录：需给定活动ID
-    public void delete(String act_ID){
+    public void delete(Integer act_ID){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql = "delete from " + GuanContract.ActSta.TABLE_NAME + " where act_ID=?";
         db.execSQL(sql,new Object[]{act_ID});

@@ -24,9 +24,8 @@ public class DaoActivityType {
     public void insert(String user_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="insert into " + GuanContract.ActivityType.TABLE_NAME+ "(user_name,created_time,updated_time) values(?,?,?)";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss ");
         Date date = new Date();
-        String currentTime = simpleDateFormat.format(date);
+        long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{user_name,currentTime,currentTime});
         db.close();
 
@@ -43,9 +42,8 @@ public class DaoActivityType {
     public void update(String user_oldName,String user_newName){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="update " + GuanContract.ActivityType.TABLE_NAME + " set user_name=? , updated_time=? where user_name=?";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss ");
         Date date = new Date();
-        String currentTime = simpleDateFormat.format(date);
+        long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{user_newName,currentTime,user_oldName});
         db.close();
 
