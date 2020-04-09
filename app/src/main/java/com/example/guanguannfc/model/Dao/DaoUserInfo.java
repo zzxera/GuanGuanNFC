@@ -28,9 +28,9 @@ public class DaoUserInfo {
     public void insert(String username,String password){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="insert into " + GuanContract.UserInfo.TABLE_NAME+ "(user_name,password,created_time,updated_time) values(?,?,?,?)";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss ");
+
         Date date = new Date();
-        String currentTime = simpleDateFormat.format(date);
+        long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{username,md5(password),currentTime,currentTime});
         db.close();
 
@@ -47,9 +47,9 @@ public class DaoUserInfo {
     public void update(String username,String newPassword){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="update " + GuanContract.UserInfo.TABLE_NAME + " set password=? , updated_time=? where user_name=?";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss ");
+
         Date date = new Date();
-        String currentTime = simpleDateFormat.format(date);
+        long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{md5(newPassword),currentTime,username});
         db.close();
 
