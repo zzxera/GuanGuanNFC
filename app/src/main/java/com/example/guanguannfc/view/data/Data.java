@@ -25,9 +25,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.guanguannfc.R;
 
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
+
 import com.example.guanguannfc.view.management.BoxmanagementActivity;
 import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
+
 
 
 import java.util.ArrayList;
