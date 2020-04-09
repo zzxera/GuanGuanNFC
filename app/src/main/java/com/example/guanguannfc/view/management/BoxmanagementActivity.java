@@ -8,35 +8,35 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
 
-public class Boxmanagement extends AppCompatActivity {
+public class BoxmanagementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.management_box);
+        setContentView(R.layout.activity_boxmanagement);
     }
 
     public void Searchgoods(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Searchgoods.class);
+        Intent intent = new Intent(this, SearchgoodsActivity.class);
         startActivity(intent);
     }
     public void Displaygoods(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Displaygoods.class);
+        Intent intent = new Intent(this, DisplaygoodsActivity.class);
         startActivity(intent);
     }
     public void Changebox(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Changebox.class);
+        Intent intent = new Intent(this, ChangeboxActivity.class);
         startActivity(intent);
     }
     public void Boxtip(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Boxtip.class);
+        Intent intent = new Intent(this, BoxtipActivity.class);
         startActivity(intent);
     }
     public void Timemanagement(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Timemanagement.class);
+        Intent intent = new Intent(this, TimemanagementActivity.class);
         startActivity(intent);
     }
 }

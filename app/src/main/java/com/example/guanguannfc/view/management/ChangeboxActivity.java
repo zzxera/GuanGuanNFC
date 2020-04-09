@@ -8,15 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
 
-public class Addbox extends AppCompatActivity {
+public class ChangeboxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.box_add);
+        setContentView(R.layout.activity_changebox);
     }
 
-    public void Boxtip(View view) {
+    public void Displaygoods(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Boxtip.class);
+        Intent intent = new Intent(this, DisplaygoodsActivity.class);
         startActivity(intent);
     }
 }

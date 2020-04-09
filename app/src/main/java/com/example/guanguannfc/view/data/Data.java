@@ -20,8 +20,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.guanguannfc.R;
+
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 import com.example.guanguannfc.view.management.Boxmanagement;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -197,6 +199,7 @@ public class Data extends AppCompatActivity {
                 }
                 break;
             case R.id.button_manage:
+
                 Intent intent1 = new Intent();
                 intent1.setClass(Data.this, Boxmanagement.class);
                 startActivity(intent1);
@@ -210,6 +213,7 @@ public class Data extends AppCompatActivity {
                 Intent intent3 = new Intent();
                 intent3.setClass(Data.this, ClockActivity.class);
                 startActivity(intent3);
+
                 break;
 
         }

@@ -28,6 +28,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".controller.nfcManagement.RunAppActivity"
             android:label="@string/str_run_app"
@@ -77,6 +78,7 @@
         <activity android:name=".view.loginAndLogon.Forgetkey" />
         <activity android:name=".view.data.Data" > </activity>
         <activity android:name=".view.loginAndLogon.LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
