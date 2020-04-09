@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.guanguannfc"
-    >
-
-    <uses-permission android:name="android.permission.NFC" />
-    <!-- 要求当前设备必须要有NFC芯片 -->
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    package="com.example.guanguannfc">
 
     <application
         android:allowBackup="true"
@@ -14,12 +9,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true" 
-
-        
+        android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+        <activity android:name=".controller.dataManagement.DateTestActivity">
+           
+        </activity>
+       
+
         <activity android:name=".controller.nfcManagement.MainNFCActivity">
 
             <intent-filter>
@@ -85,17 +83,70 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
-        <activity android:name=".model.DataBaseTest.UserInfo"></activity>
-    </application>
 
-        
-    
+        <activity android:name=".model.DataBaseTest.UserInfo"></activity>
+
+        <activity
+            android:name=".controller.nfcManagement.RunAppActivity"
+            android:label="@string/str_run_app"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.RunUrlActivity"
+            android:label="@string/str_run_url"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.ReadTextActivity"
+            android:label="@string/str_read_text"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.WriteTextActivity"
+            android:label="@string/str_write_text"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.ReadUriActivity"
+            android:label="@string/str_read_uri"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.WriteUriActivity"
+            android:label="@string/str_write_uri"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.ReadMUActivity"
+            android:label="@string/str_read_mu"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.WriteMUActivity"
+            android:label="@string/str_write_mu"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.dataVisualization.echarttest"
+            android:label="@string/app_name"></activity>
+        <activity android:name=".view.management.Boxmanagement" />
+        <activity android:name=".view.management.Changebox" />
+        <activity android:name=".view.management.Addgoods" />
+        <activity android:name=".view.management.Timemanagement" />
+        <activity android:name=".view.management.Changeactivity" />
+        <activity android:name=".view.management.Addbox" />
+        <activity android:name=".view.management.Changename" />
+        <activity android:name=".view.management.Displaygoods" />
+        <activity android:name=".view.management.Searchgoods" />
+        <activity android:name=".view.management.Boxtip" />
+        <activity android:name=".view.management.Addactivity" />
+        <activity android:name=".view.loginAndLogon.Forgetkey" />
+        <activity android:name=".view.data.Data" />
+        <activity android:name=".view.loginAndLogon.LogAndSign"></activity>
+    </application> <!-- 要求当前设备必须要有NFC芯片 -->
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-
+    <uses-permission android:name="android.permission.NFC" />
 
 </manifest>
