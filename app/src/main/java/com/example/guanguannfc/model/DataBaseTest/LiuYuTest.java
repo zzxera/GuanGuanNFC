@@ -12,6 +12,7 @@ import com.example.guanguannfc.R;
 import com.example.guanguannfc.model.DataBaseTest.UserInfo;
 import com.example.guanguannfc.model.Initialization;
 
+
 /**
  * 数据表操作方法测试类
  */
@@ -33,6 +34,7 @@ public class LiuYuTest extends AppCompatActivity implements View.OnClickListener
         mButton4 = findViewById(R.id.btn4);
         mButton5 = findViewById(R.id.btn5);
         mButton6 = findViewById(R.id.btn6);
+        Initialization.initialization(this);
 
     }
 
