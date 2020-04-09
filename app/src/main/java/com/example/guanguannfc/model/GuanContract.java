@@ -61,8 +61,7 @@ public class GuanContract {
                 Activity.COLUMN_ACT_NAME + TEXT_TYPE + COMMA_SEP +
                 Activity.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
                 Activity.COLUMN_UPDATED_TIME + INT_TYPE +
-                " FOREIGN KEY (" + Activity.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")" +
-                " FOREIGN KEY (" + Activity.COLUMN_TYPE_ID + ") REFERENCES " + ActivityType.TABLE_NAME + "(" + ActivityType._ID + ")"
+                " FOREIGN KEY (" + Activity.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")"
                 + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + Activity.TABLE_NAME;
