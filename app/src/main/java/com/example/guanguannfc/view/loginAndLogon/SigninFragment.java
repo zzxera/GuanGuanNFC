@@ -16,11 +16,15 @@ import androidx.annotation.Nullable;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.view.data.Data;
+import com.example.guanguannfc.controller.userManagement.Login;
+
 
 public class SigninFragment extends Fragment {
 
-    public EditText edit_username,edit_psw;
-    public String username,psw;
+    private EditText edit_username,edit_psw;
+    private String username,psw;
+    private Login login = new Login();
+
     Button button_signin;
     Context ctx;
     @Nullable
@@ -52,9 +56,15 @@ public class SigninFragment extends Fragment {
                     if(psw.length()<6 | psw.length()>20){
                     Toast.makeText(ctx,"密码长度为6-20位",Toast.LENGTH_LONG).show();
                 }
+//                    else if(login.IsExistUserName(username)==false){
+//                        Toast.makeText(ctx,"账号不存在",Toast.LENGTH_LONG).show();
+//                    }
                     else if (username.equals("GGYY") == false){
                         Toast.makeText(ctx,"账号不存在",Toast.LENGTH_LONG).show();
                     }
+//                    else if (login.LisloginSuccess(username,psw)==false){
+//                        Toast.makeText(ctx,"密码错误",Toast.LENGTH_LONG).show();
+//                    }
 
                     else if (psw.equals("123456") == false){
                         Toast.makeText(ctx,"密码错误",Toast.LENGTH_LONG).show();

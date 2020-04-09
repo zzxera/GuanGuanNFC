@@ -14,16 +14,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import com.example.guanguannfc.controller.userManagement.Register;
 
 import com.example.guanguannfc.R;
 
 public class LogonFragment extends Fragment {
 
-    public EditText edit_username,edit_psw,edit_psw_confirm;
-    public String username,pasword,pasword_confirm;
-    public CheckBox checkBox;
-    public Context ctx;
-    public Button btn_logon;
+    private EditText edit_username,edit_psw,edit_psw_confirm;
+    private String username,pasword,pasword_confirm;
+    private CheckBox checkBox;
+    private Context ctx;
+    private Button btn_logon;
+    private Register register;
+
+
 
 
     @Nullable
@@ -75,6 +79,10 @@ public class LogonFragment extends Fragment {
                     if (username .equals("GY")){
                         Toast.makeText(ctx,"账号已存在",Toast.LENGTH_LONG).show();
                     }
+//                    if(register.RisExistUserName(username)){
+//                        Toast.makeText(ctx,"账号已存在",Toast.LENGTH_LONG).show();
+//                    }
+
                     else if(pasword_confirm.equals(pasword) == false){
                         Toast.makeText(ctx,"两次输入的密码不同",Toast.LENGTH_LONG).show();
 
@@ -84,6 +92,7 @@ public class LogonFragment extends Fragment {
                     }
                     else {
                         Toast.makeText(getActivity(),"注册成功",Toast.LENGTH_LONG).show();
+//                        register.IsRegisterSuccess(username,psw);
                         edit_username.setText("");
                         edit_psw.setText("");
                         edit_psw_confirm.setText("");
