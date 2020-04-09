@@ -74,14 +74,20 @@
 
         <activity android:name=".view.loginAndLogon.Forgetkey" ></activity>
         <activity android:name=".view.data.Data"></activity>
+
         <activity android:name=".view.loginAndLogon.LogAndSign">
 
+
+        </activity>
+
+        <activity android:name=".model.DataBaseTest.LiuYuTest">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".model.DataBaseTest.UserInfo"></activity>
     </application>
 
         
