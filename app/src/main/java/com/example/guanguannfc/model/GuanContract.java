@@ -101,7 +101,7 @@ public class GuanContract {
                 + Box.TABLE_NAME + " (" +
                 Box._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 Box.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
-                Box.COLUMN_NFC + INT_TYPE + COMMA_SEP +
+                Box.COLUMN_NFC + TEXT_TYPE + COMMA_SEP +
                 Box.COLUMN_BOX_NAME + TEXT_TYPE + COMMA_SEP +
                 Box.COLUMN_BOX_POS + TEXT_TYPE + COMMA_SEP +
                 Box.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
