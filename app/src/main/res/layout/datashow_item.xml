@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="type"
+        android:layout_weight="1"
+        android:gravity="center_vertical|left"
+
+        android:paddingLeft="20dp"
+        android:id="@+id/datashow_type" />
+
+    <TextView
+        android:text="time"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/datashow_time"
+        android:layout_weight="1"
+
+        android:gravity="center_vertical|right"
+        android:paddingRight="20dp"
+
+        android:textSize="14sp" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
