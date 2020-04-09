@@ -31,7 +31,7 @@ public class GuanContract {
 
     public static class ActivityType implements BaseColumns{
         public static final String TABLE_NAME = "Activity_Type";
-        public static final String COLUMN_ACT_TYPE = "user_name";
+        public static final String COLUMN_ACT_TYPE = "act_type";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
@@ -56,7 +56,7 @@ public class GuanContract {
                 + Activity.TABLE_NAME + " (" +
                 Activity._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 Activity.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
-                Activity.COLUMN_NFC + INT_TYPE + COMMA_SEP +
+                Activity.COLUMN_NFC + TEXT_TYPE + COMMA_SEP +
                 Activity.COLUMN_TYPE_ID + INT_TYPE + COMMA_SEP +
                 Activity.COLUMN_ACT_NAME + TEXT_TYPE + COMMA_SEP +
                 Activity.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
