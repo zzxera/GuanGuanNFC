@@ -2,18 +2,12 @@ package com.example.guanguannfc.view.data;
 
 
 import android.app.DatePickerDialog;
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -21,12 +15,11 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.guanguannfc.R;
-import com.example.guanguannfc.view.management.Boxmanagement;
+import com.example.guanguannfc.view.management.BoxmanagementActivity;
 
 import java.util.Calendar;
 
@@ -184,7 +177,7 @@ public class Data extends AppCompatActivity {
                 break;
             case R.id.button_manage:
                 Intent intent = new Intent();
-                intent.setClass(Data.this, Boxmanagement.class);
+                intent.setClass(Data.this, BoxmanagementActivity.class);
                 startActivity(intent);
                 break;
 
