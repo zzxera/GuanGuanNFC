@@ -72,8 +72,13 @@
 
         <activity android:name=".view.loginAndLogon.Forgetkey" ></activity>
         <activity android:name=".view.data.Data"></activity>
+
         <activity android:name=".view.loginAndLogon.LogAndSign">
 
+
+        </activity>
+
+        <activity android:name=".model.DataBaseTest.LiuYuTest">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -81,6 +86,8 @@
 
             </intent-filter>
         </activity>
+
+        <activity android:name=".model.DataBaseTest.UserInfo"></activity>
 
         <activity
             android:name=".controller.nfcManagement.RunAppActivity"
