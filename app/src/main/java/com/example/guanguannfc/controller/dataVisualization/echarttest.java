@@ -1,7 +1,6 @@
 package com.example.guanguannfc.controller.dataVisualization;
 
 
-
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
