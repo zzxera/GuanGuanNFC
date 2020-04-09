@@ -64,17 +64,17 @@
         <activity
             android:name=".controller.dataVisualization.echarttest"
             android:label="@string/app_name" >   </activity>
-        <activity android:name=".view.management.Boxmanagement" />
-        <activity android:name=".view.management.Changebox" />
-        <activity android:name=".view.management.Addgoods" />
-        <activity android:name=".view.management.Timemanagement" />
-        <activity android:name=".view.management.Changeactivity" />
-        <activity android:name=".view.management.Addbox" />
-        <activity android:name=".view.management.Changename" />
-        <activity android:name=".view.management.Displaygoods" />
-        <activity android:name=".view.management.Searchgoods" />
-        <activity android:name=".view.management.Boxtip" />
-        <activity android:name=".view.management.Addactivity" />
+        <activity android:name=".view.management.BoxmanagementActivity" />
+        <activity android:name=".view.management.ChangeboxActivity" />
+        <activity android:name=".view.management.AddgoodsActivity" />
+        <activity android:name=".view.management.TimemanagementActivity" />
+        <activity android:name=".view.management.ChangeactActivity" />
+        <activity android:name=".view.management.AddboxActivity" />
+        <activity android:name=".view.management.ChangenameActivity" />
+        <activity android:name=".view.management.DisplaygoodsActivity" />
+        <activity android:name=".view.management.SearchgoodsActivity" />
+        <activity android:name=".view.management.BoxtipActivity" />
+        <activity android:name=".view.management.AddactActivity" />
         <activity android:name=".view.loginAndLogon.Forgetkey" />
 
         <activity android:name=".view.data.Data" > </activity>
