@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2"></TextView>
 
     <TextView
-        android:id="@+id/tv_end_time"
+        android:id="@+id/tv_now_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
@@ -128,7 +128,7 @@
         app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tv_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
