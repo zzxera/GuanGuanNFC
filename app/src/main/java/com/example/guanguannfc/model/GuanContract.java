@@ -60,8 +60,9 @@ public class GuanContract {
                 Activity.COLUMN_TYPE_ID + INT_TYPE + COMMA_SEP +
                 Activity.COLUMN_ACT_NAME + TEXT_TYPE + COMMA_SEP +
                 Activity.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
-                Activity.COLUMN_UPDATED_TIME + INT_TYPE +
-                " FOREIGN KEY (" + Activity.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")"
+                Activity.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
+                " FOREIGN KEY (" + Activity.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")" + COMMA_SEP +
+                " FOREIGN KEY (" + Activity.COLUMN_TYPE_ID + ") REFERENCES " + ActivityType.TABLE_NAME + "(" + ActivityType._ID + ")"
                 + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + Activity.TABLE_NAME;
@@ -81,7 +82,7 @@ public class GuanContract {
                 ActSta.COLUMN_START_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_END_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
-                ActSta.COLUMN_UPDATED_TIME + INT_TYPE +
+                ActSta.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
                 " FOREIGN KEY (" + ActSta.COLUMN_ACT_ID + ") REFERENCES " + Activity.TABLE_NAME + "(" + Activity._ID + ")"
                 + " )";
         public static final String SQL_DELETE_ENTRIES =
@@ -104,7 +105,7 @@ public class GuanContract {
                 Box.COLUMN_BOX_NAME + TEXT_TYPE + COMMA_SEP +
                 Box.COLUMN_BOX_POS + TEXT_TYPE + COMMA_SEP +
                 Box.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
-                Box.COLUMN_UPDATED_TIME + INT_TYPE +
+                Box.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
                 " FOREIGN KEY (" + Box.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")"
                 + " )";
         public static final String SQL_DELETE_ENTRIES =
@@ -125,7 +126,7 @@ public class GuanContract {
                 BoxContent.COLUMN_THING_NAME + TEXT_TYPE + COMMA_SEP +
                 BoxContent.COLUMN_THING_NUM + INT_TYPE + COMMA_SEP +
                 BoxContent.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
-                BoxContent.COLUMN_UPDATED_TIME + INT_TYPE +
+                BoxContent.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
                 " FOREIGN KEY (" + BoxContent.COLUMN_BOX_ID + ") REFERENCES " + Box.TABLE_NAME + "(" + Box._ID + ")"
                 + " )";
         public static final String SQL_DELETE_ENTRIES =
