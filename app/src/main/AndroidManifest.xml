@@ -60,17 +60,17 @@
   
   
   
-        <activity android:name=".view.management.Boxmanagement"></activity>
-        <activity android:name=".view.management.Changebox"></activity>
-        <activity android:name=".view.management.Addgoods"></activity>
-        <activity android:name=".view.management.Timemanagement"></activity>
-        <activity android:name=".view.management.Changeactivity"></activity>
-        <activity android:name=".view.management.Addbox"></activity>
-        <activity android:name=".view.management.Changename"></activity>
-        <activity android:name=".view.management.Displaygoods"></activity>
-        <activity android:name=".view.management.Searchgoods"></activity>
-        <activity android:name=".view.management.Boxtip"></activity>
-        <activity android:name=".view.management.Addactivity"></activity>
+        <activity android:name=".view.management.BoxmanagementActivity"></activity>
+        <activity android:name=".view.management.ChangeboxActivity"></activity>
+        <activity android:name=".view.management.AddgoodsActivity"></activity>
+        <activity android:name=".view.management.TimemanagementActivity"></activity>
+        <activity android:name=".view.management.ChangeactActivity"></activity>
+        <activity android:name=".view.management.AddboxActivity"></activity>
+        <activity android:name=".view.management.ChangenameActivity"></activity>
+        <activity android:name=".view.management.DisplaygoodsActivity"></activity>
+        <activity android:name=".view.management.SearchgoodsActivity"></activity>
+        <activity android:name=".view.management.BoxtipActivity"></activity>
+        <activity android:name=".view.management.AddactActivity"></activity>
 
         <activity android:name=".view.loginAndLogon.Forgetkey" ></activity>
         <activity android:name=".view.data.Data"></activity>
