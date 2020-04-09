@@ -77,18 +77,19 @@
         <activity android:name=".view.management.Addactivity" />
         <activity android:name=".view.loginAndLogon.Forgetkey" />
         <activity android:name=".view.data.Data" > </activity>
+        <!--view测试入口-->
         <activity android:name=".view.loginAndLogon.LoginActivity">
-
-
-        </activity>
-
-        <activity android:name=".model.DataBaseTest.LiuYuTest">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
+
+        </activity>
+        <!--model测试入口-->
+        <activity android:name=".model.DataBaseTest.LiuYuTest">
+
         </activity>
 
 

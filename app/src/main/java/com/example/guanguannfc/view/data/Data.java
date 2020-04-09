@@ -22,7 +22,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.guanguannfc.R;
 
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
-import com.example.guanguannfc.view.management.Boxmanagement;
+
+import com.example.guanguannfc.view.management.BoxmanagementActivity;
 
 
 import java.util.ArrayList;
@@ -201,7 +202,7 @@ public class Data extends AppCompatActivity {
             case R.id.button_manage:
 
                 Intent intent1 = new Intent();
-                intent1.setClass(Data.this, Boxmanagement.class);
+                intent1.setClass(Data.this, BoxmanagementActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.button_quit:
