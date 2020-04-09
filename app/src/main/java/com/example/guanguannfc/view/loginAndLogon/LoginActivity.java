@@ -11,7 +11,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
-import com.example.guanguannfc.view.data.DataActivity;
+import com.example.guanguannfc.view.data.Data;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
         editorMain=sprfMain.edit();
         if(sprfMain.getBoolean("main",false)){
-            Intent intent = new Intent(LoginActivity.this, DataActivity.class);
+            Intent intent = new Intent(LoginActivity.this, Data.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             LoginActivity.this.finish();

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DataActivity extends AppCompatActivity {
+public class Data extends AppCompatActivity {
 
 
 
@@ -50,7 +50,7 @@ public class DataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
         initDataShow();
-        DataShowAdapter dataShowAdapter = new DataShowAdapter(DataActivity.this,R.layout.datashow_item,dataShowList);
+        DataShowAdapter dataShowAdapter = new DataShowAdapter(Data.this,R.layout.datashow_item,dataShowList);
 
 
         actlist=findViewById(R.id.listview_actlist);
@@ -79,8 +79,8 @@ public class DataActivity extends AppCompatActivity {
         spinner_times.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String cardNumber = DataActivity.this.getResources().getStringArray(R.array.times)[position];
-                Toast.makeText(DataActivity.this, "" + cardNumber, Toast.LENGTH_SHORT).show();
+                String cardNumber = Data.this.getResources().getStringArray(R.array.times)[position];
+                Toast.makeText(Data.this, "" + cardNumber, Toast.LENGTH_SHORT).show();
                 if (position==3){
                     lay_time.setVisibility(View.VISIBLE);
                 }
@@ -95,8 +95,8 @@ public class DataActivity extends AppCompatActivity {
         spinner_types.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String cardNumber = DataActivity.this.getResources().getStringArray(R.array.types)[position];
-                Toast.makeText(DataActivity.this, "" + cardNumber, Toast.LENGTH_SHORT).show();
+                String cardNumber = Data.this.getResources().getStringArray(R.array.types)[position];
+                Toast.makeText(Data.this, "" + cardNumber, Toast.LENGTH_SHORT).show();
                 if (position==0){
                     webView.setVisibility(View.INVISIBLE);
                     actlist.setVisibility(View.VISIBLE);
@@ -141,7 +141,7 @@ public class DataActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String starttime =  year + "-" + (month + 1) + "-" + dayOfMonth ;
-                        Toast.makeText(DataActivity.this, starttime, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Data.this, starttime, Toast.LENGTH_SHORT).show();
                         bt_starttime.setText(starttime);
                     }
                 }
@@ -155,7 +155,7 @@ public class DataActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String endtime =  year + "-" + (month + 1) + "-" + dayOfMonth ;
-                        Toast.makeText(DataActivity.this, endtime, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Data.this, endtime, Toast.LENGTH_SHORT).show();
                         bt_endtime.setText(endtime);
                     }
                 }
@@ -164,7 +164,7 @@ public class DataActivity extends AppCompatActivity {
                         , calendar1.get(Calendar.DAY_OF_MONTH)).show();
                 break;
             case R.id.button_acttype:
-                PopupMenu actmenu=new PopupMenu(DataActivity.this,v);
+                PopupMenu actmenu=new PopupMenu(Data.this,v);
                 actmenu.inflate(R.menu.actmenu);
                 actmenu.show();
                 actmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -198,17 +198,17 @@ public class DataActivity extends AppCompatActivity {
                 break;
             case R.id.button_manage:
                 Intent intent1 = new Intent();
-                intent1.setClass(DataActivity.this, Boxmanagement.class);
+                intent1.setClass(Data.this, Boxmanagement.class);
                 startActivity(intent1);
                 break;
             case R.id.button_quit:
                 Intent intent2 = new Intent();
-                intent2.setClass(DataActivity.this, LoginActivity.class);
+                intent2.setClass(Data.this, LoginActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.text_prompt:
                 Intent intent3 = new Intent();
-                intent3.setClass(DataActivity.this, ClockActivity.class);
+                intent3.setClass(Data.this, ClockActivity.class);
                 startActivity(intent3);
                 break;
 

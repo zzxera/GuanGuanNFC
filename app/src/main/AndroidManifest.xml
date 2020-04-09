@@ -75,7 +75,7 @@
         <activity android:name=".view.management.Boxtip" />
         <activity android:name=".view.management.Addactivity" />
         <activity android:name=".view.loginAndLogon.Forgetkey" />
-        <activity android:name=".view.data.DataActivity" > </activity>
+        <activity android:name=".view.data.Data" > </activity>
         <activity android:name=".view.loginAndLogon.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

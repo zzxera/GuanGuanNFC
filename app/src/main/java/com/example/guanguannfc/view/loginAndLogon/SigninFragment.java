@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.guanguannfc.R;
-import com.example.guanguannfc.view.data.DataActivity;
+import com.example.guanguannfc.view.data.Data;
 
 public class SigninFragment extends Fragment {
 
@@ -60,7 +60,7 @@ public class SigninFragment extends Fragment {
                         Toast.makeText(ctx,"密码错误",Toast.LENGTH_LONG).show();
                     }
                     else{
-                        Intent intent = new Intent(getActivity(), DataActivity.class);
+                        Intent intent = new Intent(getActivity(), Data.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
 
