@@ -2,22 +2,37 @@ package com.example.guanguannfc.view.loginAndLogon;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.view.data.Data;
 
-public class LogAndSign extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private Signin frag_signin = new Signin();
-    private Logon frag_logon = new Logon();
+    SharedPreferences sprfMain;
+    SharedPreferences.Editor editorMain;
+    private SigninFragment frag_signin = new SigninFragment();
+    private LogonFragment frag_logon = new LogonFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_las);
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain=sprfMain.edit();
+        if(sprfMain.getBoolean("main",false)){
+            Intent intent = new Intent(LoginActivity.this, Data.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            LoginActivity.this.finish();
+        }
 
+        setContentView(R.layout.activity_las);
+        frag_signin.getContex(this);
         getFragmentManager().beginTransaction().replace(R.id.logandsign,frag_signin).commit();
 
     }

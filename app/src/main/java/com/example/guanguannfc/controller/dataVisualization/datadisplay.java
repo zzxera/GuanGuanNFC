@@ -43,7 +43,8 @@ public class datadisplay {
         return arr;
     }
     public String webview(String type){
-        String echarttype="";
+        String echarttype=type;
+//        String echarttype="";
         String url ="";
         switch (echarttype){
             case "列表":
