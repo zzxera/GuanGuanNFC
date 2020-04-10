@@ -2,33 +2,39 @@ package com.example.guanguannfc.view.data;
 
 
 import android.app.DatePickerDialog;
-import android.content.ClipData;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.guanguannfc.R;
-import com.example.guanguannfc.view.management.Boxmanagement;
 
+import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
+
+import com.example.guanguannfc.view.management.BoxmanagementActivity;
+import com.example.guanguannfc.controller.dataVisualization.datadisplay;
+import com.example.guanguannfc.controller.dataVisualization.Allactivity;
+
+
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Data extends AppCompatActivity {
 
@@ -36,18 +42,28 @@ public class Data extends AppCompatActivity {
 
 //    private Datashow frag_datashow = new Datashow();
 //    private DataShow frag_datashow = new DataShow();
+
+    private List<DataShow> dataShowList = new ArrayList<DataShow>();
     private ListView actlist;
     private WebView webView;
     private Spinner spinner_times,spinner_types;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
-    private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage;
-
+    private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
+    private TextView txt_prompt;
+    private String[] dataType={"工作","学习","睡眠","娱乐","吃饭","学习","睡眠","娱乐","吃饭"};
+    private String[] dataTime={"2h","3h","2h","0h","1h","3h","2h","0h","1h"};
+    private String[][] allact;
+    private WebView myWebView;
+    private datadisplay dd=new datadisplay();
+    private Allactivity allactivity=new Allactivity();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
+        initDataShow();
+        DataShowAdapter dataShowAdapter = new DataShowAdapter(Data.this,R.layout.datashow_item,dataShowList);
 
 
         actlist=findViewById(R.id.listview_actlist);
@@ -67,6 +83,29 @@ public class Data extends AppCompatActivity {
         bt_confirmtime=findViewById(R.id.button_time_confirm);
         bt_person=findViewById(R.id.button_personset);
         bt_manage=findViewById(R.id.button_manage);
+        bt_quit=findViewById(R.id.button_quit);
+        txt_prompt=findViewById(R.id.text_prompt);
+        myWebView=findViewById(R.id.webview_acts);
+
+        actlist.setAdapter(dataShowAdapter);
+        myWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    view.loadUrl(request.getUrl().toString());
+                } else {
+                    view.loadUrl(request.toString());
+                }
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        });
+        //进行webwiev的一堆设置
+        // 开启本地文件读取（默认为true，不设置也可以）
+        myWebView.getSettings().setAllowFileAccess(true);
+        //开启脚本支持
+        myWebView.getSettings().setJavaScriptEnabled(true);
+        myWebView.loadUrl("file:///android_asset/echart/myechart.html");
+        allact=allactivity.allacttype();
 
 
         spinner_times.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -88,8 +127,8 @@ public class Data extends AppCompatActivity {
         spinner_types.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String cardNumber = Data.this.getResources().getStringArray(R.array.types)[position];
-                Toast.makeText(Data.this, "" + cardNumber, Toast.LENGTH_SHORT).show();
+                String showType = Data.this.getResources().getStringArray(R.array.types)[position];
+//                Toast.makeText(Data.this, "" + showType, Toast.LENGTH_SHORT).show();
                 if (position==0){
                     webView.setVisibility(View.INVISIBLE);
                     actlist.setVisibility(View.VISIBLE);
@@ -97,7 +136,13 @@ public class Data extends AppCompatActivity {
                 else{
                     webView.setVisibility(View.VISIBLE);
                     actlist.setVisibility(View.INVISIBLE);
+                    String url=dd.webview(showType);
+                    Toast.makeText(Data.this, url, Toast.LENGTH_SHORT).show();
+
+                    myWebView.loadUrl(url);
+
                 }
+
 
             }
 
@@ -108,6 +153,13 @@ public class Data extends AppCompatActivity {
         });
 
 
+    }
+
+    private void initDataShow(){
+        for(int i=0;i<dataType.length;i++){
+            DataShow dataShow = new DataShow(dataType[i],dataTime[i]);
+            dataShowList.add(dataShow);
+        }
     }
 
     public void click(View v){
@@ -183,9 +235,21 @@ public class Data extends AppCompatActivity {
                 }
                 break;
             case R.id.button_manage:
-                Intent intent = new Intent();
-                intent.setClass(Data.this, Boxmanagement.class);
-                startActivity(intent);
+
+                Intent intent1 = new Intent();
+                intent1.setClass(Data.this, BoxmanagementActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.button_quit:
+                Intent intent2 = new Intent();
+                intent2.setClass(Data.this, LoginActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.text_prompt:
+                Intent intent3 = new Intent();
+                intent3.setClass(Data.this, ClockActivity.class);
+                startActivity(intent3);
+
                 break;
 
         }
