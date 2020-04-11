@@ -21,7 +21,7 @@ public class DaoActSta {
 
     }
     //插入整条数据：需要给定活动ID、开始活动时间、结束活动时间
-    public void insert(Integer act_ID,Integer start_time,Integer end_time){
+    public void insert(Integer act_ID,Long start_time,Long end_time){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="insert into " + GuanContract.ActSta.TABLE_NAME+ "(act_ID,start_time,end_time,created_time,updated_time) values(?,?,?,?,?)";
         Date date = new Date();
