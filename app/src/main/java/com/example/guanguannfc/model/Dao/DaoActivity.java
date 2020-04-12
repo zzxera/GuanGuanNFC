@@ -21,7 +21,7 @@ public class DaoActivity {
 
     }
     //向表中插入一整条数据
-    public void insert(Integer user_ID,String nfc,Integer type_ID,String act_name){
+    public void insert(long user_ID,String nfc,long type_ID,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="insert into " + GuanContract.Activity.TABLE_NAME+ "(user_ID,nfc,type_ID,act_name,created_time,updated_time) values(?,?,?,?,?,?)";
         Date date = new Date();
@@ -31,7 +31,7 @@ public class DaoActivity {
 
     }
     //根据活动名称删除整个活动：给定用户ID、要删除的活动名称
-    public void delete(Integer user_ID,String act_name){
+    public void delete(long user_ID,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql = "delete from " + GuanContract.Activity.TABLE_NAME + " where act_name=? and user_ID=?";
         db.execSQL(sql,new Object[]{user_ID,act_name});
@@ -39,7 +39,7 @@ public class DaoActivity {
 
     }
     //更新活动名字：需要给定用户ID，原来的活动名字、更新后的活动名字
-    public void update(Integer user_ID,String act_oldName,String act_newName){
+    public void update(long user_ID,String act_oldName,String act_newName){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="update " + GuanContract.Activity.TABLE_NAME + " set act_name=? , updated_time=? where act_name=? and user_ID=?";
         Date date = new Date();
@@ -49,7 +49,7 @@ public class DaoActivity {
 
     }
     //活动名查重，已包含活动名返回true,反之返回false:给定用户ID和活动名称
-    public boolean query(Integer user_ID,String act_name){
+    public boolean query(long user_ID,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="select * from " + GuanContract.Activity.TABLE_NAME + " where user_ID=? and act_name=?";
         Cursor cursor=db.rawQuery(sql,new String[]{String.valueOf(user_ID),act_name});
