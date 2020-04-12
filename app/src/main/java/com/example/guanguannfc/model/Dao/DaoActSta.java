@@ -8,9 +8,10 @@ import com.example.guanguannfc.model.GuanContract;
 import com.example.guanguannfc.model.GuanSQLHelper;
 import com.example.guanguannfc.model.Helper.HelperActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 /**
  * 活动统计表操作类
  */
@@ -61,17 +62,101 @@ public class DaoActSta {
         }
     }
 
-    //返回所有活动，一个ArrayList<HelperActivity>
-    public ArrayList<HelperActivity> queryActivityList(String user_name){
+    //返回一个活动集合（时间从长到短），一个ArrayList<HelperActivity>
+    public ArrayList<HelperActivity> queryByLengthDesc(String user_name){
+        List<HelperActivity> list = new ArrayList<HelperActivity>();
+        HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="";
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+                " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
+                " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
+                " where user_ID=(select _id from User_Info where user_name=?) " +
+                " order by end_time-start_time desc";
 
-        Cursor cursor=db.rawQuery(sql,new String[]{});
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name});
         if(cursor.getCount()!=0){
             while (cursor.moveToNext()){
-                return null;
+                helperActivity = new HelperActivity(cursor.getString(0),
+                        cursor.getString(1),cursor.getLong(2),
+                        cursor.getLong(3),cursor.getLong(4));
+                list.add(helperActivity);
             }
+            return (ArrayList<HelperActivity>) list;
+        }else {
             return null;
+        }
+    }
+
+    //返回一个活动集合（时间从短到长），一个ArrayList<HelperActivity>
+    public ArrayList<HelperActivity> queryByLengthAsc(String user_name){
+        List<HelperActivity> list = new ArrayList<HelperActivity>();
+        HelperActivity helperActivity;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+                " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
+                " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
+                " where user_ID=(select _id from User_Info where user_name=?) " +
+                " order by end_time-start_time asc";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperActivity = new HelperActivity(cursor.getString(0),
+                        cursor.getString(1),cursor.getLong(2),
+                        cursor.getLong(3),cursor.getLong(4));
+                list.add(helperActivity);
+            }
+            return (ArrayList<HelperActivity>) list;
+        }else {
+            return null;
+        }
+    }
+
+    //返回一个活动集合（最新活动在前），一个ArrayList<HelperActivity>
+    public ArrayList<HelperActivity> queryByTimeDesc(String user_name){
+        List<HelperActivity> list = new ArrayList<HelperActivity>();
+        HelperActivity helperActivity;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+                " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
+                " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
+                " where user_ID=(select _id from User_Info where user_name=?) " +
+                " order by end_time desc";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperActivity = new HelperActivity(cursor.getString(0),
+                        cursor.getString(1),cursor.getLong(2),
+                        cursor.getLong(3),cursor.getLong(4));
+                list.add(helperActivity);
+            }
+            return (ArrayList<HelperActivity>) list;
+        }else {
+            return null;
+        }
+    }
+
+    //返回一个活动集合（最新活动在后），一个ArrayList<HelperActivity>
+    public ArrayList<HelperActivity> queryByTimeAsc(String user_name){
+        List<HelperActivity> list = new ArrayList<HelperActivity>();
+        HelperActivity helperActivity;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+                " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
+                " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
+                " where user_ID=(select _id from User_Info where user_name=?) " +
+                " order by end_time asc";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperActivity = new HelperActivity(cursor.getString(0),
+                        cursor.getString(1),cursor.getLong(2),
+                        cursor.getLong(3),cursor.getLong(4));
+                list.add(helperActivity);
+            }
+            return (ArrayList<HelperActivity>) list;
         }else {
             return null;
         }
