@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.guanguannfc"
-    >
+    package="com.example.guanguannfc">
 
-    <uses-permission android:name="android.permission.NFC" />
-    <!-- 要求当前设备必须要有NFC芯片 -->
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -14,82 +10,104 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true" 
-
-        
+        android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".controller.nfcManagement.MainNFCActivity">
 
+        <activity android:name=".view.data.ClockActivity"></activity>
+
+        <activity android:name=".controller.dataManagement.DateTestActivity">
+
+        </activity>
+       
+
+
+        <activity android:name=".controller.nfcManagement.MainNFCActivity">
             <intent-filter>
-                <action android:name="android.nfc.action.TECH_DISCOVERED" />                <!-- 添加这一条默认设置，能拦截当前页面所有扫描NFC的配置 -->
+                <action android:name="android.nfc.action.TECH_DISCOVERED" /> <!-- 添加这一条默认设置，能拦截当前页面所有扫描NFC的配置 -->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.nfcManagement.RunAppActivity"
-            android:launchMode="singleTop"
-            android:label="@string/str_run_app"/>
-        <activity android:name=".controller.nfcManagement.RunUrlActivity"
-            android:launchMode="singleTop"
-            android:label="@string/str_run_url"/>
-        <activity android:name=".controller.nfcManagement.ReadTextActivity"
-            android:launchMode="singleTop"
-            android:label="@string/str_read_text"/>
-        <activity android:name=".controller.nfcManagement.WriteTextActivity"
-            android:launchMode="singleTop"
-            android:label="@string/str_write_text"/>
-        <activity android:name=".controller.nfcManagement.ReadUriActivity"
-            android:launchMode="singleTop"
-            android:label="@string/str_read_uri"/>
-        <activity android:name=".controller.nfcManagement.WriteUriActivity"
-            android:launchMode="singleTop"
-            android:label="@string/str_write_uri"/>
-        <activity android:name=".controller.nfcManagement.ReadMUActivity"
-            android:launchMode="singleTop"
-            android:label="@string/str_read_mu"/>
-        <activity android:name=".controller.nfcManagement.WriteMUActivity"
-            android:launchMode="singleTop"
-            android:label="@string/str_write_mu"/>
-        
-        <activity android:name=".controller.dataVisualization.echarttest"
-            android:label="@string/app_name">
 
+        <activity
+            android:name=".controller.nfcManagement.RunAppActivity"
+            android:label="@string/str_run_app"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.RunUrlActivity"
+            android:label="@string/str_run_url"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.ReadTextActivity"
+            android:label="@string/str_read_text"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.WriteTextActivity"
+            android:label="@string/str_write_text"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.ReadUriActivity"
+            android:label="@string/str_read_uri"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.WriteUriActivity"
+            android:label="@string/str_write_uri"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.ReadMUActivity"
+            android:label="@string/str_read_mu"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.nfcManagement.WriteMUActivity"
+            android:label="@string/str_write_mu"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".controller.dataVisualization.echarttest"
+            android:label="@string/app_name" >   </activity>
+        <activity android:name=".view.management.BoxmanagementActivity" />
+        <activity android:name=".view.management.ChangeboxActivity" />
+        <activity android:name=".view.management.AddgoodsActivity" />
+        <activity android:name=".view.management.TimemanagementActivity" />
+        <activity android:name=".view.management.ChangeactActivity" />
+        <activity android:name=".view.management.AddboxActivity" />
+        <activity android:name=".view.management.ChangenameActivity" />
+        <activity android:name=".view.management.DisplaygoodsActivity" />
+        <activity android:name=".view.management.SearchgoodsActivity" />
+        <activity android:name=".view.management.BoxtipActivity" />
+        <activity android:name=".view.management.AddactActivity" />
+        <activity android:name=".view.loginAndLogon.Forgetkey" />
 
-        </activity>
-  
-  
-  
-        <activity android:name=".view.management.Boxmanagement"></activity>
-        <activity android:name=".view.management.Changebox"></activity>
-        <activity android:name=".view.management.Addgoods"></activity>
-        <activity android:name=".view.management.Timemanagement"></activity>
-        <activity android:name=".view.management.Changeactivity"></activity>
-        <activity android:name=".view.management.Addbox"></activity>
-        <activity android:name=".view.management.Changename"></activity>
-        <activity android:name=".view.management.Displaygoods"></activity>
-        <activity android:name=".view.management.Searchgoods"></activity>
-        <activity android:name=".view.management.Boxtip"></activity>
-        <activity android:name=".view.management.Addactivity"></activity>
-
-        <activity android:name=".view.loginAndLogon.Forgetkey" ></activity>
-        <activity android:name=".view.data.Data"></activity>
-        <activity android:name=".view.loginAndLogon.LogAndSign">
-
+        <activity android:name=".view.data.Data" > </activity>
+        <!--view测试入口-->
+        <activity android:name=".view.loginAndLogon.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
-    </application>
+        <!--model测试入口-->
+        <activity android:name=".model.DataBaseTest.LiuYuTest">
+
+
+        </activity>
+
+
+        <activity android:name=".model.DataBaseTest.UserInfo"></activity>
 
         
-    
+    </application> <!-- 要求当前设备必须要有NFC芯片 -->
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <uses-permission android:name="android.permission.NFC" />
 
 
 </manifest>

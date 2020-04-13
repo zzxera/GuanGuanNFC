@@ -46,8 +46,9 @@ public class datadisplay {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        switch (echarttype) {
-            case "列表":
+//        String echarttype="";
+        switch (echarttype){
+         case "列表":
                 url = "";
                 break;
             case "条状图":
