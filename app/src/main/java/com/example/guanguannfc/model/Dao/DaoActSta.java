@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.guanguannfc.model.GuanContract;
 import com.example.guanguannfc.model.GuanSQLHelper;
 import com.example.guanguannfc.model.Helper.HelperActivity;
+import com.example.guanguannfc.model.Helper.HelperActivityType;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,43 +25,78 @@ public class DaoActSta {
 
     }
     //插入整条数据：需要给定活动ID、开始活动时间、结束活动时间
-    public void insert(long act_ID,long start_time,long end_time){
+    public boolean insert(long act_ID,long start_time,long end_time){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="insert into " + GuanContract.ActSta.TABLE_NAME+ "(act_ID,start_time,end_time,created_time,updated_time) values(?,?,?,?,?)";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{act_ID,start_time,end_time,currentTime,currentTime});
         db.close();
+        return true;
 
     }
     //根据活动ID删除和该活动所有时间记录：需给定活动ID
-    public void delete(long act_ID){
+    public boolean delete(long act_ID){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql = "delete from " + GuanContract.ActSta.TABLE_NAME + " where act_ID=?";
         db.execSQL(sql,new Object[]{act_ID});
         db.close();
+        return true;
 
     }
 
     //查询某用户任意大类活动总时间: 用户名、活动大类名、开始日期时间戳、结束日期时间戳
-    public long queryActType(String user_name,String act_type,long begin,long end ){
-        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select sum(end_time-start_time) from  Act_Sta inner join Activity" +
-                " on Activity._id=Act_Sta.act_ID " +
-                " inner join User_Info " +
-                " on User_Info._id=Activity.user_ID " +
-                " where Activity.type_ID=( select _id from Activity_Type where act_type=?) and user_name=? and start_time>? and end_time<?";
+//    public long queryActType(String user_name,String act_type,long begin,long end ){
+//        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+//        String sql="select sum(end_time-start_time) from  Act_Sta inner join Activity" +
+//                " on Activity._id=Act_Sta.act_ID " +
+//                " inner join User_Info " +
+//                " on User_Info._id=Activity.user_ID " +
+//                " where Activity.type_ID=( select _id from Activity_Type where act_type=?) and user_name=? and start_time>? and end_time<?";
+//
+//        Cursor cursor=db.rawQuery(sql,new String[]{act_type,user_name, String.valueOf(begin), String.valueOf(end)});
+//        if(cursor.getCount()!=0){
+//            while (cursor.moveToNext()){
+//                return cursor.getLong(cursor.getColumnIndex("sum(end_time-start_time)"));
+//            }
+//            return -1;
+//        }else {
+//            return -1;
+//        }
+//    }
 
-        Cursor cursor=db.rawQuery(sql,new String[]{act_type,user_name, String.valueOf(begin), String.valueOf(end)});
+    //查询自定义范围所有大类活动总时间,返回一个ArrayList<HelperActivityType>: 用户名、活动大类名、开始日期时间戳、结束日期时间戳
+    public ArrayList<HelperActivityType> queryActType(String user_name,  long begin, long end ){
+        List<HelperActivityType> list = new ArrayList<HelperActivityType>();
+        HelperActivityType helperActivityType;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+//        String sql="select act_type,sum(end_time-start_time) from  Activity_Type,Act_Sta inner join Activity" +
+//                " on Activity._id=Act_Sta.act_ID " +
+//                " inner join User_Info " +
+//                " on User_Info._id=Activity.user_ID " +
+//                " where Activity.type_ID=Activity_Type._id and user_name=? and start_time>? and end_time<? " +
+//                " group by act_type";
+        String sql="select act_type,sum(end_time-start_time) from  Activity_Type,Act_Sta inner join Activity" +
+                " on Activity._id=Act_Sta.act_ID " +
+                " where Activity_type._id=Activity.type_ID and Activity.user_ID=(select _id from User_Info where user_name=?) and start_time>? and end_time<? " +
+                " group by act_type";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name, String.valueOf(begin), String.valueOf(end)});
         if(cursor.getCount()!=0){
             while (cursor.moveToNext()){
-                return cursor.getLong(cursor.getColumnIndex("sum(end_time-start_time)"));
+                helperActivityType = new HelperActivityType(cursor.getString(0),cursor.getLong(1));
+                list.add(helperActivityType);
             }
-            return -1;
+            return (ArrayList<HelperActivityType>) list;
         }else {
-            return -1;
+            return null;
         }
     }
+
+
+
+
+    ////////////////////////////////////////////////////
 
     //返回一个活动集合（时间从长到短），一个ArrayList<HelperActivity>
     public ArrayList<HelperActivity> queryByLengthDesc(String user_name){
@@ -163,6 +199,113 @@ public class DaoActSta {
     }
 
 
+///////////////////////////////////////////////////////////////
+
+
+
+    //返回一个活动集合（时间从长到短），一个ArrayList<HelperActivity>(指定大类筛选)
+    public ArrayList<HelperActivity> queryByLengthDesc(String user_name,String act_type){
+        List<HelperActivity> list = new ArrayList<HelperActivity>();
+        HelperActivity helperActivity;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+                " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
+                " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
+                " where user_ID=(select _id from User_Info where user_name=?) " +
+                " and act_type=?" +
+                " order by end_time-start_time desc";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name,act_type});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperActivity = new HelperActivity(cursor.getString(0),
+                        cursor.getString(1),cursor.getLong(2),
+                        cursor.getLong(3),cursor.getLong(4));
+                list.add(helperActivity);
+            }
+            return (ArrayList<HelperActivity>) list;
+        }else {
+            return null;
+        }
+    }
+
+    //返回一个活动集合（时间从短到长），一个ArrayList<HelperActivity>(指定大类筛选)
+    public ArrayList<HelperActivity> queryByLengthAsc(String user_name,String act_type){
+        List<HelperActivity> list = new ArrayList<HelperActivity>();
+        HelperActivity helperActivity;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+                " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
+                " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
+                " where user_ID=(select _id from User_Info where user_name=?) " +
+                " and act_type=?" +
+                " order by end_time-start_time asc";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name,act_type});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperActivity = new HelperActivity(cursor.getString(0),
+                        cursor.getString(1),cursor.getLong(2),
+                        cursor.getLong(3),cursor.getLong(4));
+                list.add(helperActivity);
+            }
+            return (ArrayList<HelperActivity>) list;
+        }else {
+            return null;
+        }
+    }
+
+    //返回一个活动集合（最新活动在前），一个ArrayList<HelperActivity>,(指定大类筛选)
+    public ArrayList<HelperActivity> queryByTimeDesc(String user_name,String act_type){
+        List<HelperActivity> list = new ArrayList<HelperActivity>();
+        HelperActivity helperActivity;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+                " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
+                " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
+                " where user_ID=(select _id from User_Info where user_name=?) " +
+                " and act_type=?" +
+                " order by end_time desc";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name,act_type});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperActivity = new HelperActivity(cursor.getString(0),
+                        cursor.getString(1),cursor.getLong(2),
+                        cursor.getLong(3),cursor.getLong(4));
+                list.add(helperActivity);
+            }
+            return (ArrayList<HelperActivity>) list;
+        }else {
+            return null;
+        }
+    }
+
+    //返回一个活动集合（最新活动在后），一个ArrayList<HelperActivity>,(指定大类筛选)
+    public ArrayList<HelperActivity> queryByTimeAsc(String user_name,String act_type){
+        List<HelperActivity> list = new ArrayList<HelperActivity>();
+        HelperActivity helperActivity;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+                " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
+                " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
+                " where user_ID=(select _id from User_Info where user_name=?) " +
+                " and act_type=?" +
+                " order by end_time asc";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name,act_type});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperActivity = new HelperActivity(cursor.getString(0),
+                        cursor.getString(1),cursor.getLong(2),
+                        cursor.getLong(3),cursor.getLong(4));
+                list.add(helperActivity);
+            }
+            return (ArrayList<HelperActivity>) list;
+        }else {
+            return null;
+        }
+    }
 
 
 
