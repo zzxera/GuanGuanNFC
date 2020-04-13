@@ -9,7 +9,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Login extends AppCompatActivity {
 
-    private boolean IsExistUserName(String userName) {
+    public boolean IsExistUserName(String userName) {
         boolean hasUserName = false;
         SharedPreferences sp = getSharedPreferences("loginInfo", MODE_PRIVATE);
         String spPsw = sp.getString(userName, "");
@@ -18,7 +18,7 @@ public class Login extends AppCompatActivity {
         }
         return hasUserName;
     }
-    private boolean LisloginSuccess(String username1,String password1,String username2,String password2){
+    public boolean LisloginSuccess(String username1,String password1,String username2,String password2){
         boolean loginresult =  false;
         if (username1 == username2 && password1==password2){
             loginresult = true;

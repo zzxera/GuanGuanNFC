@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Register extends AppCompatActivity {
-    private boolean RisExistUserName(String userName) {
+    public boolean RisExistUserName(String userName) {
         boolean hasUserName = false;
         SharedPreferences sp = getSharedPreferences("loginInfo", MODE_PRIVATE);
         String spPsw = sp.getString(userName, "");
@@ -17,7 +17,10 @@ public class Register extends AppCompatActivity {
         }
         return hasUserName;
     }
-    private Register(String username, String password){
-
+    public String ISRegisterSuccess(String username, String password){
+        String newUsername = username;
+        String Userpassword = password;//调用数据库方法，返回布尔类型的值
+        String result = "successful";
+        return result;
     }
 }

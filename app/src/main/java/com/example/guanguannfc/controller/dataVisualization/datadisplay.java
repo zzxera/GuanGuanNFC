@@ -1,5 +1,8 @@
 package com.example.guanguannfc.controller.dataVisualization;
 
+import android.renderscript.Sampler;
+
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class datadisplay {
-    public  String[][] timeactivity(String timestart, String timeend) {
+    public Object[] function(String username,String timestart,String timeend,String activityType,String showType){
         String[][] arr = new String[2][];
+        String dataAnalysis="";
+        String echarttype = showType;
+        String url="" ;
         try {
-            String acttype = "";//活动类型
+            String acttype = activityType;//活动类型
             String acttime = "";//活动时长
             Connection conn = DriverManager.getConnection("url", acttype, acttime);//建立connection
             Statement stmt = conn.createStatement();
@@ -40,23 +46,20 @@ public class datadisplay {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return arr;
-    }
-    public String webview(String type){
-        String echarttype="";
-        String url ="";
-        switch (echarttype){
+        switch (echarttype) {
             case "列表":
+                url = "";
                 break;
             case "条状图":
-                url = "javascript:createChart('line',[89,78,77]);";
+                url = "javascript:createChart('bar',[89,78,77]);";
                 break;
             case "饼状图":
                 url = "javascript:createChart('pie',[89,78,77]);";
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
-
-    return url;}
-}
+        Object[] objs = new Object[]{arr,url,dataAnalysis};
+        return objs;
+    }
+    }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Allactivity {
-    public String[][] allacttype(){
+    public String[][] allacttype(String username ){
         String[][] arr = new String[1][];
         try {
             String allacttype = "";//活动类型
@@ -39,6 +39,26 @@ public class Allactivity {
         }
         return arr;
     }
+    public String[][] sortedactivity(String username,String activityType,String sortType ){
+        //根据用户名和活动类型从数据库拿到一个集合，将需要的数据取出，将数据进行转换，根据排序方式调取数据库不同方法，返回一个集合，以数组的形式再返回给view
+        int n=5;//;根据活动类型返回数据的数目
+        String sort=sortType;
+        String[][] arr1 = new String[n][5];
+        switch (sort){
+            case "最新活动在前"://调用不同排序方法
+                break;
+            case "最新活动在后":
+                break;
+            case "时间由长到短":
+                break;
+            case "时间由短到长":
+                break;
+                default:
+                    break;
+        }
+        return arr1;
+    }
+
 
 
     }
