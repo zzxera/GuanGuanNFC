@@ -1,5 +1,7 @@
 package com.example.guanguannfc.controller.dataVisualization;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -7,54 +9,45 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Allactivity {
+import com.example.guanguannfc.model.Dao.DaoActSta;
+import com.example.guanguannfc.model.Helper.HelperActivity;
+
+public class Allactivity extends AppCompatActivity {
+    DaoActSta DS = new DaoActSta(this);
     public String[][] allacttype(String username ){
-        String[][] arr = new String[1][];
-        try {
-            String allacttype = "";//活动类型
-            String acttime = "";//活动时长
-            Connection conn = DriverManager.getConnection("url", allacttype,acttime);//建立connection
-            Statement stmt = conn.createStatement();
-            conn.setAutoCommit(false);// 更改jdbc事务的默认提交方式
-
-            String sql = "";//查询语句
-            ResultSet rs = stmt.executeQuery(sql);//得到结果集
-            conn.commit();//事务提交
-            conn.setAutoCommit(true);// 更改jdbc事务的默认提交方式
-            List<String> list = new ArrayList<String>();//创建取结果的列表，之所以使用列表，不用数组，因为现在还不知道结果有多少，不能确定数组长度，所有先用list接收，然后转为数组
-            while (rs.next()) {//如果有数据，取第一列添加入list
-                list.add(rs.getString(1));
-            }
-            if (list != null && list.size() > 0) {//如果list中存入了数据，转化为数组
-                //String[][] arr = new String[2][a];//创建一个和list长度一样的数组
-                for (int i = 0; i < list.size(); i++) {
-                    arr[1][i] = list.get(i);//数组赋值了。
-                }
-
-            }
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        String[][] arr = new String[1][5];
+        arr[1][1]="学习";
+        arr[1][2]="睡觉";
+        arr[1][3]="工作";
+        arr[1][4]="吃饭";
+        arr[1][5]="其它";
         return arr;
     }
     public String[][] sortedactivity(String username,String activityType,String sortType ){
-        //根据用户名和活动类型从数据库拿到一个集合，将需要的数据取出，将数据进行转换，根据排序方式调取数据库不同方法，返回一个集合，以数组的形式再返回给view
-        int n=5;//;根据活动类型返回数据的数目
+        //根据用户名和活动类型从数据库拿到一个集合，将需要的数据取出，将数据进行转换，根据排序方式调取数据库不同方法，返回一个集合，以数组的形式再返回给view//;根据活动类型返回数据的数目
+        ArrayList<HelperActivity> list = new ArrayList<>();
         String sort=sortType;
-        String[][] arr1 = new String[n][5];
         switch (sort){
             case "最新活动在前"://调用不同排序方法
+                list = DS.queryByTimeDesc(username,activityType);
                 break;
             case "最新活动在后":
+                list = DS.queryByLengthAsc(username,activityType);
                 break;
             case "时间由长到短":
+                list = DS.queryByLengthDesc(username,activityType);
                 break;
             case "时间由短到长":
+                list = DS.queryByLengthAsc(username,activityType);
                 break;
                 default:
                     break;
+        }
+        int n = list.size();
+        String[][] arr1 = new String[n][5];
+        for (int i=0; i<n; i++){
+            arr1[i][1]=list.get(i).getActivity_name();
+            arr1[i][5]=String.valueOf(list.get(i).getLen_time());
         }
         return arr1;
     }

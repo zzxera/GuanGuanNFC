@@ -1,6 +1,13 @@
 package com.example.guanguannfc.controller.dataVisualization;
 
+import android.content.Context;
 import android.renderscript.Sampler;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.guanguannfc.model.Helper.HelperActivity;
+import com.example.guanguannfc.model.Helper.HelperActivityType;
+import com.example.guanguannfc.model.Dao.DaoActSta;
 
 import java.lang.reflect.Array;
 import java.sql.Connection;
@@ -10,43 +17,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class datadisplay {
-    public Object[] function(String username,String timestart,String timeend,String activityType,String showType){
-        String[][] arr = new String[2][];
-        String dataAnalysis="";
+public class datadisplay extends AppCompatActivity {
+    DaoActSta Dq =  new DaoActSta(this);
+    public Object[] Datadisplay(String username,String timestart,String timeend,String activityType,String showType){
+        ArrayList<HelperActivityType> list = new ArrayList<>();
+        long timeStart = 1;
+        long timeEnd = 2;
+        list = Dq.queryActType(username,timeStart,timeEnd);
+        int n = list.size();
+        String[][] arr = new String[n][2];
+        for (int i = 0;i<n;i++){
+            arr [i][1]=list.get(i).getActivity_type();
+            arr [i][2]=String.valueOf(list.get(i).getLen_time());
+        }
+        String dataAnalysis="test";
         String echarttype = showType;
         String url="" ;
-        try {
-            String acttype = activityType;//活动类型
-            String acttime = "";//活动时长
-            Connection conn = DriverManager.getConnection("url", acttype, acttime);//建立connection
-            Statement stmt = conn.createStatement();
-            conn.setAutoCommit(false);// 更改jdbc事务的默认提交方式
-
-            String sql = "";//查询语句
-            ResultSet rs = stmt.executeQuery(sql);//得到结果集
-            conn.commit();//事务提交
-            conn.setAutoCommit(true);// 更改jdbc事务的默认提交方式
-            List<String> list = new ArrayList<String>();//创建取结果的列表，之所以使用列表，不用数组，因为现在还不知道结果有多少，不能确定数组长度，所有先用list接收，然后转为数组
-            List<String> list2 = new ArrayList<String>();
-            while (rs.next()) {//如果有数据，取第一列添加入list
-                list.add(rs.getString(1));
-                list2.add(rs.getString(2));
-            }
-            if (list != null && list.size() > 0) {//如果list中存入了数据，转化为数组
-                //String[][] arr = new String[2][a];//创建一个和list长度一样的数组
-                for (int i = 0; i < list.size(); i++) {
-                    arr[1][i] = list.get(i);//数组赋值了。
-                    arr[2][i] = list2.get(i);
-                }
-
-            }
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-//        String echarttype="";
         switch (echarttype){
          case "列表":
                 url = "";

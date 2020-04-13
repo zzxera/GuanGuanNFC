@@ -12,11 +12,11 @@ import static android.content.Context.MODE_PRIVATE;
 public class Login extends AppCompatActivity {
      DaoUserInfo DD = new DaoUserInfo(this);
 
-    public boolean IsExistUserName(String userName) {
+    public boolean LIsExistUserName(String userName) {
         boolean hasUserName = DD.registrationQuery(userName);
         return hasUserName;
     }
-    public boolean LisloginSuccess(String username,String password){
+    public boolean isloginSuccess(String username,String password){
         boolean loginresult =  DD.loadQuery(username,password);
         return loginresult;
     }
