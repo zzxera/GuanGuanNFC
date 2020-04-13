@@ -21,38 +21,41 @@ public class DaoActivityType {
 
     }
     //插入一个活动大类:需给定活动大类名称
-    public void insert(String user_name){
+    public boolean insert(String act_type){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="insert into " + GuanContract.ActivityType.TABLE_NAME+ "(user_name,created_time,updated_time) values(?,?,?)";
+        String sql="insert into " + GuanContract.ActivityType.TABLE_NAME+ "(act_type,created_time,updated_time) values(?,?,?)";
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{user_name,currentTime,currentTime});
+        db.execSQL(sql,new Object[]{act_type,currentTime,currentTime});
         db.close();
+        return true;
 
     }
     //删除一个活动大类:需给定活动大类名称
-    public void delete(String user_name){
+    public boolean delete(String act_type){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql = "delete from " + GuanContract.ActivityType.TABLE_NAME + " where user_name=?";
-        db.execSQL(sql,new Object[]{user_name});
+        String sql = "delete from " + GuanContract.ActivityType.TABLE_NAME + " where act_type=?";
+        db.execSQL(sql,new Object[]{act_type});
         db.close();
+        return true;
 
     }
     //更新一个活动大类：需给定原来的大类名称、现在的大类名称
-    public void update(String user_oldName,String user_newName){
+    public boolean update(String act_oldType,String act_newType){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update " + GuanContract.ActivityType.TABLE_NAME + " set user_name=? , updated_time=? where user_name=?";
+        String sql="update " + GuanContract.ActivityType.TABLE_NAME + " set act_type=? , updated_time=? where act_type=?";
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{user_newName,currentTime,user_oldName});
+        db.execSQL(sql,new Object[]{act_newType,currentTime,act_oldType});
         db.close();
+        return true;
 
     }
     //根据大类名称查询id：需给定大类活动名称
-    public int query(String user_name){
+    public int query(String act_type){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select _id from " + GuanContract.ActivityType.TABLE_NAME + " where user_name=?";
-        Cursor cursor=db.rawQuery(sql,new String[]{user_name});
+        String sql="select _id from " + GuanContract.ActivityType.TABLE_NAME + " where act_type=?";
+        Cursor cursor=db.rawQuery(sql,new String[]{act_type});
         if(cursor.getCount()!=0){
             return cursor.getInt(0);
         }else {
