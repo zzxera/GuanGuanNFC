@@ -45,37 +45,12 @@ public class DaoActSta {
 
     }
 
-    //查询某用户任意大类活动总时间: 用户名、活动大类名、开始日期时间戳、结束日期时间戳
-//    public long queryActType(String user_name,String act_type,long begin,long end ){
-//        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-//        String sql="select sum(end_time-start_time) from  Act_Sta inner join Activity" +
-//                " on Activity._id=Act_Sta.act_ID " +
-//                " inner join User_Info " +
-//                " on User_Info._id=Activity.user_ID " +
-//                " where Activity.type_ID=( select _id from Activity_Type where act_type=?) and user_name=? and start_time>? and end_time<?";
-//
-//        Cursor cursor=db.rawQuery(sql,new String[]{act_type,user_name, String.valueOf(begin), String.valueOf(end)});
-//        if(cursor.getCount()!=0){
-//            while (cursor.moveToNext()){
-//                return cursor.getLong(cursor.getColumnIndex("sum(end_time-start_time)"));
-//            }
-//            return -1;
-//        }else {
-//            return -1;
-//        }
-//    }
 
     //查询自定义范围所有大类活动总时间,返回一个ArrayList<HelperActivityType>: 用户名、活动大类名、开始日期时间戳、结束日期时间戳
     public ArrayList<HelperActivityType> queryActType(String user_name,  long begin, long end ){
         List<HelperActivityType> list = new ArrayList<HelperActivityType>();
         HelperActivityType helperActivityType;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-//        String sql="select act_type,sum(end_time-start_time) from  Activity_Type,Act_Sta inner join Activity" +
-//                " on Activity._id=Act_Sta.act_ID " +
-//                " inner join User_Info " +
-//                " on User_Info._id=Activity.user_ID " +
-//                " where Activity.type_ID=Activity_Type._id and user_name=? and start_time>? and end_time<? " +
-//                " group by act_type";
         String sql="select act_type,sum(end_time-start_time) from  Activity_Type,Act_Sta inner join Activity" +
                 " on Activity._id=Act_Sta.act_ID " +
                 " where Activity_type._id=Activity.type_ID and Activity.user_ID=(select _id from User_Info where user_name=?) and start_time>? and end_time<? " +
@@ -96,7 +71,7 @@ public class DaoActSta {
 
 
 
-    ////////////////////////////////////////////////////
+
 
     //返回一个活动集合（时间从长到短），一个ArrayList<HelperActivity>
     public ArrayList<HelperActivity> queryByLengthDesc(String user_name){
@@ -199,7 +174,7 @@ public class DaoActSta {
     }
 
 
-///////////////////////////////////////////////////////////////
+
 
 
 
