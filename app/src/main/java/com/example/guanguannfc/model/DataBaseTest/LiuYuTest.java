@@ -17,7 +17,7 @@ import com.example.guanguannfc.model.Initialization;
  * 数据表操作方法测试类
  */
 public class LiuYuTest extends AppCompatActivity implements View.OnClickListener {
-    Button mButton1,mButton2,mButton3,mButton4,mButton5,mButton6;
+    Button mButton1,mButton2;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -30,21 +30,16 @@ public class LiuYuTest extends AppCompatActivity implements View.OnClickListener
     private void initView() {
         mButton1 = findViewById(R.id.btn1);
         mButton2 = findViewById(R.id.btn2);
-        mButton3 = findViewById(R.id.btn3);
-        mButton4 = findViewById(R.id.btn4);
-        mButton5 = findViewById(R.id.btn5);
-        mButton6 = findViewById(R.id.btn6);
+
         Initialization.initialization(this);
+//        FakeData fakeData = new FakeData(this);
+//        fakeData.insert();
 
     }
 
     private void initEvent() {
         mButton1.setOnClickListener(this);
         mButton2.setOnClickListener(this);
-        mButton3.setOnClickListener(this);
-        mButton4.setOnClickListener(this);
-        mButton5.setOnClickListener(this);
-        mButton6.setOnClickListener(this);
     }
 
     @Override
@@ -55,15 +50,10 @@ public class LiuYuTest extends AppCompatActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.btn2:
+                intent = new Intent(this,DataQueryTest.class);
+                startActivity(intent);
                 break;
-            case R.id.btn3:
-                break;
-            case R.id.btn4:
-                break;
-            case R.id.btn5:
-                break;
-            case R.id.btn6:
-                break;
+
         }
     }
 }
