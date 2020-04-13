@@ -4,23 +4,19 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.guanguannfc.model.Dao.DaoUserInfo;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Register extends AppCompatActivity {
+    DaoUserInfo DD = new DaoUserInfo(this);
     public boolean RisExistUserName(String userName) {
-        boolean hasUserName = false;
-        SharedPreferences sp = getSharedPreferences("loginInfo", MODE_PRIVATE);
-        String spPsw = sp.getString(userName, "");
-        if (!TextUtils.isEmpty(spPsw)) {
-            hasUserName = true;
-        }
+        boolean hasUserName = DD.registrationQuery(userName);
         return hasUserName;
     }
-    public String ISRegisterSuccess(String username, String password){
-        String newUsername = username;
-        String Userpassword = password;//调用数据库方法，返回布尔类型的值
-        String result = "successful";
+    public boolean ISRegisterSuccess(String username, String password){
+        DD.insert(username,password);
+         boolean result = true;
         return result;
     }
 }
