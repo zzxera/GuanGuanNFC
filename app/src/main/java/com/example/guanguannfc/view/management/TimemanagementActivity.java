@@ -8,20 +8,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
 
-public class Timemanagement extends AppCompatActivity {
+public class TimemanagementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.management_time);
+        setContentView(R.layout.activity_timemanagement);
     }
 
     public void Changeactivity(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Changeactivity.class);
+        Intent intent = new Intent(this, ChangeactActivity.class);
         startActivity(intent);
     }
     public void Boxmanagement(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Boxmanagement.class);
+        Intent intent = new Intent(this, BoxmanagementActivity.class);
         startActivity(intent);
     }
 }

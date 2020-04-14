@@ -8,7 +8,7 @@
     </string-array>
     <string-array name="types">
         <item>列表</item>
-        <item>条形图</item>
+        <item>条状图</item>
         <item>饼状图</item>
     </string-array>
     <string-array name="actlists">

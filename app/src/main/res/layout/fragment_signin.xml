@@ -11,15 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="账号"
-        app:layout_constraintStart_toStartOf="@+id/edit_zh"
+        app:layout_constraintStart_toStartOf="@+id/edit_username"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <EditText
-        android:id="@+id/edit_zh"
+        android:id="@+id/edit_username"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="请输入账号"
+        android:inputType="text"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
@@ -34,16 +36,17 @@
 
         app:layout_constraintStart_toStartOf="@+id/textView1"
 
-        app:layout_constraintTop_toBottomOf="@+id/edit_zh"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/edit_username"></TextView>
 
     <EditText
-        android:id="@+id/edit_mm"
+        android:id="@+id/edit_psw"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-
+        android:inputType="textPassword"
+        android:maxLength="20"
         android:hint="请输入密码"
-        app:layout_constraintStart_toStartOf="@+id/edit_zh"
+        app:layout_constraintStart_toStartOf="@+id/edit_username"
         app:layout_constraintTop_toBottomOf="@+id/textView2"></EditText>
 
     <TextView
@@ -53,9 +56,9 @@
         android:text="忘记密码"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="12dp"
-        android:onClick="click"
+
         app:layout_constraintTop_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="@+id/edit_zh"
+        app:layout_constraintEnd_toEndOf="@+id/edit_username"
 
          ></TextView>
 
@@ -64,13 +67,12 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:background="@drawable/button_fillet"
-        android:backgroundTint="@color/colorDark"
+        android:background="@drawable/button_log"
         android:text="登录"
 
 
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_mm"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/edit_psw"></Button>
 </androidx.constraintlayout.widget.ConstraintLayout>
