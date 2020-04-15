@@ -11,9 +11,11 @@ import java.util.List;
 
 import com.example.guanguannfc.model.Dao.DaoActSta;
 import com.example.guanguannfc.model.Helper.HelperActivity;
+import com.example.guanguannfc.controller.timeManagement.GetTime;
 
 public class Allactivity extends AppCompatActivity {
     DaoActSta DS = new DaoActSta(this);
+    GetTime gt = new GetTime();
     public String[][] allacttype(String username ){
         String[][] arr = new String[1][5];
         arr[1][1]="学习";
@@ -44,10 +46,14 @@ public class Allactivity extends AppCompatActivity {
                     break;
         }
         int n = list.size();
-        String[][] arr1 = new String[n][5];
+        String[][] arr1 = new String[n][6];
         for (int i=0; i<n; i++){
-            arr1[i][1]=list.get(i).getActivity_name();
-            arr1[i][5]=String.valueOf(list.get(i).getLen_time());
+            arr1[i][1]=list.get(i).getActivity_type();
+            arr1[i][2]=gt.transString(list.get(i).getBegin_time())[1][1];
+            arr1[i][3]=gt.transString(list.get(i).getBegin_time())[1][1]+gt.transString(list.get(i).getBegin_time())[1][2];
+            arr1[i][4]=gt.transString(list.get(i).getEnd_time())[1][1]+gt.transString(list.get(i).getEnd_time())[1][2];
+            arr1[i][5]=gt.transString1(list.get(i).getLen_time());
+            arr1[i][6]=list.get(i).getActivity_name();
         }
         return arr1;
     }

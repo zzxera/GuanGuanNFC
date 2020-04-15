@@ -16,19 +16,25 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.guanguannfc.controller.timeManagement.GetTime;
 
 public class datadisplay extends AppCompatActivity {
     DaoActSta Dq =  new DaoActSta(this);
+    GetTime gt = new GetTime();
     public Object[] Datadisplay(String username,String timestart,String timeend,String activityType,String showType){
         ArrayList<HelperActivityType> list = new ArrayList<>();
-        long timeStart = 1;
-        long timeEnd = 2;
-        list = Dq.queryActType(username,timeStart,timeEnd);
+        long timeStart = gt.getStringToDate(timestart,"yyyy年MM月dd日 HH时mm分ss秒");
+        long timeEnd = gt.getStringToDate(timeend,"yyyy年MM月dd日 HH时mm分ss秒");
+        if (activityType.length() <= 0){
+            list = Dq.queryActType(username,timeStart,timeEnd);
+        }else {
+            list = Dq.queryActType(username,timeStart,timeEnd,activityType);
+        }
         int n = list.size();
         String[][] arr = new String[n][2];
         for (int i = 0;i<n;i++){
             arr [i][1]=list.get(i).getActivity_type();
-            arr [i][2]=String.valueOf(list.get(i).getLen_time());
+            arr [i][2]=(gt.transString1(list.get(i).getLen_time()));
         }
         String dataAnalysis="test";
         String echarttype = showType;
