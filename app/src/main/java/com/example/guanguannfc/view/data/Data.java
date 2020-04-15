@@ -24,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.guanguannfc.R;
 
+import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 
 import com.example.guanguannfc.view.management.BoxmanagementActivity;
@@ -46,28 +47,35 @@ public class Data extends AppCompatActivity {
     private List<DataShow> dataShowList = new ArrayList<DataShow>();
     private ListView actlist;
     private WebView webView;
-    private Spinner spinner_times,spinner_types;
+    private Spinner spinner_times,spinner_types,spinner_acts,spinner_sorts;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
     private TextView tv_prompt;
-    private String txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
+    private String userName,txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
     private String[] dataType={"工作","学习","睡眠","娱乐","吃饭","学习","睡眠","娱乐","吃饭"};
     private String[] dataTime={"2h","3h","2h","0h","1h","3h","2h","0h","1h"};
-    private String[][] allact;
+    private String[][] datas={{"工作","2h"},{"学习","3h"},{"睡眠","2h"},{"娱乐","0h"},{"吃饭","1h"},{"学习","3h"},{"睡眠","2h"},{"娱乐","0h"},{"吃饭","1h"}};
+    private String[] allActName;
+    private String[][] actAndTime;
+    private Object ob_dataShow;
     private WebView myWebView;
     private datadisplay dd=new datadisplay();
     private Allactivity allactivity=new Allactivity();
+    private GetTime getTime=new GetTime();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
+        Bundle bundle = this.getIntent().getExtras();
+        userName=bundle.getString("userName");
         initView();
+//        allActName=allactivity.allacttype(userName);
         DataShowAdapter dataShowAdapter = new DataShowAdapter(Data.this,R.layout.datashow_item,dataShowList);
         actlist.setAdapter(dataShowAdapter);
-
-        initDataShow();
+        initDataShow(datas);
+//        initDataShow();
         initSpinner();
         initWebView();
 
@@ -82,8 +90,10 @@ public class Data extends AppCompatActivity {
     private void initView(){
         actlist=findViewById(R.id.listview_actlist);
         webView=findViewById(R.id.webview_acts);
-        spinner_times=(Spinner)findViewById(R.id.spinner_time);
-        spinner_types=(Spinner)findViewById(R.id.spinner_type);
+        spinner_times=findViewById(R.id.spinner_time);
+        spinner_types=findViewById(R.id.spinner_type);
+        spinner_acts=findViewById(R.id.spinner_acttype);
+        spinner_sorts=findViewById(R.id.spinner_sort);
         lay_datashow=findViewById(R.id.layout_show);
         lay_actshow=findViewById(R.id.layout_allact);
         lay_actshow.setVisibility(View.INVISIBLE);
@@ -108,11 +118,17 @@ public class Data extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String timeType = Data.this.getResources().getStringArray(R.array.times)[position];
-                Toast.makeText(Data.this, "" + timeType, Toast.LENGTH_SHORT).show();
+
                 txt_timeType=timeType;
                 if (position==3){
                     lay_time.setVisibility(View.VISIBLE);
                 }
+//                else {
+//                    txt_startTime=getTime.getBeginTime(timeType);
+//                    ob_dataShow=dd.Datadisplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
+//                    initDataShow(ob_dataShow[0]);
+
+//                }
             }
 
             @Override
@@ -125,19 +141,22 @@ public class Data extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String showType = Data.this.getResources().getStringArray(R.array.types)[position];
-//                Toast.makeText(Data.this, "" + showType, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Data.this,""+position,Toast.LENGTH_LONG).show();
                 txt_showType=showType;
                 if (position==0){
                     webView.setVisibility(View.INVISIBLE);
                     actlist.setVisibility(View.VISIBLE);
+
                 }
                 else{
                     webView.setVisibility(View.VISIBLE);
                     actlist.setVisibility(View.INVISIBLE);
-                    String url=dd.webview(showType);
-                    Toast.makeText(Data.this, url, Toast.LENGTH_SHORT).show();
+//                    String url=dd.webview(showType);
+//                    myWebView.loadUrl(url);
 
-                    myWebView.loadUrl(url);
+//                    ob_dataShow=dd.Datadisplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
+//                    String url=ob_dataShow[1];
+//                    myWebView.loadUrl(url);
                 }
             }
 
@@ -148,9 +167,15 @@ public class Data extends AppCompatActivity {
         });
     }
 
-    private void initDataShow(){
-        for(int i=0;i<dataType.length;i++){
-            DataShow dataShow = new DataShow(dataType[i],dataTime[i]);
+//    private void initDataShow(){
+//        for(int i=0;i<dataType.length;i++){
+//            DataShow dataShow = new DataShow(dataType[i],dataTime[i]);
+//            dataShowList.add(dataShow);
+//        }
+//    }
+    private void initDataShow(String[][] arry){
+        for(int i=0;i<arry.length;i++){
+            DataShow dataShow = new DataShow(arry[i][0],arry[i][1]);
             dataShowList.add(dataShow);
         }
     }
@@ -173,7 +198,6 @@ public class Data extends AppCompatActivity {
         //开启脚本支持
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.loadUrl("file:///android_asset/echart/myechart.html");
-        allact=allactivity.allacttype();
     }
 
     public void click(View v){
@@ -239,6 +263,7 @@ public class Data extends AppCompatActivity {
                 break;
             case R.id.button_time_confirm:
                 lay_time.setVisibility(View.INVISIBLE);
+
                 break;
             case R.id.button_personset:
                 if(lay_personset.getVisibility()==View.VISIBLE){
