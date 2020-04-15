@@ -47,7 +47,8 @@ public class Data extends AppCompatActivity {
     private Spinner spinner_times,spinner_types;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
-    private TextView txt_prompt;
+    private TextView tv_prompt;
+    private String txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
     private String[] dataType={"工作","学习","睡眠","娱乐","吃饭","学习","睡眠","娱乐","吃饭"};
     private String[] dataTime={"2h","3h","2h","0h","1h","3h","2h","0h","1h"};
     private String[][] allact;
@@ -60,10 +61,23 @@ public class Data extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
-        initDataShow();
+        initView();
         DataShowAdapter dataShowAdapter = new DataShowAdapter(Data.this,R.layout.datashow_item,dataShowList);
+        actlist.setAdapter(dataShowAdapter);
+
+        initDataShow();
+        initSpinner();
+        initWebView();
 
 
+
+
+
+
+
+    }
+
+    private void initView(){
         actlist=findViewById(R.id.listview_actlist);
         webView=findViewById(R.id.webview_acts);
         spinner_times=(Spinner)findViewById(R.id.spinner_time);
@@ -82,10 +96,64 @@ public class Data extends AppCompatActivity {
         bt_person=findViewById(R.id.button_personset);
         bt_manage=findViewById(R.id.button_manage);
         bt_quit=findViewById(R.id.button_quit);
-        txt_prompt=findViewById(R.id.text_prompt);
+        tv_prompt=findViewById(R.id.text_prompt);
         myWebView=findViewById(R.id.webview_acts);
 
-        actlist.setAdapter(dataShowAdapter);
+    }
+
+    private void initSpinner(){
+        spinner_times.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String timeType = Data.this.getResources().getStringArray(R.array.times)[position];
+                Toast.makeText(Data.this, "" + timeType, Toast.LENGTH_SHORT).show();
+                txt_timeType=timeType;
+                if (position==3){
+                    lay_time.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner_types.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String showType = Data.this.getResources().getStringArray(R.array.types)[position];
+//                Toast.makeText(Data.this, "" + showType, Toast.LENGTH_SHORT).show();
+                txt_showType=showType;
+                if (position==0){
+                    webView.setVisibility(View.INVISIBLE);
+                    actlist.setVisibility(View.VISIBLE);
+                }
+                else{
+                    webView.setVisibility(View.VISIBLE);
+                    actlist.setVisibility(View.INVISIBLE);
+                    String url=dd.webview(showType);
+                    Toast.makeText(Data.this, url, Toast.LENGTH_SHORT).show();
+
+                    myWebView.loadUrl(url);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void initDataShow(){
+        for(int i=0;i<dataType.length;i++){
+            DataShow dataShow = new DataShow(dataType[i],dataTime[i]);
+            dataShowList.add(dataShow);
+        }
+    }
+
+    private void initWebView(){
         myWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -104,60 +172,6 @@ public class Data extends AppCompatActivity {
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.loadUrl("file:///android_asset/echart/myechart.html");
         allact=allactivity.allacttype();
-
-
-        spinner_times.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String cardNumber = Data.this.getResources().getStringArray(R.array.times)[position];
-                Toast.makeText(Data.this, "" + cardNumber, Toast.LENGTH_SHORT).show();
-                if (position==3){
-                    lay_time.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinner_types.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String showType = Data.this.getResources().getStringArray(R.array.types)[position];
-//                Toast.makeText(Data.this, "" + showType, Toast.LENGTH_SHORT).show();
-                if (position==0){
-                    webView.setVisibility(View.INVISIBLE);
-                    actlist.setVisibility(View.VISIBLE);
-                }
-                else{
-                    webView.setVisibility(View.VISIBLE);
-                    actlist.setVisibility(View.INVISIBLE);
-                    String url=dd.webview(showType);
-                    Toast.makeText(Data.this, url, Toast.LENGTH_SHORT).show();
-
-                    myWebView.loadUrl(url);
-
-                }
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-    }
-
-    private void initDataShow(){
-        for(int i=0;i<dataType.length;i++){
-            DataShow dataShow = new DataShow(dataType[i],dataTime[i]);
-            dataShowList.add(dataShow);
-        }
     }
 
     public void click(View v){
@@ -177,7 +191,7 @@ public class Data extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String starttime =  year + "-" + (month + 1) + "-" + dayOfMonth ;
-                        Toast.makeText(Data.this, starttime, Toast.LENGTH_SHORT).show();
+                        txt_startTime=starttime;
                         bt_starttime.setText(starttime);
                     }
                 }
@@ -191,7 +205,7 @@ public class Data extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String endtime =  year + "-" + (month + 1) + "-" + dayOfMonth ;
-                        Toast.makeText(Data.this, endtime, Toast.LENGTH_SHORT).show();
+                        txt_endTime=endtime;
                         bt_endtime.setText(endtime);
                     }
                 }
@@ -208,6 +222,7 @@ public class Data extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         String acttype=(String)menuItem.getTitle();
                         bt_acttype.setText(acttype);
+                        txt_actType=acttype;
 //                        switch (menuItem.getItemId()){
 //                            case R.id.all:
 //                                bt_acttype.setText("全部");
