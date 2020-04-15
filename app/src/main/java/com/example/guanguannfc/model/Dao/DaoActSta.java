@@ -68,6 +68,28 @@ public class DaoActSta {
         }
     }
 
+    //查询自定义范围单个大类活动总时间,返回一个ArrayList<HelperActivityType>: 用户名、活动大类名、开始日期时间戳、结束日期时间戳
+    public ArrayList<HelperActivityType> queryActType(String user_name,  long begin, long end ,String act_type){
+        List<HelperActivityType> list = new ArrayList<HelperActivityType>();
+        HelperActivityType helperActivityType;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="select act_type,sum(end_time-start_time) from  Activity_Type,Act_Sta inner join Activity" +
+                " on Activity._id=Act_Sta.act_ID " +
+                " where Activity_type._id=Activity.type_ID and Activity.user_ID=(select _id from User_Info where user_name=?) and start_time>? and end_time<? and Activity_Type.act_type=?" +
+                " group by act_type";
+
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name, String.valueOf(begin), String.valueOf(end),act_type});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperActivityType = new HelperActivityType(cursor.getString(0),cursor.getLong(1));
+                list.add(helperActivityType);
+            }
+            return (ArrayList<HelperActivityType>) list;
+        }else {
+            return null;
+        }
+    }
+
 
 
 
