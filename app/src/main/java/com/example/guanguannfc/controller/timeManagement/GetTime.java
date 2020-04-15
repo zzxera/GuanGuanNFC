@@ -19,37 +19,37 @@ public class GetTime{
         String dateStr = simpleDateFormat.format(date);
         return dateStr;
     }
-    //将给定时间戳转为字符串形式（2020年）
+    //将给定时间戳转为年整数形式（2020）
     public static int getYearByTimeStamp(long timeStamp){
         String date = timeStampToDate(timeStamp);
         String year = date.substring(0,4);
         return Integer.parseInt(year);
     }
-    //将给定时间戳转为字符串形式（04月）
+    //将给定时间戳转为月整数形式（4）
     public static int getMonthByTimeStamp(long timeStamp){
         String date = timeStampToDate(timeStamp);
         String month = date.substring(5,7);
         return Integer.parseInt(month);
     }
-    //将给定时间戳转为字符串形式（01日）
+    //将给定时间戳转为日整数形式（1）
     public static int getDayByTimeStamp(long timeStamp){
         String date = timeStampToDate(timeStamp);
         String day = date.substring(8,10);
         return Integer.parseInt(day);
     }
-    //将给定时间戳转为字符串形式（12时）
+    //将给定时间戳转为小时整数形式（12时）
     public static int getHourByTimeStamp(long timeStamp){
         String date = timeStampToDate(timeStamp);
         String hour = date.substring(12,14);
         return Integer.parseInt(hour);
     }
-    //将给定时间戳转为字符串形式（00分）
+    //将给定时间戳转为分钟整数形式（00）
     public static int getMinuteByTimeStamp(long timeStamp){
         String date = timeStampToDate(timeStamp);
         String minute = date.substring(15,17);
         return Integer.parseInt(minute);
     }
-    //将给定时间戳转为字符串形式（00秒）
+    //将给定时间戳转为秒整数形式（00）
     public static int getSecondByTimeStamp(long timeStamp){
         String date = timeStampToDate(timeStamp);
         String second = date.substring(18,20);
@@ -172,6 +172,16 @@ public class GetTime{
         array[1][1] = year + "年" + month + "月" + day + "日";
         array[1][2] = hour + "时" + minute + "分" + second + "秒";
         return array;
+    }
+
+    public static String transString1(long continueTime){
+        long allseconds = continueTime / 1000;
+        long lastseconds = allseconds % 60*60;
+        long hour = allseconds / 60*60;
+        long minute = lastseconds / 60;
+        long second = lastseconds % 60;
+        String dataString = hour + "时" + minute + "分" + second + "秒";
+        return dataString;
     }
 
 //自己乱写的
