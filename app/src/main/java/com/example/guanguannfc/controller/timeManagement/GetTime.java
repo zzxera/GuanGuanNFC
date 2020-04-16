@@ -169,8 +169,8 @@ public class GetTime{
         int hour = getHourByTimeStamp(timeStamp);
         int minute = getMinuteByTimeStamp(timeStamp);
         int second = getSecondByTimeStamp(timeStamp);
-        array[1][1] = year + "年" + month + "月" + day + "日";
-        array[1][2] = hour + "时" + minute + "分" + second + "秒";
+        array[0][0] = year + "年" + month + "月" + day + "日";
+        array[0][1] = hour + "时" + minute + "分" + second + "秒";
         return array;
     }
     public static String transString1(long continueTime){
@@ -183,15 +183,15 @@ public class GetTime{
         return dataString;
     }
 
-    public static String transString1(long continueTime){
-        long allseconds = continueTime / 1000;
-        long lastseconds = allseconds % 60*60;
-        long hour = allseconds / 60*60;
-        long minute = lastseconds / 60;
-        long second = lastseconds % 60;
-        String dataString = hour + "时" + minute + "分" + second + "秒";
-        return dataString;
-    }
+//    public static String transString1(long continueTime){
+//        long allseconds = continueTime / 1000;
+//        long lastseconds = allseconds % 60*60;
+//        long hour = allseconds / 60*60;
+//        long minute = lastseconds / 60;
+//        long second = lastseconds % 60;
+//        String dataString = hour + "时" + minute + "分" + second + "秒";
+//        return dataString;
+//    }
 
 //自己乱写的
     //获取当前时间并显示为字符串形式 12：24：23
