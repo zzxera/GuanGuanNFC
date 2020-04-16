@@ -77,7 +77,9 @@
         <activity android:name=".view.management.AddactActivity" />
         <activity android:name=".view.loginAndLogon.Forgetkey" />
 
-        <activity android:name=".view.data.Data" > </activity>
+        <activity android:name=".view.data.Data" >
+
+        </activity>
         <!--view测试入口-->
         <activity android:name=".view.loginAndLogon.LoginActivity">
             <intent-filter>
@@ -92,10 +94,12 @@
         <activity android:name=".model.DataBaseTest.LiuYuTest">
 
 
+
         </activity>
 
 
         <activity android:name=".model.DataBaseTest.UserInfo"></activity>
+        <activity android:name=".model.DataBaseTest.DataQueryTest"></activity>
 
         
     </application> <!-- 要求当前设备必须要有NFC芯片 -->

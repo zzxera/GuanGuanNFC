@@ -27,7 +27,6 @@ public class ThingManage {
         if (isBoxExist(name)){
             // TODO Auto-generated catch block
             //将数据传给数据库
-            //
         }else{
             Log.i("deleteBox","Box is not existed");
         }
