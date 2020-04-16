@@ -26,36 +26,41 @@ public class datadisplay {
     GetTime gt = new GetTime();
     public Object[] Datadplay(String username,String timestart,String timeend,String activityType,String showType){
         ArrayList<HelperActivityType> list = new ArrayList<>();
-        long timeStart = gt.getStringToDate(timestart,"yyyy年MM月dd日 HH时mm分ss秒");
-        long timeEnd = gt.getStringToDate(timeend,"yyyy年MM月dd日 HH时mm分ss秒");
+        long timeStart = gt.getStringToDate(timestart,"yyyy-MM-dd");
+        long timeEnd = gt.getStringToDate(timeend,"yyyy-MM-dd");
         if (activityType.length() <= 0){
             list = Dq.queryActType(username,timeStart,timeEnd);
         }else {
             list = Dq.queryActType(username,timeStart,timeEnd,activityType);
         }
-        int n = list.size();
-        String[][] arr = new String[n][2];
-        for (int i = 0;i<n;i++){
-            arr [i][1]=list.get(i).getActivity_type();
-            arr [i][2]=(gt.transString1(list.get(i).getLen_time()));
+        if(list!=null) {
+            int n = list.size();
+            String[][] arr = new String[n][2];
+            for (int i = 0; i < n; i++) {
+                arr[i][0] = list.get(i).getActivity_type();
+                arr[i][1] = (gt.transString1(list.get(i).getLen_time()));
+            }
+            String dataAnalysis = "test";
+            String echarttype = showType;
+            String url = "";
+            switch (echarttype) {
+                case "列表":
+                    url = "";
+                    break;
+                case "条状图":
+                    url = "javascript:createChart('bar',[89,78,77]);";
+                    break;
+                case "饼状图":
+                    url = "javascript:createChart('pie',[89,78,77]);";
+                    break;
+                default:
+                    break;
+            }
+            Object[] objs = new Object[]{arr, url, dataAnalysis};
+            return objs;
         }
-        String dataAnalysis="test";
-        String echarttype = showType;
-        String url="" ;
-        switch (echarttype){
-         case "列表":
-                url = "";
-                break;
-            case "条状图":
-                url = "javascript:createChart('bar',[89,78,77]);";
-                break;
-            case "饼状图":
-                url = "javascript:createChart('pie',[89,78,77]);";
-                break;
-            default:
-                break;
+        else {
+            return null;
         }
-        Object[] objs = new Object[]{arr,url,dataAnalysis};
-        return objs;
     }
     }
