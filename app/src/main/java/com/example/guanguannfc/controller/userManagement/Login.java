@@ -9,9 +9,11 @@ import com.example.guanguannfc.model.Dao.DaoUserInfo;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class Login extends AppCompatActivity {
-     DaoUserInfo DD = new DaoUserInfo(this);
-
+public class Login {
+    DaoUserInfo DD;
+    public Login(Context context){
+        this.DD = new DaoUserInfo(context);
+    }
     public boolean LIsExistUserName(String userName) {
         boolean hasUserName = DD.registrationQuery(userName);
         return hasUserName;

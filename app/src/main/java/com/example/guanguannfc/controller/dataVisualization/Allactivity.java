@@ -1,5 +1,7 @@
 package com.example.guanguannfc.controller.dataVisualization;
 
+import android.content.Context;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.sql.Connection;
@@ -13,8 +15,11 @@ import com.example.guanguannfc.model.Dao.DaoActSta;
 import com.example.guanguannfc.model.Helper.HelperActivity;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 
-public class Allactivity extends AppCompatActivity {
-    DaoActSta DS = new DaoActSta(this);
+public class Allactivity{
+    DaoActSta DS;
+    public Allactivity(Context context){
+        this.DS = new DaoActSta(context);
+    }
     GetTime gt = new GetTime();
     public String[][] allacttype(String username ){
         String[][] arr = new String[1][5];
