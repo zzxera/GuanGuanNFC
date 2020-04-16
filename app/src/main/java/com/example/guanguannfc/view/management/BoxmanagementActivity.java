@@ -3,19 +3,16 @@ package com.example.guanguannfc.view.management;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Transition;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.guanguannfc.R;
-import com.example.guanguannfc.view.management.DisplaygoodsActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,11 +87,11 @@ public class BoxmanagementActivity extends AppCompatActivity {
         });
 
         ListView listView =contentView.findViewById(R.id.listview);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData(),
-                R.layout.activity_listview1,
-                new String[]{"tv_name","btn_c"},
-                new int[]{R.id.tv_name,R.id.btn_c});
-        listView.setAdapter(mSimpleAdapter);
+        SimpleAdapter mSimpleAdapter2 = new SimpleAdapter(this, this.getData(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter2);
         //显示PopupWindow
         View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
@@ -102,16 +99,17 @@ public class BoxmanagementActivity extends AppCompatActivity {
 
     private List<Map<String,Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String,Object> map= new HashMap<String, Object>();
-        map.put("tv_name","Apple");
-        map.put("btn_c", R.id.btn_c);
-        list.add(map);
-        map.put("tv_name","Appe");
-        map.put("btn_c", R.id.btn_c);
-        list.add(map);
-        map.put("tv_name","Appell");
-        map.put("btn_c", R.id.btn_c);
-        list.add(map);
+        String [] name=new String[]{"化妆1","化妆2","化妆3","化妆4"};
+        String [] num = new String[]{"2","5","4","7"};
+        String [] num2 = new String[]{"2","5","4","7"};
+        for (int i=0;i<name.length;i++)
+        {
+            Map<String,Object> map=new HashMap<String, Object>();
+            map.put("tv_goods_name",name[i]);
+            map.put("tv_goods_shuliang",num[i]);
+            map.put("btn_change_num",R.id.btn_change_num);
+            list.add(map);
+        }
 
         return list;
     }
