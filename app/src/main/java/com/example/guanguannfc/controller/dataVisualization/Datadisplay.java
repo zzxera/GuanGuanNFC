@@ -18,10 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 
-public class datadisplay extends AppCompatActivity {
-    DaoActSta Dq =  new DaoActSta(this);
+public class datadisplay {
+    DaoActSta Dq;
+    public datadisplay(Context context){
+        this.Dq = new DaoActSta(context);
+    }
     GetTime gt = new GetTime();
-    public Object[] Datadisplay(String username,String timestart,String timeend,String activityType,String showType){
+    public Object[] Datadplay(String username,String timestart,String timeend,String activityType,String showType){
         ArrayList<HelperActivityType> list = new ArrayList<>();
         long timeStart = gt.getStringToDate(timestart,"yyyy年MM月dd日 HH时mm分ss秒");
         long timeEnd = gt.getStringToDate(timeend,"yyyy年MM月dd日 HH时mm分ss秒");
