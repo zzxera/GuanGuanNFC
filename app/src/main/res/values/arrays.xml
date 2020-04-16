@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="times">
-        <item>今日</item>
+        <item>本日</item>
         <item>本周</item>
         <item>本月</item>
         <item>自定起始时间</item>
