@@ -21,14 +21,6 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="151dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="物品管理"
-            android:textSize="24sp" />
-
-        <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -39,7 +31,17 @@
             android:layout_width="165dp"
             android:layout_height="fill_parent"
             android:gravity="center"
+            android:onClick="Timemanagement"
             android:text="时间管理"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="151dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:onClick="Boxmanagement"
+            android:text="物品管理"
             android:textSize="24sp" />
 
 
@@ -58,15 +60,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="188dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="155dp"
-        android:onClick="Displaygoods"
-        android:text="Button"
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="385dp"
+        android:layout_height="607dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView2" />
