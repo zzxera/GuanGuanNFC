@@ -27,15 +27,26 @@ public class SearchgoodsActivity extends AppCompatActivity {
     }
     private List<Map<String,Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String ,Object>>();
-        String [] name=new String[]{"新的朋友","群聊","标签","公众号"};
+        String [] name=new String[]{"化妆品","球类","笔","书"};
+        String [] num = new String[]{"2","5","4","7"};
         for (int i=0;i<name.length;i++)
         {
             Map<String,Object> map=new HashMap<String, Object>();
             map.put("tvName",name[i]);
-            map.put("tv_shuliang",name[i]);
+            map.put("tv_shuliang",num[i]);
             list.add(map);
         }
         return list;
 
+    }
+    public void Timemanagement(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, TimemanagementActivity.class);
+        startActivity(intent);
+    }
+    public void Boxmanagement(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, BoxmanagementActivity.class);
+        startActivity(intent);
     }
 }
