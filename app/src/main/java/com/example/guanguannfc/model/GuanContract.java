@@ -8,6 +8,7 @@ public class GuanContract {
     public static final String DATABASE_NAME = "guan.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INT_TYPE = " INTEGER";
+    private static final String UNIQUE_TYPE = " UNIQUE";
     private static final String COMMA_SEP = " ,";
 
     private GuanContract(){}
@@ -21,7 +22,7 @@ public class GuanContract {
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + UserInfo.TABLE_NAME + " (" +
                 UserInfo._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
-                UserInfo.COLUMN_USER_NAME + TEXT_TYPE + COMMA_SEP +
+                UserInfo.COLUMN_USER_NAME + TEXT_TYPE + UNIQUE_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_PASSWORD + TEXT_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_UPDATED_TIME + INT_TYPE + " )";
