@@ -31,6 +31,7 @@ public class FakeData {
         DaoActSta daoActSta = new DaoActSta(context);
         DaoBoxContent daoBoxContent = new DaoBoxContent(context);
 
+
         if(daoUserInfo.registrationQuery("aaa") != true){
             daoUserInfo.insert("aaa", "12123");
             daoUserInfo.insert("bbb","12123");
@@ -128,6 +129,7 @@ public class FakeData {
             daoBoxContent.insert(4, "迷你优盘", 1);
         }
 
+     
 
 
 

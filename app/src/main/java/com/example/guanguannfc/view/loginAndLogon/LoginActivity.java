@@ -11,6 +11,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.model.DataBaseTest.FakeData;
+import com.example.guanguannfc.model.Initialization;
 import com.example.guanguannfc.view.data.Data;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,7 +35,13 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_las);
         frag_signin.getContex(this);
+        frag_logon.getContex(this);
         getFragmentManager().beginTransaction().replace(R.id.logandsign,frag_signin).commit();
+
+        Initialization.initialization(this);
+//        FakeData fakeData = new FakeData(this);
+//        fakeData.insert();
+
 
     }
 

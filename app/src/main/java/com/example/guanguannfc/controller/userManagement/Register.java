@@ -1,23 +1,26 @@
 package com.example.guanguannfc.controller.userManagement;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.guanguannfc.model.Dao.DaoUserInfo;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class Register extends AppCompatActivity {
-    private boolean RisExistUserName(String userName) {
-        boolean hasUserName = false;
-        SharedPreferences sp = getSharedPreferences("loginInfo", MODE_PRIVATE);
-        String spPsw = sp.getString(userName, "");
-        if (!TextUtils.isEmpty(spPsw)) {
-            hasUserName = true;
-        }
+public class Register {
+    DaoUserInfo DD;
+    public Register(Context context){
+        this.DD = new DaoUserInfo(context);
+    }
+    public boolean RisExistUserName(String userName) {
+        boolean hasUserName = DD.registrationQuery(userName);
         return hasUserName;
     }
-    private Register(String username, String password){
-
+    public boolean ISRegisterSuccess(String username, String password){
+        DD.insert(username,password);
+         boolean result = true;
+        return result;
     }
 }
