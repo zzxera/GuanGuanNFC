@@ -23,7 +23,7 @@ public class SigninFragment extends Fragment {
 
     private EditText edit_username,edit_psw;
     private String username,psw;
-    private Login login = new Login();
+    private Login login ;
 
     Button button_signin;
     Context ctx;
@@ -31,7 +31,6 @@ public class SigninFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin, container, false);
-
         edit_username=view.findViewById(R.id.edit_username);
         edit_psw=view.findViewById(R.id.edit_psw);
         button_signin = (Button) view.findViewById(R.id.button_signin_confirm);
@@ -56,22 +55,25 @@ public class SigninFragment extends Fragment {
                     if(psw.length()<6 | psw.length()>20){
                     Toast.makeText(ctx,"密码长度为6-20位",Toast.LENGTH_LONG).show();
                 }
-//                    else if(login.IsExistUserName(username)==false){
-//                        Toast.makeText(ctx,"账号不存在",Toast.LENGTH_LONG).show();
-//                    }
-                    else if (username.equals("GGYY") == false){
+                    else if(login.LIsExistUserName(username)==false){
                         Toast.makeText(ctx,"账号不存在",Toast.LENGTH_LONG).show();
                     }
-//                    else if (login.LisloginSuccess(username,psw)==false){
-//                        Toast.makeText(ctx,"密码错误",Toast.LENGTH_LONG).show();
+//                    else if (username.equals("GGYY") == false){
+//                        Toast.makeText(ctx,"账号不存在",Toast.LENGTH_LONG).show();
 //                    }
-
-                    else if (psw.equals("123456") == false){
+                    else if (login.isloginSuccess(username,psw)==false){
                         Toast.makeText(ctx,"密码错误",Toast.LENGTH_LONG).show();
                     }
+
+//                    else if (psw.equals("123456") == false){
+//                        Toast.makeText(ctx,"密码错误",Toast.LENGTH_LONG).show();
+//                    }
                     else{
                         Intent intent = new Intent(getActivity(), Data.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Bundle bundle=new Bundle();
+                        bundle.putString("userName",username);
+                        intent.putExtras(bundle);
                         startActivity(intent);
 
                     }
@@ -99,6 +101,8 @@ public class SigninFragment extends Fragment {
 
     public void getContex(Context context){
         ctx = context;
+        login= new Login(ctx);
+
     }
 
 

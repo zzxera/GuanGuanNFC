@@ -10,6 +10,7 @@
         android:layout_height="321dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="124dp"
+        android:background="#9E8686"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +31,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="209dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
@@ -62,7 +63,7 @@
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="209dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
@@ -96,7 +97,7 @@
         <Button
             android:id="@+id/button8"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_marginTop="30dp"
             android:text="Button"
             android:textSize="10sp" />
