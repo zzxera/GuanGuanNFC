@@ -11,6 +11,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.controller.userManagement.Login;
 import com.example.guanguannfc.model.DataBaseTest.FakeData;
 import com.example.guanguannfc.model.Initialization;
 import com.example.guanguannfc.view.data.Data;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences.Editor editorMain;
     private SigninFragment frag_signin = new SigninFragment();
     private LogonFragment frag_logon = new LogonFragment();
+    Login login = new Login(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +36,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_las);
-        frag_signin.getContex(this);
-        frag_logon.getContex(this);
+//        frag_logon.getContex(this);
         getFragmentManager().beginTransaction().replace(R.id.logandsign,frag_signin).commit();
 
         Initialization.initialization(this);
-//        FakeData fakeData = new FakeData(this);
-//        fakeData.insert();
-
+        if (!login.LIsExistUserName("aaa")){
+            FakeData fakeData = new FakeData(this);
+            fakeData.insert();
+        }
 
     }
 
