@@ -34,6 +34,8 @@ public class LogonFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_logon, container, false);
+        ctx=getActivity();
+        register=new Register(ctx);
 
         btn_logon=view.findViewById(R.id.button_logon_confirm);
         edit_username=view.findViewById(R.id.edit_username);
@@ -115,9 +117,5 @@ public class LogonFragment extends Fragment {
         return view;
     }
 
-    public void getContex(Context context){
-        ctx = context;
-        register=new Register(ctx);
 
-    }
 }

@@ -41,7 +41,6 @@
         android:textColor="@color/colorWhite"
         android:background="@color/colorgray"
         android:onClick="click"
-
         app:layout_constraintTop_toBottomOf="@+id/text_show"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,19 +55,19 @@
         android:layout_marginTop="58dp"
 
         >
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="200dp"
             android:layout_height="30dp"
-            android:text="数据展示"
-            android:textColor="@color/colorWhite"
-            android:gravity="center"
-
             android:background="@color/colorbBlack"
+            android:gravity="center"
+            android:text="数据展示"
+
+            android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            ></TextView>
+            app:layout_constraintTop_toTopOf="parent"></TextView>
 
         <TextView
             android:id="@+id/text_time"
@@ -125,7 +124,20 @@
             app:layout_constraintTop_toTopOf="@+id/spinner_time"
             android:layout_marginStart="5dp"
             ></Spinner>
-        oo
+
+        <TextView
+            android:id="@+id/text_noInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="暂无记录"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_time"></TextView>
 
         <ListView
             android:id="@+id/listview_actlist"
@@ -134,7 +146,7 @@
             android:layout_marginTop="10dp"
 
 
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/text_noInfo"
             app:layout_constraintTop_toBottomOf="@id/text_time"></ListView>
 <!--        android:entries="@array/actlists"-->
 
@@ -301,7 +313,7 @@
             android:onClick="click"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:text="2020-03-20"
+            android:text="2020-3-20"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toBottomOf="@+id/textView"></Button>
@@ -320,7 +332,7 @@
             android:id="@+id/button_endtime"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="2020-03-28"
+            android:text="2020-3-28"
             android:onClick="click"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
