@@ -175,23 +175,13 @@ public class GetTime{
     }
     public static String transString1(long continueTime){
         long allseconds = continueTime / 1000;
-        long lastseconds = allseconds % 60*60;
-        long hour = allseconds / 60*60;
+        long lastseconds = allseconds % 3600;
+        long hour = allseconds / 3600;
         long minute = lastseconds / 60;
         long second = lastseconds % 60;
         String dataString = hour + "时" + minute + "分" + second + "秒";
         return dataString;
     }
-
-//    public static String transString1(long continueTime){
-//        long allseconds = continueTime / 1000;
-//        long lastseconds = allseconds % 60*60;
-//        long hour = allseconds / 60*60;
-//        long minute = lastseconds / 60;
-//        long second = lastseconds % 60;
-//        String dataString = hour + "时" + minute + "分" + second + "秒";
-//        return dataString;
-//    }
 
 //自己乱写的
     //获取当前时间并显示为字符串形式 12：24：23
