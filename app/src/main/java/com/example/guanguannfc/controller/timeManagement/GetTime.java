@@ -183,6 +183,25 @@ public class GetTime{
         return dataString;
     }
 
+//张浦鑫的方法
+    public static String[] bigActivity(){
+        int i = 10;
+        String[] array = new String[i];
+        for (int j = 0; j < i; j++){
+            array[j] = "";
+        }
+        return array;
+    }
+
+    public static String[][] smallActivity(){
+        int i = 10;
+        String[][] array = new String[1][i];
+        for (int j = 0; j < i; j++){
+            array[1][j] = "";
+        }
+        return array;
+    }
+
 //自己乱写的
     //获取当前时间并显示为字符串形式 12：24：23
     public static String getNowTime(){

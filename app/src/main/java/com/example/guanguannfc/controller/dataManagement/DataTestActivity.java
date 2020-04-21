@@ -16,7 +16,7 @@ import com.example.guanguannfc.controller.timeManagement.GetTime;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class DateTestActivity extends AppCompatActivity {
+public class DataTestActivity extends AppCompatActivity {
 
     public static final String TAG = "MyActivity";
     private Button mbtn_test;

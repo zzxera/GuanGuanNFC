@@ -5,6 +5,20 @@ import android.util.Log;
 
 public class ThingManage {
 
+    //张浦鑫需要的
+    public static String[] thingsInBox(){
+        String[] array = new String[1];
+        
+        return array;
+    }
+
+    public static String[] numbersOfThings(){
+        String[] array = new String[1];
+        return array;
+    }
+
+
+
     public boolean isBoxExist(String name){
         boolean boxExist = false;
         // TODO Auto-generated catch block
