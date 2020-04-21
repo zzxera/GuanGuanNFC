@@ -28,10 +28,11 @@ public class datadisplay {
         ArrayList<HelperActivityType> list = new ArrayList<>();
         long timeStart = gt.getStringToDate(timestart,"yyyy-MM-dd");
         long timeEnd = gt.getStringToDate(timeend,"yyyy-MM-dd");
+        long timeEnd1 = timeEnd + 24*60*60*1000;
         if (activityType.length() <= 0){
-            list = Dq.queryActType(username,timeStart,timeEnd);
+            list = Dq.queryActType(username,timeStart,timeEnd1);
         }else {
-            list = Dq.queryActType(username,timeStart,timeEnd,activityType);
+            list = Dq.queryActType(username,timeStart,timeEnd1,activityType);
         }
         if(list!=null) {
             int n = list.size();
