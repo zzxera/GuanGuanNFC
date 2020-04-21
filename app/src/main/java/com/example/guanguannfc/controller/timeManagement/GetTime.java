@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Locale;
 
+import com.example.guanguannfc.model.Dao.DaoActivityType;
+
 //获取本地时间、系统时间为基准
 public class GetTime{
     //将给定时间戳转为字符串形式（2020年04月01日 12时00分00秒）
@@ -184,16 +186,17 @@ public class GetTime{
     }
 
 //张浦鑫的方法
-    public static String[] bigActivity(){
+    public static String[] getBigActivity(){
         int i = 10;
         String[] array = new String[i];
+
         for (int j = 0; j < i; j++){
             array[j] = "";
         }
         return array;
     }
 
-    public static String[][] smallActivity(){
+    public static String[][] getSmallActivity(){
         int i = 10;
         String[][] array = new String[1][i];
         for (int j = 0; j < i; j++){

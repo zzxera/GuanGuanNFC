@@ -8,7 +8,7 @@ public class ThingManage {
     //张浦鑫需要的
     public static String[] thingsInBox(){
         String[] array = new String[1];
-        
+
         return array;
     }
 
