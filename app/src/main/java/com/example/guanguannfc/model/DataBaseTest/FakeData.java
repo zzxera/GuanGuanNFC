@@ -33,8 +33,8 @@ public class FakeData {
 
 
         if(daoUserInfo.registrationQuery("aaa") != true){
-            daoUserInfo.insert("aaa", "12123");
-            daoUserInfo.insert("bbb","12123");
+            daoUserInfo.insert("aaa", "123123");
+            daoUserInfo.insert("bbb","123123");
 
             daoActivityType.insert("学习");
             daoActivityType.insert("工作");
