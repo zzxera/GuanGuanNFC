@@ -2,8 +2,10 @@ package com.example.guanguannfc.model.Dao;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.guanguannfc.model.GuanContract;
 import com.example.guanguannfc.model.GuanSQLHelper;
@@ -31,8 +33,16 @@ public class DaoUserInfo {
 
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{username,md5(password),currentTime,currentTime});
-        db.close();
+        try{
+            db.execSQL(sql,new Object[]{username,md5(password),currentTime,currentTime});
+        }catch (SQLiteConstraintException e){
+            Log.v("tag","插入失败");
+
+            return false;
+
+        }finally {
+            db.close();
+        }
         return true;
 
     }

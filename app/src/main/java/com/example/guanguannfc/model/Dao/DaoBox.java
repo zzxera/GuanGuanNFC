@@ -3,12 +3,18 @@ package com.example.guanguannfc.model.Dao;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Button;
 
 import com.example.guanguannfc.model.GuanContract;
 import com.example.guanguannfc.model.GuanSQLHelper;
+import com.example.guanguannfc.model.Helper.HelperBox;
+import com.example.guanguannfc.model.Helper.HelperBoxContent;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+
 /**
  * 盒子表操作类
  */
@@ -81,6 +87,54 @@ public class DaoBox {
         }else {
             return false;
         }
+    }
+
+    //返回指定用户所有盒子，和盒子位置描述
+    public ArrayList<HelperBox> queryAllBox(String user_name){
+        ArrayList<HelperBox> arrayList = new ArrayList<HelperBox>();
+        HelperBox helperBox = null;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="select box_name,box_pos from Box where user_ID=(select _id from User_Info where user_name=?)";
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                helperBox = new HelperBox(cursor.getString(0),cursor.getString(1));
+                arrayList.add(helperBox);
+
+            }
+        }
+        return arrayList;
+    }
+
+    /*
+    返回所有一个HashMap<String,ArrayList<HelperBoxContent>>,其中key=盒子名称,value=和盒子对应的一个ArrayList<HelperBoxContent>集合
+    集合里面每一个元素是一个HelperBoxContext对象，包括物品名称和物品数量两个属性
+    方法需给定用户名
+     */
+
+    public HashMap<String,ArrayList<HelperBoxContent>> queryBoxAndContext(String user_name){
+        HashMap<String,ArrayList<HelperBoxContent>> hashMap = new HashMap<String,ArrayList<HelperBoxContent>>();
+        HelperBoxContent helperBoxContent = null;
+        ArrayList<HelperBox> arrayList1 =this.queryAllBox(user_name);
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        for(HelperBox helperBox:arrayList1){
+            String boxName = helperBox.getName();
+            String sql=" select thing_name,thing_num from Box_Content" +
+                    " inner join Box on Box._id=Box_Content.box_ID " +
+                    " where Box.user_ID=(select _id from User_Info where user_name=?) and Box.box_name=?";
+            Cursor cursor=db.rawQuery(sql,new String[]{user_name,boxName});
+            if(cursor.getCount()!=0){
+                ArrayList<HelperBoxContent> arrayList = new ArrayList<HelperBoxContent>();
+                while(cursor.moveToNext()){
+                    helperBoxContent = new HelperBoxContent(cursor.getString(0),cursor.getInt(1));
+                    arrayList.add(helperBoxContent);
+                }
+                hashMap.put(boxName,arrayList);
+            }
+        }
+
+
+        return hashMap;
     }
 
 

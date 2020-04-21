@@ -18,6 +18,8 @@ import com.example.guanguannfc.R;
 import com.example.guanguannfc.view.data.Data;
 import com.example.guanguannfc.controller.userManagement.Login;
 
+import java.security.PublicKey;
+
 
 public class SigninFragment extends Fragment {
 
@@ -31,11 +33,12 @@ public class SigninFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin, container, false);
+        ctx=getActivity();
         edit_username=view.findViewById(R.id.edit_username);
         edit_psw=view.findViewById(R.id.edit_psw);
         button_signin = (Button) view.findViewById(R.id.button_signin_confirm);
 
-
+        login=new Login(ctx);
 
 //        View rootView = inflater.inflate(R.layout.signin, null); // 先解析file.xml布局，得到一个view
         button_signin.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +58,7 @@ public class SigninFragment extends Fragment {
                     if(psw.length()<6 | psw.length()>20){
                     Toast.makeText(ctx,"密码长度为6-20位",Toast.LENGTH_LONG).show();
                 }
-                    else if(login.LIsExistUserName(username)==false){
+                    else if(!login.LIsExistUserName(username)){
                         Toast.makeText(ctx,"账号不存在",Toast.LENGTH_LONG).show();
                     }
 //                    else if (username.equals("GGYY") == false){
@@ -99,11 +102,9 @@ public class SigninFragment extends Fragment {
 
     }
 
-    public void getContex(Context context){
-        ctx = context;
-        login= new Login(ctx);
-
-    }
+//    public void getContex(Context context){
+//        ctx = context;
+//    }
 
 
 }
