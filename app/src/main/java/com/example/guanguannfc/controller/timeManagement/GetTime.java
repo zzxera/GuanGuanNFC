@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Locale;
 
+import com.example.guanguannfc.model.Dao.DaoActivityType;
+
 //获取本地时间、系统时间为基准
 public class GetTime{
     //将给定时间戳转为字符串形式（2020年04月01日 12时00分00秒）
