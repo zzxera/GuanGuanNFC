@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -34,7 +37,8 @@ import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 
 
-
+import java.io.Console;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,7 +54,7 @@ public class Data extends AppCompatActivity {
     private Spinner spinner_times,spinner_types,spinner_acts,spinner_sorts;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
-    private TextView tv_prompt;
+    private TextView tv_prompt,tv_noInfo;
     private String userName,txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
     public String txt_showActType,txt_sortType;
     private String[] allActName;
@@ -77,8 +81,9 @@ public class Data extends AppCompatActivity {
         setContentView(R.layout.activity_data);
         Bundle bundle = this.getIntent().getExtras();
         userName=bundle.getString("userName");
-        Toast.makeText(Data.this,"用户名"+userName,Toast.LENGTH_LONG).show();
+//        Toast.makeText(Data.this,"用户名"+userName,Toast.LENGTH_LONG).show();
         initView();
+
 
 
         actlist.setAdapter(dataShowAdapter);
@@ -124,8 +129,16 @@ public class Data extends AppCompatActivity {
         bt_manage=findViewById(R.id.button_manage);
         bt_quit=findViewById(R.id.button_quit);
         tv_prompt=findViewById(R.id.text_prompt);
+        tv_noInfo=findViewById(R.id.text_noInfo);
         myWebView=findViewById(R.id.webview_acts);
         txt_actType="";
+        txt_showActType="全部";
+        txt_sortType="最新活动在前";
+        txt_timeType="今日";
+        txt_showType="列表";
+        txt_startTime=getTime.getBeginTime("本日");
+        txt_endTime=txt_startTime;
+
 
         allActName=allactivity.allacttype(userName);
         ArrayAdapter<String> actAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,allActName);
@@ -140,6 +153,9 @@ public class Data extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String timeType = Data.this.getResources().getStringArray(R.array.times)[position];
                 txt_timeType=timeType;
+//                tv_noInfo.setVisibility(View.GONE);
+//                actlist.setVisibility(View.VISIBLE);
+
                 if (position==3){
                     lay_time.setVisibility(View.VISIBLE);
                 }
@@ -160,24 +176,32 @@ public class Data extends AppCompatActivity {
                         txt_endTime=getTime.getBeginTime("本日");
 //                        Toast.makeText(Data.this,txt_startTime,Toast.LENGTH_LONG).show();
                     }
+//                    Toast.makeText(Data.this,txt_startTime+txt_endTime,Toast.LENGTH_LONG).show();
+
                     ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
+//                    Log.i("gy",ob_dataShow[0].toString());
+
                     if (ob_dataShow!=null){
+//                        tv_noInfo.setVisibility(View.GONE);
+                        actlist.setVisibility(View.VISIBLE);
+                        tv_noInfo.setVisibility(View.GONE);
                         actAndTime=(String[][])ob_dataShow[0];
                         initDataShow(actAndTime);
                         actlist.setAdapter(dataShowAdapter);
+//                        String url=(String)ob_dataShow[1];
+//                        myWebView.loadUrl(url);
+                        Log.i("gy","获取到数据");
+
+                    }
+                    else{
+                        Log.i("gy","没有获取到数据");
+                        actlist.setVisibility(View.INVISIBLE);
+                        tv_noInfo.setVisibility(View.VISIBLE);
+//                        actlist.setVisibility(View.INVISIBLE);
                     }
                 }
 
-//                else {
-//                    txt_endTime=getTime.getBeginTime("本日");
-//                    txt_startTime=getTime.getBeginTime(txt_timeType);
-//                    Toast.makeText(Data.this,txt_startTime,Toast.LENGTH_LONG).show();
 
-
-//                    ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
-//                    initDataShow(ob_dataShow[0]);
-
-//                }
             }
 
             @Override
@@ -192,6 +216,8 @@ public class Data extends AppCompatActivity {
                 String showType = Data.this.getResources().getStringArray(R.array.types)[position];
 //                Toast.makeText(Data.this,""+position,Toast.LENGTH_LONG).show();
                 txt_showType=showType;
+                Log.i("gy","showType:"+txt_showType);
+
                 if (position==0){
                     webView.setVisibility(View.INVISIBLE);
                     actlist.setVisibility(View.VISIBLE);
@@ -200,15 +226,17 @@ public class Data extends AppCompatActivity {
                 else{
                     webView.setVisibility(View.VISIBLE);
                     actlist.setVisibility(View.INVISIBLE);
-
-                    ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,"工作",txt_showType);
-                    if (ob_dataShow!=null){
-                        actAndTime=(String[][])ob_dataShow[0];
-                        initDataShow(actAndTime);
-                        actlist.setAdapter(dataShowAdapter);
-                        String url=(String)ob_dataShow[1];
-                        myWebView.loadUrl(url);
                     }
+                ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
+                if (ob_dataShow!=null){
+                    actAndTime=(String[][])ob_dataShow[0];
+                    initDataShow(actAndTime);
+                    actlist.setAdapter(dataShowAdapter);
+                    String url=(String)ob_dataShow[1];
+                    myWebView.loadUrl(url);
+                }
+                else{
+                    actlist.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -225,7 +253,7 @@ public class Data extends AppCompatActivity {
                 txt_showActType=showActType;
 //                Toast.makeText(Data.this,txt_showActType+txt_sortType,Toast.LENGTH_LONG).show();
 
-                ob_actShow=allactivity.sortedactivity(userName,txt_showActType,"最新活动在前");
+                ob_actShow=allactivity.sortedactivity(userName,txt_showActType,txt_sortType);
 
                 if (ob_actShow !=null){
                     initActShow(ob_actShow);
@@ -249,7 +277,12 @@ public class Data extends AppCompatActivity {
                 txt_sortType=sortType;
 //                Toast.makeText(Data.this,txt_sortType,Toast.LENGTH_LONG).show();
 
+                ob_actShow=allactivity.sortedactivity(userName,txt_showActType,txt_sortType);
 
+                if (ob_actShow !=null){
+                    initActShow(ob_actShow);
+                    lv_allactlist.setAdapter(actShowAdapter);
+                }
 
             }
 
@@ -258,6 +291,24 @@ public class Data extends AppCompatActivity {
 
             }
         });
+
+//        处理两次点击同一个选项
+        spinner_times.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    Class<?> clazz = AdapterView.class;
+                    Field field = clazz.getDeclaredField("mOldSelectedPosition");
+                    field.setAccessible(true);
+                    field.setInt(spinner_times,AdapterView.INVALID_POSITION);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
+
+
 
 
 
@@ -270,6 +321,7 @@ public class Data extends AppCompatActivity {
 //        }
 //    }
     private void initDataShow(String[][] array){
+        tv_noInfo.setVisibility(View.GONE);
         dataShowList.clear();
         for(int i=0;i<array.length;i++){
             DataShow dataShow = new DataShow(array[i][0],array[i][1]);
@@ -378,11 +430,19 @@ public class Data extends AppCompatActivity {
 //                Toast.makeText(Data.this,userName+txt_startTime+txt_endTime+txt_actType+txt_showType,Toast.LENGTH_LONG).show();
 
                 if (ob_dataShow!=null){
+                    actlist.setVisibility(View.VISIBLE);
+                    tv_noInfo.setVisibility(View.GONE);
                     actAndTime=(String[][])ob_dataShow[0];
 //                    Toast.makeText(Data.this,actAndTime.length,Toast.LENGTH_LONG).show();
                     initDataShow(actAndTime);
                     actlist.setAdapter(dataShowAdapter);
+                    String url=(String)ob_dataShow[1];
+                    myWebView.loadUrl(url);
 
+                }
+                else{
+                    tv_noInfo.setVisibility(View.VISIBLE);
+                    actlist.setVisibility(View.INVISIBLE);
                 }
 //                initDataShow(datas);
 //                actlist.setAdapter(dataShowAdapter);

@@ -34,6 +34,8 @@ public class LogonFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_logon, container, false);
+        ctx=getActivity();
+        register=new Register(ctx);
 
         btn_logon=view.findViewById(R.id.button_logon_confirm);
         edit_username=view.findViewById(R.id.edit_username);
@@ -79,11 +81,11 @@ public class LogonFragment extends Fragment {
 //                    if (username .equals("GY")){
 //                        Toast.makeText(ctx,"账号已存在",Toast.LENGTH_LONG).show();
 //                    }
-                    if(register.RisExistUserName(username)){
-                        Toast.makeText(ctx,"账号已存在",Toast.LENGTH_LONG).show();
-                    }
+//                    if(register.RisExistUserName(username)){
+//                        Toast.makeText(ctx,"账号已存在",Toast.LENGTH_LONG).show();
+//                    }
 
-                    else if(pasword_confirm.equals(pasword) == false){
+                    if(pasword_confirm.equals(pasword) == false){
                         Toast.makeText(ctx,"两次输入的密码不同",Toast.LENGTH_LONG).show();
 
                     }
@@ -91,16 +93,22 @@ public class LogonFragment extends Fragment {
                         Toast.makeText(ctx,"密码长度为6-20位",Toast.LENGTH_LONG).show();
                     }
                     else {
-                        Toast.makeText(getActivity(),"注册成功",Toast.LENGTH_LONG).show();
-                        register.ISRegisterSuccess(username,pasword);
-                        edit_username.setText("");
-                        edit_psw.setText("");
-                        edit_psw_confirm.setText("");
-                        checkBox.setChecked(false);
-                        getFragmentManager().beginTransaction()
-                                .addToBackStack(null)
-                                .replace(R.id.logandsign,new SigninFragment())
-                                .commit();
+                        if(register.ISRegisterSuccess(username,pasword)){
+                            Toast.makeText(getActivity(),"注册成功",Toast.LENGTH_LONG).show();
+                            edit_username.setText("");
+                            edit_psw.setText("");
+                            edit_psw_confirm.setText("");
+                            checkBox.setChecked(false);
+                            getFragmentManager().beginTransaction()
+                                    .addToBackStack(null)
+                                    .replace(R.id.logandsign,new SigninFragment())
+                                    .commit();
+                        }
+                        else{
+                            Toast.makeText(ctx,"账号已存在",Toast.LENGTH_LONG).show();
+                        }
+
+
                     }
                 }
 
@@ -115,9 +123,5 @@ public class LogonFragment extends Fragment {
         return view;
     }
 
-    public void getContex(Context context){
-        ctx = context;
-        register=new Register(ctx);
 
-    }
 }
