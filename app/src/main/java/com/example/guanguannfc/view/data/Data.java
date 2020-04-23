@@ -1,6 +1,7 @@
 package com.example.guanguannfc.view.data;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.guanguannfc.R;
 
+import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
+import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 
@@ -62,7 +65,9 @@ public class Data extends AppCompatActivity {
     private Object[] ob_dataShow;
     private String[][] ob_actShow;
     private String[][] actInfo;
-    private WebView myWebView;
+    private Object[] echart_act;
+    private Object[] echart_time;
+    private EchartView myWebView;
     private datadisplay dd=new datadisplay(this);
     private Allactivity allactivity=new Allactivity(this);
     private GetTime getTime=new GetTime();
@@ -104,12 +109,13 @@ public class Data extends AppCompatActivity {
 
     }
 
+
     private void initView(){
         actlist=findViewById(R.id.listview_actlist);
         lv_allactlist=findViewById(R.id.lv_allacts);
         dataShowAdapter = new DataShowAdapter(Data.this,R.layout.datashow_item,dataShowList);
         actShowAdapter = new ActShowAdapter(Data.this,R.layout.actshow_item,actShowList);
-        webView=findViewById(R.id.webview_acts);
+        myWebView=findViewById(R.id.webview_acts);
         spinner_times=findViewById(R.id.spinner_time);
         spinner_types=findViewById(R.id.spinner_type);
         spinner_acts=findViewById(R.id.spinner_acttype);
@@ -130,7 +136,6 @@ public class Data extends AppCompatActivity {
         bt_quit=findViewById(R.id.button_quit);
         tv_prompt=findViewById(R.id.text_prompt);
         tv_noInfo=findViewById(R.id.text_noInfo);
-        myWebView=findViewById(R.id.webview_acts);
         txt_actType="";
         txt_showActType="全部";
         txt_sortType="最新活动在前";
@@ -138,6 +143,8 @@ public class Data extends AppCompatActivity {
         txt_showType="列表";
         txt_startTime=getTime.getBeginTime("本日");
         txt_endTime=txt_startTime;
+
+
 
 
         allActName=allactivity.allacttype(userName);
@@ -217,6 +224,8 @@ public class Data extends AppCompatActivity {
 //                Toast.makeText(Data.this,""+position,Toast.LENGTH_LONG).show();
                 txt_showType=showType;
                 Log.i("gy","showType:"+txt_showType);
+                ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
+                String[][] array=(String[][])ob_dataShow[0];
 
                 if (position==0){
                     webView.setVisibility(View.INVISIBLE);
@@ -226,14 +235,45 @@ public class Data extends AppCompatActivity {
                 else{
                     webView.setVisibility(View.VISIBLE);
                     actlist.setVisibility(View.INVISIBLE);
-                    }
-                ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
+
+                }
+
                 if (ob_dataShow!=null){
                     actAndTime=(String[][])ob_dataShow[0];
                     initDataShow(actAndTime);
                     actlist.setAdapter(dataShowAdapter);
-                    String url=(String)ob_dataShow[1];
-                    myWebView.loadUrl(url);
+//                    String url=(String)ob_dataShow[1];
+//                    myWebView.loadUrl(url);
+                    int len=array.length;
+                    echart_act=new Object[len];
+                    echart_time=new Object[len];
+                    for(int i = 0;i<len;i++){
+                        echart_act[i]=array[i][0];
+                        echart_time[i]=Long.parseLong(array[i][2]);
+                    }
+                    if(position==1){
+//                        条状图
+                        myWebView.setWebViewClient(new WebViewClient(){
+                            @Override
+                            public void onPageFinished(WebView view, String url) {
+                                super.onPageFinished(view, url);
+                                //最好在h5页面加载完毕后再加载数据，防止html的标签还未加载完成，不能正常显示
+                                myWebView.refreshEchartsWithOption(EchartOptionUtil.getBarChartOptions(echart_act, echart_time));
+                            }
+                        });
+                    }
+                    if(position==2) {
+//                        折线图
+                        myWebView.setWebViewClient(new WebViewClient() {
+                            @Override
+                            public void onPageFinished(WebView view, String url) {
+                                super.onPageFinished(view, url);
+                                //最好在h5页面加载完毕后再加载数据，防止html的标签还未加载完成，不能正常显示
+                                myWebView.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(echart_act, echart_time));
+                            }
+                        });
+                    }
+
                 }
                 else{
                     actlist.setVisibility(View.INVISIBLE);
