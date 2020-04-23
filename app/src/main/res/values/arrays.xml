@@ -9,7 +9,7 @@
     <string-array name="types">
         <item>列表</item>
         <item>条状图</item>
-        <item>饼状图</item>
+        <item>折线图</item>
     </string-array>
     <string-array name="actlists">
         <item>工作 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 2h</item>
