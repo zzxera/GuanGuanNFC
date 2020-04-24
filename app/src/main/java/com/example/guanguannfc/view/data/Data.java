@@ -36,7 +36,7 @@ import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 
 import com.example.guanguannfc.view.management.BoxmanagementActivity;
-import com.example.guanguannfc.controller.dataVisualization.datadisplay;
+import com.example.guanguannfc.controller.dataVisualization.Datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 
 
@@ -53,7 +53,7 @@ public class Data extends AppCompatActivity {
 //    private Datashow frag_datashow = new Datashow();
 //    private DataShow frag_datashow = new DataShow();
 
-    private WebView webView;
+
     private Spinner spinner_times,spinner_types,spinner_acts,spinner_sorts;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
@@ -68,7 +68,7 @@ public class Data extends AppCompatActivity {
     private Object[] echart_act;
     private Object[] echart_time;
     private EchartView myWebView;
-    private datadisplay dd=new datadisplay(this);
+    private Datadisplay dd=new Datadisplay(this);
     private Allactivity allactivity=new Allactivity(this);
     private GetTime getTime=new GetTime();
     private List<DataShow> dataShowList = new ArrayList<DataShow>();
@@ -77,6 +77,12 @@ public class Data extends AppCompatActivity {
     private List<ActShow> actShowList = new ArrayList<ActShow>();
     private ListView lv_allactlist = null;
     private ActShowAdapter actShowAdapter;
+    private Object[] x = new Object[]{
+            "Mon", "Tue", "Wed", "Thu", "Fri"
+    };
+    private Object[] y = new Object[]{
+            820, 932, 901, 934, 1290
+    };
 
 
 
@@ -195,8 +201,7 @@ public class Data extends AppCompatActivity {
                         actAndTime=(String[][])ob_dataShow[0];
                         initDataShow(actAndTime);
                         actlist.setAdapter(dataShowAdapter);
-//                        String url=(String)ob_dataShow[1];
-//                        myWebView.loadUrl(url);
+
                         Log.i("gy","获取到数据");
 
                     }
@@ -228,12 +233,12 @@ public class Data extends AppCompatActivity {
                 String[][] array=(String[][])ob_dataShow[0];
 
                 if (position==0){
-                    webView.setVisibility(View.INVISIBLE);
+                    myWebView.setVisibility(View.INVISIBLE);
                     actlist.setVisibility(View.VISIBLE);
 
                 }
                 else{
-                    webView.setVisibility(View.VISIBLE);
+                    myWebView.setVisibility(View.VISIBLE);
                     actlist.setVisibility(View.INVISIBLE);
 
                 }
@@ -242,37 +247,27 @@ public class Data extends AppCompatActivity {
                     actAndTime=(String[][])ob_dataShow[0];
                     initDataShow(actAndTime);
                     actlist.setAdapter(dataShowAdapter);
-//                    String url=(String)ob_dataShow[1];
-//                    myWebView.loadUrl(url);
-                    int len=array.length;
-                    echart_act=new Object[len];
-                    echart_time=new Object[len];
-                    for(int i = 0;i<len;i++){
-                        echart_act[i]=array[i][0];
-                        echart_time[i]=Long.parseLong(array[i][2]);
-                    }
-                    if(position==1){
-//                        条状图
-                        myWebView.setWebViewClient(new WebViewClient(){
-                            @Override
-                            public void onPageFinished(WebView view, String url) {
-                                super.onPageFinished(view, url);
-                                //最好在h5页面加载完毕后再加载数据，防止html的标签还未加载完成，不能正常显示
-                                myWebView.refreshEchartsWithOption(EchartOptionUtil.getBarChartOptions(echart_act, echart_time));
-                            }
-                        });
-                    }
-                    if(position==2) {
-//                        折线图
-                        myWebView.setWebViewClient(new WebViewClient() {
-                            @Override
-                            public void onPageFinished(WebView view, String url) {
-                                super.onPageFinished(view, url);
-                                //最好在h5页面加载完毕后再加载数据，防止html的标签还未加载完成，不能正常显示
-                                myWebView.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(echart_act, echart_time));
-                            }
-                        });
-                    }
+
+//                    int len=array.length;
+//                    echart_act=new Object[len];
+//                    echart_time=new Object[len];
+//                    for(int i = 0;i<len;i++){
+//                        echart_act[i]=array[i][0];
+//                        echart_time[i]=array[i][1];
+//                    }
+//                    if(position==1){
+////                        条状图
+//
+//                        myWebView.refreshEchartsWithOption(EchartOptionUtil.getBarChartOptions(x, y));
+//
+//
+//                    }
+//                    if(position==2) {
+////                        折线图
+//
+//                        myWebView.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(x, y));
+//
+//                    }
 
                 }
                 else{
@@ -378,23 +373,14 @@ public class Data extends AppCompatActivity {
     }
 
     private void initWebView(){
-        myWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    view.loadUrl(request.getUrl().toString());
-                } else {
-                    view.loadUrl(request.toString());
-                }
-                return super.shouldOverrideUrlLoading(view, request);
-            }
-        });
-        //进行webwiev的一堆设置
-        // 开启本地文件读取（默认为true，不设置也可以）
-        myWebView.getSettings().setAllowFileAccess(true);
-        //开启脚本支持
-        myWebView.getSettings().setJavaScriptEnabled(true);
-        myWebView.loadUrl("file:///android_asset/echart/myechart.html");
+//        myWebView.setWebViewClient(new WebViewClient(){
+//            @Override
+//            public void onPageFinished(WebView view, String url) {
+//                super.onPageFinished(view, url);
+//                //最好在h5页面加载完毕后再加载数据，防止html的标签还未加载完成，不能正常显示
+//                myWebView.refreshEchartsWithOption(EchartOptionUtil.getBarChartOptions(x, y));
+//            }
+//        });
     }
 
     public void click(View v){
@@ -477,7 +463,7 @@ public class Data extends AppCompatActivity {
                     initDataShow(actAndTime);
                     actlist.setAdapter(dataShowAdapter);
                     String url=(String)ob_dataShow[1];
-                    myWebView.loadUrl(url);
+
 
                 }
                 else{
