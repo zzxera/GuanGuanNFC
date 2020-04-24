@@ -16,11 +16,12 @@ public class ThingManage {
     private String username;
     private Context context;
 
-    DaoBox daoBox = new DaoBox(context);
+    DaoBox daoBox;
 
     public ThingManage(String username, Context context){
         this.username = username;
         this.context = context;
+        daoBox = new DaoBox(context);
     }
 
     //张浦鑫需要的
