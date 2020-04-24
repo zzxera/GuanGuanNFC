@@ -28,7 +28,7 @@ public class ThingManage {
         HashMap<String, ArrayList<HelperBoxContent>> hashMap = new HashMap<String, ArrayList<HelperBoxContent>>();
         hashMap = daoBox.queryBoxAndContext(username);
         ArrayList<HelperBoxContent> list = hashMap.get(boxName);
-        String[][] array = new String[1][list.size()];
+        String[][] array = new String[2][list.size()];
         for (int i = 0; i< list.size(); i++){
             array[0][i] = list.get(i).getName();
         }for (int j = 0; j< list.size(); j++){
@@ -40,7 +40,7 @@ public class ThingManage {
     public String[][] boxAndPosition(){
         ArrayList<HelperBox> list = new ArrayList<HelperBox>();
         list = daoBox.queryAllBox(username);
-        String[][] array = new String[1][list.size()];
+        String[][] array = new String[2][list.size()];
         for (int i = 0; i< list.size(); i++){
             array[0][i] = list.get(i).getName();
         }for (int j = 0; j< list.size(); j++){
