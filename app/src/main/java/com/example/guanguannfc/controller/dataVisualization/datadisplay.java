@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 
-public class datadisplay {
+public class Datadisplay {
     DaoActSta Dq;
-    public datadisplay(Context context){
+    public Datadisplay(Context context){
         this.Dq = new DaoActSta(context);
     }
     GetTime gt = new GetTime();
@@ -36,10 +36,11 @@ public class datadisplay {
         }
         if(list!=null) {
             int n = list.size();
-            String[][] arr = new String[n][2];
+            String[] arr1 = new String[n];
+            int [] arr2 = new int[n];
             for (int i = 0; i < n; i++) {
-                arr[i][0] = list.get(i).getActivity_type();
-                arr[i][1] = (gt.transString1(list.get(i).getLen_time()));
+                arr1[i] = list.get(i).getActivity_type();
+                arr2[i] = (gt.transString2(list.get(i).getLen_time()));
             }
             String dataAnalysis = "test";
             String echarttype = showType;
@@ -57,7 +58,7 @@ public class datadisplay {
                 default:
                     break;
             }
-            Object[] objs = new Object[]{arr, url, dataAnalysis};
+            Object[] objs = new Object[]{arr1,arr2, dataAnalysis};
             return objs;
         }
         else {
