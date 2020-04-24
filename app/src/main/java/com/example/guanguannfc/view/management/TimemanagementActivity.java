@@ -9,21 +9,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.controller.dataManagement.ActivityManage;
 
 public class TimemanagementActivity extends AppCompatActivity {
 
     private PopupWindow mPopWindow;
     private ExpandableListView expand_list_id;
+    private String username;
+    private Context context;
+    private ActivityManage getact=new ActivityManage(username,this);
+    private String[] groups;
     //Model：定义的数据
-    private String[] groups = {"工作", "学习", "娱乐"};
+
 
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
-    private String[][] childs = {{"开会", "设计", "制作ppt", "信息统计"}, {"看书", "看报", "写作业", "写代码"}, {"看电视", "玩手机", "打游戏", "打球"}};
+    private String[][] childs;
+    private String[] child;
 
 
 
@@ -31,17 +38,17 @@ public class TimemanagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timemanagement);
         initView();
-        Button btn1 = findViewById(R.id.button7);
+        Button btn_changeact = findViewById(R.id.btn_changeact);
         View contentView = LayoutInflater.from(TimemanagementActivity.this).inflate(R.layout.expand_chidren_item, null);
-        final Button btn2 = contentView.findViewById(R.id.btn_change_actname);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        final Button btn_change_actname = contentView.findViewById(R.id.btn_change_actname);
+        btn_changeact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn2.setVisibility(View.INVISIBLE);
+                btn_change_actname.setVisibility(View.INVISIBLE);
             }
         });
-        Button btn3 =findViewById(R.id.btn_add_act);
-        btn3.setOnClickListener(new View.OnClickListener() {
+        ImageView addact =findViewById(R.id.iv_addact);
+        addact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupWindow2();
@@ -62,6 +69,13 @@ public class TimemanagementActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        groups=getact.getBigActivity(this);
+        for (int i =0;i<groups.length;i++){
+            child=getact.getSmallActivity(groups[i]);
+            for(int j=0;j<child.length;j++){
+                childs[i][j]=child[j];
+            }
+        }
         expand_list_id=findViewById(R.id.expand_list_id);
         ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(this,groups,childs);
         expand_list_id.setAdapter(adapter);

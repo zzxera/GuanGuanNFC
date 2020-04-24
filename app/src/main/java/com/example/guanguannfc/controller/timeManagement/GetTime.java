@@ -184,6 +184,12 @@ public class GetTime{
         String dataString = hour + "时" + minute + "分" + second + "秒";
         return dataString;
     }
+    public static int transString2(long continueTime){
+        long allseconds = continueTime/1000;
+        long hour = allseconds/3600;
+        int dataInt = (int)hour;
+        return dataInt;
+    }
 
 //自己乱写的
     //获取当前时间并显示为字符串形式 12：24：23

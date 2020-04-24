@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/btn_changeact"
         android:layout_width="38dp"
         android:layout_height="42dp"
         android:layout_marginStart="13dp"
@@ -77,15 +77,16 @@
         android:groupIndicator="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7"></ExpandableListView>
+        app:layout_constraintTop_toBottomOf="@+id/btn_changeact"></ExpandableListView>
 
-    <Button
-        android:id="@+id/btn_add_act"
-        android:layout_width="394dp"
-        android:layout_height="68dp"
-        android:text="Button"
+
+    <ImageView
+        android:id="@+id/iv_addact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/img_addact"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expand_list_id" />
+        app:layout_constraintTop_toBottomOf="@+id/expand_list_id"  />
 </androidx.constraintlayout.widget.ConstraintLayout>
