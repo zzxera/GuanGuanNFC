@@ -21,6 +21,33 @@
             android:layout_height="wrap_content"
             android:hint="大类列表"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/all_typeAndActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="所有大类和对应的子活动"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/all_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="所有盒子和位置"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/all_boxAndContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="所有盒子和盒子内部的物品、物品数量"/>
+    </LinearLayout>
 
 
 </LinearLayout>

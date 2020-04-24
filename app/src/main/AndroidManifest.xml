@@ -16,7 +16,7 @@
 
         <activity android:name=".view.data.ClockActivity"></activity>
 
-        <activity android:name=".controller.dataManagement.DateTestActivity">
+        <activity android:name=".controller.dataManagement.DataTestActivity">
 
         </activity>
        

@@ -8,7 +8,10 @@ import com.example.guanguannfc.model.GuanContract;
 import com.example.guanguannfc.model.GuanSQLHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+
 /**
  * 活动一级种类表操作类
  */
@@ -62,5 +65,48 @@ public class DaoActivityType {
             return 0;
         }
     }
+
+
+    //返回所有大类活动集合
+    public ArrayList<String> queryAllType(){
+        ArrayList<String> arrayList = new ArrayList<String>();
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql=" select act_type from Activity_Type";
+        Cursor cursor=db.rawQuery(sql,null);
+        if(cursor.getCount()!=0){
+            while(cursor.moveToNext()){
+                arrayList.add(cursor.getString(0));
+            }
+        }
+        return arrayList;
+    }
+
+    //返回所有一个HashMap<String,ArrayList<String>>,其中key=大类名称,value=和大类对应的所有活动。需给定用户名
+    public HashMap<String,ArrayList<String>> queryTypeAndActivity(String user_name){
+        HashMap<String,ArrayList<String>> hashMap = new HashMap<String,ArrayList<String>>();
+        ArrayList<String> arrayList1 =this.queryAllType();
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        if (arrayList1.size()!=0){
+            for(String type:arrayList1){
+                String sql=" select act_name from Activity" +
+                        " inner join Activity_Type on Activity.type_ID=Activity_Type._id" +
+                        " where Activity_Type.act_type=? and Activity.user_ID=" +
+                        " (select _id from User_Info where user_name=?)";
+                Cursor cursor=db.rawQuery(sql,new String[]{type,user_name});
+                if(cursor.getCount()!=0){
+                    ArrayList<String> arrayList = new ArrayList<String>();
+                    while(cursor.moveToNext()){
+                        arrayList.add(cursor.getString(0));
+                    }
+                    hashMap.put(type,arrayList);
+
+                }
+
+
+            }
+        }
+        return hashMap;
+    }
+
 
 }

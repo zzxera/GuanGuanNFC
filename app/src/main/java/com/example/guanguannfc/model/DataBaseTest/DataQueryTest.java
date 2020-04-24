@@ -11,13 +11,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.model.Dao.DaoActSta;
+import com.example.guanguannfc.model.Dao.DaoActivityType;
+import com.example.guanguannfc.model.Dao.DaoBox;
 import com.example.guanguannfc.model.GuanContract;
+import com.example.guanguannfc.model.Helper.HelperBox;
+import com.example.guanguannfc.model.Helper.HelperBoxContent;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class DataQueryTest extends AppCompatActivity implements View.OnClickListener {
-    Button mButton2,mButton3;
+    Button mButton2,mButton3,mButton4,mButton5,mButton6;
     DaoActSta mActSta = new DaoActSta(this);
+    DaoActivityType mDaoActivityType = new DaoActivityType(this);
+    DaoBox mDaoBox = new DaoBox(this);
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +40,18 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
     private void initView() {
         mButton2 = findViewById(R.id.all_activity);
         mButton3 = findViewById(R.id.all_type);
+        mButton4 = findViewById(R.id.all_typeAndActivity);
+        mButton5 = findViewById(R.id.all_box);
+        mButton6 = findViewById(R.id.all_boxAndContent);
 
     }
 
     private void initEvent() {
         mButton2.setOnClickListener(this);
         mButton3.setOnClickListener(this);
+        mButton4.setOnClickListener(this);
+        mButton5.setOnClickListener(this);
+        mButton6.setOnClickListener(this);
     }
 
     @Override
@@ -52,6 +69,26 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
                 for(int i=0;i<list1.size();i++){
 
                     Log.v(i+"",list1.get(i).toString());
+                }
+                break;
+            case R.id.all_typeAndActivity:
+                HashMap<String, ArrayList<String>> hashMap = mDaoActivityType.queryTypeAndActivity("aaa");
+                Iterator iterator =hashMap.entrySet().iterator();
+               while(iterator.hasNext()){
+                   Log.v("TAG",iterator.next().toString());
+               }
+                break;
+            case R.id.all_box:
+                ArrayList<HelperBox> arrayList = mDaoBox.queryAllBox("aaa");
+                for(HelperBox helperBox:arrayList){
+                    Log.v("TAG",helperBox.toString());
+                }
+                break;
+            case R.id.all_boxAndContent:
+                HashMap<String,ArrayList<HelperBoxContent>> hashMap1 = mDaoBox.queryBoxAndContext("aaa");
+                Set<Map.Entry<String,ArrayList<HelperBoxContent>>> set = hashMap1.entrySet();
+                for(Map.Entry<String,ArrayList<HelperBoxContent>> entry:set){
+                    Log.v("TAG",entry.toString());
                 }
                 break;
         }
