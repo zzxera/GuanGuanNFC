@@ -37,7 +37,7 @@ public class Datadisplay {
         if(list!=null) {
             int n = list.size();
             String[][] arr1 = new String[n][2];
-            int[] arr2 = new int[n];
+            float[] arr2 = new float[n];
             for (int i = 0; i < n; i++) {
                 arr1[i][0] = list.get(i).getActivity_type();
                 arr1[i][1] = (gt.transString1(list.get(i).getLen_time()));
