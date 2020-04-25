@@ -27,13 +27,15 @@ public class BoxmanagementActivity extends AppCompatActivity {
 
     private PopupWindow mPopWindow;
     private String username;
-    private ThingManage boxget =new ThingManage(username,this);
+    private ThingManage boxget;
     private String[][] box;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxmanagement);
-        box=boxget.boxAndPosition();
         Bundle bundle = this.getIntent().getExtras();
+        username=bundle.getString("userName");
+        boxget =new ThingManage(username,this);
+        box=boxget.boxAndPosition();
         ImageView iv_box1 =findViewById(R.id.iv_box1);
         iv_box1.setOnClickListener(new View.OnClickListener() {
             @Override
