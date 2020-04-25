@@ -40,7 +40,7 @@
             android:layout_width="151dp"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:onClick="Boxmanagement"
+            android:onClick="Boxmanagement2"
             android:text="物品管理"
             android:textSize="24sp" />
 
