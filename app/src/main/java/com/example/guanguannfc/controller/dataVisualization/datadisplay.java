@@ -41,7 +41,7 @@ public class Datadisplay {
             for (int i = 0; i < n; i++) {
                 arr1[i][0] = list.get(i).getActivity_type();
                 arr1[i][1] = (gt.transString1(list.get(i).getLen_time()));
-                arr2[i] = (gt.transString2(list.get(i).getLen_time()));
+                arr2[i] = (int)list.get(i).getLen_time();
             }
             String dataAnalysis = "test";
             String echarttype = showType;
