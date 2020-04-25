@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -59,6 +60,17 @@ public class TimemanagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPopupWindow2();
+            }
+        });
+        TextView tv_box = findViewById(R.id.tv_box);
+        tv_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TimemanagementActivity.this, BoxmanagementActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("userName",username);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
@@ -133,11 +145,6 @@ public class TimemanagementActivity extends AppCompatActivity {
     public void Changeactivity(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, ChangeactActivity.class);
-        startActivity(intent);
-    }
-    public void Boxmanagement(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, BoxmanagementActivity.class);
         startActivity(intent);
     }
 }
