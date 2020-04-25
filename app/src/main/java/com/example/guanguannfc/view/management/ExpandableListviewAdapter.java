@@ -20,13 +20,13 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
     //Model：定义的数据
     private String[] groups;
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
-    private String[][] childs;
+    private String[][] childsq;
     private Context context;
 
-    public ExpandableListviewAdapter(Context context,String[] groups,String[][] childs){
+    public ExpandableListviewAdapter(Context context,String[] groups,String[][] childsq){
         this.context=context;
         this.groups=groups;
-        this.childs=childs;
+        this.childsq=childsq;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return childs[i].length;
+        return childsq[i].length;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int i, int i1) {
-        return childs[i][i1];
+        return childsq[i][i1];
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
         }else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
-        childViewHolder.chidren_item.setText(childs[groupPosition][childPosition]);
+        childViewHolder.chidren_item.setText(childsq[groupPosition][childPosition]);
         Button btn1 =convertView.findViewById(R.id.btn_change_actname);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
