@@ -1,7 +1,6 @@
 package com.example.guanguannfc.view.data;
 
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -36,7 +36,7 @@ import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 
 import com.example.guanguannfc.view.management.BoxmanagementActivity;
-import com.example.guanguannfc.controller.dataVisualization.datadisplay;
+import com.example.guanguannfc.controller.dataVisualization.Datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 
 
@@ -53,7 +53,7 @@ public class Data extends AppCompatActivity {
 //    private Datashow frag_datashow = new Datashow();
 //    private DataShow frag_datashow = new DataShow();
 
-    private WebView webView;
+
     private Spinner spinner_times,spinner_types,spinner_acts,spinner_sorts;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
@@ -63,12 +63,12 @@ public class Data extends AppCompatActivity {
     private String[] allActName;
     private String[][] actAndTime;
     private Object[] ob_dataShow;
+    private Object echart_act[];
+    private Object echart_time[];
     private String[][] ob_actShow;
     private String[][] actInfo;
-    private Object[] echart_act;
-    private Object[] echart_time;
     private EchartView myWebView;
-    private datadisplay dd=new datadisplay(this);
+    private Datadisplay dd=new Datadisplay(this);
     private Allactivity allactivity=new Allactivity(this);
     private GetTime getTime=new GetTime();
     private List<DataShow> dataShowList = new ArrayList<DataShow>();
@@ -77,13 +77,19 @@ public class Data extends AppCompatActivity {
     private List<ActShow> actShowList = new ArrayList<ActShow>();
     private ListView lv_allactlist = null;
     private ActShowAdapter actShowAdapter;
-
+    private Object[] x = new Object[]{
+            "Mon", "Tue", "Wed", "Thu", "Fri"
+    };
+    private Object[] y = new Object[]{
+            820, 932, 901, 934, 1290
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
+//        获取用户名
         Bundle bundle = this.getIntent().getExtras();
         userName=bundle.getString("userName");
 //        Toast.makeText(Data.this,"用户名"+userName,Toast.LENGTH_LONG).show();
@@ -108,7 +114,6 @@ public class Data extends AppCompatActivity {
 
 
     }
-
 
     private void initView(){
         actlist=findViewById(R.id.listview_actlist);
@@ -136,6 +141,7 @@ public class Data extends AppCompatActivity {
         bt_quit=findViewById(R.id.button_quit);
         tv_prompt=findViewById(R.id.text_prompt);
         tv_noInfo=findViewById(R.id.text_noInfo);
+
         txt_actType="";
         txt_showActType="全部";
         txt_sortType="最新活动在前";
@@ -143,8 +149,6 @@ public class Data extends AppCompatActivity {
         txt_showType="列表";
         txt_startTime=getTime.getBeginTime("本日");
         txt_endTime=txt_startTime;
-
-
 
 
         allActName=allactivity.allacttype(userName);
@@ -167,7 +171,7 @@ public class Data extends AppCompatActivity {
                     lay_time.setVisibility(View.VISIBLE);
                 }
                 else {
-                   if(position==0){
+                    if(position==0){
                         txt_startTime=getTime.getBeginTime("本日");
                         txt_endTime=getTime.getBeginTime("本日");
 //                        Toast.makeText(Data.this,txt_startTime,Toast.LENGTH_LONG).show();
@@ -187,22 +191,49 @@ public class Data extends AppCompatActivity {
 
                     ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
 //                    Log.i("gy",ob_dataShow[0].toString());
+//                    Log.i("gy","time获取到数据"+txt_timeType+""+txt_showType);
+
+
 
                     if (ob_dataShow!=null){
-//                        tv_noInfo.setVisibility(View.GONE);
-                        actlist.setVisibility(View.VISIBLE);
+
                         tv_noInfo.setVisibility(View.GONE);
                         actAndTime=(String[][])ob_dataShow[0];
-                        initDataShow(actAndTime);
-                        actlist.setAdapter(dataShowAdapter);
-//                        String url=(String)ob_dataShow[1];
-//                        myWebView.loadUrl(url);
-                        Log.i("gy","获取到数据");
+
+                        if (txt_showType.equals("列表")) {
+                            actlist.setVisibility(View.VISIBLE);
+                            Log.i("gy","获取到数据"+txt_timeType+""+txt_showType);
+
+                            initDataShow(actAndTime);
+                            actlist.setAdapter(dataShowAdapter);
+                        }
+                        else {
+                            myWebView.setVisibility(View.VISIBLE);
+                            refreshEChart();
+                            int len = actAndTime.length;
+                            echart_act = new Object[len];
+                            echart_time= new Object[len];
+                            for(int i =0;i<len;i++){
+                                echart_act[i]=actAndTime[i][0];
+                                echart_time[i]=((float[]) ob_dataShow[1])[i];
+                            }
+                            if (txt_showType.equals("柱状图")){
+                                Log.i("gy","获取到数据"+txt_timeType+""+txt_showType);
+                                myWebView.refreshEchartsWithOption(EchartOptionUtil.getBarChartOptions(echart_act,echart_time));
+                            }
+                            else if (txt_showType.equals("折线图")){
+                                Log.i("gy","获取到数据"+txt_timeType+""+txt_showType);
+                                myWebView.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(echart_act, echart_time));
+                            }
+                        }
+
+
 
                     }
                     else{
                         Log.i("gy","没有获取到数据");
                         actlist.setVisibility(View.INVISIBLE);
+                        myWebView.setVisibility(View.INVISIBLE);
                         tv_noInfo.setVisibility(View.VISIBLE);
 //                        actlist.setVisibility(View.INVISIBLE);
                     }
@@ -224,59 +255,51 @@ public class Data extends AppCompatActivity {
 //                Toast.makeText(Data.this,""+position,Toast.LENGTH_LONG).show();
                 txt_showType=showType;
                 Log.i("gy","showType:"+txt_showType);
-                ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
-                String[][] array=(String[][])ob_dataShow[0];
 
                 if (position==0){
-                    webView.setVisibility(View.INVISIBLE);
+                    myWebView.setVisibility(View.INVISIBLE);
                     actlist.setVisibility(View.VISIBLE);
 
                 }
                 else{
-                    webView.setVisibility(View.VISIBLE);
+                    myWebView.setVisibility(View.VISIBLE);
                     actlist.setVisibility(View.INVISIBLE);
 
                 }
-
+                ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
                 if (ob_dataShow!=null){
-                    actAndTime=(String[][])ob_dataShow[0];
-                    initDataShow(actAndTime);
-                    actlist.setAdapter(dataShowAdapter);
-//                    String url=(String)ob_dataShow[1];
-//                    myWebView.loadUrl(url);
-                    int len=array.length;
-                    echart_act=new Object[len];
-                    echart_time=new Object[len];
-                    for(int i = 0;i<len;i++){
-                        echart_act[i]=array[i][0];
-                        echart_time[i]=Long.parseLong(array[i][2]);
+                    if (position==0){
+                        actAndTime=(String[][])ob_dataShow[0];
+                        initDataShow(actAndTime);
+                        actlist.setAdapter(dataShowAdapter);
                     }
-                    if(position==1){
-//                        条状图
-                        myWebView.setWebViewClient(new WebViewClient(){
-                            @Override
-                            public void onPageFinished(WebView view, String url) {
-                                super.onPageFinished(view, url);
-                                //最好在h5页面加载完毕后再加载数据，防止html的标签还未加载完成，不能正常显示
-                                myWebView.refreshEchartsWithOption(EchartOptionUtil.getBarChartOptions(echart_act, echart_time));
-                            }
-                        });
-                    }
-                    if(position==2) {
-//                        折线图
-                        myWebView.setWebViewClient(new WebViewClient() {
-                            @Override
-                            public void onPageFinished(WebView view, String url) {
-                                super.onPageFinished(view, url);
-                                //最好在h5页面加载完毕后再加载数据，防止html的标签还未加载完成，不能正常显示
-                                myWebView.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(echart_act, echart_time));
-                            }
-                        });
+                    else {
+                        refreshEChart();
+                        int len = actAndTime.length;
+                        echart_act = new Object[len];
+                        echart_time= new Object[len];
+                        for(int i =0;i<len;i++){
+                            echart_act[i]=actAndTime[i][0];
+                            echart_time[i]=((float[]) ob_dataShow[1])[i];
+                        }
+
+                        Log.i("gy","act:"+echart_act[0]+"time:"+echart_time[0]);
+
+                        if(position == 1){
+                            myWebView.refreshEchartsWithOption(EchartOptionUtil.getBarChartOptions(echart_act,echart_time));
+
+                        }
+                        if(position == 2){
+                            myWebView.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(echart_act, echart_time));
+
+                        }
                     }
 
                 }
                 else{
                     actlist.setVisibility(View.INVISIBLE);
+                    myWebView.setVisibility(View.INVISIBLE);
+                    tv_noInfo.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -307,8 +330,6 @@ public class Data extends AppCompatActivity {
 
             }
         });
-
-
 
         spinner_sorts.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -354,12 +375,15 @@ public class Data extends AppCompatActivity {
 
     }
 
-//    private void initDataShow(){
-//        for(int i=0;i<dataType.length;i++){
-//            DataShow dataShow = new DataShow(dataType[i],dataTime[i]);
-//            dataShowList.add(dataShow);
-//        }
-//    }
+    private void refreshEChart(){
+        Log.i("gy","刷新图表");
+        echart_time=new Object[0];
+        echart_act=new Object[0];
+
+    }
+
+
+
     private void initDataShow(String[][] array){
         tv_noInfo.setVisibility(View.GONE);
         dataShowList.clear();
@@ -378,23 +402,12 @@ public class Data extends AppCompatActivity {
     }
 
     private void initWebView(){
-        myWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    view.loadUrl(request.getUrl().toString());
-                } else {
-                    view.loadUrl(request.toString());
-                }
-                return super.shouldOverrideUrlLoading(view, request);
-            }
-        });
-        //进行webwiev的一堆设置
-        // 开启本地文件读取（默认为true，不设置也可以）
-        myWebView.getSettings().setAllowFileAccess(true);
-        //开启脚本支持
-        myWebView.getSettings().setJavaScriptEnabled(true);
-        myWebView.loadUrl("file:///android_asset/echart/myechart.html");
+
+//设置载入页面自适应手机屏幕，居中显示
+        WebSettings mWebSettings = myWebView.getSettings();
+        mWebSettings.setJavaScriptEnabled(true);
+        mWebSettings.setUseWideViewPort(true);
+        mWebSettings.setLoadWithOverviewMode(true);
     }
 
     public void click(View v){
@@ -414,7 +427,7 @@ public class Data extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String starttime =  year + "-" + (month + 1) + "-" + dayOfMonth ;
-                        txt_startTime=starttime;
+//                        txt_startTime=starttime;
                         bt_starttime.setText(starttime);
                     }
                 }
@@ -428,7 +441,7 @@ public class Data extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String endtime =  year + "-" + (month + 1) + "-" + dayOfMonth ;
-                        txt_endTime=endtime;
+//                        txt_endTime=endtime;
                         bt_endtime.setText(endtime);
                     }
                 }
@@ -452,37 +465,55 @@ public class Data extends AppCompatActivity {
                             txt_actType=acttype;
 
                         }
-//                        switch (menuItem.getItemId()){
-//                            case R.id.all:
-//                                bt_acttype.setText("全部");
-//                                break;
-//                            case R.id.work:
-//                                bt_acttype.setText("工作");
-//                                break;
-//                        }
+
                         return false;
                     }
                 });
                 break;
             case R.id.button_time_confirm:
+                txt_startTime=(String) bt_starttime.getText();
+                txt_endTime=(String) bt_endtime.getText();
+
                 lay_time.setVisibility(View.INVISIBLE);
                 ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
 //                Toast.makeText(Data.this,userName+txt_startTime+txt_endTime+txt_actType+txt_showType,Toast.LENGTH_LONG).show();
 
                 if (ob_dataShow!=null){
+
                     actlist.setVisibility(View.VISIBLE);
                     tv_noInfo.setVisibility(View.GONE);
                     actAndTime=(String[][])ob_dataShow[0];
-//                    Toast.makeText(Data.this,actAndTime.length,Toast.LENGTH_LONG).show();
-                    initDataShow(actAndTime);
-                    actlist.setAdapter(dataShowAdapter);
-                    String url=(String)ob_dataShow[1];
-                    myWebView.loadUrl(url);
+                    if (txt_showType.equals("列表")) {
+                        Log.i("gy","获取到数据"+txt_timeType+""+txt_showType);
+
+                        initDataShow(actAndTime);
+                        actlist.setAdapter(dataShowAdapter);
+                    }
+                    else {
+                        refreshEChart();
+                        int len = actAndTime.length;
+                        echart_act = new Object[len];
+                        echart_time= new Object[len];
+                        for(int i =0;i<len;i++){
+                            echart_act[i]=actAndTime[i][0];
+                            echart_time[i]=((float[]) ob_dataShow[1])[i];
+                        }
+                        if (txt_showType.equals("柱状图")){
+                            Log.i("gy","获取到数据"+txt_timeType+""+txt_showType);
+                            myWebView.refreshEchartsWithOption(EchartOptionUtil.getBarChartOptions(echart_act,echart_time));
+                        }
+                        else if (txt_showType.equals("折线图")){
+                            Log.i("gy","获取到数据"+txt_timeType+""+txt_showType);
+                            myWebView.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(echart_act, echart_time));
+                        }
+                    }
+
 
                 }
                 else{
                     tv_noInfo.setVisibility(View.VISIBLE);
                     actlist.setVisibility(View.INVISIBLE);
+                    myWebView.setVisibility(View.INVISIBLE);
                 }
 //                initDataShow(datas);
 //                actlist.setAdapter(dataShowAdapter);
@@ -501,6 +532,9 @@ public class Data extends AppCompatActivity {
 
                 Intent intent1 = new Intent();
                 intent1.setClass(Data.this, BoxmanagementActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("userName",userName);
+                intent1.putExtras(bundle);
                 startActivity(intent1);
                 break;
             case R.id.button_quit:
@@ -517,10 +551,10 @@ public class Data extends AppCompatActivity {
 
         }
 
-        }
-
-
     }
+
+
+}
 
 
 
