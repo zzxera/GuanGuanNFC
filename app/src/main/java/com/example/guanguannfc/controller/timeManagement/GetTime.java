@@ -184,10 +184,16 @@ public class GetTime{
         String dataString = hour + "时" + minute + "分" + second + "秒";
         return dataString;
     }
-    public static int transString2(long continueTime){
+    public static float transString2(long continueTime){
         long allseconds = continueTime/1000;
+        long lastseconds = allseconds % 3600;
         long hour = allseconds/3600;
-        int dataInt = (int)hour;
+        long minute = lastseconds / 60;
+        long second = lastseconds % 60;
+        int intmin =(int)minute/60;
+        int intsec = (int)second/3600;
+        int inth = (int)hour;
+        int dataInt = intmin+intsec+inth;
         return dataInt;
     }
 

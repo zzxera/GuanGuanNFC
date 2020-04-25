@@ -43,6 +43,7 @@ public class BoxmanagementActivity extends AppCompatActivity {
                 Intent intent = new Intent(BoxmanagementActivity.this, TimemanagementActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putString("userName",username);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

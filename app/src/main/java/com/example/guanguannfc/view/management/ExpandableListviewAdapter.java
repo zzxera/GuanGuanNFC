@@ -15,15 +15,17 @@ import com.example.guanguannfc.view.management.TimemanagementActivity;
 import androidx.core.content.ContextCompat;
 import com.example.guanguannfc.R;
 
+import java.util.List;
+
 public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
     private PopupWindow mPopWindow;
     //Model：定义的数据
     private String[] groups;
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
-    private String[][] childsq;
+    private List<Act> childsq;
     private Context context;
 
-    public ExpandableListviewAdapter(Context context,String[] groups,String[][] childsq){
+    public ExpandableListviewAdapter(Context context,String[] groups,List<Act> childsq){
         this.context=context;
         this.groups=groups;
         this.childsq=childsq;
@@ -36,7 +38,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return childsq[i].length;
+        return childsq.get(i).getAct().length;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int i, int i1) {
-        return childsq[i][i1];
+        return childsq.get(i).getAct()[i1];
     }
 
     @Override
@@ -106,7 +108,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
         }else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
-        childViewHolder.chidren_item.setText(childsq[groupPosition][childPosition]);
+        childViewHolder.chidren_item.setText(childsq.get(groupPosition).getAct()[childPosition]);
         Button btn1 =convertView.findViewById(R.id.btn_change_actname);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
