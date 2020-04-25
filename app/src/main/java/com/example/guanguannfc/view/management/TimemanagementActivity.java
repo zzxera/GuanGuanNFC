@@ -35,7 +35,7 @@ public class TimemanagementActivity extends AppCompatActivity {
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs;
     private String[] child;
-    List<String> childsq = new ArrayList<String>();
+    List<Act> childsq = new ArrayList<Act>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +79,10 @@ public class TimemanagementActivity extends AppCompatActivity {
         groups=getact.getBigActivity(this);
         for (int i =0;i<groups.length;i++){
             child=getact.getSmallActivity(groups[i]);
-            Collections.addAll(childsq,child);
+            childsq.add(new Act(groups[i],child));
         }
         expand_list_id=findViewById(R.id.expand_list_id);
-        ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(this,groups,childs);
+        ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(this,groups,childsq);
         expand_list_id.setAdapter(adapter);
         //默认展开第一个数组
         expand_list_id.expandGroup(0);
