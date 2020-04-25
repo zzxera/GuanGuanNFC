@@ -292,11 +292,8 @@ public class Data extends AppCompatActivity {
                         if(position == 2){
                             myWebView.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(echart_act, echart_time));
 
-
                         }
                     }
-
-
 
                 }
                 else{
