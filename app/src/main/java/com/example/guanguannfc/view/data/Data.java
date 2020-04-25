@@ -215,7 +215,7 @@ public class Data extends AppCompatActivity {
                             echart_time= new Object[len];
                             for(int i =0;i<len;i++){
                                 echart_act[i]=actAndTime[i][0];
-                                echart_time[i]=((int[]) ob_dataShow[1])[i];
+                                echart_time[i]=((float[]) ob_dataShow[1])[i];
                             }
                             if (txt_showType.equals("柱状图")){
                                 Log.i("gy","获取到数据"+txt_timeType+""+txt_showType);
@@ -280,7 +280,7 @@ public class Data extends AppCompatActivity {
                         echart_time= new Object[len];
                         for(int i =0;i<len;i++){
                             echart_act[i]=actAndTime[i][0];
-                            echart_time[i]=((int[]) ob_dataShow[1])[i];
+                            echart_time[i]=((float[]) ob_dataShow[1])[i];
                         }
 
                         Log.i("gy","act:"+echart_act[0]+"time:"+echart_time[0]);
@@ -496,7 +496,7 @@ public class Data extends AppCompatActivity {
                         echart_time= new Object[len];
                         for(int i =0;i<len;i++){
                             echart_act[i]=actAndTime[i][0];
-                            echart_time[i]=((int[]) ob_dataShow[1])[i];
+                            echart_time[i]=((float[]) ob_dataShow[1])[i];
                         }
                         if (txt_showType.equals("柱状图")){
                             Log.i("gy","获取到数据"+txt_timeType+""+txt_showType);
