@@ -44,7 +44,7 @@ public class SearchgoodsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TimemanagementActivity.class);
         startActivity(intent);
     }
-    public void Boxmanagement(View view) {
+    public void Boxmanagement2(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, BoxmanagementActivity.class);
         startActivity(intent);
