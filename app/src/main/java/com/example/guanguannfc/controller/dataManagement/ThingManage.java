@@ -28,11 +28,11 @@ public class ThingManage {
         HashMap<String, ArrayList<HelperBoxContent>> hashMap = new HashMap<String, ArrayList<HelperBoxContent>>();
         hashMap = daoBox.queryBoxAndContext(username);
         ArrayList<HelperBoxContent> list = hashMap.get(boxName);
-        String[][] array = new String[2][list.size()];
+        String[][] array = new String[1][list.size()];
         for (int i = 0; i< list.size(); i++){
-            array[1][i] = list.get(i).getName();
+            array[0][i] = list.get(i).getName();
         }for (int j = 0; j< list.size(); j++){
-            array[2][j] = list.get(j).getNum() + "";
+            array[1][j] = list.get(j).getNum() + "";
         }
         return array;
     }
@@ -40,11 +40,11 @@ public class ThingManage {
     public String[][] boxAndPosition(){
         ArrayList<HelperBox> list = new ArrayList<HelperBox>();
         list = daoBox.queryAllBox(username);
-        String[][] array = new String[2][list.size()];
+        String[][] array = new String[1][list.size()];
         for (int i = 0; i< list.size(); i++){
-            array[1][i] = list.get(i).getName();
+            array[0][i] = list.get(i).getName();
         }for (int j = 0; j< list.size(); j++){
-            array[2][j] = list.get(j).getPosition();
+            array[1][j] = list.get(j).getPosition();
         }
         return array;
     }
