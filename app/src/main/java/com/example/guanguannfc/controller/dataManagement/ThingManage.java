@@ -16,11 +16,12 @@ public class ThingManage {
     private String username;
     private Context context;
 
-    DaoBox daoBox = new DaoBox(context);
+    DaoBox daoBox;
 
     public ThingManage(String username, Context context){
         this.username = username;
         this.context = context;
+        daoBox = new DaoBox(context);
     }
 
     //张浦鑫需要的
@@ -28,7 +29,7 @@ public class ThingManage {
         HashMap<String, ArrayList<HelperBoxContent>> hashMap = new HashMap<String, ArrayList<HelperBoxContent>>();
         hashMap = daoBox.queryBoxAndContext(username);
         ArrayList<HelperBoxContent> list = hashMap.get(boxName);
-        String[][] array = new String[1][list.size()];
+        String[][] array = new String[2][list.size()];
         for (int i = 0; i< list.size(); i++){
             array[0][i] = list.get(i).getName();
         }for (int j = 0; j< list.size(); j++){
@@ -40,7 +41,7 @@ public class ThingManage {
     public String[][] boxAndPosition(){
         ArrayList<HelperBox> list = new ArrayList<HelperBox>();
         list = daoBox.queryAllBox(username);
-        String[][] array = new String[1][list.size()];
+        String[][] array = new String[2][list.size()];
         for (int i = 0; i< list.size(); i++){
             array[0][i] = list.get(i).getName();
         }for (int j = 0; j< list.size(); j++){

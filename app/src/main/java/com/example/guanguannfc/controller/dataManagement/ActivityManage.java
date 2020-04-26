@@ -12,11 +12,12 @@ public class ActivityManage {
     private String username;
     private Context context;
 
-    DaoActivityType daoActivityType = new DaoActivityType(context);
+    DaoActivityType daoActivityType;
 
     public ActivityManage(String username, Context context){
         this.username = username;
         this.context = context;
+        daoActivityType = new DaoActivityType(context);
     }
 
     public String[] getBigActivity(Context context){

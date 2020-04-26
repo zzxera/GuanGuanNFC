@@ -27,13 +27,26 @@ public class BoxmanagementActivity extends AppCompatActivity {
 
     private PopupWindow mPopWindow;
     private String username;
-    private ThingManage boxget =new ThingManage(username,this);
+    private ThingManage boxget;
     private String[][] box;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxmanagement);
-        box=boxget.boxAndPosition();
         Bundle bundle = this.getIntent().getExtras();
+        username=bundle.getString("userName");
+        boxget =new ThingManage(username,this);
+        box=boxget.boxAndPosition();
+        TextView tv_timemanagement =findViewById(R.id.tv_timemanagement);
+        tv_timemanagement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BoxmanagementActivity.this, TimemanagementActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("userName",username);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         ImageView iv_box1 =findViewById(R.id.iv_box1);
         iv_box1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,9 +300,5 @@ public class BoxmanagementActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BoxtipActivity.class);
         startActivity(intent);
     }
-    public void Timemanagement(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, TimemanagementActivity.class);
-        startActivity(intent);
-    }
+
 }
