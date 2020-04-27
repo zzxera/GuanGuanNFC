@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -91,8 +92,11 @@ public class Data extends AppCompatActivity {
         setContentView(R.layout.activity_data);
 //        获取用户名
         Bundle bundle = this.getIntent().getExtras();
+
         userName=bundle.getString("userName");
-//        Toast.makeText(Data.this,"用户名"+userName,Toast.LENGTH_LONG).show();
+
+
+        Toast.makeText(Data.this,"用户名"+userName,Toast.LENGTH_LONG).show();
         initView();
 
 
@@ -545,7 +549,8 @@ public class Data extends AppCompatActivity {
             case R.id.text_prompt:
                 Intent intent3 = new Intent();
                 intent3.setClass(Data.this, ClockActivity.class);
-                startActivity(intent3);
+                intent3.putExtra("username",userName);
+                startActivityForResult (intent3, 1);
 
                 break;
 
@@ -553,7 +558,15 @@ public class Data extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                String result = data.getStringExtra("result");
+                Toast.makeText(this,result,Toast.LENGTH_LONG).show();
+        }
+    }
 }
 
 
