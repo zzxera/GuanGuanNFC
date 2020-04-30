@@ -57,6 +57,13 @@ public class ClockActivity extends AppCompatActivity {
         }
     }
 
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("result","计时继续");
+        this.setResult(1,intent);
+        this.finish();
+    }
+
 
     private void delay(int ms){
         try {

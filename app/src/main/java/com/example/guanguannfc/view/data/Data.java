@@ -58,7 +58,7 @@ public class Data extends AppCompatActivity {
     private Spinner spinner_times,spinner_types,spinner_acts,spinner_sorts;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
-    private TextView tv_prompt,tv_noInfo;
+    private TextView tv_prompt,tv_noInfo,tv_noActInfo;
     private String userName,txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
     public String txt_showActType,txt_sortType;
     private String[] allActName;
@@ -145,6 +145,7 @@ public class Data extends AppCompatActivity {
         bt_quit=findViewById(R.id.button_quit);
         tv_prompt=findViewById(R.id.text_prompt);
         tv_noInfo=findViewById(R.id.text_noInfo);
+        tv_noActInfo=findViewById(R.id.text_noActInfo);
 
         txt_actType="";
         txt_showActType="全部";
@@ -323,8 +324,14 @@ public class Data extends AppCompatActivity {
                 ob_actShow=allactivity.sortedactivity(userName,txt_showActType,txt_sortType);
 
                 if (ob_actShow !=null){
+                    lv_allactlist.setVisibility(View.VISIBLE);
+                    tv_noActInfo.setVisibility(View.GONE);
                     initActShow(ob_actShow);
                     lv_allactlist.setAdapter(actShowAdapter);
+                }
+                else {
+                    lv_allactlist.setVisibility(View.GONE);
+                    tv_noActInfo.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -348,6 +355,7 @@ public class Data extends AppCompatActivity {
                     initActShow(ob_actShow);
                     lv_allactlist.setAdapter(actShowAdapter);
                 }
+
 
             }
 
@@ -567,6 +575,9 @@ public class Data extends AppCompatActivity {
                 Toast.makeText(this,result,Toast.LENGTH_LONG).show();
         }
     }
+
+
+
 }
 
 
