@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.view.HomePageActivity;
 import com.example.guanguannfc.view.data.Data;
 import com.example.guanguannfc.controller.userManagement.Login;
 
@@ -72,8 +73,13 @@ public class SigninFragment extends Fragment {
 //                        Toast.makeText(ctx,"密码错误",Toast.LENGTH_LONG).show();
 //                    }
                     else{
-                        Intent intent = new Intent(getActivity(), Data.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        Intent intent = new Intent(getActivity(), Data.class);
+////                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        Bundle bundle=new Bundle();
+//                        bundle.putString("userName",username);
+//                        intent.putExtras(bundle);
+//                        startActivity(intent);
+                        Intent intent = new Intent(getActivity(), HomePageActivity.class);
                         Bundle bundle=new Bundle();
                         bundle.putString("userName",username);
                         intent.putExtras(bundle);
