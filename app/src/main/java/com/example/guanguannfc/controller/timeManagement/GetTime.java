@@ -190,10 +190,10 @@ public class GetTime{
         long hour = allseconds/3600;
         long minute = lastseconds / 60;
         long second = lastseconds % 60;
-        int intmin =(int)minute/60;
-        int intsec = (int)second/3600;
-        int inth = (int)hour;
-        int dataInt = intmin+intsec+inth;
+        float intmin =(float) minute/60;
+        float intsec = (float) second/3600;
+        float inth = (float) hour;
+        float dataInt = intmin+intsec+inth;
         return dataInt;
     }
 
