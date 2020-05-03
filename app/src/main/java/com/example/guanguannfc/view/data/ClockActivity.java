@@ -38,6 +38,7 @@ public class ClockActivity extends AppCompatActivity {
         Intent intent=getIntent();
         userName=intent.getStringExtra("username");
         Toast.makeText(this,"开始计时",Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,userName,Toast.LENGTH_LONG).show();
 
 
     }
