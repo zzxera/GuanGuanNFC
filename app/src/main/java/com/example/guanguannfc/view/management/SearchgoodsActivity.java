@@ -41,17 +41,7 @@ public class SearchgoodsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        TextView tv_timemangement2 =findViewById(R.id.tv_timemanagement2);
-        tv_timemangement2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SearchgoodsActivity.this, TimemanagementActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putString("userName",username);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+
     }
     private List<Map<String,Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String ,Object>>();
@@ -67,11 +57,7 @@ public class SearchgoodsActivity extends AppCompatActivity {
         return list;
 
     }
-    public void Timemanagement(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, TimemanagementActivity.class);
-        startActivity(intent);
-    }
+
     public void Boxmanagement2(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, BoxmanagementActivity.class);
