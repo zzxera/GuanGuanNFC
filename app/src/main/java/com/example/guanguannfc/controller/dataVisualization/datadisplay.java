@@ -2,6 +2,7 @@ package com.example.guanguannfc.controller.dataVisualization;
 
 import android.content.Context;
 import android.renderscript.Sampler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,6 +43,7 @@ public class Datadisplay {
                 arr1[i][0] = list.get(i).getActivity_type();
                 arr1[i][1] = (gt.transString1(list.get(i).getLen_time()));
                 arr2[i] = (gt.transString2(list.get(i).getLen_time()));
+                Log.i("gy", "Datadplay time: "+arr2[i]);
             }
             String dataAnalysis = "test";
             String echarttype = showType;

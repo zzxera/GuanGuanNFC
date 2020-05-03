@@ -11,11 +11,16 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataManagement.ActivityManage;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TimemanagementActivity extends AppCompatActivity {
 
@@ -23,7 +28,7 @@ public class TimemanagementActivity extends AppCompatActivity {
     private ExpandableListView expand_list_id;
     private String username;
     private Context context;
-    private ActivityManage getact=new ActivityManage(username,this);
+    private ActivityManage getact;
     private String[] groups;
     //Model：定义的数据
 
@@ -31,12 +36,15 @@ public class TimemanagementActivity extends AppCompatActivity {
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs;
     private String[] child;
-
+    List<Act> childsq = new ArrayList<Act>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timemanagement);
+        Bundle bundle = this.getIntent().getExtras();
+        username=bundle.getString("userName");
+        getact=new ActivityManage(username,this);
         initView();
         Button btn_changeact = findViewById(R.id.btn_changeact);
         View contentView = LayoutInflater.from(TimemanagementActivity.this).inflate(R.layout.expand_chidren_item, null);
@@ -52,6 +60,17 @@ public class TimemanagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPopupWindow2();
+            }
+        });
+        TextView tv_box = findViewById(R.id.tv_box);
+        tv_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TimemanagementActivity.this, BoxmanagementActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("userName",username);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
@@ -72,12 +91,10 @@ public class TimemanagementActivity extends AppCompatActivity {
         groups=getact.getBigActivity(this);
         for (int i =0;i<groups.length;i++){
             child=getact.getSmallActivity(groups[i]);
-            for(int j=0;j<child.length;j++){
-                childs[i][j]=child[j];
-            }
+            childsq.add(new Act(groups[i],child));
         }
         expand_list_id=findViewById(R.id.expand_list_id);
-        ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(this,groups,childs);
+        ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(this,groups,childsq);
         expand_list_id.setAdapter(adapter);
         //默认展开第一个数组
         expand_list_id.expandGroup(0);
@@ -128,11 +145,6 @@ public class TimemanagementActivity extends AppCompatActivity {
     public void Changeactivity(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, ChangeactActivity.class);
-        startActivity(intent);
-    }
-    public void Boxmanagement(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, BoxmanagementActivity.class);
         startActivity(intent);
     }
 }
