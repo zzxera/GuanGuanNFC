@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -57,7 +58,7 @@ public class Data extends AppCompatActivity {
     private Spinner spinner_times,spinner_types,spinner_acts,spinner_sorts;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
-    private TextView tv_prompt,tv_noInfo;
+    private TextView tv_prompt,tv_noInfo,tv_noActInfo;
     private String userName,txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
     public String txt_showActType,txt_sortType;
     private String[] allActName;
@@ -91,8 +92,11 @@ public class Data extends AppCompatActivity {
         setContentView(R.layout.activity_data);
 //        获取用户名
         Bundle bundle = this.getIntent().getExtras();
+
         userName=bundle.getString("userName");
-//        Toast.makeText(Data.this,"用户名"+userName,Toast.LENGTH_LONG).show();
+
+
+        Toast.makeText(Data.this,"用户名"+userName,Toast.LENGTH_LONG).show();
         initView();
 
 
@@ -141,6 +145,7 @@ public class Data extends AppCompatActivity {
         bt_quit=findViewById(R.id.button_quit);
         tv_prompt=findViewById(R.id.text_prompt);
         tv_noInfo=findViewById(R.id.text_noInfo);
+        tv_noActInfo=findViewById(R.id.text_noActInfo);
 
         txt_actType="";
         txt_showActType="全部";
@@ -319,8 +324,14 @@ public class Data extends AppCompatActivity {
                 ob_actShow=allactivity.sortedactivity(userName,txt_showActType,txt_sortType);
 
                 if (ob_actShow !=null){
+                    lv_allactlist.setVisibility(View.VISIBLE);
+                    tv_noActInfo.setVisibility(View.GONE);
                     initActShow(ob_actShow);
                     lv_allactlist.setAdapter(actShowAdapter);
+                }
+                else {
+                    lv_allactlist.setVisibility(View.GONE);
+                    tv_noActInfo.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -344,6 +355,7 @@ public class Data extends AppCompatActivity {
                     initActShow(ob_actShow);
                     lv_allactlist.setAdapter(actShowAdapter);
                 }
+
 
             }
 
@@ -545,13 +557,25 @@ public class Data extends AppCompatActivity {
             case R.id.text_prompt:
                 Intent intent3 = new Intent();
                 intent3.setClass(Data.this, ClockActivity.class);
-                startActivity(intent3);
+                intent3.putExtra("username",userName);
+                startActivityForResult (intent3, 1);
 
                 break;
 
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                String result = data.getStringExtra("result");
+                Toast.makeText(this,result,Toast.LENGTH_LONG).show();
+        }
+    }
+
 
 
 }
