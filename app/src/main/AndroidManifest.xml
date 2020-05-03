@@ -70,7 +70,6 @@
         <activity android:name=".view.management.BoxmanagementActivity" />
         <activity android:name=".view.management.ChangeboxActivity" />
         <activity android:name=".view.management.AddgoodsActivity" />
-        <activity android:name=".view.management.TimemanagementActivity" />
         <activity android:name=".view.management.ChangeactActivity" />
         <activity android:name=".view.management.AddboxActivity" />
         <activity android:name=".view.management.ChangenameActivity" />

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import com.example.guanguannfc.view.management.TimemanagementActivity;
+
 import androidx.core.content.ContextCompat;
 import com.example.guanguannfc.R;
 
@@ -121,7 +121,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
                 mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
                 //设置各个控件的点击响应
                 //显示PopupWindow
-                View rootview = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_timemanagement,null);
+                View rootview = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_boxmanagement,null);
                 mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
             }
         });
