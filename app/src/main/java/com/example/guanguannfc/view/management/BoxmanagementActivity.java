@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -47,6 +48,18 @@ public class BoxmanagementActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        SearchView sv_goods =findViewById(R.id.sv_goods);
+        sv_goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BoxmanagementActivity.this, SearchgoodsActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("userName",username);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         ImageView iv_box1 =findViewById(R.id.iv_box1);
         iv_box1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +68,7 @@ public class BoxmanagementActivity extends AppCompatActivity {
                     showPopupWindow();
                 }
                 else {
-                    showPopupWindow4();
+                    showPopupWindow11();
                 }
             }
         });
@@ -63,7 +76,7 @@ public class BoxmanagementActivity extends AppCompatActivity {
         iv_box_1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                showPopupWindow3();
+                showPopupWindow12();
                 return false;
             }
         });
@@ -73,10 +86,10 @@ public class BoxmanagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(box[0][1]!=null){
-                    showPopupWindow5();
+                    showPopupWindow1();
                 }
                 else {
-                    showPopupWindow4();
+                    showPopupWindow11();
                 }
             }
         });
@@ -85,10 +98,10 @@ public class BoxmanagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(box[0][2]!=null){
-                    showPopupWindow();
+                    showPopupWindow2();
                 }
                 else {
-                    showPopupWindow4();
+                    showPopupWindow11();
                 }
             }
         });
@@ -98,10 +111,10 @@ public class BoxmanagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(box[0][3]!=null){
-                    showPopupWindow();
+                    showPopupWindow3();
                 }
                 else {
-                    showPopupWindow4();
+                    showPopupWindow11();
                 }
             }
         });
@@ -111,10 +124,10 @@ public class BoxmanagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(box[0][4]!=null){
-                    showPopupWindow();
+                    showPopupWindow4();
                 }
                 else {
-                    showPopupWindow4();
+                    showPopupWindow11();
                 }
             }
         });
@@ -124,15 +137,61 @@ public class BoxmanagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(box[0][5]!=null){
-                    showPopupWindow();
+                    showPopupWindow5();
                 }
                 else {
-                    showPopupWindow4();
+                    showPopupWindow11();
                 }
             }
         });
-
-
+        ImageView iv_box7 =findViewById(R.id.iv_box7);
+        iv_box7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(box[0][6]!=null){
+                    showPopupWindow6();
+                }
+                else {
+                    showPopupWindow11();
+                }
+            }
+        });
+        ImageView iv_box8 =findViewById(R.id.iv_box8);
+        iv_box8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(box[0][7]!=null){
+                    showPopupWindow7();
+                }
+                else {
+                    showPopupWindow11();
+                }
+            }
+        });
+        ImageView iv_box9 =findViewById(R.id.iv_box9);
+        iv_box9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(box[0][8]!=null){
+                    showPopupWindow8();
+                }
+                else {
+                    showPopupWindow11();
+                }
+            }
+        });
+        ImageView iv_box10 =findViewById(R.id.iv_box10);
+        iv_box10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(box[0][9]!=null){
+                    showPopupWindow9();
+                }
+                else {
+                    showPopupWindow11();
+                }
+            }
+        });
 
 
 
@@ -141,11 +200,11 @@ public class BoxmanagementActivity extends AppCompatActivity {
         addbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow4();
+                showPopupWindow11();
             }
         });
     }
-    private void showPopupWindow3() {
+    private void showPopupWindow12() {
         //设置contentView
         View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_changebox, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -154,7 +213,7 @@ public class BoxmanagementActivity extends AppCompatActivity {
         View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow4() {
+    private void showPopupWindow11() {
         //设置contentView
         View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_addbox, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -163,7 +222,7 @@ public class BoxmanagementActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow2();
+                showPopupWindow13();
             }
         });
         //显示PopupWindow
@@ -179,7 +238,7 @@ public class BoxmanagementActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow2();
+                showPopupWindow13();
             }
         });
 
@@ -196,6 +255,106 @@ public class BoxmanagementActivity extends AppCompatActivity {
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
 
+    private void showPopupWindow1() {
+        //设置contentView
+        View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //设置各个控件的点击响应
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow13();
+            }
+        });
+
+        ListView listView =contentView.findViewById(R.id.listview);
+        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][1]);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showPopupWindow2() {
+        //设置contentView
+        View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //设置各个控件的点击响应
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow13();
+            }
+        });
+
+        ListView listView =contentView.findViewById(R.id.listview);
+        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][2]);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showPopupWindow3() {
+        //设置contentView
+        View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //设置各个控件的点击响应
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow13();
+            }
+        });
+
+        ListView listView =contentView.findViewById(R.id.listview);
+        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][3]);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showPopupWindow4() {
+        //设置contentView
+        View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //设置各个控件的点击响应
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow13();
+            }
+        });
+
+        ListView listView =contentView.findViewById(R.id.listview);
+        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][4]);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
     private void showPopupWindow5() {
         //设置contentView
         View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
@@ -205,13 +364,113 @@ public class BoxmanagementActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow2();
+                showPopupWindow13();
             }
         });
 
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][1]);
+        tv_boxname.setText(box[0][5]);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showPopupWindow6() {
+        //设置contentView
+        View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //设置各个控件的点击响应
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow13();
+            }
+        });
+
+        ListView listView =contentView.findViewById(R.id.listview);
+        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][6]);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showPopupWindow7() {
+        //设置contentView
+        View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //设置各个控件的点击响应
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow13();
+            }
+        });
+
+        ListView listView =contentView.findViewById(R.id.listview);
+        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][7]);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showPopupWindow8() {
+        //设置contentView
+        View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //设置各个控件的点击响应
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow13();
+            }
+        });
+
+        ListView listView =contentView.findViewById(R.id.listview);
+        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][8]);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
+                R.layout.activity_listview3,
+                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        listView.setAdapter(mSimpleAdapter);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showPopupWindow9() {
+        //设置contentView
+        View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_displaygoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //设置各个控件的点击响应
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow13();
+            }
+        });
+
+        ListView listView =contentView.findViewById(R.id.listview);
+        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][9]);
         SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData2(),
                 R.layout.activity_listview3,
                 new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
@@ -279,7 +538,7 @@ public class BoxmanagementActivity extends AppCompatActivity {
 
 
 
-    private void showPopupWindow2(){
+    private void showPopupWindow13(){
         View contentView = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_addgoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         View rootview = LayoutInflater.from(BoxmanagementActivity.this).inflate(R.layout.activity_boxmanagement, null);
