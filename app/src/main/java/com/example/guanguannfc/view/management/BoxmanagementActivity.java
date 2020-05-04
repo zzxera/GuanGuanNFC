@@ -32,7 +32,7 @@ import java.util.Map;
 public class BoxmanagementActivity extends AppCompatActivity {
 
     private PopupWindow mPopWindow;
-    private String username;
+    private String username="aaa";
     private ThingManage boxget;
     private String[][] box;
     private ConstraintLayout lay_box,lay_time;
@@ -53,7 +53,7 @@ public class BoxmanagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxmanagement);
         Bundle bundle = this.getIntent().getExtras();
-        username=bundle.getString("userName");
+//        username=bundle.getString("userName");
         boxget =new ThingManage(username,this);
         box=boxget.boxAndPosition();
 
