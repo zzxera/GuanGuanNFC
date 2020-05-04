@@ -147,7 +147,7 @@ public class ManageFragment extends Fragment {
         iv_box3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][2]!=null){
+                if(box[0].length>=3){
                     showPopupWindow2();
                 }
                 else {
@@ -160,7 +160,7 @@ public class ManageFragment extends Fragment {
         iv_box4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][3]!=null){
+                if(box[0].length>=4){
                     showPopupWindow3();
                 }
                 else {
@@ -173,7 +173,7 @@ public class ManageFragment extends Fragment {
         iv_box5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][4]!=null){
+                if(box[0].length>=5){
                     showPopupWindow4();
                 }
                 else {
@@ -186,7 +186,7 @@ public class ManageFragment extends Fragment {
         iv_box6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][5]!=null){
+                if(box[0].length>=6){
                     showPopupWindow5();
                 }
                 else {
@@ -198,7 +198,7 @@ public class ManageFragment extends Fragment {
         iv_box7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][6]!=null){
+                if(box[0].length>=7){
                     showPopupWindow6();
                 }
                 else {
@@ -210,7 +210,7 @@ public class ManageFragment extends Fragment {
         iv_box8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][7]!=null){
+                if(box[0].length>=8){
                     showPopupWindow7();
                 }
                 else {
@@ -222,7 +222,7 @@ public class ManageFragment extends Fragment {
         iv_box9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][8]!=null){
+                if(box[0].length>=9){
                     showPopupWindow8();
                 }
                 else {
@@ -234,7 +234,7 @@ public class ManageFragment extends Fragment {
         iv_box10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][9]!=null){
+                if(box[0].length>=10){
                     showPopupWindow9();
                 }
                 else {
