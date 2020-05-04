@@ -1,5 +1,6 @@
 package com.example.guanguannfc.view.management;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +9,11 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.view.HomePageActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -31,16 +36,7 @@ public class SearchgoodsActivity extends AppCompatActivity {
                 new int[]{R.id.tvName,R.id.tv_shuliang});
         listView.setAdapter(mSimpleAdapter);
         TextView tv_boxmanagement2 = findViewById(R.id.tv_boxmanagement2);
-        tv_boxmanagement2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SearchgoodsActivity.this, BoxmanagementActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putString("userName",username);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+
 
     }
     private List<Map<String,Object>> getData() {
@@ -57,10 +53,13 @@ public class SearchgoodsActivity extends AppCompatActivity {
         return list;
 
     }
-
-    public void Boxmanagement2(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, BoxmanagementActivity.class);
-        startActivity(intent);
+    public void onClick(View v) {
+        Intent intent = new Intent();
+        Bundle bundle=new Bundle();
+        bundle.putString("userName",username);
+        intent.putExtras(bundle);
+        this.setResult(2,intent);
+        this.finish();
     }
+
 }
