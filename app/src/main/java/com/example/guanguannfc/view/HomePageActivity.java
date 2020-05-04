@@ -206,6 +206,16 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
         setSelectStatus(1);
 
     }
+    private void setManage() {
+        //getSupportFragmentManager() -> beginTransaction() -> add -> (R.id.main_boy,显示课程 new CourseFragment()
+        ManageFragment manageFragment = new ManageFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("username",userName);
+        manageFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
+        setSelectStatus(2);
+    }
+
 
 
 }
