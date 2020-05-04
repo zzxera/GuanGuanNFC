@@ -22,24 +22,24 @@ import java.util.List;
 import java.util.Map;
 
 public class SearchgoodsActivity extends AppCompatActivity {
-    private ListView listView;
+    private ListView lv_search;
     private String username;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchgoods);
         Bundle bundle = this.getIntent().getExtras();
         username=bundle.getString("userName");
-        listView = (ListView) findViewById(R.id.listview);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData(),
+        lv_search = (ListView) findViewById(R.id.lv_search);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, this.getData20(),
                 R.layout.activity_listview2,
                 new String[]{"tvName","tv_shuliang"},
                 new int[]{R.id.tvName,R.id.tv_shuliang});
-        listView.setAdapter(mSimpleAdapter);
+        lv_search.setAdapter(mSimpleAdapter);
         TextView tv_boxmanagement2 = findViewById(R.id.tv_boxmanagement2);
 
 
     }
-    private List<Map<String,Object>> getData() {
+    private List<Map<String,Object>> getData20() {
         List<Map<String, Object>> list = new ArrayList<Map<String ,Object>>();
         String [] name=new String[]{"化妆品","球类","笔","书"};
         String [] num = new String[]{"2","5","4","7"};
@@ -51,7 +51,6 @@ public class SearchgoodsActivity extends AppCompatActivity {
             list.add(map);
         }
         return list;
-
     }
     public void onClick(View v) {
         Intent intent = new Intent();
@@ -61,5 +60,6 @@ public class SearchgoodsActivity extends AppCompatActivity {
         this.setResult(2,intent);
         this.finish();
     }
+
 
 }

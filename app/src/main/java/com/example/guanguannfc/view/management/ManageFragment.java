@@ -39,12 +39,13 @@ public class ManageFragment extends Fragment {
     private String username;
     private ThingManage boxget;
     private String[][] box;
-    private ConstraintLayout lay_box,lay_time;
+    private ConstraintLayout lay_box,lay_time,lay_search;
 
     private ExpandableListView expand_list_id;
     private Context context;
     private ActivityManage getact;
     private String[] groups;
+    private ListView lv_search;
     //Model：定义的数据
 
 
@@ -95,21 +96,17 @@ public class ManageFragment extends Fragment {
 //        lay_box.setVisibility(View.VISIBLE);
         lay_time=view.findViewById(R.id.layout_timemanagement);
         lay_time.setVisibility(View.INVISIBLE);
+        lay_search=view.findViewById(R.id.layout_search);
+        lay_search.setVisibility(View.INVISIBLE);
+        ListView lv_search = (ListView) view.findViewById(R.id.lv_search);
+        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData20(),
+                R.layout.activity_listview2,
+                new String[]{"tvName","tv_shuliang"},
+                new int[]{R.id.tvName,R.id.tv_shuliang});
+        lv_search.setAdapter(mSimpleAdapter);
 
 
 
-
-        SearchView sv_goods =view.findViewById(R.id.sv_goods);
-        sv_goods.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchgoodsActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putString("userName",username);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
         ImageView iv_box1 =view.findViewById(R.id.iv_box1);
         iv_box1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,6 +251,10 @@ public class ManageFragment extends Fragment {
             }
         });
         return view;
+
+
+
+
 
     }
 
@@ -795,6 +796,7 @@ public class ManageFragment extends Fragment {
             public void onClick(View view) {
                 lay_box.setVisibility(View.VISIBLE);
                 lay_time.setVisibility(View.INVISIBLE);
+                lay_search.setVisibility(View.INVISIBLE);
             }
         });
         view.findViewById(R.id.tv_timemanagement).setOnClickListener(new View.OnClickListener() {
@@ -803,6 +805,15 @@ public class ManageFragment extends Fragment {
             public void onClick(View view) {
                 lay_box.setVisibility(View.INVISIBLE);
                 lay_time.setVisibility(View.VISIBLE);
+                lay_search.setVisibility(View.INVISIBLE);
+            }
+        });
+        view.findViewById(R.id.sv_goods).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lay_box.setVisibility(View.INVISIBLE);
+                lay_time.setVisibility(View.INVISIBLE);
+                lay_search.setVisibility(View.VISIBLE);
             }
         });
 
@@ -827,6 +838,19 @@ public class ManageFragment extends Fragment {
         // Do something in response to button
         Intent intent = new Intent(getActivity(), BoxtipActivity.class);
         startActivity(intent);
+    }
+    private List<Map<String,Object>> getData20() {
+        List<Map<String, Object>> list = new ArrayList<Map<String ,Object>>();
+        String [] name=new String[]{"化妆品","球类","笔","书"};
+        String [] num = new String[]{"2","5","4","7"};
+        for (int i=0;i<name.length;i++)
+        {
+            Map<String,Object> map=new HashMap<String, Object>();
+            map.put("tvName",name[i]);
+            map.put("tv_shuliang",num[i]);
+            list.add(map);
+        }
+        return list;
     }
 
 
