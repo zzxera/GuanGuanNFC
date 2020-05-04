@@ -86,13 +86,13 @@
                 android:layout_width="103dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box1" />
+                android:src="@drawable/img_box1" />
             <ImageView
                 android:id="@+id/iv_box2"
                 android:layout_width="103dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box2" />
+                android:src="@drawable/img_box2" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,14 +112,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box3" />
+                android:src="@drawable/img_box3" />
 
             <ImageView
                 android:id="@+id/iv_box4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box6" />
+                android:src="@drawable/img_box6" />
 
         </LinearLayout>
 
@@ -140,14 +140,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box3" />
+                android:src="@drawable/img_box3" />
 
             <ImageView
                 android:id="@+id/iv_box6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box6" />
+                android:src="@drawable/img_box6" />
         </LinearLayout>
 
         <LinearLayout
@@ -167,14 +167,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box3" />
+                android:src="@drawable/img_box3" />
 
             <ImageView
                 android:id="@+id/iv_box8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box6" />
+                android:src="@drawable/img_box6" />
         </LinearLayout>
 
         <LinearLayout
@@ -194,14 +194,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box4" />
+                android:src="@drawable/img_box4" />
 
             <ImageView
                 android:id="@+id/iv_box10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/img_box5" />
+                android:src="@drawable/img_box5" />
         </LinearLayout>
 
 
@@ -213,7 +213,7 @@
             android:layout_marginStart="155dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="150dp"
-            app:srcCompat="@drawable/img_addbox"
+            android:src="@drawable/img_addbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toStartOf="parent"
@@ -275,6 +275,6 @@
             app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expand_list_id"
-            app:srcCompat="@drawable/img_addact" />
+            android:src="@drawable/img_addact" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
