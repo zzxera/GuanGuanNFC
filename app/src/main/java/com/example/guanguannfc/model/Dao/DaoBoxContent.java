@@ -21,17 +21,25 @@ public class DaoBoxContent {
 
     }
 
-    //插入一条盒子物品数据：需要给定盒子ID、物品名称、物品数量
+    //插入一条盒子物品数据：需要给定盒子名称、物品名称、物品数量
+    public boolean insert(String box_name, String thing_name, Integer thing_num) {
+        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
+        String sql = "insert into Box_Content(box_ID,thing_name,thing_num,created_time,updated_time) values((select id from Box where box_name=?),?,?,?,?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql, new Object[]{box_name, thing_name, thing_num, currentTime, currentTime});
+        db.close();
+        return true;
+    }
+    //插入一条盒子物品数据：需要给定盒子id、物品名称、物品数量
     public boolean insert(long box_ID, String thing_name, Integer thing_num) {
         SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        String sql = "insert into " + GuanContract.BoxContent.TABLE_NAME + "(box_ID,thing_name,thing_num,created_time,updated_time) values(?,?,?,?,?)";
-
+        String sql = "insert into Box_Content(box_ID,thing_name,thing_num,created_time,updated_time) values(?,?,?,?,?)";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql, new Object[]{box_ID, thing_name, thing_num, currentTime, currentTime});
         db.close();
         return true;
-
     }
 
     //删除某个盒子的所有物品：需要给定盒子ID
@@ -44,10 +52,10 @@ public class DaoBoxContent {
     }
 
     //删除某个盒子中某个物品：需要给定盒子ID、物品名称
-    public boolean delete(long box_ID, String thing_name) {
+    public boolean delete(String box_name, String thing_name) {
         SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        String sql = "delete from " + GuanContract.BoxContent.TABLE_NAME + " where box_ID=? and thing_name=?";
-        db.execSQL(sql, new Object[]{box_ID, thing_name});
+        String sql =" delete from Box_Content where box_ID=(select id from Box where box_name=?) and thing_name=?";
+        db.execSQL(sql, new Object[]{box_name, thing_name});
         db.close();
         return true;
     }
