@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.guanguannfc.model.Dao.DaoBox;
 import com.example.guanguannfc.model.Dao.DaoActivityType;
+import com.example.guanguannfc.model.Dao.DaoBoxContent;
 import com.example.guanguannfc.model.Helper.HelperBox;
 import com.example.guanguannfc.model.Helper.HelperBoxContent;
 
@@ -17,11 +18,13 @@ public class ThingManage {
     private Context context;
 
     DaoBox daoBox;
+    DaoBoxContent mDaoBoxContent;
 
     public ThingManage(String username, Context context){
         this.username = username;
         this.context = context;
         daoBox = new DaoBox(context);
+        mDaoBoxContent = new DaoBoxContent(context);
     }
 
     //张浦鑫需要的
@@ -41,6 +44,7 @@ public class ThingManage {
     public String[][] boxAndPosition(){
         ArrayList<HelperBox> list = new ArrayList<HelperBox>();
         list = daoBox.queryAllBox(username);
+        if (list.size() == 0) return null;
         String[][] array = new String[2][list.size()];
         for (int i = 0; i< list.size(); i++){
             array[0][i] = list.get(i).getName();
@@ -72,6 +76,13 @@ public class ThingManage {
     public void addThings(String boxName, String thingName, int number){
         // TODO Auto-generated catch block
         //将名称与数量信息传给数据库
+        mDaoBoxContent.insert(boxName,thingName,number);
+    }
+
+    public void deleteThings(String boxName, String thingName){
+        // TODO Auto-generated catch block
+        //将名称与数量信息传给数据库
+        mDaoBoxContent.delete(boxName,thingName);
     }
 
 }

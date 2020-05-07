@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,8 +30,7 @@ import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 
-import com.example.guanguannfc.view.management.BoxmanagementActivity;
-import com.example.guanguannfc.controller.dataVisualization.datadisplay;
+import com.example.guanguannfc.controller.dataVisualization.Datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 
 
@@ -61,7 +61,7 @@ public class Data extends AppCompatActivity {
     private String[][] ob_actShow;
     private String[][] actInfo;
     private EchartView myWebView;
-    private datadisplay dd=new datadisplay(this);
+    private Datadisplay dd=new Datadisplay(this);
     private Allactivity allactivity=new Allactivity(this);
     private GetTime getTime=new GetTime();
     private List<DataShow> dataShowList = new ArrayList<DataShow>();
