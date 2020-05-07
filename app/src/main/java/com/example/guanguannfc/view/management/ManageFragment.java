@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,12 +47,16 @@ public class ManageFragment extends Fragment {
     private ActivityManage getact;
     private String[] groups;
     private ListView lv_search;
+    private String name;
+    private int num;
     //Model：定义的数据
 
 
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private String[][] childs;
     private String[] child;
+    private String[] goodsname;
+    private String[] goodsnum;
     List<Act> childsq = new ArrayList<Act>();
 
 
@@ -74,7 +79,7 @@ public class ManageFragment extends Fragment {
 
         getact=new ActivityManage(username,ctx);
         initView();
-        Button btn_changeact = view.findViewById(R.id.btn_changeact);
+        ImageView btn_changeact = view.findViewById(R.id.btn_changeact);
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.expand_chidren_item, null);
         final Button btn_change_actname = contentView.findViewById(R.id.btn_change_actname);
         btn_changeact.setOnClickListener(new View.OnClickListener() {
@@ -276,9 +281,15 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showPopupWindow16();
             }
         });
+        ListView lv_goods=contentView.findViewById(R.id.lv_goods);
+        SimpleAdapter ms=new SimpleAdapter(getActivity(),getData2(),
+                R.layout.activity_lv_goods,
+                new String[]{"tv_goods_name","tv_goods_shuliang"},
+                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang});
+        lv_goods.setAdapter(ms);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
@@ -295,15 +306,15 @@ public class ManageFragment extends Fragment {
                 showPopupWindow13();
             }
         });
-
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][0]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData1(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][0]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
+
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
@@ -325,10 +336,10 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][1]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData2(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][1]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
@@ -350,10 +361,10 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][2]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData3(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][2]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
@@ -375,10 +386,10 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][3]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData4(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][3]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
@@ -400,10 +411,10 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][4]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData5(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][4]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
@@ -425,10 +436,10 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][5]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData6(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][5]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
@@ -450,10 +461,10 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][6]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData7(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][6]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
@@ -475,10 +486,10 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][7]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData8(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][7]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
@@ -500,10 +511,10 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][8]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData9(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][8]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
@@ -525,202 +536,38 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][9]);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData10(),
-                R.layout.activity_listview3,
-                new String[]{"tv_goods_name","tv_goods_shuliang","btn_change_num"},
-                new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang,R.id.btn_change_num});
+        String [][] thing=boxget.thingAndNumberInBox(box[0][9]);
+        goodsname=thing[0];
+        goodsnum=thing[1];
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
+
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    private List<Map<String,Object>> getData1() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][0]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-
-    private List<Map<String,Object>> getData2() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][1]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-    private List<Map<String,Object>> getData3() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][2]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-    private List<Map<String,Object>> getData4() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][3]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-    private List<Map<String,Object>> getData5() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][4]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-    private List<Map<String,Object>> getData6() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][5]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-    private List<Map<String,Object>> getData7() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][6]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-    private List<Map<String,Object>> getData8() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][7]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-    private List<Map<String,Object>> getData9() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][8]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-    private List<Map<String,Object>> getData10() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        String [] name;
-        String [] num;
-        String [][] thing=boxget.thingAndNumberInBox(box[0][9]);
-        name=thing[0];
-        num=thing[1];
-        for (int j=0;j<name.length;j++)
-        {
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[j]);
-            map.put("tv_goods_shuliang",num[j]);
-            map.put("btn_change_num",R.id.btn_change_num);
-            list.add(map);
-        }
-        return list;
-    }
-
-
     private void showPopupWindow13(){
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addgoods, null);
+        final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addgoods, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        Button btn_add_goods=contentView.findViewById(R.id.btn_add_goods);
+        btn_add_goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText ed_name=contentView.findViewById(R.id.ed_name);
+                EditText ed_num=contentView.findViewById(R.id.ed_num);
+                name=ed_name.getText().toString();
+                String i=ed_num.getText().toString();
+                num=Integer.valueOf(i).intValue();
+                boxget.addThings(name,num);
+            }
+        });
+        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showPopupWindow16(){
+        final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_goods_box, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
@@ -739,8 +586,10 @@ public class ManageFragment extends Fragment {
     private void initView() {
         groups=getact.getBigActivity(getActivity());
         for (int i =0;i<groups.length;i++){
-            child=getact.getSmallActivity(groups[i]);
-            childsq.add(new Act(groups[i],child));
+            if (groups.length>1){
+                child = getact.getSmallActivity(groups[i]);
+                childsq.add(new Act(groups[i], child));
+            }
         }
         expand_list_id=view.findViewById(R.id.expand_list_id);
         ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(getActivity(),groups,childsq);
@@ -848,6 +697,19 @@ public class ManageFragment extends Fragment {
             Map<String,Object> map=new HashMap<String, Object>();
             map.put("tvName",name[i]);
             map.put("tv_shuliang",num[i]);
+            list.add(map);
+        }
+        return list;
+    }
+    private List<Map<String,Object>> getData2() {
+        List<Map<String, Object>> list = new ArrayList<Map<String ,Object>>();
+        String [] name=new String[]{"化妆品","球类","笔","书"};
+        String [] num = new String[]{"2","5","4","7"};
+        for (int i=0;i<name.length;i++)
+        {
+            Map<String,Object> map=new HashMap<String, Object>();
+            map.put("tv_goods_name",name[i]);
+            map.put("tv_goods_shuliang",num[i]);
             list.add(map);
         }
         return list;
