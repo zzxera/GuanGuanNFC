@@ -51,7 +51,7 @@ public class ThingManage {
     }
 
 
-    public boolean isBoxExist(String name){
+    public boolean isBoxExist(String boxName){
         boolean boxExist = false;
         // TODO Auto-generated catch block
         if (true){//需要表进行存在判断
@@ -60,17 +60,8 @@ public class ThingManage {
         return boxExist;
     }
 
-    public boolean isActivityNameExist(String name){
-        boolean ActivityNameExist = false;
-        // TODO Auto-generated catch block
-        if (true){//需要表进行存在判断
-            ActivityNameExist = true;
-        }
-        return ActivityNameExist;
-    }
-
-    public void deleteBox(String name, String location){
-        if (isBoxExist(name)){
+    public void deleteBox(String boxName){
+        if (isBoxExist(boxName)){
             // TODO Auto-generated catch block
             //将数据传给数据库
         }else{
@@ -78,7 +69,7 @@ public class ThingManage {
         }
     }
 
-    public void addThings(String name, int number){
+    public void addThings(String boxName, String thingName, int number){
         // TODO Auto-generated catch block
         //将名称与数量信息传给数据库
     }
