@@ -53,6 +53,7 @@ public class MsimpleAdapter extends BaseAdapter {
             ViewHolder.tv_goods_name = (TextView)convertView.findViewById(R.id.tv_goods_name);
             ViewHolder.btn_change_num=convertView.findViewById(R.id.btn_change_num);
             ViewHolder.tv_goods_shuliang =convertView.findViewById(R.id.tv_goods_shuliang);
+            ViewHolder.btn_delet=convertView.findViewById(R.id.btn_delet);
             convertView.setTag(ViewHolder);
 
         }else {
@@ -64,7 +65,6 @@ public class MsimpleAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 thingName=ViewHolder.tv_goods_name.getText().toString();
-                boxget.deleteThings(boxName,thingName);
             }
         });
         ViewHolder.btn_change_num.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +88,6 @@ public class MsimpleAdapter extends BaseAdapter {
         TextView tv_goods_shuliang;
         Button btn_change_num;
         Button btn_delet;
-        TextView tv_boxname;
     }
 
 }
