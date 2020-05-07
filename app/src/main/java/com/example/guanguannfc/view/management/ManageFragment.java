@@ -116,8 +116,10 @@ public class ManageFragment extends Fragment {
         iv_box1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=1){
-                    showbox1();
+                if(box!=null){
+                    if(box[0].length>=1){
+                        showbox1();
+                    }
                 }
                 else {
                     showaddbox();
@@ -137,8 +139,10 @@ public class ManageFragment extends Fragment {
         iv_box2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=2){
-                    showbox2();
+                if(box!=null){
+                    if(box[0].length>=2){
+                        showbox2();
+                    }
                 }
                 else {
                     showaddbox();
@@ -149,8 +153,10 @@ public class ManageFragment extends Fragment {
         iv_box3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=3){
-                    showbox3();
+                if(box!=null){
+                    if(box[0].length>=3){
+                        showbox3();
+                    }
                 }
                 else {
                     showaddbox();
@@ -162,8 +168,10 @@ public class ManageFragment extends Fragment {
         iv_box4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=4){
-                    showbox4();
+                if(box!=null){
+                    if(box[0].length>=4){
+                        showbox4();
+                    }
                 }
                 else {
                     showaddbox();
@@ -175,8 +183,10 @@ public class ManageFragment extends Fragment {
         iv_box5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=5){
-                    showbox5();
+                if(box!=null){
+                    if(box[0].length>=5){
+                        showbox5();
+                    }
                 }
                 else {
                     showaddbox();
@@ -188,8 +198,10 @@ public class ManageFragment extends Fragment {
         iv_box6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=6){
-                    showbox6();
+                if(box!=null){
+                    if(box[0].length>=6){
+                        showbox6();
+                    }
                 }
                 else {
                     showaddbox();
@@ -200,8 +212,10 @@ public class ManageFragment extends Fragment {
         iv_box7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=7){
-                    showbox7();
+                if(box!=null){
+                    if(box[0].length>=7){
+                        showbox7();
+                    }
                 }
                 else {
                     showaddbox();
@@ -212,8 +226,10 @@ public class ManageFragment extends Fragment {
         iv_box8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=8){
-                    showbox8();
+                if(box!=null){
+                    if(box[0].length>=8){
+                        showbox8();
+                    }
                 }
                 else {
                     showaddbox();
@@ -224,8 +240,10 @@ public class ManageFragment extends Fragment {
         iv_box9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=9){
-                    showbox9();
+                if(box!=null){
+                    if(box[0].length>=9){
+                        showbox9();
+                    }
                 }
                 else {
                     showaddbox();
@@ -236,8 +254,10 @@ public class ManageFragment extends Fragment {
         iv_box10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=10){
-                    showbox10();
+                if(box!=null){
+                    if(box[0].length>=10){
+                        showbox10();
+                    }
                 }
                 else {
                     showaddbox();
@@ -315,7 +335,6 @@ public class ManageFragment extends Fragment {
                 showaddgoods();
                 Bundle bundle=new Bundle();
                 bundle.putString("boxname",boxname);
-                intent.putExtra(boxname);
             }
         });
         //显示PopupWindow
@@ -563,7 +582,6 @@ public class ManageFragment extends Fragment {
                 name=ed_name.getText().toString();
                 String i=ed_num.getText().toString();
                 num=Integer.valueOf(i).intValue();
-                boxName=bundle.getString("boxname");
                 boxget.addThings(boxName,name,num);
             }
         });
