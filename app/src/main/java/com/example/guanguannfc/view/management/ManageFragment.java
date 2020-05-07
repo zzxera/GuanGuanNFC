@@ -47,8 +47,8 @@ public class ManageFragment extends Fragment {
     private ActivityManage getact;
     private String[] groups;
     private ListView lv_search;
-    private String name;
-    private int num;
+    private String thingName;
+    private int number;
     //Model：定义的数据
 
 
@@ -560,10 +560,10 @@ public class ManageFragment extends Fragment {
                 EditText ed_num=contentView.findViewById(R.id.ed_num);
                 EditText ed_boxname=contentView.findViewById(R.id.tv_boxname);
                 boxName =ed_boxname.getText().toString();
-                name=ed_name.getText().toString();
+                thingName=ed_name.getText().toString();
                 String i=ed_num.getText().toString();
-                num=Integer.valueOf(i).intValue();
-                boxget.addThings(boxName，name,num);
+                number=Integer.valueOf(i).intValue();
+                boxget.addThings(boxName,thingName,number);
             }
         });
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
