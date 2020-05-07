@@ -80,6 +80,7 @@ public class SigninFragment extends Fragment {
 //                        intent.putExtras(bundle);
 //                        startActivity(intent);
                         Intent intent = new Intent(getActivity(), HomePageActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         Bundle bundle=new Bundle();
                         bundle.putString("userName",username);
                         intent.putExtras(bundle);

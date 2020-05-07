@@ -2,19 +2,13 @@ package com.example.guanguannfc.view.data;
 
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,7 +17,6 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,11 +30,10 @@ import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 
 import com.example.guanguannfc.view.management.BoxmanagementActivity;
-import com.example.guanguannfc.controller.dataVisualization.Datadisplay;
+import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 
 
-import java.io.Console;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,7 +61,7 @@ public class Data extends AppCompatActivity {
     private String[][] ob_actShow;
     private String[][] actInfo;
     private EchartView myWebView;
-    private Datadisplay dd=new Datadisplay(this);
+    private datadisplay dd=new datadisplay(this);
     private Allactivity allactivity=new Allactivity(this);
     private GetTime getTime=new GetTime();
     private List<DataShow> dataShowList = new ArrayList<DataShow>();
