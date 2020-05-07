@@ -51,6 +51,8 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
 
         initView();
         setMain();
+        checkClick();
+
 
         img_person.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,13 +189,24 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,fragment4).commit();
                 setSelectStatus(3);
                 break;
-            case R.id.button_quit:
-                Intent intent2 = new Intent();
-                intent2.setClass(HomePageActivity.this, LoginActivity.class);
-                startActivity(intent2);
-                break;
+
 
         }
+    }
+
+    private void checkClick(){
+        findViewById(R.id.button_quit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //                退出登录
+                Intent intent2 = new Intent();
+                intent2.setClass(HomePageActivity.this, LoginActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
+            }
+        });
+
+
     }
 
     private void setMain() {
@@ -206,15 +219,7 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
         setSelectStatus(1);
 
     }
-    private void setManage() {
-        //getSupportFragmentManager() -> beginTransaction() -> add -> (R.id.main_boy,显示课程 new CourseFragment()
-        ManageFragment manageFragment = new ManageFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("username",userName);
-        manageFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
-        setSelectStatus(2);
-    }
+
 
 
 
