@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="236dp"
+        android:layout_height="321dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="220dp"
+        android:background="#9E8686"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="62dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="修改物品数量"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/ed_num"
+            android:layout_width="171dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="请输入物品数量"
+            android:inputType="textPersonName" />
+
+
+        <Button
+            android:id="@+id/btn_add_goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="确定" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
