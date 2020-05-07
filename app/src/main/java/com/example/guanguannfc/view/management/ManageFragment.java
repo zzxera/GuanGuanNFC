@@ -57,6 +57,7 @@ public class ManageFragment extends Fragment {
     private String[] child;
     private String[] goodsname;
     private String[] goodsnum;
+    private String boxName;
     List<Act> childsq = new ArrayList<Act>();
 
 
@@ -557,10 +558,12 @@ public class ManageFragment extends Fragment {
             public void onClick(View v) {
                 EditText ed_name=contentView.findViewById(R.id.ed_name);
                 EditText ed_num=contentView.findViewById(R.id.ed_num);
+                EditText ed_boxname=contentView.findViewById(R.id.tv_boxname);
+                boxName =ed_boxname.getText().toString();
                 name=ed_name.getText().toString();
                 String i=ed_num.getText().toString();
                 num=Integer.valueOf(i).intValue();
-                boxget.addThings(name,num);
+                boxget.addThings(boxName，name,num);
             }
         });
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
