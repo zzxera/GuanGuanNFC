@@ -563,7 +563,7 @@ public class ManageFragment extends Fragment {
                 name=ed_name.getText().toString();
                 String i=ed_num.getText().toString();
                 num=Integer.valueOf(i).intValue();
-                boxget.addThings(boxName，name,num);
+                boxget.addThings(boxName,name,num);
             }
         });
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);

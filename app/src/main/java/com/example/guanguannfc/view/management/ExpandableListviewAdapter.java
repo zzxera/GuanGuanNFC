@@ -38,7 +38,9 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return childsq.get(i).getAct().length;
+        if (childsq.get(i).getAct() != null) return childsq.get(i).getAct().length;
+        return 0;
+
     }
 
     @Override
