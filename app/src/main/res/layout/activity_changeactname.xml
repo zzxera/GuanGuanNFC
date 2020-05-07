@@ -10,12 +10,12 @@
         android:layout_width="248dp"
         android:layout_height="224dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="180dp"
         android:background="#9E8686"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="请输入活动名称"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/button4"
