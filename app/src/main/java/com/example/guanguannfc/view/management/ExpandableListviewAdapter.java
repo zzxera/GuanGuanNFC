@@ -109,13 +109,13 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
         childViewHolder.chidren_item.setText(childsq.get(groupPosition).getAct()[childPosition]);
-        Button btn1 =convertView.findViewById(R.id.btn_change_actname);
+
+        final Button btn1 =convertView.findViewById(R.id.btn_change_actname);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupWindow();
             }
-
             private void showPopupWindow() {
                 View contentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_changeactname,null);
                 mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
