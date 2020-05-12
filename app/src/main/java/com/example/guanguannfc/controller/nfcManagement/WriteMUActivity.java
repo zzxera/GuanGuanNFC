@@ -44,10 +44,10 @@ public class WriteMUActivity extends BaseNfcActivity {
         try {
             ultralight.connect();
             //写入八个汉字，从第五页开始写，中文需要转换成GB2312格式
-            ultralight.writePage(4, "北京".getBytes(Charset.forName("GB2312")));
-            ultralight.writePage(5, "上海".getBytes(Charset.forName("GB2312")));
-            ultralight.writePage(6, "广州".getBytes(Charset.forName("GB2312")));
-            ultralight.writePage(7, "天津".getBytes(Charset.forName("GB2312")));
+            ultralight.writePage(4, "这是".getBytes(Charset.forName("GB2312")));
+            ultralight.writePage(5, "化妆".getBytes(Charset.forName("GB2312")));
+            ultralight.writePage(6, "盒子".getBytes(Charset.forName("GB2312")));
+            ultralight.writePage(7, "哦哦".getBytes(Charset.forName("GB2312")));
             Toast.makeText(this, "写入成功", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
         } finally {

@@ -11,10 +11,9 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import  com.example.guanguannfc.R;
-//import com.ricky.nfc.base.BaseNfcActivity;
 
 public class RunAppActivity extends BaseNfcActivity {
-    private String mPackageName = "com.android.mms";//短信
+    private String mPackageName = "com.android.GuanGuanNFC";//打开本程序
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
