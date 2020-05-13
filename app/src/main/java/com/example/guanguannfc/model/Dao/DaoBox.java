@@ -36,6 +36,16 @@ public class DaoBox {
         db.close();
         return true;
     }
+    //添加一个盒子：需给定用户id、nfc、盒子名称、盒子位置
+    public boolean insert(int user_ID,String nfc,String box_name,String box_pos){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="insert into Box(user_ID,nfc,box_name,box_pos,created_time,updated_time) values(?,?,?,?,?,?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{user_ID,nfc,box_name,box_pos,currentTime,currentTime});
+        db.close();
+        return true;
+    }
     //删除盒子：需给定用户名、盒子名称
     public boolean delete(String user_name,String box_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
