@@ -56,6 +56,7 @@
         app:layout_constraintBottom_toTopOf="@+id/layout_show"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/ll_select"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -200,6 +201,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"></TextView>
 
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="模拟开始计时"
+
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView12"></Button>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -207,9 +220,9 @@
         android:id="@+id/layout_allact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_prompt">
+        app:layout_constraintTop_toBottomOf="parent">
 
         <TextView
             android:id="@+id/text_acttype"
@@ -230,12 +243,11 @@
             android:layout_width="98dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
 
             android:entries="@array/acttype"
             android:overlapAnchor="false"
             app:layout_constraintStart_toEndOf="@+id/text_acttype"
-            app:layout_constraintTop_toTopOf="parent"></Spinner>
+            app:layout_constraintTop_toTopOf="@+id/text_acttype"></Spinner>
 
         <TextView
             android:id="@+id/text_sort"
@@ -268,7 +280,12 @@
             android:id="@+id/lv_allacts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
+
+            android:layout_marginTop="50dp"
+
+            android:divider="@android:color/transparent"
+            android:dividerHeight="20sp"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_acttype"
 

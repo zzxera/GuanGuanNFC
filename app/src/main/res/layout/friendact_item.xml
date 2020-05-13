@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/ll_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <ImageView
+            android:id="@+id/img_friendHead"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/img_head"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            ></ImageView>
+
+        <TextView
+            android:id="@+id/tv_friendName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="好友用户名"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"
+            ></TextView>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+
+        android:background="@color/colorlight"
+        app:layout_constraintTop_toBottomOf="@+id/ll_user"
+
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="20dp"
+        >
+
+        <TextView
+            android:id="@+id/text_type1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="活动类型"
+            android:textColor="@color/colorgray"></TextView>
+
+        <TextView
+            android:id="@+id/text_act1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/text_type1"
+            android:layout_alignLeft="@+id/text_type1"
+            android:layout_marginTop="10dp"
+            android:text="吃饭"
+            android:textColor="@color/colorbBlack"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_act1"
+            android:layout_alignLeft="@+id/text_act1"
+            android:layout_marginTop="10dp"
+            android:text="食堂"
+            android:textColor="@color/colorgray"></TextView>
+
+        <TextView
+            android:id="@+id/text_endttime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:text="13:40:10"
+            android:textColor="@color/colorgray"></TextView>
+
+        <TextView
+            android:id="@+id/min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:layout_toStartOf="@id/text_endttime"
+            android:layout_alignTop="@id/text_endttime"
+
+            ></TextView>
+
+        <TextView
+            android:id="@+id/text_starttime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:12:12"
+            android:layout_toStartOf="@id/min"
+            android:layout_alignTop="@id/text_endttime"
+            ></TextView>
+
+
+        <TextView
+            android:id="@+id/text_long"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/text_act1"
+            android:layout_alignEnd="@+id/text_endttime"
+
+            android:text="0h15m15s"
+            android:textColor="@color/colorRed"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_long"
+            android:layout_alignEnd="@+id/text_endttime"
+            android:layout_marginTop="10dp"
+            android:text="2020-04-10"
+            android:textColor="@color/colorgray"></TextView>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -93,13 +93,13 @@ public class ManageFragment extends Fragment {
         addact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow15();
+                showaddact();
             }
         });
 
 
         lay_box=view.findViewById(R.id.layout_boxmanagement);
-//        lay_box.setVisibility(View.VISIBLE);
+//      lay_box.setVisibility(View.VISIBLE);
         lay_time=view.findViewById(R.id.layout_timemanagement);
         lay_time.setVisibility(View.INVISIBLE);
         lay_search=view.findViewById(R.id.layout_search);
@@ -112,16 +112,17 @@ public class ManageFragment extends Fragment {
         lv_search.setAdapter(mSimpleAdapter);
 
 
-
         ImageView iv_box1 =view.findViewById(R.id.iv_box1);
         iv_box1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][0]!=null){
-                    showPopupWindow();
+                if(box!=null){
+                    if(box[0].length>=1){
+                        showbox1();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -129,7 +130,7 @@ public class ManageFragment extends Fragment {
         iv_box_1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                showPopupWindow12();
+                showchangebox();
                 return false;
             }
         });
@@ -138,11 +139,13 @@ public class ManageFragment extends Fragment {
         iv_box2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0][1]!=null){
-                    showPopupWindow1();
+                if(box!=null){
+                    if(box[0].length>=2){
+                        showbox2();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -150,11 +153,13 @@ public class ManageFragment extends Fragment {
         iv_box3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=3){
-                    showPopupWindow2();
+                if(box!=null){
+                    if(box[0].length>=3){
+                        showbox3();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -163,11 +168,13 @@ public class ManageFragment extends Fragment {
         iv_box4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=4){
-                    showPopupWindow3();
+                if(box!=null){
+                    if(box[0].length>=4){
+                        showbox4();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -176,11 +183,13 @@ public class ManageFragment extends Fragment {
         iv_box5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=5){
-                    showPopupWindow4();
+                if(box!=null){
+                    if(box[0].length>=5){
+                        showbox5();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -189,11 +198,13 @@ public class ManageFragment extends Fragment {
         iv_box6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=6){
-                    showPopupWindow5();
+                if(box!=null){
+                    if(box[0].length>=6){
+                        showbox6();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -201,11 +212,13 @@ public class ManageFragment extends Fragment {
         iv_box7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=7){
-                    showPopupWindow6();
+                if(box!=null){
+                    if(box[0].length>=7){
+                        showbox7();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -213,11 +226,13 @@ public class ManageFragment extends Fragment {
         iv_box8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=8){
-                    showPopupWindow7();
+                if(box!=null){
+                    if(box[0].length>=8){
+                        showbox8();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -225,11 +240,13 @@ public class ManageFragment extends Fragment {
         iv_box9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=9){
-                    showPopupWindow8();
+                if(box!=null){
+                    if(box[0].length>=9){
+                        showbox9();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -237,11 +254,13 @@ public class ManageFragment extends Fragment {
         iv_box10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(box[0].length>=10){
-                    showPopupWindow9();
+                if(box!=null){
+                    if(box[0].length>=10){
+                        showbox10();
+                    }
                 }
                 else {
-                    showPopupWindow11();
+                    showaddbox();
                 }
             }
         });
@@ -253,7 +272,7 @@ public class ManageFragment extends Fragment {
         addbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow11();
+                showaddbox();
             }
         });
         return view;
@@ -264,7 +283,7 @@ public class ManageFragment extends Fragment {
 
     }
 
-    private void showPopupWindow12() {
+    private void showchangebox() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_changebox, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -273,7 +292,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow11() {
+    private void showaddbox() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addbox, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -282,7 +301,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow16();
+                showaddgood_box();
             }
         });
         ListView lv_goods=contentView.findViewById(R.id.lv_goods);
@@ -295,33 +314,35 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow() {
+    private void showbox1() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
         ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        final TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][0]);
+        final String boxname=tv_boxname.getText().toString();
         String [][] thing=boxget.thingAndNumberInBox(box[0][0]);
         goodsname=thing[0];
         goodsnum=thing[1];
         MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
-
+        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showaddgoods();
+                Bundle bundle=new Bundle();
+                bundle.putString("boxname",boxname);
+            }
+        });
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
 
-    private void showPopupWindow1() {
+    private void showbox2() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -330,7 +351,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -346,7 +367,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow2() {
+    private void showbox3() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -355,7 +376,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -371,7 +392,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow3() {
+    private void showbox4() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -380,7 +401,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -396,7 +417,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow4() {
+    private void showbox5() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -405,7 +426,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -421,7 +442,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow5() {
+    private void showbox6() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -430,7 +451,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -446,7 +467,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow6() {
+    private void showbox7() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -455,7 +476,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -471,7 +492,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow7() {
+    private void showbox8() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -480,7 +501,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -496,7 +517,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow8() {
+    private void showbox9() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -505,7 +526,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -521,7 +542,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow9() {
+    private void showbox10() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -530,7 +551,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                showaddgoods();
             }
         });
 
@@ -549,7 +570,7 @@ public class ManageFragment extends Fragment {
     }
 
 
-    private void showPopupWindow13(){
+    private void showaddgoods(){
         final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addgoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         Button btn_add_goods=contentView.findViewById(R.id.btn_add_goods);
@@ -558,8 +579,6 @@ public class ManageFragment extends Fragment {
             public void onClick(View v) {
                 EditText ed_name=contentView.findViewById(R.id.ed_name);
                 EditText ed_num=contentView.findViewById(R.id.ed_num);
-                EditText ed_boxname=contentView.findViewById(R.id.tv_boxname);
-                boxName =ed_boxname.getText().toString();
                 name=ed_name.getText().toString();
                 String i=ed_num.getText().toString();
                 num=Integer.valueOf(i).intValue();
@@ -569,14 +588,14 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow16(){
+    private void showaddgood_box(){
         final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_goods_box, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
 
-    private void showPopupWindow15() {
+    private void showaddact() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addact, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -671,26 +690,6 @@ public class ManageFragment extends Fragment {
 
     }
 
-
-
-
-
-
-    public void Searchgoods(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(getActivity(), SearchgoodsActivity.class);
-        startActivity(intent);
-    }
-    public void Displaygoods(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(getActivity(), DisplaygoodsActivity.class);
-        startActivity(intent);
-    }
-    public void Boxtip(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(getActivity(), BoxtipActivity.class);
-        startActivity(intent);
-    }
     private List<Map<String,Object>> getData20() {
         List<Map<String, Object>> list = new ArrayList<Map<String ,Object>>();
         String [] name=new String[]{"化妆品","球类","笔","书"};

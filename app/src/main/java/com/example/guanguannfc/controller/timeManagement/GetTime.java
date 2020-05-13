@@ -200,7 +200,7 @@ public class GetTime{
 //自己乱写的
     //获取当前时间并显示为字符串形式 12：24：23
     public static String getNowTime(){
-        SimpleDateFormat format = new SimpleDateFormat("HH时mm分ss秒");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         Date curData = new Date(System.currentTimeMillis());
         String string = format.format(curData);
         return string;
@@ -214,10 +214,27 @@ public class GetTime{
 
     //将获取的长整型起始时间与当前的时间进行计算并返回字符串型持续时间 12：24：23
     public static String countTime(long startTime){
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("HH时mm分ss秒");
         long endTime = System.currentTimeMillis();
-        String contineTime = format.format(startTime - endTime);
-        return contineTime;
+//        String contineTime = format.format(startTime - endTime);
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+        long ns = 1000;
+        // long ns = 1000;
+        // 获得两个时间的秒时间差异
+        long diff = (endTime) - (startTime);
+        // 计算差多少小时
+        long hour = diff % nd / nh;
+        // 计算差多少分钟
+        long min = diff % nd % nh / nm;
+        // 计算差多少秒//输出结果
+        long sec = diff % nd % nh % nm / ns;
+        String res = "";
+        res += ""+hour + "时"+min + "分"+sec+"秒";
+
+        return res;
+//        return contineTime;
     }
 
     //将字符串转换为时间戳，pattern为日期格式

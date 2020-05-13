@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DemoClockView01">
+        <attr name="borderwidth" format="dimension"/>
+        <attr name="bordercolor" format="color"/>
+        <attr name="pointcolor" format="color"/>
+        <attr name="hourcolor" format="color"/>
+        <attr name="minutecolor" format="color"/>
+        <attr name="secondcolor" format="color"/>
+        <attr name="numsize" format="dimension"/>
+        <attr name="numcolor" format="color"/>
+    </declare-styleable>
+</resources>
