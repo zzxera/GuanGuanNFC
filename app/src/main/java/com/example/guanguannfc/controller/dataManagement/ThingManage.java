@@ -76,13 +76,13 @@ public class ThingManage {
     public void addThings(String boxName, String thingName, int number){
         // TODO Auto-generated catch block
         //将名称与数量信息传给数据库
-        mDaoBoxContent.insert(boxName,thingName,number);
+        mDaoBoxContent.insert(username,boxName,thingName,number);
     }
 
     public void deleteThings(String boxName, String thingName){
         // TODO Auto-generated catch block
         //将名称与数量信息传给数据库
-        mDaoBoxContent.delete(boxName,thingName);
+        mDaoBoxContent.delete(username,boxName,thingName);
     }
 
 }

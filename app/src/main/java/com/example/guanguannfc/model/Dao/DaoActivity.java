@@ -31,6 +31,18 @@ public class DaoActivity {
         return true;
 
     }
+
+    //添加一个活动。需要：用户名、nfc、大类名称、活动名称
+    public boolean insert(int user_ID,String nfc,int type_ID,String act_name){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="insert into Activity (user_ID,nfc,type_ID,act_name,created_time,updated_time) values(?,?,?,?,?,?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{user_ID,nfc,type_ID,act_name,currentTime,currentTime});
+        db.close();
+        return true;
+
+    }
     //根据活动名称删除整个活动：给定用户名、要删除的活动名称
     public boolean delete(String user_name,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();

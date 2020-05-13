@@ -31,6 +31,16 @@ public class DaoBoxContent {
         db.close();
         return true;
     }
+    //插入一条盒子物品数据：需要给定盒子id、物品名称、物品数量
+    public boolean insert(int box_ID, String thing_name, Integer thing_num) {
+        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
+        String sql = "insert into Box_Content(box_ID,thing_name,thing_num,created_time,updated_time) values(?,?,?,?,?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql, new Object[]{box_ID,thing_name, thing_num, currentTime, currentTime});
+        db.close();
+        return true;
+    }
 
 
     //删除某个盒子的所有物品：需要给定盒子ID
