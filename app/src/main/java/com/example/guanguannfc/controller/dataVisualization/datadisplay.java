@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 
-public class Datadisplay {
+public class datadisplay {
     DaoActSta Dq;
-    public Datadisplay(Context context){
+    public datadisplay(Context context){
         this.Dq = new DaoActSta(context);
     }
     GetTime gt = new GetTime();

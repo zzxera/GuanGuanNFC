@@ -2,7 +2,6 @@ package com.example.guanguannfc.view.data;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,7 +30,7 @@ import android.widget.Toast;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
-import com.example.guanguannfc.controller.dataVisualization.Datadisplay;
+import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
 import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
@@ -70,7 +69,7 @@ public class DataFragment extends Fragment {
     private String[][] ob_actShow;
     private String[][] actInfo;
     private EchartView myWebView;
-    private Datadisplay dd=new Datadisplay(getActivity());
+    private datadisplay dd=new datadisplay(getActivity());
     private Allactivity allactivity=new Allactivity(getActivity());
     private GetTime getTime=new GetTime();
     private List<DataShow> dataShowList = new ArrayList<DataShow>();
@@ -90,7 +89,7 @@ public class DataFragment extends Fragment {
             userName = bundle.getString("username");
         }
 
-        dd=new Datadisplay(getActivity());
+        dd=new datadisplay(getActivity());
         allactivity=new Allactivity(getActivity());
         initView();
         actlist.setAdapter(dataShowAdapter);
