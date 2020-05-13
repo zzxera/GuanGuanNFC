@@ -17,6 +17,7 @@ public class ClockActivity extends AppCompatActivity {
     private Button btn_suspend,btn_stop;
     private TextView tv_start_time,tv_now_time,tv_distance,tv_duration;
     private GetTime getTime;
+    String userName;
 
 
 
@@ -34,6 +35,12 @@ public class ClockActivity extends AppCompatActivity {
         tv_now_time.setText(getTime.getNowTime());
         tv_duration.setText(getTime.countTime(startTime));
 
+        Intent intent=getIntent();
+        userName=intent.getStringExtra("username");
+        Toast.makeText(this,"开始计时",Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,userName,Toast.LENGTH_LONG).show();
+
+
     }
 
     public void click(View v){
@@ -43,12 +50,19 @@ public class ClockActivity extends AppCompatActivity {
                 Toast.makeText(this,"计时已暂停",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_stop:
-                Toast.makeText(this,"计时结束",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
-                intent.setClass(ClockActivity.this, Data.class);
-                startActivity(intent);
+                intent.putExtra("result","本次计时已结束");
+                this.setResult(1,intent);
+                this.finish();
                 break;
         }
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("result","计时继续");
+        this.setResult(1,intent);
+        this.finish();
     }
 
 

@@ -1,58 +1,56 @@
 package com.example.guanguannfc.view.data;
 
-
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.example.guanguannfc.R;
-
+import com.example.guanguannfc.controller.dataVisualization.Allactivity;
+import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
 import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
-import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
-
-import com.example.guanguannfc.controller.dataVisualization.datadisplay;
-import com.example.guanguannfc.controller.dataVisualization.Allactivity;
-
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Data extends AppCompatActivity {
 
-
-
-//    private Datashow frag_datashow = new Datashow();
-//    private DataShow frag_datashow = new DataShow();
-
-
+public class DataFragment extends Fragment {
+    private View view;
     private Spinner spinner_times,spinner_types,spinner_acts,spinner_sorts;
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
+    private LinearLayout ll_container;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
     private TextView tv_prompt,tv_noInfo,tv_noActInfo;
     private String userName,txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
     public String txt_showActType,txt_sortType;
+    private TextView tv_data,tv_allact;
     private String[] allActName;
     private String[][] actAndTime;
     private Object[] ob_dataShow;
@@ -61,8 +59,8 @@ public class Data extends AppCompatActivity {
     private String[][] ob_actShow;
     private String[][] actInfo;
     private EchartView myWebView;
-    private datadisplay dd=new datadisplay(this);
-    private Allactivity allactivity=new Allactivity(this);
+    private datadisplay dd=new datadisplay(getActivity());
+    private Allactivity allactivity=new Allactivity(getActivity());
     private GetTime getTime=new GetTime();
     private List<DataShow> dataShowList = new ArrayList<DataShow>();
     private ListView actlist;
@@ -77,68 +75,63 @@ public class Data extends AppCompatActivity {
             820, 932, 901, 934, 1290
     };
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data);
-//        获取用户名
-        Bundle bundle = this.getIntent().getExtras();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view= inflater.inflate(R.layout.activity_data, container, false);
+        Bundle bundle = this.getArguments();
+        if(bundle!=null){
+            userName = bundle.getString("username");
+        }
 
-        userName=bundle.getString("userName");
-
-
-        Toast.makeText(Data.this,"用户名"+userName,Toast.LENGTH_LONG).show();
+        dd=new datadisplay(getActivity());
+        allactivity=new Allactivity(getActivity());
         initView();
-
-
-
         actlist.setAdapter(dataShowAdapter);
         lv_allactlist.setAdapter(actShowAdapter);
 
 
 
-//        initDataShow(datas);
-//        initDataShow();
         initSpinner();
         initWebView();
+        checkClick();
 
 
 
-
-
-
-
+        return view;
     }
-
     private void initView(){
-        actlist=findViewById(R.id.listview_actlist);
-        lv_allactlist=findViewById(R.id.lv_allacts);
-        dataShowAdapter = new DataShowAdapter(Data.this,R.layout.datashow_item,dataShowList);
-        actShowAdapter = new ActShowAdapter(Data.this,R.layout.actshow_item,actShowList);
-        myWebView=findViewById(R.id.webview_acts);
-        spinner_times=findViewById(R.id.spinner_time);
-        spinner_types=findViewById(R.id.spinner_type);
-        spinner_acts=findViewById(R.id.spinner_acttype);
-        spinner_sorts=findViewById(R.id.spinner_sort);
-        lay_datashow=findViewById(R.id.layout_show);
-        lay_actshow=findViewById(R.id.layout_allact);
+        actlist=view.findViewById(R.id.listview_actlist);
+        lv_allactlist=view.findViewById(R.id.lv_allacts);
+        dataShowAdapter = new DataShowAdapter(getActivity(),R.layout.datashow_item,dataShowList);
+        actShowAdapter = new ActShowAdapter(getActivity(),R.layout.actshow_item,actShowList);
+        myWebView=view.findViewById(R.id.webview_acts);
+        spinner_times=view.findViewById(R.id.spinner_time);
+        spinner_types=view.findViewById(R.id.spinner_type);
+        spinner_acts=view.findViewById(R.id.spinner_acttype);
+        spinner_sorts=view.findViewById(R.id.spinner_sort);
+        lay_datashow=view.findViewById(R.id.layout_show);
+        lay_actshow=view.findViewById(R.id.layout_allact);
         lay_actshow.setVisibility(View.INVISIBLE);
-        lay_time=findViewById(R.id.layout_chosetime);
+        lay_time=view.findViewById(R.id.layout_chosetime);
         lay_time.setVisibility(View.INVISIBLE);
-        lay_personset=findViewById(R.id.layout_person);
-        lay_personset.setVisibility(View.INVISIBLE);
-        bt_starttime=findViewById(R.id.button_starttime);
-        bt_endtime=findViewById(R.id.button_endtime);
-        bt_acttype=findViewById(R.id.button_acttype);
-        bt_confirmtime=findViewById(R.id.button_time_confirm);
-//        bt_person=findViewById(R.id.button_personset);
-//        bt_manage=findViewById(R.id.button_manage);
-        bt_quit=findViewById(R.id.button_quit);
-        tv_prompt=findViewById(R.id.text_prompt);
-        tv_noInfo=findViewById(R.id.text_noInfo);
-        tv_noActInfo=findViewById(R.id.text_noActInfo);
+        lay_personset=view.findViewById(R.id.layout_person);
+//        lay_personset.setVisibility(View.INVISIBLE);
+        bt_starttime=view.findViewById(R.id.button_starttime);
+        bt_endtime=view.findViewById(R.id.button_endtime);
+        bt_acttype=view.findViewById(R.id.button_acttype);
+        bt_confirmtime=view.findViewById(R.id.button_time_confirm);
+//        bt_person=view.findViewById(R.id.button_personset);
+//        bt_manage=view.findViewById(R.id.button_manage);
+        bt_quit=view.findViewById(R.id.button_quit);
+        tv_prompt=view.findViewById(R.id.text_prompt);
+        tv_noInfo=view.findViewById(R.id.text_noInfo);
+        tv_noActInfo=view.findViewById(R.id.text_noActInfo);
+        tv_data=view.findViewById(R.id.text_show);
+        tv_allact =view.findViewById(R.id.text_allact);
+        ll_container = view.findViewById(R.id.ll_container);
 
+//        userName="aaa";
         txt_actType="";
         txt_showActType="全部";
         txt_sortType="最新活动在前";
@@ -149,23 +142,57 @@ public class Data extends AppCompatActivity {
 
 
         allActName=allactivity.allacttype(userName);
-        ArrayAdapter<String> actAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,allActName);
+        ArrayAdapter<String> actAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,allActName);
         spinner_acts.setAdapter(actAdapter);
 
     }
+    private void refreshEChart(){
+        Log.i("gy","刷新图表");
+        echart_time=new Object[0];
+        echart_act=new Object[0];
 
+    }
+
+
+
+    private void initDataShow(String[][] array){
+        tv_noInfo.setVisibility(View.GONE);
+        dataShowList.clear();
+        for(int i=0;i<array.length;i++){
+            DataShow dataShow = new DataShow(array[i][0],array[i][1]);
+            dataShowList.add(dataShow);
+        }
+    }
+
+    private void initActShow(String[][] array){
+        actShowList.clear();
+        for(int i=0;i<array.length;i++){
+            ActShow actShow = new ActShow(array[i]);
+            actShowList.add(actShow);
+        }
+    }
+
+    private void initWebView(){
+
+//设置载入页面自适应手机屏幕，居中显示
+        WebSettings mWebSettings = myWebView.getSettings();
+        mWebSettings.setJavaScriptEnabled(true);
+        mWebSettings.setUseWideViewPort(true);
+        mWebSettings.setLoadWithOverviewMode(true);
+    }
     private void initSpinner(){
 
         spinner_times.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String timeType = Data.this.getResources().getStringArray(R.array.times)[position];
+                String timeType = parent.getItemAtPosition(position).toString();
                 txt_timeType=timeType;
 //                tv_noInfo.setVisibility(View.GONE);
 //                actlist.setVisibility(View.VISIBLE);
 
                 if (position==3){
                     lay_time.setVisibility(View.VISIBLE);
+                    ll_container.setVisibility(View.VISIBLE);
                 }
                 else {
                     if(position==0){
@@ -187,6 +214,7 @@ public class Data extends AppCompatActivity {
 //                    Toast.makeText(Data.this,txt_startTime+txt_endTime,Toast.LENGTH_LONG).show();
 
                     ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
+
 //                    Log.i("gy",ob_dataShow[0].toString());
 //                    Log.i("gy","time获取到数据"+txt_timeType+""+txt_showType);
 
@@ -248,7 +276,7 @@ public class Data extends AppCompatActivity {
         spinner_types.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String showType = Data.this.getResources().getStringArray(R.array.types)[position];
+                String showType = parent.getItemAtPosition(position).toString();
 //                Toast.makeText(Data.this,""+position,Toast.LENGTH_LONG).show();
                 txt_showType=showType;
                 Log.i("gy","showType:"+txt_showType);
@@ -379,55 +407,33 @@ public class Data extends AppCompatActivity {
 
     }
 
-    private void refreshEChart(){
-        Log.i("gy","刷新图表");
-        echart_time=new Object[0];
-        echart_act=new Object[0];
 
-    }
-
-
-
-    private void initDataShow(String[][] array){
-        tv_noInfo.setVisibility(View.GONE);
-        dataShowList.clear();
-        for(int i=0;i<array.length;i++){
-            DataShow dataShow = new DataShow(array[i][0],array[i][1]);
-            dataShowList.add(dataShow);
-        }
-    }
-
-    private void initActShow(String[][] array){
-        actShowList.clear();
-        for(int i=0;i<array.length;i++){
-            ActShow actShow = new ActShow(array[i]);
-            actShowList.add(actShow);
-        }
-    }
-
-    private void initWebView(){
-
-//设置载入页面自适应手机屏幕，居中显示
-        WebSettings mWebSettings = myWebView.getSettings();
-        mWebSettings.setJavaScriptEnabled(true);
-        mWebSettings.setUseWideViewPort(true);
-        mWebSettings.setLoadWithOverviewMode(true);
-    }
-
-    public void click(View v){
-        int id=v.getId();
-        switch (id) {
-            case R.id.text_show:
+    public void checkClick(){
+        view.findViewById(R.id.text_show).setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View view) {
                 lay_datashow.setVisibility(View.VISIBLE);
                 lay_actshow.setVisibility(View.INVISIBLE);
-                break;
-            case R.id.text_allact:
+                tv_data.setTextColor(Color.RED);
+                tv_allact.setTextColor(R.color.colorgray);
+            }
+        });
+        view.findViewById(R.id.text_allact).setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View view) {
                 lay_datashow.setVisibility(View.INVISIBLE);
                 lay_actshow.setVisibility(View.VISIBLE);
-                break;
-            case R.id.button_starttime:
+                tv_data.setTextColor(R.color.colorgray);
+                tv_allact.setTextColor(Color.RED);
+            }
+        });
+        view.findViewById(R.id.button_starttime).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Calendar calendar = Calendar.getInstance();
-                new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String starttime =  year + "-" + (month + 1) + "-" + dayOfMonth ;
@@ -438,10 +444,13 @@ public class Data extends AppCompatActivity {
                         , calendar.get(Calendar.YEAR)
                         , calendar.get(Calendar.MONTH)
                         , calendar.get(Calendar.DAY_OF_MONTH)).show();
-                break;
-            case R.id.button_endtime:
+            }
+        });
+        view.findViewById(R.id.button_endtime).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Calendar calendar1 = Calendar.getInstance();
-                new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String endtime =  year + "-" + (month + 1) + "-" + dayOfMonth ;
@@ -452,9 +461,12 @@ public class Data extends AppCompatActivity {
                         , calendar1.get(Calendar.YEAR)
                         , calendar1.get(Calendar.MONTH)
                         , calendar1.get(Calendar.DAY_OF_MONTH)).show();
-                break;
-            case R.id.button_acttype:
-                PopupMenu actmenu=new PopupMenu(Data.this,v);
+            }
+        });
+        view.findViewById(R.id.button_acttype).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu actmenu=new PopupMenu(getActivity(),view);
                 actmenu.inflate(R.menu.actmenu);
                 actmenu.show();
                 actmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -473,12 +485,29 @@ public class Data extends AppCompatActivity {
                         return false;
                     }
                 });
-                break;
-            case R.id.button_time_confirm:
+            }
+        });
+
+
+        view.findViewById(R.id.text_prompt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent();
+                intent3.setClass(getActivity(), ClockActivity.class);
+                intent3.putExtra("username",userName);
+                startActivityForResult (intent3, 1);
+            }
+        });
+
+        view.findViewById(R.id.button_time_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 txt_startTime=(String) bt_starttime.getText();
                 txt_endTime=(String) bt_endtime.getText();
 
                 lay_time.setVisibility(View.INVISIBLE);
+                ll_container.setVisibility(View.GONE);
+
                 ob_dataShow=dd.Datadplay(userName,txt_startTime,txt_endTime,txt_actType,txt_showType);
 //                Toast.makeText(Data.this,userName+txt_startTime+txt_endTime+txt_actType+txt_showType,Toast.LENGTH_LONG).show();
 
@@ -519,58 +548,44 @@ public class Data extends AppCompatActivity {
                     actlist.setVisibility(View.INVISIBLE);
                     myWebView.setVisibility(View.INVISIBLE);
                 }
-//                initDataShow(datas);
-//                actlist.setAdapter(dataShowAdapter);
-
-                break;
-//            case R.id.button_personset:
-//                if(lay_personset.getVisibility()==View.VISIBLE){
-//                    lay_personset.setVisibility(View.INVISIBLE);
-//                }
-//                else{
-//                    lay_personset.setVisibility(View.VISIBLE);
-//
-//                }
-//                break;
-//            case R.id.button_manage:
-//
+            }
+        });
+        ll_container.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                lay_time.setVisibility(View.INVISIBLE);
+                ll_container.setVisibility(View.GONE);
+                return false;
+            }
+        });
+//        view.findViewById(R.id.button_manage).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
 //                Intent intent1 = new Intent();
-//                intent1.setClass(Data.this, BoxmanagementActivity.class);
+//                intent1.setClass(getActivity(), BoxmanagementActivity.class);
 //                Bundle bundle=new Bundle();
 //                bundle.putString("userName",userName);
 //                intent1.putExtras(bundle);
 //                startActivity(intent1);
-//                break;
-            case R.id.button_quit:
-                Intent intent2 = new Intent();
-                intent2.setClass(Data.this, LoginActivity.class);
-                startActivity(intent2);
-                break;
-            case R.id.text_prompt:
-                Intent intent3 = new Intent();
-                intent3.setClass(Data.this, ClockActivity.class);
-                intent3.putExtra("username",userName);
-                startActivityForResult (intent3, 1);
-
-                break;
-
-        }
-
+//            }
+//        });
     }
 
+
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case 1:
                 String result = data.getStringExtra("result");
-                Toast.makeText(this,result,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
         }
     }
 
 
 
+
+
+
 }
-
-
-

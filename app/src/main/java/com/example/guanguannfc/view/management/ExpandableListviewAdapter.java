@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import com.example.guanguannfc.view.management.TimemanagementActivity;
+
 import androidx.core.content.ContextCompat;
 import com.example.guanguannfc.R;
 
@@ -38,7 +38,9 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return childsq.get(i).getAct().length;
+        if (childsq.get(i).getAct() != null) return childsq.get(i).getAct().length;
+        return 0;
+
     }
 
     @Override
@@ -109,19 +111,19 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
         childViewHolder.chidren_item.setText(childsq.get(groupPosition).getAct()[childPosition]);
-        Button btn1 =convertView.findViewById(R.id.btn_change_actname);
+
+        final Button btn1 =convertView.findViewById(R.id.btn_change_actname);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupWindow();
             }
-
             private void showPopupWindow() {
                 View contentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_changeactname,null);
                 mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
                 //设置各个控件的点击响应
                 //显示PopupWindow
-                View rootview = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_timemanagement,null);
+                View rootview = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_boxmanagement,null);
                 mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
             }
         });

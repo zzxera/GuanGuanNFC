@@ -13,5 +13,10 @@
         <item name="colorControlActivated">@color/colorRed</item>
     </style>
 
+    <style name="HomepageTitle" parent="android:Theme.Light">
+        <item name="android:windowTitleSize">50dp</item>//设置宽度
+        <item name="android:windowTitleBackgroundStyle">@color/colorPrimaryDark</item>
+    </style>
+
 
 </resources>

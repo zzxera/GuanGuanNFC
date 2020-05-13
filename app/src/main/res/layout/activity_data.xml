@@ -6,53 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".view.data.Data">
 
-    <TextView
-        android:id="@+id/text_show"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_select"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="数据展示"
-        android:textSize="16sp"
-        android:onClick="click"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="80dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="5dp"
-        ></TextView>
+        >
+        <TextView
+            android:id="@+id/text_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="数据展示"
+            android:textSize="20sp"
+            android:textColor="@color/colorRed"
+            android:onClick="click"
+            android:paddingVertical="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            ></TextView>
 
-    <TextView
-        android:id="@+id/text_allact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="所有活动"
-        android:textSize="16sp"
-        android:onClick="click"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="80dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="5dp"
-        ></TextView>
+        <TextView
+            android:id="@+id/text_allact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="所有活动"
+            android:textSize="20sp"
+            android:onClick="click"
+            android:paddingVertical="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            ></TextView>
+
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/text_prompt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorgray"
+        android:onClick="click"
+        android:paddingVertical="5dp"
         android:text="你有一个活动正在进行 点此查看.."
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:background="@color/colorgray"
-        android:onClick="click"
-        app:layout_constraintTop_toBottomOf="@+id/text_show"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/layout_show"
-        ></TextView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_select"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_show"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="58dp"
+        app:layout_constraintTop_toBottomOf="@id/text_prompt"
+        android:layout_marginTop="10dp"
 
         >
 
@@ -196,20 +207,20 @@
         android:id="@+id/layout_allact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="@+id/layout_show"
+        android:layout_marginTop="80dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="60dp"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/text_prompt">
+
         <TextView
             android:id="@+id/text_acttype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:text="类型"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
 
             ></TextView>
 
@@ -218,14 +229,13 @@
             android:id="@+id/spinner_acttype"
             android:layout_width="98dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+
             android:entries="@array/acttype"
             android:overlapAnchor="false"
-
             app:layout_constraintStart_toEndOf="@+id/text_acttype"
-            android:layout_marginStart="5dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
-            ></Spinner>
+            app:layout_constraintTop_toTopOf="parent"></Spinner>
 
         <TextView
             android:id="@+id/text_sort"
@@ -246,22 +256,21 @@
             android:id="@+id/spinner_sort"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:entries="@array/sort"
-            android:overlapAnchor="false"
-
-            app:layout_constraintStart_toEndOf="@+id/text_sort"
-            app:layout_constraintTop_toTopOf="@+id/spinner_acttype"
             android:layout_marginStart="5dp"
-            ></Spinner>
+            android:entries="@array/sort"
+
+            android:overlapAnchor="false"
+            app:layout_constraintStart_toEndOf="@+id/text_sort"
+            app:layout_constraintTop_toTopOf="@+id/spinner_acttype"></Spinner>
 
 
         <ListView
             android:id="@+id/lv_allacts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_acttype"
-            android:layout_marginTop="50dp"
 
 
             >
@@ -269,9 +278,33 @@
 
         </ListView>
 
+        <TextView
+            android:id="@+id/text_noActInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="暂无记录"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_acttype"></TextView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorbBlack"
+        android:alpha="0.5"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"></LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_chosetime"
@@ -379,94 +412,34 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_person"
-        android:layout_width="220dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"
-        >
 
-        <ImageView
-            android:id="@+id/img_head"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/ic_launcher_background"
+<!--    <Button-->
+<!--        android:id="@+id/button_personset"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:layout_marginBottom="60dp"-->
+<!--        android:onClick="click"-->
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="30dp"
-            ></ImageView>
+<!--        android:text="个人设置"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        ></Button>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="UserName"
-            android:textColor="@color/colorbBlack"
-            android:textSize="18dp"
+<!--    <Button-->
+<!--        android:id="@+id/button_manage"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="30dp"-->
+<!--        android:layout_marginBottom="60dp"-->
 
+<!--        android:onClick="click"-->
 
-            app:layout_constraintStart_toEndOf="@+id/img_head"
-            app:layout_constraintTop_toTopOf="@+id/img_head"
-            android:layout_marginStart="10dp"
-            ></TextView>
+<!--        android:text="管理页面"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        ></Button>-->
 
-        <ListView
-            android:id="@+id/lv_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-
-
-            android:entries="@array/personset"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_head"></ListView>
-
-        <Button
-            android:id="@+id/button_quit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="退出登录"
-            android:backgroundTint="@color/colorDark"
-            android:textColor="@color/colorWhite"
-            android:onClick="click"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lv_settings"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            ></Button>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button_personset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:onClick="click"
-
-        android:text="个人设置"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        ></Button>
-
-    <Button
-        android:id="@+id/button_manage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:onClick="click"
-
-        android:text="管理页面"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        ></Button>
 <!--    <LinearLayout-->
 <!--        android:id="@+id/frag_data"-->
 <!--        android:layout_width="match_parent"-->

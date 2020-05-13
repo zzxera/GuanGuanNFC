@@ -27,20 +27,19 @@
             android:gravity="center" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_timemanagement2"
             android:layout_width="165dp"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:onClick="Timemanagement"
             android:text="时间管理"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tv_boxmanagement2"
             android:layout_width="151dp"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:onClick="Boxmanagement2"
+            android:onClick="onClick"
             android:text="物品管理"
             android:textSize="24sp" />
 
@@ -61,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/lv_search"
         android:layout_width="385dp"
         android:layout_height="607dp"
         android:layout_marginTop="12dp"

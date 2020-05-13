@@ -11,17 +11,6 @@ import android.widget.TextView;
 
 import com.example.guanguannfc.R;
 
-
-//import com.ricky.nfc.activity.ReadMUActivity;
-//import com.ricky.nfc.activity.ReadTextActivity;
-//import com.ricky.nfc.activity.ReadUriActivity;
-//import com.ricky.nfc.activity.RunAppActivity;
-//import com.ricky.nfc.activity.RunUrlActivity;
-//import com.ricky.nfc.activity.WriteMUActivity;
-//import com.ricky.nfc.activity.WriteTextActivity;
-//import com.ricky.nfc.activity.WriteUriActivity;
-//import com.ricky.nfc.base.BaseNfcActivity;
-
 public class MainNFCActivity extends BaseNfcActivity {
     private TextView ifo_NFC;
     private static final String[] strs = new String[]{
