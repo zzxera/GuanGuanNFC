@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.model.Dao.DaoActSta;
+import com.example.guanguannfc.model.Dao.DaoActivity;
 import com.example.guanguannfc.model.Dao.DaoActivityType;
 import com.example.guanguannfc.model.Dao.DaoBox;
 import com.example.guanguannfc.model.GuanContract;
@@ -25,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class DataQueryTest extends AppCompatActivity implements View.OnClickListener {
-    Button mButton2,mButton3,mButton4,mButton5,mButton6;
+    Button mButton2,mButton3,mButton4,mButton5,mButton6,mButton7;
     DaoActSta mActSta = new DaoActSta(this);
     DaoActivityType mDaoActivityType = new DaoActivityType(this);
     DaoBox mDaoBox = new DaoBox(this);
@@ -43,6 +44,7 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
         mButton4 = findViewById(R.id.all_typeAndActivity);
         mButton5 = findViewById(R.id.all_box);
         mButton6 = findViewById(R.id.all_boxAndContent);
+        mButton7 = findViewById(R.id.insertTest);
 
     }
 
@@ -52,6 +54,7 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
         mButton4.setOnClickListener(this);
         mButton5.setOnClickListener(this);
         mButton6.setOnClickListener(this);
+        mButton7.setOnClickListener(this);
     }
 
     @Override
@@ -91,6 +94,15 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
                     Log.v("TAG",entry.toString());
                 }
                 break;
+            case R.id.insertTest:
+                DaoActSta daoActSta = new DaoActSta(this);
+                try {
+                    daoActSta.insert("aaa","做作业",100000000000l,100000000000000000l);
+                    Log.v("tag","插入成功");
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
         }
     }
 }
