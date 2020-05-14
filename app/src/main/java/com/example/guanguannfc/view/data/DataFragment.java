@@ -501,8 +501,6 @@ public class DataFragment extends Fragment {
                 Intent intent3 = new Intent();
                 intent3.setClass(getActivity(), ClockActivity.class);
                 intent3.putExtra("username",userName);
-                intent3.putExtra("acttyoe","工作");
-                intent3.putExtra("actname","做作业");
 //                intent3.putExtra("isfirst","false");
                 startActivityForResult (intent3, 1);
             }

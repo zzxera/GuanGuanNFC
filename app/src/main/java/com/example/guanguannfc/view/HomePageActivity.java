@@ -261,13 +261,11 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         mTagText = NFCManage.readNfcTag(intent);
         String isNFCExist = NFCManage.isNFCExist(mTagText);
         if (isNFCExist==null){
-            actType="工作";
-            actName="做作业";
+            actType="吃饭";
+            actName="吃中饭";
             WriteSysFile();//调用函数
             Intent testIntent = new Intent(HomePageActivity.this, ClockActivity.class);
             testIntent.putExtra("username",userName);
-            testIntent.putExtra("acttyoe",actType);
-            testIntent.putExtra("actname",actName);
             startActivityForResult (testIntent, 1);
                 tv_prompt.setVisibility(View.VISIBLE);
             layoutParams.setMargins(0, 200, 0, 0);
@@ -287,7 +285,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         try {
             out = this.openFileOutput("data", Context.MODE_APPEND);//"data"为文件名，第二个参数为文件操作模式：文件已经存在，就往文件里面追加类容，不从新创建文件。
             writer = new BufferedWriter(new OutputStreamWriter(out));
-            writer.write(startTime+","+lstartTime+"\n");
+            writer.write(startTime+","+lstartTime+","+actType+","+actName+"\n");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
