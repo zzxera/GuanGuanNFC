@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!--
+    android:visibility="gone"设置成不可见
+    -->
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:visibility="gone"
+        ></TextView>
+    <Button
+        android:id="@+id/buttonProgressBar"
+        android:layout_below="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Start"
+        android:onClick="click"
+        />
+
+    <Button
+        android:id="@+id/buttonStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stop"
+        android:onClick="click"
+
+        android:layout_below="@+id/buttonProgressBar"
+        ></Button>
+
+    <Button
+        android:id="@+id/buttonSuspend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonStop"
+        android:text="suspend"
+        android:onClick="click"
+
+        ></Button>
+
+    <Button
+        android:id="@+id/button_jump"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonSuspend"
+        android:text="跳转"
+        android:onClick="click"
+        ></Button>
+</RelativeLayout>

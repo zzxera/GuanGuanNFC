@@ -2,6 +2,7 @@ package com.example.guanguannfc.view.data;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +36,16 @@ import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
 import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +58,7 @@ public class DataFragment extends Fragment {
     private ConstraintLayout lay_datashow,lay_actshow,lay_time,lay_personset;
     private LinearLayout ll_container;
     private Button bt_starttime,bt_endtime,bt_acttype,bt_confirmtime,bt_person,bt_manage,bt_quit;
-    private TextView tv_prompt,tv_noInfo,tv_noActInfo;
+    private TextView tv_prompt,tv_noInfo,tv_noActInfo,tv_acttype;
     private String userName,txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
     public String txt_showActType,txt_sortType;
     private TextView tv_data,tv_allact;
@@ -68,12 +79,7 @@ public class DataFragment extends Fragment {
     private List<ActShow> actShowList = new ArrayList<ActShow>();
     private ListView lv_allactlist = null;
     private ActShowAdapter actShowAdapter;
-    private Object[] x = new Object[]{
-            "Mon", "Tue", "Wed", "Thu", "Fri"
-    };
-    private Object[] y = new Object[]{
-            820, 932, 901, 934, 1290
-    };
+    private ConstraintLayout.LayoutParams layoutParams;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,7 +136,7 @@ public class DataFragment extends Fragment {
         tv_data=view.findViewById(R.id.text_show);
         tv_allact =view.findViewById(R.id.text_allact);
         ll_container = view.findViewById(R.id.ll_container);
-
+        layoutParams = (ConstraintLayout.LayoutParams) lay_actshow.getLayoutParams();
 //        userName="aaa";
         txt_actType="";
         txt_showActType="全部";
@@ -495,9 +501,11 @@ public class DataFragment extends Fragment {
                 Intent intent3 = new Intent();
                 intent3.setClass(getActivity(), ClockActivity.class);
                 intent3.putExtra("username",userName);
+//                intent3.putExtra("isfirst","false");
                 startActivityForResult (intent3, 1);
             }
         });
+
 
         view.findViewById(R.id.button_time_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -569,6 +577,23 @@ public class DataFragment extends Fragment {
 //                startActivity(intent1);
 //            }
 //        });
+        view.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intentClock = new Intent(getActivity(),ClockService.class);
+//                getActivity().startService(intentClock);
+                WriteSysFile();//调用函数
+                tv_prompt.setVisibility(View.VISIBLE);
+                layoutParams.setMargins(0, 200, 0, 0);
+
+                Intent testIntent = new Intent(getActivity(),ClockActivity.class);
+                testIntent.putExtra("username",userName);
+//                testIntent.putExtra("isfirst","true");
+//                startActivity(testIntent);
+                startActivityForResult (testIntent, 1);
+
+            }
+        });
     }
 
 
@@ -579,13 +604,45 @@ public class DataFragment extends Fragment {
         switch (requestCode){
             case 1:
                 String result = data.getStringExtra("result");
+                if (result.equals("计时继续")){
+                    tv_prompt.setVisibility(View.VISIBLE);
+                    layoutParams.setMargins(0, 200, 0, 0);
+                }
+                else {
+                    tv_prompt.setVisibility(View.GONE);
+                    layoutParams.setMargins(0, 100, 0, 0);
+                }
                 Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
+                break;
         }
     }
 
+    public void WriteSysFile() {
+        String startTime = getTime.getNowTime();
+        Long lstartTime = getTime.getStartTime();
+//        String write ="写入数据";
 
+        //public void save(String EditText){//inputText为传入的要保存的数据
+        FileOutputStream out = null;
+        BufferedWriter writer = null;
+        try {
+            out = getActivity().openFileOutput("data", Context.MODE_APPEND);//"data"为文件名，第二个参数为文件操作模式：文件已经存在，就往文件里面追加类容，不从新创建文件。
+            writer = new BufferedWriter(new OutputStreamWriter(out));
+            writer.write(startTime+","+lstartTime+"\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        // }
 
-
+    }
 
 
 }

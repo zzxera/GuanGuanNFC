@@ -8,17 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.controller.dataManagement.ThingManage;
 
 public class MsimpleAdapter extends BaseAdapter {
     private PopupWindow mPopWindow;
     private Context context;
     private String [] goodsname;
     private String [] goodsnum;
+    private String thingName;
+    private String boxName;
+    private ThingManage boxget;
     public MsimpleAdapter(Context context,String[] goodsname,String[] goodsnum){
         this.context=context;
         this.goodsname=goodsname;
@@ -41,13 +46,14 @@ public class MsimpleAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
-        ViewHolder ViewHolder;
+        final ViewHolder ViewHolder;
         if (convertView==null){
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview3,parent,false);
             ViewHolder = new ViewHolder();
             ViewHolder.tv_goods_name = (TextView)convertView.findViewById(R.id.tv_goods_name);
             ViewHolder.btn_change_num=convertView.findViewById(R.id.btn_change_num);
             ViewHolder.tv_goods_shuliang =convertView.findViewById(R.id.tv_goods_shuliang);
+            ViewHolder.btn_delet=convertView.findViewById(R.id.btn_delet);
             convertView.setTag(ViewHolder);
 
         }else {
@@ -55,6 +61,12 @@ public class MsimpleAdapter extends BaseAdapter {
         }
         ViewHolder.tv_goods_name.setText(goodsname[position]);
         ViewHolder.tv_goods_shuliang.setText(goodsnum[position]);
+        ViewHolder.btn_delet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thingName=ViewHolder.tv_goods_name.getText().toString();
+            }
+        });
         ViewHolder.btn_change_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +87,7 @@ public class MsimpleAdapter extends BaseAdapter {
         TextView tv_goods_name;
         TextView tv_goods_shuliang;
         Button btn_change_num;
-
+        Button btn_delet;
     }
 
 }

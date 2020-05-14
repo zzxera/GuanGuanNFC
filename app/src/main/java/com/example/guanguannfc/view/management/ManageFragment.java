@@ -14,9 +14,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -49,6 +51,7 @@ public class ManageFragment extends Fragment {
     private ListView lv_search;
     private String name;
     private int num;
+    private GridView gridView1;
     //Model：定义的数据
 
 
@@ -58,6 +61,7 @@ public class ManageFragment extends Fragment {
     private String[] goodsname;
     private String[] goodsnum;
     private String boxName;
+    private String [] boxnames;
     List<Act> childsq = new ArrayList<Act>();
 
 
@@ -93,13 +97,25 @@ public class ManageFragment extends Fragment {
         addact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow15();
+                showaddact();
+            }
+        });
+
+
+        gridView1= view.findViewById(R.id.box);
+        boxnames= box[0];
+        GridviewAdapter gridviewAdapter=new GridviewAdapter(getActivity(),boxnames);
+        gridView1.setAdapter(gridviewAdapter);
+        gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showbox(position);
             }
         });
 
 
         lay_box=view.findViewById(R.id.layout_boxmanagement);
-//        lay_box.setVisibility(View.VISIBLE);
+//      lay_box.setVisibility(View.VISIBLE);
         lay_time=view.findViewById(R.id.layout_timemanagement);
         lay_time.setVisibility(View.INVISIBLE);
         lay_search=view.findViewById(R.id.layout_search);
@@ -113,147 +129,13 @@ public class ManageFragment extends Fragment {
 
 
 
-        ImageView iv_box1 =view.findViewById(R.id.iv_box1);
-        iv_box1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0][0]!=null){
-                    showPopupWindow();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-        ImageView iv_box_1= view.findViewById(R.id.iv_box1);
-        iv_box_1.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                showPopupWindow12();
-                return false;
-            }
-        });
-
-        ImageView iv_box2 =view.findViewById(R.id.iv_box2);
-        iv_box2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0][1]!=null){
-                    showPopupWindow1();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-        ImageView iv_box3 =view.findViewById(R.id.iv_box3);
-        iv_box3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0].length>=3){
-                    showPopupWindow2();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-
-        ImageView iv_box4 =view.findViewById(R.id.iv_box4);
-        iv_box4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0].length>=4){
-                    showPopupWindow3();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-
-        ImageView iv_box5 =view.findViewById(R.id.iv_box5);
-        iv_box5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0].length>=5){
-                    showPopupWindow4();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-
-        ImageView iv_box6 = view.findViewById(R.id.iv_box6);
-        iv_box6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0].length>=6){
-                    showPopupWindow5();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-        ImageView iv_box7 =view.findViewById(R.id.iv_box7);
-        iv_box7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0].length>=7){
-                    showPopupWindow6();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-        ImageView iv_box8 =view.findViewById(R.id.iv_box8);
-        iv_box8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0].length>=8){
-                    showPopupWindow7();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-        ImageView iv_box9 =view.findViewById(R.id.iv_box9);
-        iv_box9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0].length>=9){
-                    showPopupWindow8();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-        ImageView iv_box10 =view.findViewById(R.id.iv_box10);
-        iv_box10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(box[0].length>=10){
-                    showPopupWindow9();
-                }
-                else {
-                    showPopupWindow11();
-                }
-            }
-        });
-
-
 
 
         ImageView addbox = view.findViewById(R.id.iv_addbox);
         addbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow11();
+                showaddbox();
             }
         });
         return view;
@@ -264,7 +146,7 @@ public class ManageFragment extends Fragment {
 
     }
 
-    private void showPopupWindow12() {
+    private void showchangebox() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_changebox, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -273,7 +155,7 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow11() {
+    private void showaddbox() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addbox, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -282,7 +164,7 @@ public class ManageFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow16();
+                showaddgood_box();
             }
         });
         ListView lv_goods=contentView.findViewById(R.id.lv_goods);
@@ -295,261 +177,36 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow() {
+    private void showbox(final int num) {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
         ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][0]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][0]);
+        final TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
+        tv_boxname.setText(box[0][num]);
+        final String boxname=tv_boxname.getText().toString();
+        String [][] thing=boxget.thingAndNumberInBox(box[0][num]);
         goodsname=thing[0];
         goodsnum=thing[1];
         MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
         listView.setAdapter(mSimpleAdapter);
-
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-
-    private void showPopupWindow1() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
         Button btn2 =contentView.findViewById(R.id.btb_addgoods);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow13();
+                Bundle bundle=new Bundle();
+                bundle.putString("boxname",boxname);
+                showaddgoods(boxname);
             }
         });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][1]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][1]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showPopupWindow2() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][2]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][2]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showPopupWindow3() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][3]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][3]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showPopupWindow4() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][4]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][4]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showPopupWindow5() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][5]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][5]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showPopupWindow6() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][6]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][6]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showPopupWindow7() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][7]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][7]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showPopupWindow8() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][8]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][8]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-        //显示PopupWindow
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showPopupWindow9() {
-        //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        //设置各个控件的点击响应
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow13();
-            }
-        });
-
-        ListView listView =contentView.findViewById(R.id.listview);
-        TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
-        tv_boxname.setText(box[0][9]);
-        String [][] thing=boxget.thingAndNumberInBox(box[0][9]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
-        listView.setAdapter(mSimpleAdapter);
-
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
 
 
-    private void showPopupWindow13(){
+    private void showaddgoods(final String boxname){
         final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addgoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         Button btn_add_goods=contentView.findViewById(R.id.btn_add_goods);
@@ -558,10 +215,9 @@ public class ManageFragment extends Fragment {
             public void onClick(View v) {
                 EditText ed_name=contentView.findViewById(R.id.ed_name);
                 EditText ed_num=contentView.findViewById(R.id.ed_num);
-                EditText ed_boxname=contentView.findViewById(R.id.tv_boxname);
-                boxName =ed_boxname.getText().toString();
                 name=ed_name.getText().toString();
                 String i=ed_num.getText().toString();
+                boxName=boxname;
                 num=Integer.valueOf(i).intValue();
                 boxget.addThings(boxName,name,num);
             }
@@ -569,14 +225,14 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showPopupWindow16(){
+    private void showaddgood_box(){
         final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_goods_box, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
 
-    private void showPopupWindow15() {
+    private void showaddact() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addact, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
@@ -671,26 +327,6 @@ public class ManageFragment extends Fragment {
 
     }
 
-
-
-
-
-
-    public void Searchgoods(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(getActivity(), SearchgoodsActivity.class);
-        startActivity(intent);
-    }
-    public void Displaygoods(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(getActivity(), DisplaygoodsActivity.class);
-        startActivity(intent);
-    }
-    public void Boxtip(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(getActivity(), BoxtipActivity.class);
-        startActivity(intent);
-    }
     private List<Map<String,Object>> getData20() {
         List<Map<String, Object>> list = new ArrayList<Map<String ,Object>>();
         String [] name=new String[]{"化妆品","球类","笔","书"};
