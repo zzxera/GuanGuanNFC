@@ -1,5 +1,6 @@
 package com.example.guanguannfc.controller.nfcManagement;
 
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -9,45 +10,73 @@ import android.nfc.tech.Ndef;
 import android.os.Parcelable;
 import android.widget.Toast;
 
+import com.example.guanguannfc.model.Dao.DaoActivity;
+import com.example.guanguannfc.model.Dao.DaoBox;
+import com.example.guanguannfc.model.Dao.DaoBoxContent;
+
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Locale;
 
 public class NFCManage extends BaseNfcActivity{
+    private String username;
+    private Context context;
+
+    DaoActivity daoActivity;
+    DaoBox daoBox;
+    DaoBoxContent mDaoBoxContent;
+
+    public NFCManage(String username, Context context){
+        this.username = username;
+        this.context = context;
+        daoActivity = new DaoActivity(context);
+        daoBox = new DaoBox(context);
+        mDaoBoxContent = new DaoBoxContent(context);
+    }
 
     //判断NFC存在与否：是空的，还是活动的，还是盒子的。
     public static String isNFCExist(String mTagText){
-        if (mTagText.substring(0,3) == "Act"){
-            return "Act";
-        } else if (mTagText.substring(0,3) == "Box"){
-            return "Box";
+        String string = null;
+        if (mTagText == null){
+            string = null;
         }else {
-            return null;
+            if (mTagText.substring(0,3) == "Act"){
+                string = "Act";
+            }else if (mTagText.substring(0,3) == "Box"){
+                string = "Box";
+            }
         }
+        return string;
     }
 
     //根据username和NFC的编码返回活动名称
-    public static String nfcForActivity(String mTagText){
-
-            return null;
-
+    public String nfcForActivity(String mTagText){
+        return daoActivity.queryActivityByNFC(mTagText);
     }
     //根据username和NFC的编码返回盒子名称
-    public static String nfcForBox(String mTagText){
-
-        return null;
-
+    public String nfcForBox(String mTagText){
+        return daoBox.queryBoxByNFC(mTagText);
     }
 
     //对没有进行使用过的NFC进行号码编写
-    public static String setNFCNumberForAct(String username){
-        String NFCNumber = "Act" + username + System.currentTimeMillis();
-        return NFCNumber;
+    public boolean setNFCNumberForAct(String bigActivity, String smallActivity){
+        try {
+            String NFCNumber = "Act" + username + System.currentTimeMillis();
+            daoActivity.insert(username, NFCNumber, bigActivity, smallActivity);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
-    public static String setNFCNumberForBox(String username){
-        String NFCNumber = "Box" + username + System.currentTimeMillis();
-        return NFCNumber;
+    public boolean setNFCNumberForBox(String boxName, String location){
+        try {
+            String NFCNumber = "Box" + username + System.currentTimeMillis();
+            daoBox.insert(username, NFCNumber, boxName, location);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
 //    public Boolean getResult(Intent intent,String mText) {
