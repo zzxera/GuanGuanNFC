@@ -29,7 +29,7 @@ public class DaoBox {
     //添加一个盒子：需给定用户名、nfc、盒子名称、盒子位置
     public boolean insert(String user_name,String nfc,String box_name,String box_pos){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="insert into Box(user_ID,nfc,box_name,box_pos,created_time,updated_time) values((select id from User_Info where user_name=?),?,?,?,?,?)";
+        String sql="insert into Box(user_ID,nfc,box_name,box_pos,created_time,updated_time) values((select _id from User_Info where user_name=?),?,?,?,?,?)";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{user_name,nfc,box_name,box_pos,currentTime,currentTime});
@@ -49,7 +49,7 @@ public class DaoBox {
     //删除盒子：需给定用户名、盒子名称
     public boolean delete(String user_name,String box_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql = "delete from Box where user_ID=(select id from User_Info where user_name=?) and box_name=?";
+        String sql = "delete from Box where user_ID=(select _id from User_Info where user_name=?) and box_name=?";
         db.execSQL(sql,new Object[]{user_name,box_name});
         db.close();
         return true;
@@ -57,7 +57,7 @@ public class DaoBox {
     //修改盒子名称：需给定用户ID、盒子原名称、盒子现在的名称
     public boolean updateName(String user_name,String box_oldName,String box_newName){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update Box set box_name=?,updated_time=? where user_ID=(select id from User_Info where user_name=?) and box_name=?";
+        String sql="update Box set box_name=?,updated_time=? where user_ID=(select _id from User_Info where user_name=?) and box_name=?";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{box_newName,currentTime,user_name,box_oldName});
@@ -68,7 +68,7 @@ public class DaoBox {
     //更新盒子描述：需给定用户ID、盒子原描述、盒子现在的描述
     public boolean updatePos(String user_name,String box_oldPos,String box_newPos){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update Box set box_name=?,updated_time=? where user_ID=(select id from User_Info where user_name=?) and box_name=?";
+        String sql="update Box set box_name=?,updated_time=? where user_ID=(select _id from User_Info where user_name=?) and box_name=?";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{box_newPos,currentTime,user_name,box_oldPos});
@@ -79,7 +79,7 @@ public class DaoBox {
     //盒子查重，已包含盒子名返回true,反之返回false:给定用户ID和盒子名称
     public boolean query(String user_name,String box_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select * from Box where user_ID=(select id from User_Info where user_name=?) and box_name=?";
+        String sql="select * from Box where user_ID=(select _id from User_Info where user_name=?) and box_name=?";
         Cursor cursor=db.rawQuery(sql,new String[]{user_name,box_name});
         if(cursor.getCount()!=0){
             return true;

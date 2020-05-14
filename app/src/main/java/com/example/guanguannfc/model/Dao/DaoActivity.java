@@ -23,7 +23,7 @@ public class DaoActivity {
     //添加一个活动。需要：用户名、nfc、大类名称、活动名称
     public boolean insert(String user_name,String nfc,String act_type,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="insert into Activity (user_ID,nfc,type_ID,act_name,created_time,updated_time) values((select id from User_Info where user_name=?),?,(select id from Activity_Type where act_type=?),?,?,?)";
+        String sql="insert into Activity (user_ID,nfc,type_ID,act_name,created_time,updated_time) values((select _id from User_Info where user_name=?),?,(select _id from Activity_Type where act_type=?),?,?,?)";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{user_name,nfc,act_type,act_name,currentTime,currentTime});
@@ -46,7 +46,7 @@ public class DaoActivity {
     //根据活动名称删除整个活动：给定用户名、要删除的活动名称
     public boolean delete(String user_name,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql = "delete from Activity where act_name=? and user_ID=(select id from User_Info where user_name=?)";
+        String sql = "delete from Activity where act_name=? and user_ID=(select _id from User_Info where user_name=?)";
         db.execSQL(sql,new Object[]{act_name,user_name});
         db.close();
         return true;
@@ -66,7 +66,7 @@ public class DaoActivity {
     //活动名查重，已包含活动名返回true,反之返回false:给定用户名和活动名称
     public boolean query(String user_name,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select * from Activity where user_ID=(select id from User_Info where user_name=?) and act_name=?";
+        String sql="select * from Activity where user_ID=(select _id from User_Info where user_name=?) and act_name=?";
         Cursor cursor=db.rawQuery(sql,new String[]{user_name,act_name});
         if(cursor.getCount()!=0){
             return true;
