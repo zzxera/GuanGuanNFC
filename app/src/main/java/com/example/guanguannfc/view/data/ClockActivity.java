@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
+import com.example.guanguannfc.view.HomePageActivity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -41,8 +42,6 @@ public class ClockActivity extends AppCompatActivity {
         setContentView(R.layout.activity_clock);
         Intent intent=getIntent();
         userName=intent.getStringExtra("username");
-        actType = intent.getStringExtra("acttyoe");
-        actName = intent.getStringExtra("actname");
         date=1111111l;
 //        isFirst=intent.getStringExtra("isfirst");
         iscount=true;
@@ -58,6 +57,8 @@ public class ClockActivity extends AppCompatActivity {
         infos=read();
         startTime=(infos[infos.length-1].split(","))[0];
         lstartTime= Long.parseLong((infos[infos.length-1].split(","))[1]);
+        actType=(infos[infos.length-1].split(","))[2];
+        actName=(infos[infos.length-1].split(","))[3];
         tv_start_time.setText(startTime);
 
 
@@ -90,8 +91,9 @@ public class ClockActivity extends AppCompatActivity {
             case R.id.btn_stop:
                 handler.removeCallbacks(UpdateThread);
                 iscount=false;
+                HomePageActivity.isCount=false;
                 endTime=getTime.getStartTime();
-                boolean isSuccess=allactivity.insertdata("aaa","工作","做作业",date, lstartTime,endTime);
+                boolean isSuccess=allactivity.insertdata(userName,actType,actName,date, lstartTime,endTime);
                 if (isSuccess) {
                     Toast.makeText(this,"计时结束",Toast.LENGTH_LONG).show();
                 }
