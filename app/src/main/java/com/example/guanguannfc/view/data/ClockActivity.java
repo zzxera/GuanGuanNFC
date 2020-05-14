@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 
 import java.io.BufferedReader;
@@ -25,13 +26,13 @@ public class ClockActivity extends AppCompatActivity {
     private Button btn_suspend,btn_stop;
     private TextView tv_start_time,tv_now_time,tv_distance,tv_duration;
     private String startTime,nowTime,duration,isFirst;
-    private Long lstartTime;
+    private Long lstartTime,date,endTime;
     private GetTime getTime;
     private Boolean iscount;
-    String userName;
+    String userName,actType,actName;
     private String TimeInfo;
     private String[] infos;
-
+    private Allactivity allactivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,9 @@ public class ClockActivity extends AppCompatActivity {
         setContentView(R.layout.activity_clock);
         Intent intent=getIntent();
         userName=intent.getStringExtra("username");
+        actType = intent.getStringExtra("acttyoe");
+        actName = intent.getStringExtra("actname");
+        date=1111111l;
 //        isFirst=intent.getStringExtra("isfirst");
         iscount=true;
 
@@ -49,6 +53,7 @@ public class ClockActivity extends AppCompatActivity {
         tv_now_time=findViewById(R.id.tv_now_time);
         tv_duration=findViewById(R.id.tv_duration);
 
+        allactivity = new Allactivity(this);
 
         infos=read();
         startTime=(infos[infos.length-1].split(","))[0];
@@ -68,23 +73,31 @@ public class ClockActivity extends AppCompatActivity {
     public void click(View v){
         int id=v.getId();
         switch (id){
-            case R.id.btn_suspend:
-                if (iscount){
-                    handler.removeCallbacks(UpdateThread);
-                    iscount=false;
-                    btn_suspend.setText("继续计时");
-                    Toast.makeText(this,"计时已暂停",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    handler.post(UpdateThread);
-                    iscount=true;
-                    btn_suspend.setText("暂停计时");
-                    Toast.makeText(this,"计时继续",Toast.LENGTH_SHORT).show();
-                }
-                break;
+//            case R.id.btn_suspend:
+//                if (iscount){
+//                    handler.removeCallbacks(UpdateThread);
+//                    iscount=false;
+//                    btn_suspend.setText("继续计时");
+//                    Toast.makeText(this,"计时已暂停",Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    handler.post(UpdateThread);
+//                    iscount=true;
+//                    btn_suspend.setText("暂停计时");
+//                    Toast.makeText(this,"计时继续",Toast.LENGTH_SHORT).show();
+//                }
+//                break;
             case R.id.btn_stop:
                 handler.removeCallbacks(UpdateThread);
                 iscount=false;
+                endTime=getTime.getStartTime();
+                boolean isSuccess=allactivity.insertdata("aaa","工作","做作业",date, lstartTime,endTime);
+                if (isSuccess) {
+                    Toast.makeText(this,"计时结束",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(this,"数据记录失败",Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }
@@ -92,12 +105,14 @@ public class ClockActivity extends AppCompatActivity {
     public void onBackPressed() {
         handler.removeCallbacks(UpdateThread);
         if(iscount){
+            handler.removeCallbacks(UpdateThread);
             Intent intent = new Intent();
             intent.putExtra("result","计时继续");
             this.setResult(1,intent);
             this.finish();
         }
         else {
+            handler.removeCallbacks(UpdateThread);
             Intent intent = new Intent();
             intent.putExtra("result","计时结束");
             this.setResult(1,intent);
@@ -111,15 +126,16 @@ public class ClockActivity extends AppCompatActivity {
     protected void onDestroy() {
         //结束服务
 //        stopService(new Intent(ClockActivity.this, ClockService.class));
-        handler.removeCallbacks(UpdateThread);
         super.onDestroy();
+        handler.removeCallbacks(UpdateThread);
+
     }
 
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        iscount=true;
-    }
+//    @Override
+//    protected void onPostResume() {
+//        super.onPostResume();
+//        iscount=true;
+//    }
 
     Handler handler = new Handler() {
         @Override

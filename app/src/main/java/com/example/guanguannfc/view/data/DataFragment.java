@@ -501,6 +501,8 @@ public class DataFragment extends Fragment {
                 Intent intent3 = new Intent();
                 intent3.setClass(getActivity(), ClockActivity.class);
                 intent3.putExtra("username",userName);
+                intent3.putExtra("acttyoe","工作");
+                intent3.putExtra("actname","做作业");
 //                intent3.putExtra("isfirst","false");
                 startActivityForResult (intent3, 1);
             }
@@ -577,23 +579,23 @@ public class DataFragment extends Fragment {
 //                startActivity(intent1);
 //            }
 //        });
-        view.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intentClock = new Intent(getActivity(),ClockService.class);
-//                getActivity().startService(intentClock);
-                WriteSysFile();//调用函数
-                tv_prompt.setVisibility(View.VISIBLE);
-                layoutParams.setMargins(0, 200, 0, 0);
-
-                Intent testIntent = new Intent(getActivity(),ClockActivity.class);
-                testIntent.putExtra("username",userName);
-//                testIntent.putExtra("isfirst","true");
-//                startActivity(testIntent);
-                startActivityForResult (testIntent, 1);
-
-            }
-        });
+//        view.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Intent intentClock = new Intent(getActivity(),ClockService.class);
+////                getActivity().startService(intentClock);
+//                WriteSysFile();//调用函数
+//                tv_prompt.setVisibility(View.VISIBLE);
+//                layoutParams.setMargins(0, 200, 0, 0);
+//
+//                Intent testIntent = new Intent(getActivity(),ClockActivity.class);
+//                testIntent.putExtra("username",userName);
+////                testIntent.putExtra("isfirst","true");
+////                startActivity(testIntent);
+//                startActivityForResult (testIntent, 1);
+//
+//            }
+//        });
     }
 
 
@@ -612,7 +614,7 @@ public class DataFragment extends Fragment {
                     tv_prompt.setVisibility(View.GONE);
                     layoutParams.setMargins(0, 100, 0, 0);
                 }
-                Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
                 break;
         }
     }

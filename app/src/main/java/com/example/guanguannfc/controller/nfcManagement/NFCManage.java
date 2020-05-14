@@ -17,13 +17,17 @@ public class NFCManage extends BaseNfcActivity{
 
     //判断NFC存在与否：是空的，还是活动的，还是盒子的。
     public static String isNFCExist(String mTagText){
-        if (mTagText.substring(0,3) == "Act"){
-            return "Act";
-        } else if (mTagText.substring(0,3) == "Box"){
-            return "Box";
+        String string = null;
+        if (mTagText == null){
+            string = null;
         }else {
-            return null;
+            if (mTagText.substring(0,3) == "Act"){
+                string = "Act";
+            }else if (mTagText.substring(0,3) == "Box"){
+                string = "Box";
+            }
         }
+        return string;
     }
 
     //根据username和NFC的编码返回活动名称

@@ -18,7 +18,9 @@
             android:label="NFC_TEST"
             android:launchMode="singleTop"/>
 
-        <activity android:name=".view.HomePageActivity"/>
+        <activity android:name=".view.HomePageActivity"
+            android:launchMode="singleTop"
+            />
 
         <activity android:name=".view.data.ClockActivity"></activity>
         <activity android:name=".view.data.TestClock">
