@@ -1,5 +1,6 @@
 package com.example.guanguannfc.controller.nfcManagement;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.TextView;
 import  com.example.guanguannfc.R;
+import com.example.guanguannfc.controller.dataManagement.DataTestActivity;
+import com.example.guanguannfc.controller.dataManagement.NFCtestActivity;
 //import com.ricky.nfc.base.BaseNfcActivity;
 import java.util.Arrays;
 
@@ -24,15 +27,18 @@ public class ReadTextActivity extends BaseNfcActivity {
         mNfcText = (TextView) findViewById(R.id.tv_nfctext);
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onNewIntent(Intent intent) {
-        //1.获取Tag对象
-        Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        //2.获取Ndef的实例
-        Ndef ndef = Ndef.get(detectedTag);
-        mTagText = ndef.getType() + "\nmaxsize:" + ndef.getMaxSize() + "bytes\n\n";
+//        //1.获取Tag对象
+//        Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+//        //2.获取Ndef的实例
+//        Ndef ndef = Ndef.get(detectedTag);
         readNfcTag(intent);
-        mNfcText.setText(mTagText);
+        if (mTagText == "activity600001"){
+            Intent intent1 = new Intent(ReadTextActivity.this, NFCtestActivity.class);
+            startActivity(intent1);
+        }
     }
 
     /**
@@ -55,7 +61,7 @@ public class ReadTextActivity extends BaseNfcActivity {
                 if (msgs != null) {
                     NdefRecord record = msgs[0].getRecords()[0];
                     String textRecord = parseTextRecord(record);
-                    mTagText += textRecord + "\n\ntext\n" + contentSize + " bytes";
+                    mTagText = textRecord ;
                 }
             } catch (Exception e) {
             }

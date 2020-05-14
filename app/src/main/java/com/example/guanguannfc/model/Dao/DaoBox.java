@@ -26,51 +26,61 @@ public class DaoBox {
         mDataBaseHelper=new GuanSQLHelper(context);
 
     }
-    //插入一整条数据：需给定用户ID、nfc、盒子名称、盒子位置
-    public boolean insert(long user_ID,String nfc,String box_name,String box_pos){
+    //添加一个盒子：需给定用户名、nfc、盒子名称、盒子位置
+    public boolean insert(String user_name,String nfc,String box_name,String box_pos){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="insert into " + GuanContract.Box.TABLE_NAME+ "(user_ID,nfc,box_name,box_pos,created_time,updated_time) values(?,?,?,?,?,?)";
+        String sql="insert into Box(user_ID,nfc,box_name,box_pos,created_time,updated_time) values((select id from User_Info where user_name=?),?,?,?,?,?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{user_name,nfc,box_name,box_pos,currentTime,currentTime});
+        db.close();
+        return true;
+    }
+    //添加一个盒子：需给定用户id、nfc、盒子名称、盒子位置
+    public boolean insert(int user_ID,String nfc,String box_name,String box_pos){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="insert into Box(user_ID,nfc,box_name,box_pos,created_time,updated_time) values(?,?,?,?,?,?)";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{user_ID,nfc,box_name,box_pos,currentTime,currentTime});
         db.close();
         return true;
     }
-    //删除盒子：需给定用户ID、盒子名称
-    public boolean delete(long user_ID,String box_name){
+    //删除盒子：需给定用户名、盒子名称
+    public boolean delete(String user_name,String box_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql = "delete from " + GuanContract.Box.TABLE_NAME + " where user_ID=? and box_name=?";
-        db.execSQL(sql,new Object[]{user_ID,box_name});
+        String sql = "delete from Box where user_ID=(select id from User_Info where user_name=?) and box_name=?";
+        db.execSQL(sql,new Object[]{user_name,box_name});
         db.close();
         return true;
     }
-    //更新盒子名称：需给定用户ID、盒子原名称、盒子现在的名称
-    public boolean updateName(long user_ID,String box_oldName,String box_newName){
+    //修改盒子名称：需给定用户ID、盒子原名称、盒子现在的名称
+    public boolean updateName(String user_name,String box_oldName,String box_newName){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update " + GuanContract.Box.TABLE_NAME + " set box_name=?,updated_time=? where user_ID=? and box_name=?";
+        String sql="update Box set box_name=?,updated_time=? where user_ID=(select id from User_Info where user_name=?) and box_name=?";
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{box_newName,currentTime,user_ID,box_oldName});
+        db.execSQL(sql,new Object[]{box_newName,currentTime,user_name,box_oldName});
         db.close();
         return true;
 
     }
     //更新盒子描述：需给定用户ID、盒子原描述、盒子现在的描述
-    public boolean updatePos(long user_ID,String box_oldPos,String box_newPos){
+    public boolean updatePos(String user_name,String box_oldPos,String box_newPos){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update " + GuanContract.Box.TABLE_NAME + " set box_name=?,updated_time=? where user_ID=? and box_name=?";
+        String sql="update Box set box_name=?,updated_time=? where user_ID=(select id from User_Info where user_name=?) and box_name=?";
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{box_newPos,currentTime,user_ID,box_oldPos});
+        db.execSQL(sql,new Object[]{box_newPos,currentTime,user_name,box_oldPos});
         db.close();
         return true;
 
     }
     //盒子查重，已包含盒子名返回true,反之返回false:给定用户ID和盒子名称
-    public boolean query(long user_ID,String box_name){
+    public boolean query(String user_name,String box_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select * from " + GuanContract.Box.TABLE_NAME + " where user_ID=? and box_name=?";
-        Cursor cursor=db.rawQuery(sql,new String[]{String.valueOf(user_ID),box_name});
+        String sql="select * from Box where user_ID=(select id from User_Info where user_name=?) and box_name=?";
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name,box_name});
         if(cursor.getCount()!=0){
             return true;
         }else {
@@ -88,6 +98,18 @@ public class DaoBox {
             return false;
         }
     }
+    //根据nfc查询盒子名称
+    public String queryBoxByNFC(String nfc){
+        String boxName = null;
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="select box_name from  Box where nfc=?";
+        Cursor cursor=db.rawQuery(sql,new String[]{nfc});
+        while(cursor.moveToNext()){
+            boxName = cursor.getString(0);
+        }
+        return boxName;
+    }
+
 
     //返回指定用户所有盒子，和盒子位置描述
     public ArrayList<HelperBox> queryAllBox(String user_name){

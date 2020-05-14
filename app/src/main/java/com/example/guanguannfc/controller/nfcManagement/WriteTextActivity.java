@@ -17,7 +17,7 @@ import java.nio.charset.Charset;
 import java.util.Locale;
 
 public class WriteTextActivity extends BaseNfcActivity {
-    private String mText = "NFC-NewText-123";
+    private String mText = "activity" + 600001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

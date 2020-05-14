@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Author:Created by Ricky on 2017/8/25.
- * Email:584182977@qq.com
  * Description:地址前缀
  */
 public class UriPrefix {
