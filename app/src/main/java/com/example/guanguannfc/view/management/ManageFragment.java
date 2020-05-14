@@ -77,7 +77,7 @@ public class ManageFragment extends Fragment {
         }
         ctx = getActivity();
         checkClick();
-        Toast.makeText(getActivity(),"用户名"+username,Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(),"用户名"+username,Toast.LENGTH_LONG).show();
         boxget =new ThingManage(username,ctx);
         box=boxget.boxAndPosition();
 
