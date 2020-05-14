@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
+import com.example.guanguannfc.view.HomePageActivity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -90,6 +91,7 @@ public class ClockActivity extends AppCompatActivity {
             case R.id.btn_stop:
                 handler.removeCallbacks(UpdateThread);
                 iscount=false;
+                HomePageActivity.isCount=false;
                 endTime=getTime.getStartTime();
                 boolean isSuccess=allactivity.insertdata(userName,actType,actName,date, lstartTime,endTime);
                 if (isSuccess) {

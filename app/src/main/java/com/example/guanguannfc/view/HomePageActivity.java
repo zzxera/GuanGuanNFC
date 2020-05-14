@@ -52,9 +52,11 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private GetTime getTime;
     
     private DataFragment dataFragment;
-    PushFragment pushFragment;
-    ManageFragment manageFragment;
-    FrendFragment frendFragment;
+    private PushFragment pushFragment;
+    private ManageFragment manageFragment;
+    private FrendFragment frendFragment;
+
+   public static boolean isCount=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +98,11 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     @Override
     protected void onStart() {
         super.onStart();
-        View dataView = dataFragment.getView();
-        tv_prompt = dataView.findViewById(R.id.text_prompt);
-        lay_actshow=dataView.findViewById(R.id.layout_allact);
-        layoutParams = (ConstraintLayout.LayoutParams) lay_actshow.getLayoutParams();
+//            View dataView = dataFragment.getView();
+//            tv_prompt = dataView.findViewById(R.id.text_prompt);
+//            lay_actshow=dataView.findViewById(R.id.layout_allact);
+//            layoutParams = (ConstraintLayout.LayoutParams) lay_actshow.getLayoutParams();
+
     }
 
     private void initView(){
@@ -202,6 +205,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             case R.id.bottom_bar_2_btn:
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("username",userName);
+                bundle2.putBoolean("isCount",isCount);
                 dataFragment.setArguments(bundle2);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
                 setSelectStatus(1);
@@ -245,6 +249,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         //getSupportFragmentManager() -> beginTransaction() -> add -> (R.id.main_boy,显示课程 new CourseFragment()
         Bundle bundle = new Bundle();
         bundle.putString("username",userName);
+        bundle.putBoolean("isCount",isCount);
         dataFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
         setSelectStatus(1);
@@ -254,6 +259,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
+//        Toast.makeText(HomePageActivity.this,"onResume"+isCount,Toast.LENGTH_LONG).show();
     }
 
     @SuppressLint("MissingSuperCall")
@@ -261,16 +267,15 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         mTagText = NFCManage.readNfcTag(intent);
         String isNFCExist = NFCManage.isNFCExist(mTagText);
         if (isNFCExist==null){
-            actType="吃饭";
-            actName="吃中饭";
+            isCount=true;
+//            跳转传值
+            actType="工作";
+            actName="上网课";
             WriteSysFile();//调用函数
             Intent testIntent = new Intent(HomePageActivity.this, ClockActivity.class);
             testIntent.putExtra("username",userName);
             startActivityForResult (testIntent, 1);
-                tv_prompt.setVisibility(View.VISIBLE);
-            layoutParams.setMargins(0, 200, 0, 0);
 
-//            Toast.makeText(this,"计时",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -308,12 +313,10 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             case 1:
                 String result = data.getStringExtra("result");
                 if (result.equals("计时继续")){
-                    tv_prompt.setVisibility(View.VISIBLE);
-                    layoutParams.setMargins(0, 200, 0, 0);
+                    isCount = true;
                 }
                 else {
-                    tv_prompt.setVisibility(View.GONE);
-                    layoutParams.setMargins(0, 100, 0, 0);
+                    isCount = false;
                 }
 //                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
                 break;
