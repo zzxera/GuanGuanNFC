@@ -18,21 +18,16 @@
             android:label="NFC_TEST"
             android:launchMode="singleTop"/>
 
-        <activity android:name=".view.HomePageActivity">
+        <activity android:name=".view.HomePageActivity"/>
 
         <activity android:name=".view.data.ClockActivity"></activity>
         <activity android:name=".view.data.TestClock">
-
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
 
-        <activity android:name=".view.data.ClockActivity" />
         <activity android:name=".controller.dataManagement.DataTestActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" /> <!-- 添加这一条默认设置，能拦截当前页面所有扫描NFC的配置 -->
@@ -41,9 +36,7 @@
         
         </activity>
 
-        <activity android:name=".view.HomePageActivity" />
-        <activity android:name=".view.data.ClockActivity1" />
-        <activity android:name=".controller.dataManagement.DataTestActivity" />
+        <activity android:name=".view.data.ClockActivity2" />
 
         <activity android:name=".controller.nfcManagement.MainNFCActivity">
             <intent-filter>
