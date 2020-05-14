@@ -22,9 +22,6 @@ public class NFCtestActivity extends BaseNfcActivity {
     @SuppressLint("MissingSuperCall")
     public void onNewIntent(Intent intent){
         mTagText = NFCManage.readNfcTag(intent);
-//        Log.d(TAG, "mTagText: " + mTagText);
-        boolean result = true;// 判断是否存在NFC
-        //该NFC去往哪个地方？？？
         if (mTagText.equals("activity600001")){
             Intent intent1 = new Intent(NFCtestActivity.this, DataTestActivity.class);
             startActivity(intent1);
