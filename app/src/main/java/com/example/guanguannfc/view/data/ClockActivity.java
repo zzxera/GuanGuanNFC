@@ -148,22 +148,23 @@ public class ClockActivity extends AppCompatActivity {
 //            tv_now_time.setText(msg.getData().getString("nowtime"));
 //            tv_duration.setText(msg.getData().getString("duration"));
             /**把UpdateThread线程加入线程队列*/
-            handler.post(UpdateThread);
+//            handler.post(UpdateThread);
         }
     };
     Runnable UpdateThread = new Runnable() {
         int bar = 0;
         @Override
         public void run() {
-            System.out.println("Run UpdateThread!");
-            nowTime=getTime.getNowTime();
-            duration=getTime.countTime(lstartTime);
-            bar += 1;
-            tv_now_time.setText(nowTime);
-            tv_duration.setText(duration);
-            /**得到一个消息对象
-             * 该消息对象由UpdateProgressBar的obtainMessage提供
-             * */
+            while(true){
+                System.out.println("Run UpdateThread!");
+                nowTime=getTime.getNowTime();
+                duration=getTime.countTime(lstartTime);
+                bar += 1;
+                tv_now_time.setText(nowTime);
+                tv_duration.setText(duration);
+                /**得到一个消息对象
+                 * 该消息对象由UpdateProgressBar的obtainMessage提供
+                 * */
 
                 Bundle bundle = new Bundle();
                 bundle.putString("nowtime",nowTime);  //往Bundle中存放数据
@@ -179,6 +180,8 @@ public class ClockActivity extends AppCompatActivity {
                 }
 
                 handler.sendMessage(msg);
+            }
+
 
 
         }
