@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +24,7 @@ import com.example.guanguannfc.controller.nfcManagement.BaseNfcActivity;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.data.ClockActivity;
+import com.example.guanguannfc.view.data.ClockService;
 import com.example.guanguannfc.view.data.Data;
 import com.example.guanguannfc.view.data.DataFragment;
 import com.example.guanguannfc.view.friends.FrendFragment;
@@ -57,6 +59,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private FrendFragment frendFragment;
 
    public static boolean isCount=false;
+   ClockService.MyBinder binder;
+   Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
