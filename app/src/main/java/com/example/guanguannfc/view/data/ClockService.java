@@ -31,6 +31,8 @@ public class ClockService extends Service {
                         nowtime=getTime.getNowTime();
                         Intent data = new Intent();
                         data.setAction("clock");
+                        data.putExtra("lstarttime",lStartTime);
+                        data.putExtra("starttime",startTime);
                         data.putExtra("nowtime",nowtime);
                         lbm.sendBroadcast(data);
                     }
@@ -46,7 +48,7 @@ public class ClockService extends Service {
             return counting;
         }
 
-        void starTimer(){
+        public void starTimer(){
             if (!counting){
                 counting = true;
                 lStartTime = getTime.getStartTime();
@@ -55,7 +57,7 @@ public class ClockService extends Service {
             }
         }
 
-        void starTime(){
+       public void stopTimer(){
             counting = false;
         }
 

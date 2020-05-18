@@ -2,30 +2,31 @@ package com.example.guanguannfc.view;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.nfcManagement.BaseNfcActivity;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.data.ClockActivity;
+import com.example.guanguannfc.view.data.ClockActivity2;
 import com.example.guanguannfc.view.data.ClockService;
-import com.example.guanguannfc.view.data.Data;
 import com.example.guanguannfc.view.data.DataFragment;
 import com.example.guanguannfc.view.friends.FrendFragment;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
@@ -61,6 +62,19 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
    public static boolean isCount=false;
    ClockService.MyBinder binder;
    Handler handler;
+   Button btn_start;
+
+    ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            binder = (ClockService.MyBinder) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +111,23 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 return false;
             }
         });
+
+        btn_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binder.starTimer();
+                Intent intent = new Intent(HomePageActivity.this, ClockActivity2.class);
+                intent.putExtra("username",userName);
+
+                startActivityForResult(intent,2);
+            }
+        });
+
+        Intent intent = new Intent(this,ClockService.class);
+        bindService(intent,conn,Context.BIND_AUTO_CREATE);
+        handler = new Handler();
+
+
     }
 
     @Override
@@ -141,10 +172,14 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         bottom_bar_3_btn.setOnClickListener(this);
         bottom_bar_4_btn.setOnClickListener(this);
 
+//        子fragment
         pushFragment = new PushFragment();
         dataFragment = new DataFragment();
         manageFragment = new ManageFragment();
         frendFragment = new FrendFragment();
+
+//        button
+        btn_start=findViewById(R.id.startCount);
 
     }
 //  切换底部样式
@@ -230,7 +265,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 setSelectStatus(3);
                 break;
 
-
         }
     }
 
@@ -275,10 +309,15 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //            跳转传值
             actType="工作";
             actName="上网课";
-            WriteSysFile();//调用函数
-            Intent testIntent = new Intent(HomePageActivity.this, ClockActivity.class);
-            testIntent.putExtra("username",userName);
-            startActivityForResult (testIntent, 1);
+//            WriteSysFile();//调用函数
+//            Intent testIntent = new Intent(HomePageActivity.this, ClockActivity.class);
+//            testIntent.putExtra("username",userName);
+//            startActivityForResult (testIntent, 1);
+            binder.starTimer();
+            Intent startIntent = new Intent(HomePageActivity.this, ClockActivity2.class);
+            startIntent.putExtra("username",userName);
+            startActivityForResult(startIntent,2);
+
 
         }
     }
@@ -315,6 +354,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case 1:
+            case 2:
                 String result = data.getStringExtra("result");
                 if (result.equals("计时继续")){
                     isCount = true;
@@ -322,8 +362,10 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 else {
                     isCount = false;
                 }
-//                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
                 break;
+//                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
+
+            //                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
         }
     }
 

@@ -16,10 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.view.HomePageActivity;
-import com.example.guanguannfc.view.data.Data;
 import com.example.guanguannfc.controller.userManagement.Login;
-
-import java.security.PublicKey;
 
 
 public class SigninFragment extends Fragment {

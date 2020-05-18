@@ -90,7 +90,7 @@ public class DataFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if(bundle!=null){
             userName = bundle.getString("username");
-            isCount = bundle.getBoolean("isCount");
+//            isCount = bundle.getBoolean("isCount");
         }
 
         dd=new datadisplay(getActivity());
@@ -526,10 +526,10 @@ public class DataFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent3 = new Intent();
-                intent3.setClass(getActivity(), ClockActivity.class);
+                intent3.setClass(getActivity(), ClockActivity2.class);
                 intent3.putExtra("username",userName);
 //                intent3.putExtra("isfirst","false");
-                startActivityForResult (intent3, 1);
+                startActivityForResult (intent3, 2);
             }
         });
 
@@ -593,34 +593,6 @@ public class DataFragment extends Fragment {
                 return false;
             }
         });
-//        view.findViewById(R.id.button_manage).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent1 = new Intent();
-//                intent1.setClass(getActivity(), BoxmanagementActivity.class);
-//                Bundle bundle=new Bundle();
-//                bundle.putString("userName",userName);
-//                intent1.putExtras(bundle);
-//                startActivity(intent1);
-//            }
-//        });
-//        view.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Intent intentClock = new Intent(getActivity(),ClockService.class);
-////                getActivity().startService(intentClock);
-//                WriteSysFile();//调用函数
-//                tv_prompt.setVisibility(View.VISIBLE);
-//                layoutParams.setMargins(0, 200, 0, 0);
-//
-//                Intent testIntent = new Intent(getActivity(),ClockActivity.class);
-//                testIntent.putExtra("username",userName);
-////                testIntent.putExtra("isfirst","true");
-////                startActivity(testIntent);
-//                startActivityForResult (testIntent, 1);
-//
-//            }
-//        });
     }
 
 
@@ -628,8 +600,12 @@ public class DataFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getActivity(),isCount+"",Toast.LENGTH_LONG).show();
+
         switch (requestCode){
+
             case 1:
+            case 2:
                 String result = data.getStringExtra("result");
                 if (result.equals("计时继续")){
                     tv_prompt.setVisibility(View.VISIBLE);
@@ -639,7 +615,6 @@ public class DataFragment extends Fragment {
                     tv_prompt.setVisibility(View.GONE);
                     layoutParams.setMargins(0, 100, 0, 0);
                 }
-//                Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
                 break;
         }
     }
