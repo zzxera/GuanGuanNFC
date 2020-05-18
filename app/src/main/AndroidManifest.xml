@@ -38,7 +38,7 @@
         
         </activity>
 
-        <activity android:name=".view.data.ClockActivity2" />
+        <activity android:name=".view.data.ClockActivity" />
 
         <activity android:name=".controller.nfcManagement.MainNFCActivity">
             <intent-filter>

@@ -37,16 +37,10 @@ import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.HomePageActivity;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -112,8 +106,8 @@ public class DataFragment extends Fragment {
     private void initView(){
         actlist=view.findViewById(R.id.listview_actlist);
         lv_allactlist=view.findViewById(R.id.lv_allacts);
-        dataShowAdapter = new DataShowAdapter(getActivity(),R.layout.datashow_item,dataShowList);
-        actShowAdapter = new ActShowAdapter(getActivity(),R.layout.actshow_item,actShowList);
+        dataShowAdapter = new DataShowAdapter(getActivity(),R.layout.item_datashow,dataShowList);
+        actShowAdapter = new ActShowAdapter(getActivity(),R.layout.item_actshow,actShowList);
         myWebView=view.findViewById(R.id.webview_acts);
         spinner_times=view.findViewById(R.id.spinner_time);
         spinner_types=view.findViewById(R.id.spinner_type);
@@ -526,7 +520,7 @@ public class DataFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent3 = new Intent();
-                intent3.setClass(getActivity(), ClockActivity2.class);
+                intent3.setClass(getActivity(), ClockActivity.class);
                 intent3.putExtra("username",userName);
 //                intent3.putExtra("isfirst","false");
                 startActivityForResult (intent3, 2);
