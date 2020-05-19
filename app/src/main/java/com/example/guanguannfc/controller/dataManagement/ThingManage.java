@@ -57,7 +57,6 @@ public class ThingManage {
 
     public boolean isBoxExist(String boxName){
         boolean boxExist = false;
-        // TODO Auto-generated catch block
         if (true){//需要表进行存在判断
             boxExist = true;
         }
@@ -66,21 +65,17 @@ public class ThingManage {
 
     public void deleteBox(String boxName){
         if (isBoxExist(boxName)){
-            // TODO Auto-generated catch block
-            //将数据传给数据库
         }else{
             Log.i("deleteBox","Box is not existed");
         }
     }
 
     public void addThings(String boxName, String thingName, int number){
-        // TODO Auto-generated catch block
         //将名称与数量信息传给数据库
         mDaoBoxContent.insert(username,boxName,thingName,number);
     }
 
     public void deleteThings(String boxName, String thingName){
-        // TODO Auto-generated catch block
         //将名称与数量信息传给数据库
         mDaoBoxContent.delete(username,boxName,thingName);
     }
