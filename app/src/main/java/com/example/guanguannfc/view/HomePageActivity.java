@@ -275,7 +275,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             Intent testIntent = new Intent(HomePageActivity.this, ClockActivity.class);
             testIntent.putExtra("username",userName);
             startActivityForResult (testIntent, 1);
-
         }
     }
 
