@@ -63,6 +63,11 @@ public class ThingManage {
         return boxExist;
     }
 
+    public boolean isThingExist(String box_name, String thing_name){
+        boolean thingExist = mDaoBoxContent.loadQuery(username, box_name, thing_name);
+        return thingExist;
+    }
+
     public void deleteBox(String boxName){
         if (isBoxExist(boxName)){
         }else{
@@ -76,8 +81,13 @@ public class ThingManage {
     }
 
     public void deleteThings(String boxName, String thingName){
-        //将名称与数量信息传给数据库
+        //将名称与数量信息传给数据库（删除物品）
         mDaoBoxContent.delete(username,boxName,thingName);
+    }
+
+    //更新物品数量
+    public void updataThings(String box_name, String thing_name, Integer thing_num){
+        mDaoBoxContent.update(username, box_name, thing_name, thing_num);
     }
 
 }
