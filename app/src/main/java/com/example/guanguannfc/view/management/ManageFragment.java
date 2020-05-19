@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataManagement.ActivityManage;
 import com.example.guanguannfc.controller.dataManagement.ThingManage;
+import com.example.guanguannfc.controller.nfcManagement.NFCManage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,7 +114,6 @@ public class ManageFragment extends Fragment {
             }
         });
 
-
         lay_box=view.findViewById(R.id.layout_boxmanagement);
 //      lay_box.setVisibility(View.VISIBLE);
         lay_time=view.findViewById(R.id.layout_timemanagement);
@@ -130,12 +130,11 @@ public class ManageFragment extends Fragment {
 
 
 
-
         ImageView addbox = view.findViewById(R.id.iv_addbox);
         addbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showaddbox();
+                showaddbox(null,null);
             }
         });
         return view;
@@ -143,9 +142,7 @@ public class ManageFragment extends Fragment {
 
 
 
-
     }
-
     private void showchangebox() {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_changebox, null);
@@ -155,9 +152,28 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
-    private void showaddbox() {
+    private void showaddgood_box(){
+        final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_goods_box, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        EditText ed_name=contentView.findViewById(R.id.ed_name);
+        EditText ed_num=contentView.findViewById(R.id.ed_num);
+        final String name=ed_name.getText().toString();
+        final String num=ed_num.getText().toString();
+        Button btn_add_goods=contentView.findViewById(R.id.btn_add_goods);
+        btn_add_goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopWindow.dismiss();
+                showaddbox(name,num);
+            }
+        });
+
+        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void showaddbox(final String name,final String num) {
         //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addbox, null);
+        final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addbox, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         //设置各个控件的点击响应
         Button btn2 =contentView.findViewById(R.id.btn_addgoods2);
@@ -168,12 +184,39 @@ public class ManageFragment extends Fragment {
             }
         });
         ListView lv_goods=contentView.findViewById(R.id.lv_goods);
-        SimpleAdapter ms=new SimpleAdapter(getActivity(),getData2(),
+        SimpleAdapter ms=new SimpleAdapter(getActivity(),getData2(name,num),
                 R.layout.activity_lv_goods,
                 new String[]{"tv_goods_name","tv_goods_shuliang"},
                 new int[]{R.id.tv_goods_name,R.id.tv_goods_shuliang});
         lv_goods.setAdapter(ms);
+        Button addbox=contentView.findViewById(R.id.add_box);
+        addbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText ed_box_name=contentView.findViewById(R.id.ed_box_name);
+                String box_name=ed_box_name.getText().toString();
+                String box1="1";
+                box(box1,box_name);
+                boxnfc();
+            }
+        });
         //显示PopupWindow
+        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void boxnfc(){
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_nfcbox, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        Button nfcbox=contentView.findViewById(R.id.btn_box_nfc);
+        nfcbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopWindow.dismiss();
+                String box1="0";
+                String boxname=null;
+                box(box1,boxname);
+            }
+        });
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
@@ -187,9 +230,13 @@ public class ManageFragment extends Fragment {
         tv_boxname.setText(box[0][num]);
         final String boxname=tv_boxname.getText().toString();
         String [][] thing=boxget.thingAndNumberInBox(box[0][num]);
-        goodsname=thing[0];
-        goodsnum=thing[1];
-        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum);
+        if(thing==null){
+            goodsname=new String[0];
+            goodsnum=new String[0];
+        }
+        else {goodsname=thing[0];
+              goodsnum=thing[1];}
+        MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum, boxname,boxget,mPopWindow);
         listView.setAdapter(mSimpleAdapter);
         Button btn2 =contentView.findViewById(R.id.btb_addgoods);
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -220,24 +267,49 @@ public class ManageFragment extends Fragment {
                 boxName=boxname;
                 num=Integer.valueOf(i).intValue();
                 boxget.addThings(boxName,name,num);
+                mPopWindow.dismiss();
             }
         });
-        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
-        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
-    }
-    private void showaddgood_box(){
-        final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_goods_box, null);
-        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
 
     private void showaddact() {
         //设置contentView
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addact, null);
+        final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addact, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         //设置各个控件的点击响应
+        Button btn_addact=contentView.findViewById(R.id.btn_addact);
+        btn_addact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText acttype=contentView.findViewById(R.id.ed_acttype);
+                EditText actname=contentView.findViewById(R.id.ed_actname);
+                String actttype =acttype.getText().toString();
+                String acttname=actname.getText().toString();
+                String ms1= "1";
+                act(ms1,actttype,acttname);
+                shownfcact(actttype,acttname);
+            }
+        });
         //显示PopupWindow
+        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_changeact, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void shownfcact(String acttype,String actname){
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_nfcact, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        Button btn_act_nfc=contentView.findViewById(R.id.btn_act_nfc);
+        btn_act_nfc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopWindow.dismiss();
+                String ms1="0";
+                String acttype=null;
+                String actname=null;
+                act(ms1,acttype,actname);
+            }
+        });
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_changeact, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
@@ -340,20 +412,40 @@ public class ManageFragment extends Fragment {
         }
         return list;
     }
-    private List<Map<String,Object>> getData2() {
+    private List<Map<String,Object>> getData2(String name,String num) {
         List<Map<String, Object>> list = new ArrayList<Map<String ,Object>>();
-        String [] name=new String[]{"化妆品","球类","笔","书"};
-        String [] num = new String[]{"2","5","4","7"};
-        for (int i=0;i<name.length;i++)
+        //String [] names=new String[]{"化妆品","球类","笔","书"};
+       // String [] nums = new String[]{"2","5","4","7"};
+        List<String> na=new ArrayList<String>();
+        List<String> nu=new ArrayList<String>();
+        na.add(name);
+        for (int i=0;i<na.size();i++)
         {
             Map<String,Object> map=new HashMap<String, Object>();
-            map.put("tv_goods_name",name[i]);
-            map.put("tv_goods_shuliang",num[i]);
+            map.put("tv_goods_name",na.get(i));
+            map.put("tv_goods_shuliang",num);
             list.add(map);
         }
         return list;
     }
-
+    public static boolean act(String act1,String acttype,String actname){
+        if(act1 == "1"){
+            return true;
+        }
+        else if(act1=="0"){
+            return false;
+        }
+        return false;
+    }
+    public static boolean box(String box1,String boxname){
+        if(box1 == "1"){
+            return true;
+        }
+        else if(box1=="0"){
+            return false;
+        }
+        return false;
+    }
 
 
 
