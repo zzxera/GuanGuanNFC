@@ -1,8 +1,11 @@
 package com.example.guanguannfc.view;
 
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,8 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.controller.nfcManagement.BaseNfcActivity;
+import com.example.guanguannfc.controller.nfcManagement.NFCManage;
+import com.example.guanguannfc.controller.timeManagement.GetTime;
+import com.example.guanguannfc.view.data.ClockActivity;
 import com.example.guanguannfc.view.data.Data;
 import com.example.guanguannfc.view.data.DataFragment;
 import com.example.guanguannfc.view.friends.FrendFragment;
@@ -22,25 +30,41 @@ import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 import com.example.guanguannfc.view.mainInterface.PushFragment;
 import com.example.guanguannfc.view.management.ManageFragment;
 
-public class HomePageActivity extends FragmentActivity implements View.OnClickListener {
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
 
     private String userName;
     private RelativeLayout main_body;
     private LinearLayout main_bottom_bar;
     private RelativeLayout bottom_bar_1_btn,bottom_bar_2_btn,bottom_bar_3_btn,bottom_bar_4_btn;
     private TextView bottom_bar_text_1,bottom_bar_text_2,bottom_bar_text_3,bottom_bar_text_4;
-    private TextView tv_userName;
+    private TextView tv_userName,tv_prompt;
     private ImageView bottom_bar_image_1,bottom_bar_image_2,bottom_bar_image_3,bottom_bar_image_4;
-    private ConstraintLayout ctl_person;
+    private ConstraintLayout ctl_person,lay_actshow;
+    private ConstraintLayout.LayoutParams layoutParams;
     private LinearLayout ll_container;
     private ImageView img_person;
+    private String mTagText,actType,actName;
+    private GetTime getTime;
+    
+    private DataFragment dataFragment;
+    private PushFragment pushFragment;
+    private ManageFragment manageFragment;
+    private FrendFragment frendFragment;
+
+   public static boolean isCount=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_home_page);
+
 //        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.homepage_title_bar);
         Bundle bundle = this.getIntent().getExtras();
         if(bundle!=null){
@@ -71,6 +95,15 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+//            View dataView = dataFragment.getView();
+//            tv_prompt = dataView.findViewById(R.id.text_prompt);
+//            lay_actshow=dataView.findViewById(R.id.layout_allact);
+//            layoutParams = (ConstraintLayout.LayoutParams) lay_actshow.getLayoutParams();
+
+    }
 
     private void initView(){
 //        主体
@@ -103,6 +136,11 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
         bottom_bar_2_btn.setOnClickListener(this);
         bottom_bar_3_btn.setOnClickListener(this);
         bottom_bar_4_btn.setOnClickListener(this);
+
+        pushFragment = new PushFragment();
+        dataFragment = new DataFragment();
+        manageFragment = new ManageFragment();
+        frendFragment = new FrendFragment();
 
     }
 //  切换底部样式
@@ -158,35 +196,33 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.bottom_bar_1_btn:
-                PushFragment fragment1 = new PushFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("username",userName);
-                fragment1.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,fragment1).commit();
+                pushFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,pushFragment).commit();
                 setSelectStatus(0);
                 break;
             case R.id.bottom_bar_2_btn:
-                DataFragment fragment2 = new DataFragment();
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("username",userName);
-                fragment2.setArguments(bundle2);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,fragment2).commit();
+                bundle2.putBoolean("isCount",isCount);
+                dataFragment.setArguments(bundle2);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
                 setSelectStatus(1);
                 break;
             case R.id.bottom_bar_3_btn:
-                ManageFragment fragment3 = new ManageFragment();
+                
                 Bundle bundle3 = new Bundle();
                 bundle3.putString("username",userName);
-                fragment3.setArguments(bundle3);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,fragment3).commit();
+                manageFragment.setArguments(bundle3);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
                 setSelectStatus(2);
                 break;
             case R.id.bottom_bar_4_btn:
-                FrendFragment fragment4 = new FrendFragment();
                 Bundle bundle4 = new Bundle();
                 bundle4.putString("username",userName);
-                fragment4.setArguments(bundle4);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,fragment4).commit();
+                frendFragment.setArguments(bundle4);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,frendFragment).commit();
                 setSelectStatus(3);
                 break;
 
@@ -211,9 +247,9 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
 
     private void setMain() {
         //getSupportFragmentManager() -> beginTransaction() -> add -> (R.id.main_boy,显示课程 new CourseFragment()
-        DataFragment dataFragment = new DataFragment();
         Bundle bundle = new Bundle();
         bundle.putString("username",userName);
+        bundle.putBoolean("isCount",isCount);
         dataFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
         setSelectStatus(1);
@@ -221,13 +257,70 @@ public class HomePageActivity extends FragmentActivity implements View.OnClickLi
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
+//        Toast.makeText(HomePageActivity.this,"onResume"+isCount,Toast.LENGTH_LONG).show();
+    }
+
+    @SuppressLint("MissingSuperCall")
+    public void onNewIntent(Intent intent) {
+        mTagText = NFCManage.readNfcTag(intent);
+        String isNFCExist = NFCManage.isNFCExist(mTagText);
+        if (isNFCExist==null){
+            isCount=true;
+//            跳转传值
+            actType="工作";
+            actName="上网课";
+            WriteSysFile();//调用函数
+            Intent testIntent = new Intent(HomePageActivity.this, ClockActivity.class);
+            testIntent.putExtra("username",userName);
+            startActivityForResult (testIntent, 1);
+
+        }
+    }
+
+    public void WriteSysFile() {
+        String startTime = getTime.getNowTime();
+        Long lstartTime = getTime.getStartTime();
+//        String write ="写入数据";
+
+        //public void save(String EditText){//inputText为传入的要保存的数据
+        FileOutputStream out = null;
+        BufferedWriter writer = null;
+        try {
+            out = this.openFileOutput("data", Context.MODE_APPEND);//"data"为文件名，第二个参数为文件操作模式：文件已经存在，就往文件里面追加类容，不从新创建文件。
+            writer = new BufferedWriter(new OutputStreamWriter(out));
+            writer.write(startTime+","+lstartTime+","+actType+","+actName+"\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        // }
+
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                String result = data.getStringExtra("result");
+                if (result.equals("计时继续")){
+                    isCount = true;
+                }
+                else {
+                    isCount = false;
+                }
+//                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
+                break;
+        }
     }
+
 }
