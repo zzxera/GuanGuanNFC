@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataManagement.ThingManage;
 
@@ -24,10 +23,14 @@ public class MsimpleAdapter extends BaseAdapter {
     private String thingName;
     private String boxName;
     private ThingManage boxget;
-    public MsimpleAdapter(Context context,String[] goodsname,String[] goodsnum){
+
+    public MsimpleAdapter(Context context,String[] goodsname,String[] goodsnum ,String boxName,ThingManage boxget,PopupWindow mPopWindow){
         this.context=context;
         this.goodsname=goodsname;
         this.goodsnum=goodsnum;
+        this.boxName=boxName;
+        this.boxget=boxget;
+        this.mPopWindow=mPopWindow;
     }
     @Override
     public int getCount() {
@@ -65,6 +68,8 @@ public class MsimpleAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 thingName=ViewHolder.tv_goods_name.getText().toString();
+                boxget.deleteThings(boxName,thingName);
+                mPopWindow.dismiss();
             }
         });
         ViewHolder.btn_change_num.setOnClickListener(new View.OnClickListener() {
