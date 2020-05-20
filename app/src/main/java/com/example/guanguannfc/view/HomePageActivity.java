@@ -385,12 +385,14 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         if (isNFCExist==null){
             isCount=true;
 //            跳转传值
+
             actType="学习";
             actName="学英语";
             binder.starTimer();
             Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
             startIntent.putExtra("username",userName);
             startActivityForResult(startIntent,2);
+
 
 
         }
