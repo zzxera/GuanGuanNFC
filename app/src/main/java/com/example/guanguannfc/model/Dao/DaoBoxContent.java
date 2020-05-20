@@ -64,7 +64,7 @@ public class DaoBoxContent {
     //更新某个盒子中某个物品的数量：需要给定盒子的ID、物品的名称、更新后物品的数量
     public boolean update(String user_name,String box_name, String thing_name, Integer thing_num) {
         SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
-        String sql = "update Box_Content set thing_num=? , updated_time=? where box_ID=(select _id from Box where box_name=? and userID=(select _id from User_Info where user_name=?)) and thing_name=?";
+        String sql = "update Box_Content set thing_num=? , updated_time=? where box_ID=(select _id from Box where box_name=? and user_ID=(select _id from User_Info where user_name=?)) and thing_name=?";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql, new Object[]{thing_num, currentTime, box_name,user_name, thing_name});
