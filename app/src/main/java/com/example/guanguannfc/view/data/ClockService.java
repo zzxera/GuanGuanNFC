@@ -1,45 +1,89 @@
 package com.example.guanguannfc.view.data;
 
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
+import android.os.Binder;
 import android.os.IBinder;
-import android.os.Message;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 
 public class ClockService extends Service {
     
-    public static Long lStartTime;
-    public static String startTime;
-    public static GetTime getTime;
+    private Long lStartTime;
+    private String startTime,nowtime;
+    private GetTime getTime;
 
-    public ClockService(){
+    private LocalBroadcastManager lbm;
+    private ClockService.TimerThread timerThread;
+    boolean counting;
+
+
+    class TimerThread extends Thread{
+        @Override
+        public void run() {
+            while (true){
+                try{
+                    if (counting){
+                        Thread.sleep(1000);
+                        nowtime=getTime.getNowTime();
+                        Intent data = new Intent();
+                        data.setAction("clock");
+                        data.putExtra("lstarttime",lStartTime);
+                        data.putExtra("starttime",startTime);
+                        data.putExtra("nowtime",nowtime);
+                        lbm.sendBroadcast(data);
+                    }
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    @Override
-    public void onCreate() {
-        lStartTime = getTime.getStartTime();
-        startTime=getTime.getNowTime();
-        super.onCreate();
+    public class MyBinder extends Binder{
+        boolean getTimerStatue(){
+            return counting;
+        }
+
+        public void starTimer(){
+            if (!counting){
+                counting = true;
+                lStartTime = getTime.getStartTime();
+                startTime = getTime.getNowTime();
+                nowtime = getTime.getNowTime();
+            }
+        }
+
+       public void stopTimer(){
+            counting = false;
+        }
+
+    }
+
+    public ClockService(){
 
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return new ClockService.MyBinder();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+    public void onCreate() {
+        super.onCreate();
+        timerThread = new ClockService.TimerThread();
+        lStartTime = getTime.getStartTime();
+        startTime=getTime.getNowTime();
+        nowtime = getTime.getNowTime();
+        counting=false;
+        timerThread.start();
+        lbm = LocalBroadcastManager.getInstance(this);
+
     }
 
 
@@ -47,6 +91,8 @@ public class ClockService extends Service {
     public void onDestroy() {
         super.onDestroy();
     }
+
+
 
 
 }

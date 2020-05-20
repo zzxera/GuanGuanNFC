@@ -38,7 +38,7 @@ public class PushFragment extends Fragment {
         lv_pushs= view.findViewById(R.id.lv_pushs);
 
         initPushs(pushs1);
-        pushAdapter = new PushAdapter(getActivity(),R.layout.push_item,pushItemList);
+        pushAdapter = new PushAdapter(getActivity(),R.layout.item_push,pushItemList);
         lv_pushs.setAdapter(pushAdapter);
         return view;
     }

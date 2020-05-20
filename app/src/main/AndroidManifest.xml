@@ -38,7 +38,7 @@
         
         </activity>
 
-        <activity android:name=".view.data.ClockActivity2" />
+        <activity android:name=".view.data.ClockActivity" />
 
         <activity android:name=".controller.nfcManagement.MainNFCActivity">
             <intent-filter>
@@ -95,7 +95,6 @@
         <activity android:name=".view.management.BoxtipActivity" />
         <activity android:name=".view.management.AddactActivity" />
         <activity android:name=".view.loginAndLogon.Forgetkey" />
-        <activity android:name=".view.data.Data" /> <!-- view测试入口 -->
 
         <activity android:name=".view.loginAndLogon.LoginActivity">
             <intent-filter>
@@ -108,6 +107,7 @@
         <activity android:name=".model.DataBaseTest.LiuYuTest" />
         <activity android:name=".model.DataBaseTest.UserInfo" />
         <activity android:name=".model.DataBaseTest.DataQueryTest" />
+
         <service
             android:name=".view.data.ClockService"
             android:enabled="true"
