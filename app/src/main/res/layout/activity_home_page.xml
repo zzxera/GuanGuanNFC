@@ -106,6 +106,17 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <Button
+        android:id="@+id/startCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="模拟开始计时"
+        app:layout_constraintBottom_toTopOf="@+id/main_bottom_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></Button>
+
+
     <!--实现在底部，水平排列按钮-->
     <LinearLayout
         android:id="@+id/main_bottom_bar"

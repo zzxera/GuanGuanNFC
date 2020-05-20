@@ -42,9 +42,9 @@ public class FrendFragment extends Fragment {
         initView();
         initFriends();
         initFriendAct(act2);
-        friendAdapter = new FriendAdapter(getActivity(),R.layout.friend_item,friendItemsList);
+        friendAdapter = new FriendAdapter(getActivity(),R.layout.item_friend,friendItemsList);
         lv_friends.setAdapter(friendAdapter);
-        friendActAdapter = new FriendActAdapter(getActivity(),R.layout.friendact_item,friendActItemList);
+        friendActAdapter = new FriendActAdapter(getActivity(),R.layout.item_friendact,friendActItemList);
         lv_friendAct.setAdapter(friendActAdapter);
         return view;
 
