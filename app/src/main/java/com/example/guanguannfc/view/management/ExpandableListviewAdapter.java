@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.controller.dataManagement.ActivityManage;
 
 import java.util.List;
 
@@ -24,11 +26,13 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
     //注意，字符数组不要写成{{"A1,A2,A3,A4"}, {"B1,B2,B3,B4，B5"}, {"C1,C2,C3,C4"}}
     private List<Act> childsq;
     private Context context;
+    private ActivityManage getact;
 
-    public ExpandableListviewAdapter(Context context,String[] groups,List<Act> childsq){
+    public ExpandableListviewAdapter(Context context, String[] groups, List<Act> childsq,ActivityManage getact){
         this.context=context;
         this.groups=groups;
         this.childsq=childsq;
+        this.getact=getact;
     }
 
     @Override
@@ -111,17 +115,27 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
         childViewHolder.chidren_item.setText(childsq.get(groupPosition).getAct()[childPosition]);
-
+        final String old=childViewHolder.chidren_item.getText().toString();
         final Button btn1 =convertView.findViewById(R.id.btn_change_actname);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow();
+                showPopupWindow(old,getact);
             }
-            private void showPopupWindow() {
-                View contentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_changeactname,null);
+            private void showPopupWindow(final String old, final ActivityManage getact) {
+                final View contentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_changeactname,null);
                 mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
                 //设置各个控件的点击响应
+                Button btn_change_act=contentView.findViewById(R.id.btn_change_act);
+                btn_change_act.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText ed_newactname=contentView.findViewById(R.id.ed_newactname);
+                        String newactname=ed_newactname.getText().toString();
+                        getact.updataSmallActivity(old,newactname);
+                        mPopWindow.dismiss();
+                    }
+                });
                 //显示PopupWindow
                 View rootview = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_boxmanagement,null);
                 mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
