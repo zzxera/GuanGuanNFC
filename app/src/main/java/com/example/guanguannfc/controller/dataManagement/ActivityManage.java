@@ -1,6 +1,8 @@
 package com.example.guanguannfc.controller.dataManagement;
 
 import android.content.Context;
+
+import com.example.guanguannfc.model.Dao.DaoActivity;
 import com.example.guanguannfc.model.Dao.DaoActivityType;
 
 import java.lang.reflect.Array;
@@ -13,11 +15,13 @@ public class ActivityManage {
     private Context context;
 
     DaoActivityType daoActivityType;
+    DaoActivity daoActivity;
 
     public ActivityManage(String username, Context context){
         this.username = username;
         this.context = context;
         daoActivityType = new DaoActivityType(context);
+        daoActivity = new DaoActivity(context);
     }
 
     public String[] getBigActivity(Context context){
@@ -34,10 +38,15 @@ public class ActivityManage {
         hashMap = daoActivityType.queryTypeAndActivity(username);
         ArrayList<String> list = hashMap.get(bigActivity);
         if(list == null) return null;
-        String array[] = new String[list.size()];
+        String array[] = new String[list.size()];//更新小类活动名称ring[list.size()];
         for (int i = 0; i< list.size(); i++){
             array[i] = list.get(i);
         }
         return array;
+    }
+
+
+    public void updataSmallActivity(String oldName,String newName){
+        daoActivity.update(username, oldName, newName);
     }
 }

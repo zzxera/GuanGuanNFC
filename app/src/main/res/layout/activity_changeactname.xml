@@ -30,7 +30,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/ed_newactname"
             android:layout_width="171dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -39,7 +39,7 @@
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_change_act"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
