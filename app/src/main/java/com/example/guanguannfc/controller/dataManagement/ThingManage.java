@@ -59,22 +59,22 @@ public class ThingManage {
 
 
     public boolean isBoxExist(String boxName){
-        boolean boxExist = false;
-        if (true){//需要表进行存在判断
-            boxExist = true;
-        }
-        return boxExist;
+        return daoBox.query(username, boxName);
     }
 
     public boolean isThingExist(String box_name, String thing_name){
-        boolean thingExist = mDaoBoxContent.loadQuery(username, box_name, thing_name);
-        return thingExist;
+        return mDaoBoxContent.loadQuery(username, box_name, thing_name);
     }
 
-    public void deleteBox(String boxName){
+    public boolean addBox(String box_name, String thing_name, int thing_number){
+        return mDaoBoxContent.insert(username, box_name, thing_name, thing_number);
+    }
+
+    public boolean deleteBox(String boxName){
         if (isBoxExist(boxName)){
+            return daoBox.delete(username,boxName);
         }else{
-            Log.i("deleteBox","Box is not existed");
+            return false;
         }
     }
 
