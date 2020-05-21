@@ -92,15 +92,6 @@ public class ManageFragment extends Fragment {
 
         getact=new ActivityManage(username,ctx);
         initView();
-        ImageView btn_changeact = view.findViewById(R.id.btn_changeact);
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.expand_chidren_item, null);
-        final Button btn_change_actname = contentView.findViewById(R.id.btn_change_actname);
-        btn_changeact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_change_actname.setVisibility(View.INVISIBLE);
-            }
-        });
         ImageView addact = view.findViewById(R.id.iv_addact);
         addact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -346,7 +337,7 @@ public class ManageFragment extends Fragment {
         expand_list_id=view.findViewById(R.id.expand_list_id);
         ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(getActivity(),groups,childsq,getact);
         expand_list_id.setAdapter(adapter);
-        ImageView bt_shauxin=view.findViewById(R.id.btn_shuanxin);
+        ImageView bt_shauxin=view.findViewById(R.id.btn_shuaxin);
         bt_shauxin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
