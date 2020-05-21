@@ -35,6 +35,7 @@ import com.example.guanguannfc.view.data.ClockActivity;
 import com.example.guanguannfc.view.data.ClockService;
 import com.example.guanguannfc.view.data.DataFragment;
 import com.example.guanguannfc.view.friends.FrendFragment;
+import com.example.guanguannfc.view.friends.FriendRequestActivity;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 import com.example.guanguannfc.view.mainInterface.PushFragment;
 import com.example.guanguannfc.view.management.ManageFragment;
@@ -182,14 +183,16 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         addFriendDialog.setCancel(new AddFriendDialog.IOnCancelListener() {
             @Override
             public void onCancel(AddFriendDialog dialog) {
-
+                addFriendDialog.getName().setText("");
+                addFriendDialog.getRemark().setText("");
             }
         });
         addFriendDialog.setConfirm(new AddFriendDialog.IOnConfirmListener() {
             @Override
             public void onConfirm(AddFriendDialog dialog) {
-
-                addName=addFriendDialog.getEditText().getText().toString();
+                addName=addFriendDialog.getName().getText().toString();
+                addFriendDialog.getName().setText("");
+                addFriendDialog.getRemark().setText("");
                 Toast.makeText(HomePageActivity.this,"请求已发送",Toast.LENGTH_LONG).show();
 
             }
@@ -327,7 +330,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
                 lv_add.setAdapter(new ArrayAdapter<String>(HomePageActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.add)));
                 // TODO: 2016/5/17 创建PopupWindow对象，指定宽度和高度
-                addWindow = new PopupWindow(popupView, 270, 380);
+                addWindow = new PopupWindow(popupView, 270, 520);
                 // TODO: 2016/5/17 设置动画
                 addWindow.setAnimationStyle(R.style.popup_window_anim);
                 // TODO: 2016/5/17 设置背景颜色
@@ -352,6 +355,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                             addFriendDialog.show();
                             addWindow.dismiss();
                             break;
+                        case 1:
+                            Intent intent = new Intent();
+                            intent.setClass(HomePageActivity.this, FriendRequestActivity.class);
+                            intent.putExtra("username",userName);
+                            startActivity(intent);
+                            addWindow.dismiss();
                     }
                 }
             });
