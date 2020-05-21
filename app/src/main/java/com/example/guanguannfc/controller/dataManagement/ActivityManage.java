@@ -82,7 +82,7 @@ public class ActivityManage {
         return daoActSta.insert(username, smallActivityName, start_time, end_time);
     }
 
-//    public void updataSmallActivity(String oldName,String newName){
-//        daoActivity.update(username, oldName, newName);
-//    }
+    public void updataSmallActivity(String oldName,String newName){
+        daoActivity.update(username, oldName, newName);
+    }
 }
