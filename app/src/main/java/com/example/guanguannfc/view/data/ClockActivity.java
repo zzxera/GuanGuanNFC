@@ -9,31 +9,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
-import com.example.guanguannfc.view.HomePageActivity;
+import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 
 public class ClockActivity extends AppCompatActivity {

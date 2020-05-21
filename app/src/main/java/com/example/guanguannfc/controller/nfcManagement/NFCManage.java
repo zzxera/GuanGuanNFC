@@ -37,16 +37,22 @@ public class NFCManage extends BaseNfcActivity{
     //判断NFC存在与否：是空的，还是活动的，还是盒子的。
     public static String isNFCExist(String mTagText){
         String string = null;
-        if (mTagText == null){
-            string = null;
-        }else {
-            if (mTagText.substring(0,3) == "Act"){
-                string = "Act";
-            }else if (mTagText.substring(0,3) == "Box"){
-                string = "Box";
+        if (mTagText.length()>=3){
+            if (mTagText == null){
+                string = null;
+            }else {
+                if (mTagText.substring(0,3) .equals( "Act")){
+                    string = "Act";
+                }else if (mTagText.substring(0,3).equals("Box") ){
+                    string = "Box";
+                }
             }
+            return string;
         }
+
         return string;
+
+
     }
 
     //根据username和NFC的编码返回活动名称
@@ -59,19 +65,38 @@ public class NFCManage extends BaseNfcActivity{
     }
 
     //对没有进行使用过的NFC进行号码编写
-    public boolean setNFCNumberForAct(String bigActivity, String smallActivity){
+    public boolean setNFCNumberForAct(String bigActivity, String smallActivity, Tag detectedTag){
         try {
             String NFCNumber = "Act" + username + System.currentTimeMillis();
             daoActivity.insert(username, NFCNumber, bigActivity, smallActivity);
+            NdefMessage ndefMessage = new NdefMessage(
+                    new NdefRecord[]{createTextRecord(NFCNumber)});
+            writeTag(ndefMessage, detectedTag);
         }catch (Exception e){
             return false;
         }
         return true;
     }
-    public boolean setNFCNumberForBox(String boxName, String location){
+
+    public boolean setNFCNumberForBox(String boxName, String location, Tag detectedTag){
         try {
             String NFCNumber = "Box" + username + System.currentTimeMillis();
             daoBox.insert(username, NFCNumber, boxName, location);
+            NdefMessage ndefMessage = new NdefMessage(
+                    new NdefRecord[]{createTextRecord(NFCNumber)});
+            writeTag(ndefMessage, detectedTag);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean setNFCNll(Tag detectedTag){
+        try {
+            String NFCNumber = "";
+            NdefMessage ndefMessage = new NdefMessage(
+                    new NdefRecord[]{createTextRecord(NFCNumber)});
+            writeTag(ndefMessage, detectedTag);
         }catch (Exception e){
             return false;
         }

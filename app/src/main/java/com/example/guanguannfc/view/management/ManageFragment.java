@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -39,8 +40,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ManageFragment extends Fragment {
-    private static boolean actisnfc=false;
-    private static boolean boxisnfc=false;
+    public static boolean actisnfc=false;
+    public static boolean boxisnfc=false;
     private PopupWindow mPopWindow;
     private String username;
     private ThingManage boxget;
@@ -71,6 +72,10 @@ public class ManageFragment extends Fragment {
     private String num2;
     private String boxlocation;
 
+//    NFC获取的值
+    private String getBoxName="" ;
+    private int boxIndex;
+
 
 
     private View view;
@@ -82,13 +87,25 @@ public class ManageFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if(bundle!=null){
             username = bundle.getString("username");
+            getBoxName = bundle.getString("getboxname");
         }
+
+        Toast.makeText(getActivity(),getBoxName,Toast.LENGTH_SHORT).show();
         ctx = getActivity();
         checkClick();
 //        Toast.makeText(getActivity(),"用户名"+username,Toast.LENGTH_LONG).show();
         boxget =new ThingManage(username,ctx);
         box=boxget.boxAndPosition();
-
+        if(!getBoxName.equals("")){
+            boxnames=box[0];
+            for (int i = 0;i<boxnames.length;i++){
+                if (boxnames[i].equals(getBoxName)){
+                    boxIndex = i;
+                    break;
+                }
+            }
+            showbox(boxIndex);
+        }
 
         getact=new ActivityManage(username,ctx);
         initView();
@@ -212,6 +229,7 @@ public class ManageFragment extends Fragment {
             public void onClick(View v) {
                 String box1="1";
                 boxisnfc=true;
+                mPopWindow.dismiss();
                 box(box1,boxname1,na,nu,boxlocation);
                 boxnfc();
             }
@@ -225,6 +243,12 @@ public class ManageFragment extends Fragment {
     private void boxnfc(){
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_nfcbox, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        // TODO: 2016/5/17 设置背景颜色
+        mPopWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F8F8F8")));
+        // TODO: 2016/5/17 设置可以触摸弹出框以外的区域
+        mPopWindow.setOutsideTouchable(false);
+        // TODO: 2016/5/17 设置可以获取焦点
+        mPopWindow.setFocusable(false);
         Button nfcbox=contentView.findViewById(R.id.btn_box_nfc);
         nfcbox.setOnClickListener(new View.OnClickListener() {
             @Override

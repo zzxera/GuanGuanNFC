@@ -35,7 +35,7 @@ import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
 import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
-import com.example.guanguannfc.view.HomePageActivity;
+import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
