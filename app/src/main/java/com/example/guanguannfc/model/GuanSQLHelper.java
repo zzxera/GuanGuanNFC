@@ -27,6 +27,8 @@ public class GuanSQLHelper extends SQLiteOpenHelper {
         db.execSQL(GuanContract.ActSta.SQL_CREATE_TABLE);
         db.execSQL(GuanContract.Box.SQL_CREATE_TABLE);
         db.execSQL(GuanContract.BoxContent.SQL_CREATE_TABLE);
+        db.execSQL(GuanContract.FRIEND.SQL_CREATE_TABLE);
+        db.execSQL(GuanContract.APPLICATION.SQL_CREATE_TABLE);
     }
 
     @Override
@@ -37,6 +39,8 @@ public class GuanSQLHelper extends SQLiteOpenHelper {
         db.execSQL(GuanContract.ActSta.SQL_DELETE_ENTRIES);
         db.execSQL(GuanContract.Box.SQL_DELETE_ENTRIES);
         db.execSQL(GuanContract.BoxContent.SQL_DELETE_ENTRIES);
+        db.execSQL(GuanContract.FRIEND.SQL_DELETE_ENTRIES);
+        db.execSQL(GuanContract.APPLICATION.SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 }
