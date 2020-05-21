@@ -374,7 +374,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 Intent intent = new Intent(HomePageActivity.this, ClockActivity.class);
                 intent.putExtra("username",userName);
 
-                startActivityForResult(intent,2);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -702,17 +702,18 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             }
             else if (isNFCExist.equals("Act")){
 //            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
-                String actInfo = nfcManage.nfcForActivity(mTagText);
-                Toast.makeText(HomePageActivity.this,actInfo,Toast.LENGTH_SHORT).show();
-//            isCount=true;
-////            跳转传值
+                String[] actInfo = nfcManage.nfcForActivity(mTagText);
+            isCount=true;
+//            跳转传值
 //
-//            actType="学习";
-//            actName="学英语";
-//            binder.starTimer();
-//            Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
-//            startIntent.putExtra("username",userName);
-//            startActivityForResult(startIntent,2);
+            actType=allActs[Integer.parseInt(actInfo[1])-1];
+            actName=actInfo[0];
+                Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
+
+            binder.starTimer();
+            Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
+            startIntent.putExtra("username",userName);
+            startActivityForResult(startIntent,1);
             }
             else if (isNFCExist.equals("Box")){
 //            Toast.makeText(HomePageActivity.this,"Box",Toast.LENGTH_SHORT).show();
@@ -764,7 +765,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case 1:
-            case 2:
                 String result = data.getStringExtra("result");
                 if (result.equals("计时继续")){
                     isCount = true;

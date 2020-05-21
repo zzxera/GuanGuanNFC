@@ -90,7 +90,7 @@ public class ManageFragment extends Fragment {
             getBoxName = bundle.getString("getboxname");
         }
 
-        Toast.makeText(getActivity(),getBoxName,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(),getBoxName,Toast.LENGTH_SHORT).show();
         ctx = getActivity();
         checkClick();
 //        Toast.makeText(getActivity(),"用户名"+username,Toast.LENGTH_LONG).show();
@@ -105,6 +105,7 @@ public class ManageFragment extends Fragment {
                 }
             }
             showbox(boxIndex);
+
         }
 
         getact=new ActivityManage(username,ctx);
@@ -128,15 +129,18 @@ public class ManageFragment extends Fragment {
 
 
         gridView1= view.findViewById(R.id.box);
-        boxnames= box[0];
-        GridviewAdapter gridviewAdapter=new GridviewAdapter(getActivity(),boxnames);
-        gridView1.setAdapter(gridviewAdapter);
-        gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showbox(position);
-            }
-        });
+        if (box != null){
+            boxnames= box[0];
+            GridviewAdapter gridviewAdapter=new GridviewAdapter(getActivity(),boxnames);
+            gridView1.setAdapter(gridviewAdapter);
+            gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    showbox(position);
+                }
+            });
+
+        }
 
         lay_box=view.findViewById(R.id.layout_boxmanagement);
 //      lay_box.setVisibility(View.VISIBLE);

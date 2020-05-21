@@ -56,7 +56,7 @@ public class NFCManage extends BaseNfcActivity{
     }
 
     //根据username和NFC的编码返回活动名称
-    public String nfcForActivity(String mTagText){
+    public String[] nfcForActivity(String mTagText){
         return daoActivity.queryActivityByNFC(mTagText);
     }
     //根据username和NFC的编码返回盒子名称
