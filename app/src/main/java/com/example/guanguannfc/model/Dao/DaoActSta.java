@@ -24,16 +24,25 @@ public class DaoActSta {
         mDataBaseHelper=new GuanSQLHelper(context);
 
     }
-    //插入整条数据：需要给定活动ID、开始活动时间、结束活动时间
-    public boolean insert(long act_ID,long start_time,long end_time){
+    //插入一条活动记录：需要给定用户名、活动名称、开始活动时间、结束活动时间
+    public boolean insert(String user_name,String act_name,long start_time,long end_time){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="insert into " + GuanContract.ActSta.TABLE_NAME+ "(act_ID,start_time,end_time,created_time,updated_time) values(?,?,?,?,?)";
+        String sql="insert into Act_Sta (act_ID,start_time,end_time,created_time,updated_time) values((select _id from Activity where act_name=? and user_ID=(select _id from User_Info where user_name=?)),?,?,?,?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{act_name,user_name,start_time,end_time,currentTime,currentTime});
+        db.close();
+        return true;
+    }
+    //插入一条活动记录：需要给定活动id、开始活动时间、结束活动时间
+    public boolean insert(int act_ID,long start_time,long end_time){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="insert into Act_Sta (act_ID,start_time,end_time,created_time,updated_time) values(?,?,?,?,?)";
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{act_ID,start_time,end_time,currentTime,currentTime});
         db.close();
         return true;
-
     }
     //根据活动ID删除和该活动所有时间记录：需给定活动ID
     public boolean delete(long act_ID){

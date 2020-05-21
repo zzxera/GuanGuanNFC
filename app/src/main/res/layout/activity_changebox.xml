@@ -34,8 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="盒子名称"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText"
@@ -43,21 +43,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="盒子位置"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Button" />
+            android:text="确定" />
+
         <Button
             android:id="@+id/button5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Button" />
+            android:text="删除盒子" />
 
     </LinearLayout>
 

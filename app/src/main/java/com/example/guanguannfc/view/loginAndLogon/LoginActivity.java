@@ -14,7 +14,7 @@ import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.userManagement.Login;
 import com.example.guanguannfc.model.DataBaseTest.FakeData;
 import com.example.guanguannfc.model.Initialization;
-import com.example.guanguannfc.view.data.Data;
+import com.example.guanguannfc.view.HomePageActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
         editorMain=sprfMain.edit();
         if(sprfMain.getBoolean("main",false)){
-            Intent intent = new Intent(LoginActivity.this, Data.class);
+            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             LoginActivity.this.finish();

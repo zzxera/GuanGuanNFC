@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".view.data.ClockActivity">
 
+
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
 
         android:layout_marginTop="30dp"
-        android:background="@drawable/ic_launcher_background"
+        android:background="@drawable/img_clock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
@@ -25,7 +26,7 @@
 
 
         android:layout_marginEnd="65dp"
-        android:text="12:30:08"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"></TextView>
@@ -37,7 +38,7 @@
         android:layout_marginStart="65dp"
 
         android:layout_marginTop="20dp"
-        android:text="12:30:08"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"></TextView>
@@ -83,7 +84,7 @@
         android:id="@+id/tv_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0小时57分4秒"
+        android:text=""
         android:textStyle="bold"
         android:textSize="18dp"
         android:textColor="@color/colorRed"
@@ -100,7 +101,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="10dp"
-        android:text="聚类最高记录"
+        android:text="距离最高记录"
         app:layout_constraintEnd_toStartOf="@+id/tv_top"
         app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>
 
@@ -153,6 +154,7 @@
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
 
         app:layout_constraintTop_toBottomOf="@+id/tv_top"></Button>
 
@@ -164,7 +166,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="70dp"
         android:background="@drawable/button_fillet"
-        android:backgroundTint="@color/colorDark"
+        android:backgroundTint="@color/colorgray"
         android:text="结束计时"
         android:onClick="click"
 
@@ -188,6 +190,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_stop"></TextView>
 
     <Button
+        android:id="@+id/btn_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="分享"
@@ -195,9 +198,9 @@
         android:layout_marginEnd="70dp"
 
         android:background="@drawable/button_fillet"
-        android:backgroundTint="@color/colorlight"
+        android:backgroundTint="@color/design_default_color_primary_dark"
         android:textColor="@color/colorWhite"
-
+        android:onClick="click"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_stop"

@@ -17,6 +17,7 @@ public class GuanContract {
         public static final String TABLE_NAME = "User_Info";
         public static final String COLUMN_USER_NAME = "user_name";
         public static final String COLUMN_PASSWORD = "password";
+        public static final String COLUMN_ACTIVE_DAY = "active_day";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
@@ -24,6 +25,7 @@ public class GuanContract {
                 UserInfo._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 UserInfo.COLUMN_USER_NAME + TEXT_TYPE + UNIQUE_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_PASSWORD + TEXT_TYPE + COMMA_SEP +
+                UserInfo.COLUMN_ACTIVE_DAY + INT_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_UPDATED_TIME + INT_TYPE + " )";
         public static final String SQL_DELETE_ENTRIES =
@@ -134,5 +136,46 @@ public class GuanContract {
                 "DROP TABLE IF EXISTS " + BoxContent.TABLE_NAME;
     }
 
+    public static class FRIEND implements BaseColumns{
+        public static final String TABLE_NAME = "Friend_List";
+        public static final String COLUMN_USER_ID = "user_ID";
+        public static final String COLUMN_FRIEND_ID = "friend_ID";
+        public static final String COLUMN_CREATED_TIME = "created_time";
+        public static final String COLUMN_UPDATED_TIME = "updated_time";
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE"
+                + FRIEND.TABLE_NAME + " (" +
+                FRIEND._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
+                FRIEND.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
+                FRIEND.COLUMN_FRIEND_ID + INT_TYPE + COMMA_SEP +
+                FRIEND.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                FRIEND.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
+                " FOREIGN KEY (" + FRIEND.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")" + COMMA_SEP +
+                " FOREIGN KEY (" + FRIEND.COLUMN_FRIEND_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")"
+                + " )";
+        public static final String SQL_DELETE_ENTRIES =
+                "DROP TABLE IF EXISTS " + FRIEND.TABLE_NAME;
+
+    }
+
+    public  static  class MOMENT implements  BaseColumns{
+        public static final String TABLE_NAME = "Moment_List";
+        public static final String COLUMN_USER_ID = "user_ID";
+        public static final String COLUMN_CONTENT = "content";
+        public static final String COLUMN_CREATED_TIME = "created_time";
+        public static final String COLUMN_UPDATED_TIME = "updated_time";
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE"
+                + MOMENT.TABLE_NAME + " (" +
+                MOMENT._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
+                MOMENT.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
+                MOMENT.COLUMN_CONTENT + TEXT_TYPE + COMMA_SEP +
+                MOMENT.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                MOMENT.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
+                " FOREIGN KEY (" + MOMENT.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")"
+                + " )";
+        public static final String SQL_DELETE_ENTRIES =
+                "DROP TABLE IF EXISTS " + MOMENT.TABLE_NAME;
+
+
+    }
 
 }

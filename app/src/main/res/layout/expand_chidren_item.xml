@@ -14,11 +14,11 @@
 
     <Button
         android:id="@+id/btn_change_actname"
-        android:layout_width="50dp"
+        android:layout_width="114dp"
         android:layout_height="33dp"
-        android:visibility="visible"
-        android:text="changname"
-        android:textSize="8sp" />
+        android:text="修改活动名称"
+        android:textSize="8sp"
+        android:visibility="visible" />
 
 
 </LinearLayout>

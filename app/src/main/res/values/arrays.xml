@@ -8,8 +8,8 @@
     </string-array>
     <string-array name="types">
         <item>列表</item>
-        <item>条状图</item>
-        <item>饼状图</item>
+        <item>柱状图</item>
+        <item>折线图</item>
     </string-array>
     <string-array name="actlists">
         <item>工作 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 \u3000\u3000 2h</item>
@@ -25,6 +25,7 @@
         <item>吃饭</item>
         <item>睡觉</item>
         <item>娱乐</item>
+        <item>其他</item>
     </string-array>
     <string-array name="sort">
         <item>最新活动在前</item>
@@ -41,5 +42,12 @@
 
 
     </string-array>
+
+    <string-array name="add">
+        <item>添加好友</item>
+        <item>添加活动</item>
+        <item>添加盒子</item>
+    </string-array>
+
 
 </resources>

@@ -30,29 +30,29 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/ed_name"
             android:layout_width="171dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="请输入物品名称"
+            android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/ed_num"
             android:layout_width="171dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="请输入物品数量"
+            android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_add_goods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Button" />
+            android:text="确定" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

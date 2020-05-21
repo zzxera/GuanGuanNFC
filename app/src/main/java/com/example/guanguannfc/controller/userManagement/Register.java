@@ -19,8 +19,6 @@ public class Register {
         return hasUserName;
     }
     public boolean ISRegisterSuccess(String username, String password){
-        DD.insert(username,password);
-         boolean result = true;
-        return result;
+        return DD.insert(username,password);
     }
 }

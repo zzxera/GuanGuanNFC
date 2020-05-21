@@ -27,9 +27,6 @@ public class LogonFragment extends Fragment {
     private Button btn_logon;
     private Register register;
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,8 +39,6 @@ public class LogonFragment extends Fragment {
         edit_psw=view.findViewById(R.id.edit_psw);
         edit_psw_confirm=view.findViewById(R.id.edit_psw_confirm);
         checkBox=view.findViewById(R.id.checkBox);
-
-
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

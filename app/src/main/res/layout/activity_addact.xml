@@ -51,13 +51,13 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/ed_acttype"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:ems="10"
                 android:gravity="center"
+                android:hint="请添加"
                 android:inputType="textPersonName"
-                android:text="请添加"
                 android:textSize="14sp" />
         </LinearLayout>
         <LinearLayout
@@ -83,23 +83,23 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/editText7"
+                android:id="@+id/ed_actname"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:ems="10"
                 android:gravity="center"
+                android:hint="请添加"
                 android:inputType="textPersonName"
-                android:text="请输入盒子所在位置"
                 android:textSize="14sp" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/btn_addact"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="30dp"
-            android:text="Button"
+            android:text="确定"
             android:textSize="10sp" />
 
     </LinearLayout>

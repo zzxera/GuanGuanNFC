@@ -21,19 +21,20 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_timemanagement"
             android:layout_width="165dp"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:onClick="Timemanagement"
+            android:onClick="click2"
             android:text="时间管理"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tv_boxmanage"
             android:layout_width="151dp"
             android:layout_height="fill_parent"
             android:gravity="center"
+            android:onClick="click2"
             android:text="物品管理"
             android:textSize="24sp" />
 
@@ -45,169 +46,142 @@
 
 
     </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_boxmanagement"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="90dp"
+        >
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="313dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="11dp"
-        android:background="#B8A5A5"
-        android:onClick="Searchgoods"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="434dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="48dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
+        <SearchView
+            android:id="@+id/sv_goods"
+            android:layout_width="313dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="48dp"
+            android:background="#B8A5A5"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/Button1"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
+        <GridView
+            android:id="@+id/box"
+            android:layout_width="329dp"
+            android:layout_height="217dp"
+            android:layout_marginTop="48dp"
+            android:numColumns="2"
+            android:horizontalSpacing="0dp"
+            android:verticalSpacing="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv_goods" />
+
+
+
+        <ImageView
+            android:id="@+id/iv_addbox"
+            android:layout_width="361dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="155dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="150dp"
+            android:src="@drawable/img_addbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/box" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_timemanagement"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="90dp"
+        android:visibility="invisible"
+        >
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="74dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="271dp"
+            android:layout_marginBottom="3dp"
             android:gravity="center"
-            android:text="时间管理"></Button>
-        <!--android:onlongClick="Changebox"-->
+            android:text="活动类型"
+            app:layout_constraintBottom_toTopOf="@+id/expand_list_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_changeact"
+            android:layout_width="38dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="236dp"
+            android:layout_marginBottom="13dp"
+            android:src="@drawable/img_changeact"
+            app:layout_constraintBottom_toTopOf="@+id/expand_list_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ExpandableListView
+            android:id="@+id/expand_list_id"
+            android:layout_width="405dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="13dp"
+            android:groupIndicator="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_changeact"></ExpandableListView>
 
 
-        <Button
-            android:id="@+id/Button2"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_addact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expand_list_id"
+            android:src="@drawable/img_addact" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="90dp"
+        >
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="434dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        <SearchView
+            android:id="@+id/sv"
+            android:layout_width="313dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="11dp"
+            android:background="#B8A5A5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/Button3"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-
-        <Button
-            android:id="@+id/Button4"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="434dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-        <Button
-            android:id="@+id/Button5"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-
-        <Button
-            android:id="@+id/Button6"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="434dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
-        <Button
-            android:id="@+id/Button7"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-
-        <Button
-            android:id="@+id/Button8"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="434dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-
-        <Button
-            android:id="@+id/Button9"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-
-        <Button
-            android:id="@+id/Button10"
-            android:layout_width="103dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="时间管理"></Button>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_addbox"
-        android:layout_width="416dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="155dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="150dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+        <ListView
+            android:id="@+id/lv_search"
+            android:layout_width="383dp"
+            android:layout_height="443dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

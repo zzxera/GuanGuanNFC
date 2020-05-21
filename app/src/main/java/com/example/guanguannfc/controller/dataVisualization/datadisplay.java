@@ -2,6 +2,7 @@ package com.example.guanguannfc.controller.dataVisualization;
 
 import android.content.Context;
 import android.renderscript.Sampler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,17 +29,21 @@ public class datadisplay {
         ArrayList<HelperActivityType> list = new ArrayList<>();
         long timeStart = gt.getStringToDate(timestart,"yyyy-MM-dd");
         long timeEnd = gt.getStringToDate(timeend,"yyyy-MM-dd");
+        long timeEnd1 = timeEnd + 24*60*60*1000;
         if (activityType.length() <= 0){
-            list = Dq.queryActType(username,timeStart,timeEnd);
+            list = Dq.queryActType(username,timeStart,timeEnd1);
         }else {
-            list = Dq.queryActType(username,timeStart,timeEnd,activityType);
+            list = Dq.queryActType(username,timeStart,timeEnd1,activityType);
         }
         if(list!=null) {
             int n = list.size();
-            String[][] arr = new String[n][2];
+            String[][] arr1 = new String[n][2];
+            float[] arr2 = new float[n];
             for (int i = 0; i < n; i++) {
-                arr[i][0] = list.get(i).getActivity_type();
-                arr[i][1] = (gt.transString1(list.get(i).getLen_time()));
+                arr1[i][0] = list.get(i).getActivity_type();
+                arr1[i][1] = (gt.transString1(list.get(i).getLen_time()));
+                arr2[i] = (gt.transString2(list.get(i).getLen_time()));
+                Log.i("gy", "Datadplay time: "+arr2[i]);
             }
             String dataAnalysis = "test";
             String echarttype = showType;
@@ -56,11 +61,11 @@ public class datadisplay {
                 default:
                     break;
             }
-            Object[] objs = new Object[]{arr, url, dataAnalysis};
+            Object[] objs = new Object[]{arr1, arr2, dataAnalysis};
             return objs;
         }
         else {
             return null;
         }
     }
-    }
+}
