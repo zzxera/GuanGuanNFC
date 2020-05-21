@@ -35,17 +35,12 @@ import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
 import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
+import com.example.guanguannfc.view.HomePageActivity;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -80,6 +75,7 @@ public class DataFragment extends Fragment {
     private ListView lv_allactlist = null;
     private ActShowAdapter actShowAdapter;
     private ConstraintLayout.LayoutParams layoutParams;
+    private boolean isCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,6 +84,7 @@ public class DataFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if(bundle!=null){
             userName = bundle.getString("username");
+//            isCount = bundle.getBoolean("isCount");
         }
 
         dd=new datadisplay(getActivity());
@@ -102,15 +99,15 @@ public class DataFragment extends Fragment {
         initWebView();
         checkClick();
 
-
+//        Toast.makeText(getActivity(),"onCreate",Toast.LENGTH_LONG).show();
 
         return view;
     }
     private void initView(){
         actlist=view.findViewById(R.id.listview_actlist);
         lv_allactlist=view.findViewById(R.id.lv_allacts);
-        dataShowAdapter = new DataShowAdapter(getActivity(),R.layout.datashow_item,dataShowList);
-        actShowAdapter = new ActShowAdapter(getActivity(),R.layout.actshow_item,actShowList);
+        dataShowAdapter = new DataShowAdapter(getActivity(),R.layout.item_datashow,dataShowList);
+        actShowAdapter = new ActShowAdapter(getActivity(),R.layout.item_actshow,actShowList);
         myWebView=view.findViewById(R.id.webview_acts);
         spinner_times=view.findViewById(R.id.spinner_time);
         spinner_types=view.findViewById(R.id.spinner_type);
@@ -151,7 +148,30 @@ public class DataFragment extends Fragment {
         ArrayAdapter<String> actAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,allActName);
         spinner_acts.setAdapter(actAdapter);
 
+
+
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Toast.makeText(getActivity(),"onResume"+isCount,Toast.LENGTH_LONG).show();
+        isCount= HomePageActivity.isCount;
+        if (isCount){
+            tv_prompt.setVisibility(View.VISIBLE);
+            layoutParams.setMargins(0, 200, 0, 0);
+        }
+        else {
+            tv_prompt.setVisibility(View.GONE);
+            layoutParams.setMargins(0, 100, 0, 0);
+        }
+    }
+
     private void refreshEChart(){
         Log.i("gy","刷新图表");
         echart_time=new Object[0];
@@ -502,7 +522,7 @@ public class DataFragment extends Fragment {
                 intent3.setClass(getActivity(), ClockActivity.class);
                 intent3.putExtra("username",userName);
 //                intent3.putExtra("isfirst","false");
-                startActivityForResult (intent3, 1);
+                startActivityForResult (intent3, 2);
             }
         });
 
@@ -566,34 +586,6 @@ public class DataFragment extends Fragment {
                 return false;
             }
         });
-//        view.findViewById(R.id.button_manage).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent1 = new Intent();
-//                intent1.setClass(getActivity(), BoxmanagementActivity.class);
-//                Bundle bundle=new Bundle();
-//                bundle.putString("userName",userName);
-//                intent1.putExtras(bundle);
-//                startActivity(intent1);
-//            }
-//        });
-        view.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intentClock = new Intent(getActivity(),ClockService.class);
-//                getActivity().startService(intentClock);
-                WriteSysFile();//调用函数
-                tv_prompt.setVisibility(View.VISIBLE);
-                layoutParams.setMargins(0, 200, 0, 0);
-
-                Intent testIntent = new Intent(getActivity(),ClockActivity.class);
-                testIntent.putExtra("username",userName);
-//                testIntent.putExtra("isfirst","true");
-//                startActivity(testIntent);
-                startActivityForResult (testIntent, 1);
-
-            }
-        });
     }
 
 
@@ -601,8 +593,12 @@ public class DataFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getActivity(),isCount+"",Toast.LENGTH_LONG).show();
+
         switch (requestCode){
+
             case 1:
+            case 2:
                 String result = data.getStringExtra("result");
                 if (result.equals("计时继续")){
                     tv_prompt.setVisibility(View.VISIBLE);
@@ -612,7 +608,6 @@ public class DataFragment extends Fragment {
                     tv_prompt.setVisibility(View.GONE);
                     layoutParams.setMargins(0, 100, 0, 0);
                 }
-                Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
                 break;
         }
     }
