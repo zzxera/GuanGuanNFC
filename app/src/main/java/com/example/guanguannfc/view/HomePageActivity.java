@@ -182,14 +182,16 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         addFriendDialog.setCancel(new AddFriendDialog.IOnCancelListener() {
             @Override
             public void onCancel(AddFriendDialog dialog) {
-
+                addFriendDialog.getName().setText("");
+                addFriendDialog.getRemark().setText("");
             }
         });
         addFriendDialog.setConfirm(new AddFriendDialog.IOnConfirmListener() {
             @Override
             public void onConfirm(AddFriendDialog dialog) {
-
-                addName=addFriendDialog.getEditText().getText().toString();
+                addName=addFriendDialog.getName().getText().toString();
+                addFriendDialog.getName().setText("");
+                addFriendDialog.getRemark().setText("");
                 Toast.makeText(HomePageActivity.this,"请求已发送",Toast.LENGTH_LONG).show();
 
             }
