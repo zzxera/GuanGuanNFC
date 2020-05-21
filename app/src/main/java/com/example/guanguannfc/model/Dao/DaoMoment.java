@@ -25,7 +25,7 @@ public class DaoMoment {
 
     }
     //插入一条数据
-    public boolean insert (int from_id,int to_id,String content,String is_processed){
+    public boolean insert (int from_id,int to_id,String content,int is_processed){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="insert into moment_list(from_id,to_id,content,is_processed,created_time,updated_time) values(?,?,?,?,?,?)";
         Date date = new Date();
