@@ -148,7 +148,7 @@ public class GuanContract {
         public static final String COLUMN_FRIEND_ID = "friend_ID";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
-        public static final String SQL_CREATE_TABLE = "CREATE TABLE"
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + FRIEND.TABLE_NAME + " (" +
                 FRIEND._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 FRIEND.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
@@ -171,7 +171,7 @@ public class GuanContract {
         public static final String COLUMN_IS_PROCESSED = "is_processed";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
-        public static final String SQL_CREATE_TABLE = "CREATE TABLE"
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + APPLICATION.TABLE_NAME + " (" +
                 APPLICATION._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 APPLICATION.COLUMN_FROM_ID + INT_TYPE + COMMA_SEP +
@@ -179,7 +179,7 @@ public class GuanContract {
                 APPLICATION.COLUMN_CONTENT + TEXT_TYPE + COMMA_SEP +
                 APPLICATION.COLUMN_IS_PROCESSED + TEXT_TYPE + COMMA_SEP +
                 APPLICATION.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
-                APPLICATION.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP + " )";
+                APPLICATION.COLUMN_UPDATED_TIME + INT_TYPE  + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + APPLICATION.TABLE_NAME;
 
