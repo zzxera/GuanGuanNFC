@@ -27,6 +27,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
     private List<Act> childsq;
     private Context context;
     private ActivityManage getact;
+    private String [] child;
 
     public ExpandableListviewAdapter(Context context, String[] groups, List<Act> childsq,ActivityManage getact){
         this.context=context;
@@ -134,6 +135,13 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
                         String newactname=ed_newactname.getText().toString();
                         getact.updataSmallActivity(old,newactname);
                         mPopWindow.dismiss();
+                        groups=getact.getBigActivity(context);
+                        for (int i =0;i<groups.length;i++){
+                            if (groups.length>1){
+                                child = getact.getSmallActivity(groups[i]);
+                                childsq.add(new Act(groups[i], child));
+                            }
+                        }
                     }
                 });
                 //显示PopupWindow
