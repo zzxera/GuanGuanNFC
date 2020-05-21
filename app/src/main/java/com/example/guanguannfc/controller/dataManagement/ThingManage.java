@@ -57,32 +57,48 @@ public class ThingManage {
         return array;
     }
 
+    //根据nfc查询盒子名称
+    public String queryBoxNameByNfc(String NFCNumber){
+        return daoBox.queryBoxByNFC(NFCNumber);
+    }
 
+    //判断盒子是否存在或重复
     public boolean isBoxExist(String boxName){
-        boolean boxExist = false;
-        if (true){//需要表进行存在判断
-            boxExist = true;
-        }
-        return boxExist;
+        return daoBox.query(username, boxName);
     }
 
-    public boolean isThingExist(String box_name, String thing_name){
-        boolean thingExist = mDaoBoxContent.loadQuery(username, box_name, thing_name);
-        return thingExist;
+    //添加盒子
+    public boolean addBox(String box_name, String thing_name, int thing_number){
+        return mDaoBoxContent.insert(username, box_name, thing_name, thing_number);
     }
 
-    public void deleteBox(String boxName){
+    //删除盒子
+    public boolean deleteBox(String boxName){
         if (isBoxExist(boxName)){
+            return daoBox.delete(username,boxName);
         }else{
-            Log.i("deleteBox","Box is not existed");
+            return false;
         }
     }
 
+    //修改盒子名称
+    public boolean updataBoxName(String box_oldName,String box_newName){
+        return daoBox.updateName(username, box_oldName, box_newName);
+    }
+
+    //修改盒子位置
+    public boolean updataBoxPosition(String box_oldPos,String box_newPos){
+        return daoBox.updatePos(username, box_oldPos, box_newPos);
+    }
+
+
+    //添加物品
     public void addThings(String boxName, String thingName, int number){
         //将名称与数量信息传给数据库
         mDaoBoxContent.insert(username,boxName,thingName,number);
     }
 
+    //删除物品
     public void deleteThings(String boxName, String thingName){
         //将名称与数量信息传给数据库（删除物品）
         mDaoBoxContent.delete(username,boxName,thingName);
@@ -91,6 +107,11 @@ public class ThingManage {
     //更新物品数量
     public void updataThings(String box_name, String thing_name, Integer thing_num){
         mDaoBoxContent.update(username, box_name, thing_name, thing_num);
+    }
+
+    //判断物品名称存在或重复
+    public boolean isThingExist(String box_name, String thing_name){
+        return mDaoBoxContent.loadQuery(username, box_name, thing_name);
     }
 
 }

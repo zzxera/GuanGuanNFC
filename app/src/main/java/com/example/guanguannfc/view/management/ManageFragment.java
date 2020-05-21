@@ -39,7 +39,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ManageFragment extends Fragment {
-
+    private static boolean actisnfc=false;
+    private static boolean boxisnfc=false;
     private PopupWindow mPopWindow;
     private String username;
     private ThingManage boxget;
@@ -71,6 +72,7 @@ public class ManageFragment extends Fragment {
     private String boxlocation;
 
 
+
     private View view;
     Context ctx;
     @Override
@@ -90,15 +92,6 @@ public class ManageFragment extends Fragment {
 
         getact=new ActivityManage(username,ctx);
         initView();
-        ImageView btn_changeact = view.findViewById(R.id.btn_changeact);
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.expand_chidren_item, null);
-        final Button btn_change_actname = contentView.findViewById(R.id.btn_change_actname);
-        btn_changeact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_change_actname.setVisibility(View.INVISIBLE);
-            }
-        });
         ImageView addact = view.findViewById(R.id.iv_addact);
         addact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,6 +202,7 @@ public class ManageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String box1="1";
+                boxisnfc=true;
                 box(box1,boxname1,na,nu,boxlocation);
                 boxnfc();
             }
@@ -229,6 +223,7 @@ public class ManageFragment extends Fragment {
                 mPopWindow.dismiss();
                 String box1="0";
                 String boxname=null;
+                boxisnfc=false;
                 box(box1,boxname,na,nu,boxlocation);
             }
         });
@@ -303,6 +298,7 @@ public class ManageFragment extends Fragment {
                 String actttype =acttype.getText().toString();
                 String acttname=actname.getText().toString();
                 String ms1= "1";
+                actisnfc=true;
                 act(ms1,actttype,acttname);
                 shownfcact(actttype,acttname);
             }
@@ -322,6 +318,7 @@ public class ManageFragment extends Fragment {
                 String ms1="0";
                 String acttype=null;
                 String actname=null;
+                actisnfc=false;
                 act(ms1,acttype,actname);
             }
         });
@@ -340,7 +337,22 @@ public class ManageFragment extends Fragment {
         expand_list_id=view.findViewById(R.id.expand_list_id);
         ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(getActivity(),groups,childsq,getact);
         expand_list_id.setAdapter(adapter);
-        //默认展开第一个数组
+        ImageView bt_shauxin=view.findViewById(R.id.btn_shuaxin);
+        bt_shauxin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                childsq.clear();
+                groups=getact.getBigActivity(getActivity());
+                for (int i =0;i<groups.length;i++){
+                    if (groups.length>1){
+                        child = getact.getSmallActivity(groups[i]);
+                        childsq.add(new Act(groups[i], child));
+                    }
+                }
+                ExpandableListviewAdapter adapter2=new ExpandableListviewAdapter(getActivity(),groups,childsq,getact);
+                expand_list_id.setAdapter(adapter2);
+            }
+        });
         expand_list_id.expandGroup(0);
         //关闭数组某个数组，可以通过该属性来实现全部展开和只展开一个列表功能
         //expand_list_id.collapseGroup(0);
@@ -376,6 +388,8 @@ public class ManageFragment extends Fragment {
                 showToastShort("展开了数据___"+groups[groupPosition]);
             }
         });
+
+
 
     }
 
@@ -439,6 +453,7 @@ public class ManageFragment extends Fragment {
         }
         return list;
     }
+
     public static boolean act(String act1,String acttype,String actname){
         if(act1 == "1"){
             return true;

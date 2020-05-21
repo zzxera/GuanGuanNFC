@@ -17,7 +17,7 @@ import com.example.guanguannfc.R;
 public class AddFriendDialog extends Dialog {
 
     private String addName;
-    private EditText et_name;
+    private EditText et_name,et_remark;
     private Button btn_confrim,btn_cancel;
 
     //声明两个点击事件，等会一定要为取消和确定这两个按钮也点击事件
@@ -36,6 +36,7 @@ public class AddFriendDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_addfriend);
         et_name=findViewById(R.id.et_name);
+        et_remark=findViewById(R.id.et_remark);
         btn_cancel = findViewById(R.id.btn_cancel);
         btn_confrim = findViewById(R.id.btn_confirm);
         WindowManager m = getWindow().getWindowManager();
@@ -103,8 +104,12 @@ public class AddFriendDialog extends Dialog {
     }
 
 
-    public EditText getEditText(){
+    public EditText getName(){
         return et_name;
+    }
+
+    public EditText getRemark(){
+        return et_remark;
     }
 
 }

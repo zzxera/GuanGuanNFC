@@ -45,6 +45,7 @@
 
     <string-array name="add">
         <item>添加好友</item>
+        <item>好友申请</item>
         <item>添加活动</item>
         <item>添加盒子</item>
     </string-array>

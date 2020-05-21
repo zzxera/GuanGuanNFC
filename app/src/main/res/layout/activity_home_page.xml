@@ -55,13 +55,11 @@
             android:id="@+id/img_head"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/img_head"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="30dp"
-            ></ImageView>
+
+            android:background="@drawable/img_head"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
 
         <TextView
             android:id="@+id/text_userName"
@@ -75,6 +73,15 @@
             app:layout_constraintStart_toEndOf="@+id/img_head"
             app:layout_constraintTop_toTopOf="@+id/img_head"
             android:layout_marginStart="10dp"
+            ></TextView>
+        <TextView
+            android:id="@+id/text_userLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="等级"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/text_userName"
+            app:layout_constraintTop_toBottomOf="@id/text_userName"
             ></TextView>
 
         <ListView

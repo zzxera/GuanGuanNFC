@@ -26,8 +26,8 @@ public class GuanContract {
                 UserInfo._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 UserInfo.COLUMN_USER_NAME + TEXT_TYPE + UNIQUE_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_PASSWORD + TEXT_TYPE + COMMA_SEP +
-                UserInfo.COLUMN_ACTIVE_DAY + INT_TYPE + COMMA_SEP +
-                UserInfo.COLUMN_LAST_ACT + TEXT_TYPE + COMMA_SEP +
+                UserInfo.COLUMN_ACTIVE_DAY + INT_TYPE + " DEFAULT 0"+ COMMA_SEP +
+                UserInfo.COLUMN_LAST_ACT + TEXT_TYPE + " DEFAULT '1970-01-01'" + COMMA_SEP +
                 UserInfo.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_UPDATED_TIME + INT_TYPE + " )";
         public static final String SQL_DELETE_ENTRIES =
@@ -89,7 +89,7 @@ public class GuanContract {
                 ActSta.COLUMN_START_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_END_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_MOMENT_TEXT + TEXT_TYPE + COMMA_SEP +
-                ActSta.COLUMN_IS_SHARED + TEXT_TYPE + COMMA_SEP +
+                ActSta.COLUMN_IS_SHARED + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
                 " FOREIGN KEY (" + ActSta.COLUMN_ACT_ID + ") REFERENCES " + Activity.TABLE_NAME + "(" + Activity._ID + ")"
@@ -148,7 +148,7 @@ public class GuanContract {
         public static final String COLUMN_FRIEND_ID = "friend_ID";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
-        public static final String SQL_CREATE_TABLE = "CREATE TABLE"
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + FRIEND.TABLE_NAME + " (" +
                 FRIEND._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 FRIEND.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
@@ -171,15 +171,15 @@ public class GuanContract {
         public static final String COLUMN_IS_PROCESSED = "is_processed";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
-        public static final String SQL_CREATE_TABLE = "CREATE TABLE"
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE "
                 + APPLICATION.TABLE_NAME + " (" +
                 APPLICATION._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 APPLICATION.COLUMN_FROM_ID + INT_TYPE + COMMA_SEP +
                 APPLICATION.COLUMN_TO_ID + INT_TYPE + COMMA_SEP +
                 APPLICATION.COLUMN_CONTENT + TEXT_TYPE + COMMA_SEP +
-                APPLICATION.COLUMN_IS_PROCESSED + TEXT_TYPE + COMMA_SEP +
+                APPLICATION.COLUMN_IS_PROCESSED + INT_TYPE + " DEFAULT 0" + COMMA_SEP +
                 APPLICATION.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
-                APPLICATION.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP + " )";
+                APPLICATION.COLUMN_UPDATED_TIME + INT_TYPE  + " )";
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + APPLICATION.TABLE_NAME;
 
