@@ -32,6 +32,9 @@ public class FriendRequestAdapter extends ArrayAdapter {
         TextView name = view.findViewById(R.id.tv_friendName);
         TextView remark = view.findViewById(R.id.tv_remark);
 
-        return super.getView(position, convertView, parent);
+        name.setText(friendRequestItem.getName());
+        remark.setText(friendRequestItem.getRemark());
+
+        return view;
     }
 }
