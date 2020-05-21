@@ -68,7 +68,6 @@ public class NFCManage extends BaseNfcActivity{
         }
         return true;
     }
-
     public boolean setNFCNumberForBox(String boxName, String location){
         try {
             String NFCNumber = "Box" + username + System.currentTimeMillis();

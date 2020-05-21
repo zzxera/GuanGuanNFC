@@ -2,18 +2,27 @@ package com.example.guanguannfc.view;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +32,10 @@ import com.example.guanguannfc.controller.nfcManagement.BaseNfcActivity;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.view.data.ClockActivity;
-import com.example.guanguannfc.view.data.Data;
+import com.example.guanguannfc.view.data.ClockService;
 import com.example.guanguannfc.view.data.DataFragment;
 import com.example.guanguannfc.view.friends.FrendFragment;
+import com.example.guanguannfc.view.friends.FriendRequestActivity;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
 import com.example.guanguannfc.view.mainInterface.PushFragment;
 import com.example.guanguannfc.view.management.ManageFragment;
@@ -37,7 +47,7 @@ import java.io.OutputStreamWriter;
 
 public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
 
-    private String userName;
+    public static String userName,actType,actName;
     private RelativeLayout main_body;
     private LinearLayout main_bottom_bar;
     private RelativeLayout bottom_bar_1_btn,bottom_bar_2_btn,bottom_bar_3_btn,bottom_bar_4_btn;
@@ -47,16 +57,38 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private ConstraintLayout ctl_person,lay_actshow;
     private ConstraintLayout.LayoutParams layoutParams;
     private LinearLayout ll_container;
-    private ImageView img_person;
-    private String mTagText,actType,actName;
+    private ImageView img_person,img_add;
+    private String mTagText;
     private GetTime getTime;
+    private ListView lv_add;
+    private View popupView;
+//    添加好友
+    private AddFriendDialog addFriendDialog;
+    private String addName;
+    PopupWindow addWindow;
     
     private DataFragment dataFragment;
     private PushFragment pushFragment;
     private ManageFragment manageFragment;
     private FrendFragment frendFragment;
 
+//    计时
    public static boolean isCount=false;
+   ClockService.MyBinder binder;
+   Handler handler;
+   Button btn_start;
+
+    ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            binder = (ClockService.MyBinder) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,23 +108,15 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         initView();
         setMain();
         checkClick();
+        initDialog();
 
 
-        img_person.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ctl_person.setVisibility(View.VISIBLE);
-                ll_container.setVisibility(View.VISIBLE);
-            }
-        });
-        ll_container.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                ctl_person.setVisibility(View.INVISIBLE);
-                ll_container.setVisibility(View.GONE);
-                return false;
-            }
-        });
+
+        Intent intent = new Intent(this,ClockService.class);
+        bindService(intent,conn,Context.BIND_AUTO_CREATE);
+        handler = new Handler();
+
+
     }
 
     @Override
@@ -137,12 +161,44 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         bottom_bar_3_btn.setOnClickListener(this);
         bottom_bar_4_btn.setOnClickListener(this);
 
+//        子fragment
         pushFragment = new PushFragment();
         dataFragment = new DataFragment();
         manageFragment = new ManageFragment();
         frendFragment = new FrendFragment();
 
+//        button
+        btn_start=findViewById(R.id.startCount);
+
+//        添加
+        img_add=findViewById(R.id.img_add);
+        popupView = HomePageActivity.this.getLayoutInflater().inflate(R.layout.item_addwindow, null);
+        lv_add = (ListView) popupView.findViewById(R.id.lv_add);
     }
+
+//    创建弹窗
+    private void initDialog(){
+        addFriendDialog = new AddFriendDialog(HomePageActivity.this);
+//        重写按钮响应
+        addFriendDialog.setCancel(new AddFriendDialog.IOnCancelListener() {
+            @Override
+            public void onCancel(AddFriendDialog dialog) {
+                addFriendDialog.getName().setText("");
+                addFriendDialog.getRemark().setText("");
+            }
+        });
+        addFriendDialog.setConfirm(new AddFriendDialog.IOnConfirmListener() {
+            @Override
+            public void onConfirm(AddFriendDialog dialog) {
+                addName=addFriendDialog.getName().getText().toString();
+                addFriendDialog.getName().setText("");
+                addFriendDialog.getRemark().setText("");
+                Toast.makeText(HomePageActivity.this,"请求已发送",Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
 //  切换底部样式
     private void setSelectStatus(int index){
         switch (index){
@@ -211,7 +267,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 setSelectStatus(1);
                 break;
             case R.id.bottom_bar_3_btn:
-                
                 Bundle bundle3 = new Bundle();
                 bundle3.putString("username",userName);
                 manageFragment.setArguments(bundle3);
@@ -225,7 +280,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,frendFragment).commit();
                 setSelectStatus(3);
                 break;
-
 
         }
     }
@@ -241,6 +295,77 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 startActivity(intent2);
             }
         });
+
+        img_person.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ctl_person.setVisibility(View.VISIBLE);
+                ll_container.setVisibility(View.VISIBLE);
+            }
+        });
+        ll_container.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                ctl_person.setVisibility(View.INVISIBLE);
+                ll_container.setVisibility(View.GONE);
+                return false;
+            }
+        });
+
+        btn_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binder.starTimer();
+                Intent intent = new Intent(HomePageActivity.this, ClockActivity.class);
+                intent.putExtra("username",userName);
+
+                startActivityForResult(intent,2);
+            }
+        });
+
+        img_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2016/5/17 构建一个popupwindow的布局
+
+                lv_add.setAdapter(new ArrayAdapter<String>(HomePageActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.add)));
+                // TODO: 2016/5/17 创建PopupWindow对象，指定宽度和高度
+                addWindow = new PopupWindow(popupView, 270, 520);
+                // TODO: 2016/5/17 设置动画
+                addWindow.setAnimationStyle(R.style.popup_window_anim);
+                // TODO: 2016/5/17 设置背景颜色
+                addWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F8F8F8")));
+                // TODO: 2016/5/17 设置可以获取焦点
+                addWindow.setFocusable(true);
+                // TODO: 2016/5/17 设置可以触摸弹出框以外的区域
+                addWindow.setOutsideTouchable(true);
+                // TODO：更新popupwindow的状态
+                addWindow.update();
+                // TODO: 2016/5/17 以下拉的方式显示，并且可以设置显示的位置
+                addWindow.showAsDropDown(img_add, 0, 35);
+            }
+        });
+
+
+            lv_add.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    switch (i){
+                        case 0:
+                            addFriendDialog.show();
+                            addWindow.dismiss();
+                            break;
+                        case 1:
+                            Intent intent = new Intent();
+                            intent.setClass(HomePageActivity.this, FriendRequestActivity.class);
+                            intent.putExtra("username",userName);
+                            startActivity(intent);
+                            addWindow.dismiss();
+                    }
+                }
+            });
+
+
 
 
     }
@@ -269,12 +394,15 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         if (isNFCExist==null){
             isCount=true;
 //            跳转传值
-            actType="工作";
-            actName="上网课";
-            WriteSysFile();//调用函数
-            Intent testIntent = new Intent(HomePageActivity.this, ClockActivity.class);
-            testIntent.putExtra("username",userName);
-            startActivityForResult (testIntent, 1);
+
+            actType="学习";
+            actName="学英语";
+            binder.starTimer();
+            Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
+            startIntent.putExtra("username",userName);
+            startActivityForResult(startIntent,2);
+
+
 
         }
     }
@@ -311,6 +439,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case 1:
+            case 2:
                 String result = data.getStringExtra("result");
                 if (result.equals("计时继续")){
                     isCount = true;
@@ -318,8 +447,10 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 else {
                     isCount = false;
                 }
-//                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
                 break;
+//                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
+
+            //                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
         }
     }
 

@@ -38,7 +38,9 @@ public class ActivityManage {
         hashMap = daoActivityType.queryTypeAndActivity(username);
         ArrayList<String> list = hashMap.get(bigActivity);
         if(list == null) return null;
-        String array[] = new String[0];//更新小类活动名称ring[list.size()];
+
+        String array[] = new String[list.size()];//更新小类活动名称ring[list.size()];
+
         for (int i = 0; i< list.size(); i++){
             array[i] = list.get(i);
         }
