@@ -68,7 +68,18 @@ public class DataTestActivity extends BaseNfcActivity {
 
     @SuppressLint("MissingSuperCall")
     public void onNewIntent(Intent intent) {
-        Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+//        Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+//        NdefMessage ndefMessage = new NdefMessage(
+//                new NdefRecord[]{NFCManage.createTextRecord(NFCManage.setNFCNumberForAct("ooo"))}
+//               );
+//        boolean result = NFCManage.writeTag(ndefMessage, detectedTag);
+//        if (result) {
+//            Toast.makeText(this, "写入成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "写入失败", Toast.LENGTH_SHORT).show();
+//            Log.d(TAG, "NFCNumber: " + NFCManage.setNFCNumberForAct("ooo"));
+//        }
 
     }
     protected Boolean ifNFCUse() {

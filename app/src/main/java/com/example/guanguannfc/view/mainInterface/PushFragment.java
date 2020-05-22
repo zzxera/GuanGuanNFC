@@ -38,11 +38,12 @@ public class PushFragment extends Fragment {
         lv_pushs= view.findViewById(R.id.lv_pushs);
 
         initPushs(pushs1);
-        pushAdapter = new PushAdapter(getActivity(),R.layout.push_item,pushItemList);
+        pushAdapter = new PushAdapter(getActivity(),R.layout.item_push,pushItemList);
         lv_pushs.setAdapter(pushAdapter);
         return view;
     }
     private void initPushs(String[][] array){
+        pushItemList.clear();
         String[] push1 ={"时间管理的重要性","爱吃肉","当下社会的生活节奏越来越快，掌握好的事件间管理方式能够为大家带来以下好处...",Integer.toString(R.drawable.img_time1)};
         PushItem pushItem1 = new PushItem(push1);
         pushItemList.add(pushItem1);

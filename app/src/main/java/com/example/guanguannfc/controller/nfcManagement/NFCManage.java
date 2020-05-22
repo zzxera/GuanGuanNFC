@@ -59,26 +59,19 @@ public class NFCManage extends BaseNfcActivity{
     }
 
     //对没有进行使用过的NFC进行号码编写
-    public boolean setNFCNumberForAct(String bigActivity, String smallActivity, Tag detectedTag){
+    public boolean setNFCNumberForAct(String bigActivity, String smallActivity){
         try {
             String NFCNumber = "Act" + username + System.currentTimeMillis();
             daoActivity.insert(username, NFCNumber, bigActivity, smallActivity);
-            NdefMessage ndefMessage = new NdefMessage(
-                    new NdefRecord[]{createTextRecord(NFCNumber)});
-            writeTag(ndefMessage, detectedTag);
         }catch (Exception e){
             return false;
         }
         return true;
     }
-
-    public boolean setNFCNumberForBox(String boxName, String location, Tag detectedTag){
+    public boolean setNFCNumberForBox(String boxName, String location){
         try {
             String NFCNumber = "Box" + username + System.currentTimeMillis();
             daoBox.insert(username, NFCNumber, boxName, location);
-            NdefMessage ndefMessage = new NdefMessage(
-                    new NdefRecord[]{createTextRecord(NFCNumber)});
-            writeTag(ndefMessage, detectedTag);
         }catch (Exception e){
             return false;
         }

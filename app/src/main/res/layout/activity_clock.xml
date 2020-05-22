@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="10dp"
-        android:text="聚类最高记录"
+        android:text="距离最高记录"
         app:layout_constraintEnd_toStartOf="@+id/tv_top"
         app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>
 
@@ -166,7 +166,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="70dp"
         android:background="@drawable/button_fillet"
-        android:backgroundTint="@color/colorDark"
+        android:backgroundTint="@color/colorgray"
         android:text="结束计时"
         android:onClick="click"
 
@@ -198,9 +198,9 @@
         android:layout_marginEnd="70dp"
 
         android:background="@drawable/button_fillet"
-        android:backgroundTint="@color/colorlight"
+        android:backgroundTint="@color/design_default_color_primary_dark"
         android:textColor="@color/colorWhite"
-
+        android:onClick="click"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_stop"

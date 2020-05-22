@@ -12,22 +12,27 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataManagement.ThingManage;
 
 public class MsimpleAdapter extends BaseAdapter {
     private PopupWindow mPopWindow;
+    private PopupWindow lpopwindow;
     private Context context;
     private String [] goodsname;
     private String [] goodsnum;
     private String thingName;
     private String boxName;
     private ThingManage boxget;
-    public MsimpleAdapter(Context context,String[] goodsname,String[] goodsnum){
+    private int num;
+
+    public MsimpleAdapter(Context context,String[] goodsname,String[] goodsnum ,String boxName,ThingManage boxget,PopupWindow mPopWindow){
         this.context=context;
         this.goodsname=goodsname;
         this.goodsnum=goodsnum;
+        this.boxName=boxName;
+        this.boxget=boxget;
+        this.mPopWindow=mPopWindow;
     }
     @Override
     public int getCount() {
@@ -65,20 +70,35 @@ public class MsimpleAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 thingName=ViewHolder.tv_goods_name.getText().toString();
+                boxget.deleteThings(boxName,thingName);
+                mPopWindow.dismiss();
             }
         });
         ViewHolder.btn_change_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow14();
+                thingName=ViewHolder.tv_goods_name.getText().toString();
+                showPopupWindow14(boxName,thingName);
             }
-            private void showPopupWindow14() {
-                View contentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview4,null);
-                mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+            private void showPopupWindow14(final String boxName, final String thingname) {
+                final View contentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview4,null);
+                lpopwindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
                 //设置各个控件的点击响应
+                Button btn_change_goods=contentView.findViewById(R.id.btn_change_goods);
+                btn_change_goods.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText ed_num=contentView.findViewById(R.id.ed_num);
+                        String nums=ed_num.getText().toString();
+                        num=Integer.valueOf(nums).intValue();
+                        boxget.updataThings(boxName,thingname,num);
+                        lpopwindow.dismiss();
+                        mPopWindow.dismiss();
+                    }
+                });
                 //显示PopupWindow
                 View rootview = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_boxmanagement,null);
-                mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+                lpopwindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
             }
         });
         return convertView;
@@ -88,6 +108,7 @@ public class MsimpleAdapter extends BaseAdapter {
         TextView tv_goods_shuliang;
         Button btn_change_num;
         Button btn_delet;
+        Button btn_change_goods;
     }
 
 }
