@@ -43,7 +43,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.data.ClockActivity" />
         <activity android:name=".controller.nfcManagement.MainNFCActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" /> <!-- 添加这一条默认设置，能拦截当前页面所有扫描NFC的配置 -->
