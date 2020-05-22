@@ -55,13 +55,11 @@
             android:id="@+id/img_head"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/img_head"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="30dp"
-            ></ImageView>
+
+            android:background="@drawable/img_head"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
 
         <TextView
             android:id="@+id/text_userName"
