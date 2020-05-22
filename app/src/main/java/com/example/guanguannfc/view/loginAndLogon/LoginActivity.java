@@ -14,7 +14,7 @@ import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.userManagement.Login;
 import com.example.guanguannfc.model.DataBaseTest.FakeData;
 import com.example.guanguannfc.model.Initialization;
-import com.example.guanguannfc.view.HomePageActivity;
+import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -8,6 +8,8 @@ import com.example.guanguannfc.model.Dao.DaoActivityType;
 import com.example.guanguannfc.model.Dao.DaoBox;
 import com.example.guanguannfc.model.Dao.DaoBoxContent;
 import com.example.guanguannfc.model.Dao.DaoUserInfo;
+import com.example.guanguannfc.model.Dao.DaoFriend;
+import com.example.guanguannfc.model.Dao.DaoMoment;
 
 import java.util.Date;
 
@@ -30,11 +32,15 @@ public class FakeData {
         DaoBox daoBox = new DaoBox(context);
         DaoActSta daoActSta = new DaoActSta(context);
         DaoBoxContent daoBoxContent = new DaoBoxContent(context);
+        DaoMoment daoMoment = new DaoMoment(context);
+        DaoFriend daoFriend = new DaoFriend(context);
 
 
         if(daoUserInfo.registrationQuery("aaa") != true){
             daoUserInfo.insert("aaa", "123123");
             daoUserInfo.insert("bbb","123123");
+            daoUserInfo.insert("ccc", "123123");
+            daoUserInfo.insert("ddd", "123123");
 
             daoActivityType.insert("学习");
             daoActivityType.insert("工作");
@@ -127,6 +133,17 @@ public class FakeData {
             daoBoxContent.insert(3, "乐高", 3);
             daoBoxContent.insert(4, "硬盘", 2);
             daoBoxContent.insert(4, "迷你优盘", 1);
+
+            daoMoment.insert(2,1, "加个好友吧", 0);
+            daoMoment.insert(2, 3, "我们也加个好友吧", 0);
+            daoMoment.insert(3,1,"我喜欢你 我们一起跑步吧", 0);
+            daoMoment.insert(3,2,"我不喜欢你 但是我想加你好友",0);
+            daoMoment.insert(4,2,"我真的很喜欢你",0);
+
+            daoFriend.insert(1,4);
+            daoFriend.insert(4,1);
+            daoFriend.insert(3,4);
+            daoFriend.insert(4,3);
         }
 
      

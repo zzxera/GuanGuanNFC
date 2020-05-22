@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.guanguannfc.R;
-import com.example.guanguannfc.view.HomePageActivity;
+import com.example.guanguannfc.view.homepage.HomePageActivity;
 import com.example.guanguannfc.controller.userManagement.Login;
 
 

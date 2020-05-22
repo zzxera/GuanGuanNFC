@@ -17,6 +17,8 @@ public class GuanContract {
         public static final String TABLE_NAME = "User_Info";
         public static final String COLUMN_USER_NAME = "user_name";
         public static final String COLUMN_PASSWORD = "password";
+        public static final String COLUMN_ACTIVE_DAY = "active_day";
+        public static final String COLUMN_LAST_ACT = "last_act";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
@@ -24,6 +26,8 @@ public class GuanContract {
                 UserInfo._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
                 UserInfo.COLUMN_USER_NAME + TEXT_TYPE + UNIQUE_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_PASSWORD + TEXT_TYPE + COMMA_SEP +
+                UserInfo.COLUMN_ACTIVE_DAY + INT_TYPE + " DEFAULT 0"+ COMMA_SEP +
+                UserInfo.COLUMN_LAST_ACT + TEXT_TYPE + " DEFAULT '1970-01-01'" + COMMA_SEP +
                 UserInfo.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
                 UserInfo.COLUMN_UPDATED_TIME + INT_TYPE + " )";
         public static final String SQL_DELETE_ENTRIES =
@@ -74,6 +78,8 @@ public class GuanContract {
         public static final String COLUMN_ACT_ID = "act_ID";
         public static final String COLUMN_START_TIME = "start_time";
         public static final String COLUMN_END_TIME = "end_time";
+        public static final String COLUMN_MOMENT_TEXT = "moment_text";
+        public static final String COLUMN_IS_SHARED = "is_shared";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
@@ -82,6 +88,8 @@ public class GuanContract {
                 ActSta.COLUMN_ACT_ID + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_START_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_END_TIME + INT_TYPE + COMMA_SEP +
+                ActSta.COLUMN_MOMENT_TEXT + TEXT_TYPE + COMMA_SEP +
+                ActSta.COLUMN_IS_SHARED + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
                 " FOREIGN KEY (" + ActSta.COLUMN_ACT_ID + ") REFERENCES " + Activity.TABLE_NAME + "(" + Activity._ID + ")"
@@ -134,5 +142,48 @@ public class GuanContract {
                 "DROP TABLE IF EXISTS " + BoxContent.TABLE_NAME;
     }
 
+    public static class FRIEND implements BaseColumns{
+        public static final String TABLE_NAME = "Friend_List";
+        public static final String COLUMN_USER_ID = "user_ID";
+        public static final String COLUMN_FRIEND_ID = "friend_ID";
+        public static final String COLUMN_CREATED_TIME = "created_time";
+        public static final String COLUMN_UPDATED_TIME = "updated_time";
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE "
+                + FRIEND.TABLE_NAME + " (" +
+                FRIEND._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
+                FRIEND.COLUMN_USER_ID + INT_TYPE + COMMA_SEP +
+                FRIEND.COLUMN_FRIEND_ID + INT_TYPE + COMMA_SEP +
+                FRIEND.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                FRIEND.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
+                " FOREIGN KEY (" + FRIEND.COLUMN_USER_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")" + COMMA_SEP +
+                " FOREIGN KEY (" + FRIEND.COLUMN_FRIEND_ID + ") REFERENCES " + UserInfo.TABLE_NAME + "(" + UserInfo._ID + ")"
+                + " )";
+        public static final String SQL_DELETE_ENTRIES =
+                "DROP TABLE IF EXISTS " + FRIEND.TABLE_NAME;
+
+    }
+
+    public  static  class APPLICATION implements  BaseColumns{
+        public static final String TABLE_NAME = "Moment_List";
+        public static final String COLUMN_FROM_ID = "from_ID";
+        public static final String COLUMN_TO_ID = "to_ID";
+        public static final String COLUMN_CONTENT = "content";
+        public static final String COLUMN_IS_PROCESSED = "is_processed";
+        public static final String COLUMN_CREATED_TIME = "created_time";
+        public static final String COLUMN_UPDATED_TIME = "updated_time";
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE "
+                + APPLICATION.TABLE_NAME + " (" +
+                APPLICATION._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
+                APPLICATION.COLUMN_FROM_ID + INT_TYPE + COMMA_SEP +
+                APPLICATION.COLUMN_TO_ID + INT_TYPE + COMMA_SEP +
+                APPLICATION.COLUMN_CONTENT + TEXT_TYPE + COMMA_SEP +
+                APPLICATION.COLUMN_IS_PROCESSED + INT_TYPE + " DEFAULT 0" + COMMA_SEP +
+                APPLICATION.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
+                APPLICATION.COLUMN_UPDATED_TIME + INT_TYPE  + " )";
+        public static final String SQL_DELETE_ENTRIES =
+                "DROP TABLE IF EXISTS " + APPLICATION.TABLE_NAME;
+
+
+    }
 
 }
