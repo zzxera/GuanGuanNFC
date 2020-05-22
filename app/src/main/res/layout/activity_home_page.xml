@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.HomePageActivity">
+    tools:context=".view.homepage.HomePageActivity">
 
 
 
@@ -55,13 +55,11 @@
             android:id="@+id/img_head"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/img_head"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="30dp"
-            ></ImageView>
+
+            android:background="@drawable/img_head"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
 
         <TextView
             android:id="@+id/text_userName"
@@ -121,6 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="模拟开始计时"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/main_bottom_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"></Button>

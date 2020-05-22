@@ -28,7 +28,7 @@ public class Allactivity {
         arr[2]="睡觉";
         arr[3]="工作";
         arr[4]="吃饭";
-        arr[5]="其它";
+        arr[5]="其他";
         return arr;
     }
     public String[][] sortedactivity(String username,String activityType,String sortType ){
