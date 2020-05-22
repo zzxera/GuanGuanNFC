@@ -10,6 +10,7 @@
         android:layout_width="40dp"
         android:layout_height="30dp"
         android:onClick="click"
+        android:layout_marginStart="10dp"
 
         android:src="@drawable/img_more"
         android:layout_centerVertical="true"
@@ -27,5 +28,16 @@
         android:textSize="20sp"
 
         ></TextView>
+
+    <ImageView
+        android:id="@+id/img_add"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:src="@drawable/img_add"
+        android:onClick="click"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        ></ImageView>
 
 </RelativeLayout>

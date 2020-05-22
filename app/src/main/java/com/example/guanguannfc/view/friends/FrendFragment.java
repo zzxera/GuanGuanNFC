@@ -42,9 +42,9 @@ public class FrendFragment extends Fragment {
         initView();
         initFriends();
         initFriendAct(act2);
-        friendAdapter = new FriendAdapter(getActivity(),R.layout.friend_item,friendItemsList);
+        friendAdapter = new FriendAdapter(getActivity(),R.layout.item_friend,friendItemsList);
         lv_friends.setAdapter(friendAdapter);
-        friendActAdapter = new FriendActAdapter(getActivity(),R.layout.friendact_item,friendActItemList);
+        friendActAdapter = new FriendActAdapter(getActivity(),R.layout.item_friendact,friendActItemList);
         lv_friendAct.setAdapter(friendActAdapter);
         return view;
 
@@ -77,7 +77,7 @@ public class FrendFragment extends Fragment {
 //        }
 
         for (int i = 0;i<10;i++){
-            String[][] act1={{"好朋友"+(i+1),Integer.toString(R.drawable.img_head),"工作","2020年5月11日","15时47分3秒","16时47分3秒","1时0分0秒","写报告"}};
+            String[][] act1={{"好朋友"+(i+1),5+"","记录生活的点点滴滴","工作","2020-5-11","15时47分3秒","16时47分3秒","1时0分0秒","2020-05-21",Integer.toString(R.drawable.img_head)}};
             FriendActItem friendActItem = new FriendActItem(act1[0]);
             friendActItemList.add(friendActItem);
         }
