@@ -35,7 +35,7 @@ import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
 import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
-import com.example.guanguannfc.view.HomePageActivity;
+import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -427,9 +427,49 @@ public class DataFragment extends Fragment {
             }
         });
 
+        spinner_types.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    Class<?> clazz = AdapterView.class;
+                    Field field = clazz.getDeclaredField("mOldSelectedPosition");
+                    field.setAccessible(true);
+                    field.setInt(spinner_types,AdapterView.INVALID_POSITION);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
 
-
-
+        spinner_acts.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    Class<?> clazz = AdapterView.class;
+                    Field field = clazz.getDeclaredField("mOldSelectedPosition");
+                    field.setAccessible(true);
+                    field.setInt(spinner_acts,AdapterView.INVALID_POSITION);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
+        spinner_sorts.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    Class<?> clazz = AdapterView.class;
+                    Field field = clazz.getDeclaredField("mOldSelectedPosition");
+                    field.setAccessible(true);
+                    field.setInt(spinner_sorts,AdapterView.INVALID_POSITION);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -522,7 +562,7 @@ public class DataFragment extends Fragment {
                 intent3.setClass(getActivity(), ClockActivity.class);
                 intent3.putExtra("username",userName);
 //                intent3.putExtra("isfirst","false");
-                startActivityForResult (intent3, 2);
+                startActivityForResult (intent3, 1);
             }
         });
 
@@ -593,12 +633,11 @@ public class DataFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getActivity(),isCount+"",Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(),isCount+"",Toast.LENGTH_LONG).show();
 
         switch (requestCode){
 
             case 1:
-            case 2:
                 String result = data.getStringExtra("result");
                 if (result.equals("计时继续")){
                     tv_prompt.setVisibility(View.VISIBLE);

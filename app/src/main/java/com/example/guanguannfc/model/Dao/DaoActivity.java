@@ -86,13 +86,19 @@ public class DaoActivity {
     }
 
     //根据nfc查询活动名称
-    public String queryActivityByNFC(String nfc){
-        String activity = null;
+    public String[] queryActivityByNFC(String nfc){
+        String[] activity = new String[2];
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="select act_name from  Activity where nfc=?";
         Cursor cursor=db.rawQuery(sql,new String[]{nfc});
         while(cursor.moveToNext()){
-            activity = cursor.getString(0);
+            activity[0] = cursor.getString(0);
+        }
+
+        String sql1="select type_ID from  Activity where nfc=?";
+        Cursor cursor1=db.rawQuery(sql1,new String[]{nfc});
+        while(cursor1.moveToNext()){
+            activity[1] = cursor1.getString(0);
         }
         return activity;
     }
