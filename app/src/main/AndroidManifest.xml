@@ -12,6 +12,10 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-permission android:name="android.permission.NFC" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +25,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".view.friends.FriendRequestActivity"></activity>
+        <activity android:name=".view.friends.FriendRequestActivity">
+        </activity>
         <activity
             android:name=".controller.dataManagement.NFCtestActivity"
             android:label="NFC_TEST"
@@ -32,10 +37,6 @@
         <activity android:name=".view.data.ClockActivity" />
         <activity android:name=".view.data.TestClock">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".controller.dataManagement.DataTestActivity">
             <intent-filter>
@@ -43,13 +44,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.data.ClockActivity" />
+
         <activity android:name=".controller.nfcManagement.MainNFCActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" /> <!-- 添加这一条默认设置，能拦截当前页面所有扫描NFC的配置 -->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".controller.nfcManagement.RunAppActivity"
             android:label="@string/str_run_app"
@@ -98,7 +100,6 @@
         <activity android:name=".view.loginAndLogon.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- model测试入口 -->
