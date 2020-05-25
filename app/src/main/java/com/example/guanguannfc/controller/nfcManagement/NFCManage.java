@@ -1,5 +1,6 @@
 package com.example.guanguannfc.controller.nfcManagement;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -34,31 +35,32 @@ public class NFCManage extends BaseNfcActivity{
         mDaoBoxContent = new DaoBoxContent(context);
     }
 
-    //判断NFC存在与否：是空的，还是活动的，还是盒子的。
+    //判断NFC存在与否：是空的，还是活动的，还是盒子的，或者一些别的字符串。
     public static String isNFCExist(String mTagText){
-        String string = null;
-        if (mTagText.length()>=3){
-            if (mTagText == null){
-                string = null;
-            }else {
-                if (mTagText.substring(0,3) .equals( "Act")){
+        String string;
+        if (mTagText == null){
+            string = null;
+        }else {
+            if (mTagText.length()>=3){
+                if (mTagText.substring(0,3).equals("Act")){
                     string = "Act";
-                }else if (mTagText.substring(0,3).equals("Box") ){
+                }else if (mTagText.substring(0,3).equals("Box")){
                     string = "Box";
+                }else{
+                    string = null;
                 }
+            }else {
+                string = null;
             }
-            return string;
         }
-
         return string;
-
-
     }
 
     //根据username和NFC的编码返回活动名称
     public String[] nfcForActivity(String mTagText){
         return daoActivity.queryActivityByNFC(mTagText);
     }
+
     //根据username和NFC的编码返回盒子名称
     public String nfcForBox(String mTagText){
         return daoBox.queryBoxByNFC(mTagText);
@@ -91,6 +93,7 @@ public class NFCManage extends BaseNfcActivity{
         return true;
     }
 
+    //将NFC标签格式化为一个为0长度的字符串
     public boolean setNFCNll(Tag detectedTag){
         try {
             String NFCNumber = "";
@@ -135,6 +138,7 @@ public class NFCManage extends BaseNfcActivity{
                 NdefRecord.RTD_TEXT, new byte[0], data);
         return ndefRecord;
     }
+
 
     public static boolean writeTag(NdefMessage ndefMessage, Tag tag) {
         try {
