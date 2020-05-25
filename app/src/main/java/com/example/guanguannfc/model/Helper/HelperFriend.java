@@ -24,4 +24,12 @@ public class HelperFriend {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    @Override
+    public String toString() {
+        return "HelperFriend{" +
+                "user_name='" + user_name + '\'' +
+                ", level=" + level +
+                '}';
+    }
 }

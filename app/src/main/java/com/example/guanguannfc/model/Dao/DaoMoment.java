@@ -34,13 +34,31 @@ public class DaoMoment {
         db.close();
         return true;
     }
-    //删除一条数据（拒绝添加好友）:需给定用户名、和申请来源用户名
+    //插入一条数据(发送好友申请)：需给定用户名、对方用户名、申请内容
+    public boolean insert (String from_name,String to_name,String content){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="insert into moment_list(from_id,to_id,content,created_time,updated_time) values((select _id from user_info where user_name=?),(select _id from user_info where user_name=?),?,?,?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{from_name,to_name,content,currentTime,currentTime});
+        db.close();
+        return true;
+    }
+    //删除一条数据:需给定用户名、和申请来源用户名
     public boolean delete (String user_name,String friend_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
         String sql="delete from moment_list where from_id=(select _id from user_info where user_name=?) and to_id=(select _id from user_info where user_name=?)";
+        db.execSQL(sql,new Object[]{friend_name,user_name});
+        db.close();
+        return true;
+    }
+    //更新申请处理状态（不管是同意、拒绝，都需要执行该操作）:需给定用户名、和申请来源用户名
+    public boolean update (String user_name,String friend_name){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="update moment_list set is_processed=1,updated_time=? where from_id=(select _id from user_info where user_name=?) and to_id=(select _id from user_info where user_name=?)";
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{friend_name,user_name});
+        db.execSQL(sql,new Object[]{currentTime,user_name,friend_name});
         db.close();
         return true;
     }
@@ -50,7 +68,8 @@ public class DaoMoment {
         List<HelperApplication> list = new ArrayList<HelperApplication>();
         HelperApplication helperApplication;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select user_name,content,created_time from moment_list inner join user_info on user_info._id=moment_list.from_id where to_id=(select _id from user_info where user_name=?)";
+        String sql="select user_name,content,moment_list.created_time from moment_list inner join user_info on user_info._id=moment_list.from_id " +
+                " where to_id=(select _id from user_info where user_name=?) and is_processed=0";
         Cursor cursor=db.rawQuery(sql,new String[]{user_name});
         if(cursor.getCount()!=0){
             while(cursor.moveToNext()){
