@@ -1,5 +1,6 @@
 package com.example.guanguannfc.controller.nfcManagement;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -34,44 +35,71 @@ public class NFCManage extends BaseNfcActivity{
         mDaoBoxContent = new DaoBoxContent(context);
     }
 
-    //判断NFC存在与否：是空的，还是活动的，还是盒子的。
+    //判断NFC存在与否：是空的，还是活动的，还是盒子的，或者一些别的字符串。
     public static String isNFCExist(String mTagText){
-        String string = null;
+        String string;
         if (mTagText == null){
             string = null;
         }else {
-            if (mTagText.substring(0,3) == "Act"){
-                string = "Act";
-            }else if (mTagText.substring(0,3) == "Box"){
-                string = "Box";
+            if (mTagText.length()>=3){
+                if (mTagText.substring(0,3).equals("Act")){
+                    string = "Act";
+                }else if (mTagText.substring(0,3).equals("Box")){
+                    string = "Box";
+                }else{
+                    string = null;
+                }
+            }else {
+                string = null;
             }
         }
         return string;
     }
 
     //根据username和NFC的编码返回活动名称
-    public String nfcForActivity(String mTagText){
+    public String[] nfcForActivity(String mTagText){
         return daoActivity.queryActivityByNFC(mTagText);
     }
+
     //根据username和NFC的编码返回盒子名称
     public String nfcForBox(String mTagText){
         return daoBox.queryBoxByNFC(mTagText);
     }
 
     //对没有进行使用过的NFC进行号码编写
-    public boolean setNFCNumberForAct(String bigActivity, String smallActivity){
+    public boolean setNFCNumberForAct(String bigActivity, String smallActivity, Tag detectedTag){
         try {
             String NFCNumber = "Act" + username + System.currentTimeMillis();
             daoActivity.insert(username, NFCNumber, bigActivity, smallActivity);
+            NdefMessage ndefMessage = new NdefMessage(
+                    new NdefRecord[]{createTextRecord(NFCNumber)});
+            writeTag(ndefMessage, detectedTag);
         }catch (Exception e){
             return false;
         }
         return true;
     }
-    public boolean setNFCNumberForBox(String boxName, String location){
+
+    public boolean setNFCNumberForBox(String boxName, String location, Tag detectedTag){
         try {
             String NFCNumber = "Box" + username + System.currentTimeMillis();
             daoBox.insert(username, NFCNumber, boxName, location);
+            NdefMessage ndefMessage = new NdefMessage(
+                    new NdefRecord[]{createTextRecord(NFCNumber)});
+            writeTag(ndefMessage, detectedTag);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    //将NFC标签格式化为一个为0长度的字符串
+    public boolean setNFCNll(Tag detectedTag){
+        try {
+            String NFCNumber = "";
+            NdefMessage ndefMessage = new NdefMessage(
+                    new NdefRecord[]{createTextRecord(NFCNumber)});
+            writeTag(ndefMessage, detectedTag);
         }catch (Exception e){
             return false;
         }
@@ -110,6 +138,7 @@ public class NFCManage extends BaseNfcActivity{
                 NdefRecord.RTD_TEXT, new byte[0], data);
         return ndefRecord;
     }
+
 
     public static boolean writeTag(NdefMessage ndefMessage, Tag tag) {
         try {

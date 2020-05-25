@@ -1,4 +1,4 @@
-package com.example.guanguannfc.view;
+package com.example.guanguannfc.view.homepage;
 
 import android.app.Dialog;
 import android.content.Context;
