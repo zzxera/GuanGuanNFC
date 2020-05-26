@@ -1,15 +1,15 @@
-package com.example.guanguannfc.view.mainInterface;
+package com.example.guanguannfc.view.pushs;
 
 public class PushItem {
 
     private String title,author,content;
     private int imageId;
 
-    public PushItem(String[] array){
-        this.title=array[0];
-        this.author=array[1];
+    public PushItem(String[] array,int id){
+        this.title=array[1];
+        this.author=array[0];
         this.content=array[2];
-        this.imageId=Integer.parseInt(array[3]);
+        this.imageId=id;
 
     }
     public String getTitle(){

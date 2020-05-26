@@ -38,7 +38,7 @@ public class NFCManage extends BaseNfcActivity{
     //判断NFC存在与否：是空的，还是活动的，还是盒子的，或者一些别的字符串。
     public static String isNFCExist(String mTagText){
         String string;
-        if (mTagText == null){
+        if (mTagText == null || mTagText.equals("")){
             string = null;
         }else {
             if (mTagText.length()>=3){
@@ -47,10 +47,10 @@ public class NFCManage extends BaseNfcActivity{
                 }else if (mTagText.substring(0,3).equals("Box")){
                     string = "Box";
                 }else{
-                    string = null;
+                    string = "Something is exist!";
                 }
             }else {
-                string = null;
+                string = "Something is exist!";
             }
         }
         return string;
