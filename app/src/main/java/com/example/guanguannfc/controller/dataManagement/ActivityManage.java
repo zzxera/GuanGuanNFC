@@ -51,9 +51,9 @@ public class ActivityManage {
 
 
     //根据NFC标签字符串查询活动
-    public String queryActivityByNFC(String nfcNumber){
-        return daoActivity.queryActivityByNFC(nfcNumber);
-    }
+    //public String queryActivityByNFC(String nfcNumber){
+  //      return daoActivity.queryActivityByNFC(nfcNumber);
+   // }
 
 
     //判断小类活动名称是否存在
