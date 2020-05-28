@@ -40,8 +40,7 @@ public class PushAdapter extends ArrayAdapter {
         TextView tv_title = view.findViewById(R.id.tv_title);
         TextView tv_author = view.findViewById(R.id.tv_author);
         TextView tv_content = view.findViewById(R.id.tv_content);
-        //imageView.setImageResource(pushItem.getImageId());
-        imageView.setImageResource();
+        imageView.setImageResource(pushItem.getImageId());
         tv_title.setText(pushItem.getTitle());
         tv_author.setText(pushItem.getAuthor());
         tv_content.setText(pushItem.getContent());
