@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.guanguannfc.model.Dao.DaoActSta;
 import com.example.guanguannfc.model.Dao.DaoFriend;
 import com.example.guanguannfc.model.Dao.DaoMoment;
+import com.example.guanguannfc.model.Dao.DaoPush;
 import com.example.guanguannfc.model.Dao.DaoUserInfo;
 import com.example.guanguannfc.model.Helper.HelperPush;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class UserInfo {
     DaoActSta DA;
     DaoUserInfo DU;
+    DaoPush DP;
     public UserInfo(Context context){
         this.DU = new DaoUserInfo(context);
         this.DA = new DaoActSta(context);
+        this.DP = new DaoPush(context);
     }
     public boolean updateActDay(String username,String last_actday){
         boolean a = DU.queryLastActDate(username, last_actday);
@@ -41,6 +44,7 @@ public class UserInfo {
 
 public String[][] Push(){
     List<HelperPush> list = new ArrayList<>();
+    list = DP.query();
     if (list != null){
         int n = list.size();
         String[][] arr1 = new String[n][4];
