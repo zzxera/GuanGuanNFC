@@ -10,7 +10,6 @@ public class PushItem {
         this.author=array[1];
         this.content=array[2];
         this.imageId=Integer.parseInt(array[3]);
-
     }
     public String getTitle(){
         return title;
