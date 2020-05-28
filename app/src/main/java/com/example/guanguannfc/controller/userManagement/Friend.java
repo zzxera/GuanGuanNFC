@@ -20,14 +20,15 @@ public class Friend {
         this.DF = new DaoFriend(context);
         this.DM = new DaoMoment(context);
     }
-    public String[] friendlist(String username){
+    public String[][] friendlist(String username){
         List<HelperFriend> list = new ArrayList<>();
         list = DF.query(username);
         if (list!=null){
         int i = list.size();
-        String []arr = new String[i];
+        String [][] arr = new String[i][2];
         for (int a=0;a<i;a++){
-            arr [a]= list.get(a).getUser_name();
+            arr [a][0]= list.get(a).getUser_name();
+            arr [a][1]= String.valueOf(list.get(a).getLevel());
         }
         return arr;
         }
@@ -40,15 +41,16 @@ public class Friend {
         list = DF.queryFriendAct(username);
         if (list!=null){
             int n=list.size();
-            String arr1[][] = new String[n][7];
+            String arr1[][] = new String[n][8];
             for (int i=0;i<n;i++){
                 arr1[i][0]=list.get(i).getFriend_name();
                 arr1[i][1]=String.valueOf(list.get(i).getLevel());
-                arr1[i][2]=gt.timeStampToDate(list.get(i).getBegin_time());
-                arr1[i][3]=gt.timeStampToDate(list.get(i).getEnd_time());
+                arr1[i][2]=gt.transString(list.get(i).getBegin_time())[0][0];
+                arr1[i][3]=gt.transString(list.get(i).getEnd_time())[0][0];
                 arr1[i][4]=gt.transString1(list.get(i).getLen_time());
                 arr1[i][5]=list.get(i).getActivity_type();
                 arr1[i][6]=list.get(i).getMoment_text();
+                arr1[i][7]=gt.transString(list.get(i).getShared_time())[0][0];
             }
             return arr1;
         }
@@ -70,6 +72,7 @@ public class Friend {
     }
     public String[][] friendapply(String username){
         List<HelperApplication> list = new ArrayList<>();
+        list = DM.query(username);
         if (list!= null){
             int n = list.size();
             String[][] arr = new String[n][3];
