@@ -53,6 +53,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"/>
+    <Button
+        android:id="@+id/friend_act"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好友动态"/>
+    <Button
+        android:id="@+id/application"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="所有好友申请"/>
+    <Button
+        android:id="@+id/allFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="所有好友"/>
 
 
 </LinearLayout>

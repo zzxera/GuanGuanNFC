@@ -34,4 +34,13 @@ public class HelperApplication {
     public void setTime(long time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "HelperApplication{" +
+                "user_name='" + user_name + '\'' +
+                ", content='" + content + '\'' +
+                ", time=" + time +
+                '}';
+    }
 }

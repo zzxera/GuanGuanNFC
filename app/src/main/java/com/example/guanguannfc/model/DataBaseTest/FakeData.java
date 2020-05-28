@@ -67,7 +67,7 @@ public class FakeData {
             daoActivity.insert(2, "200008", 4, "吃披萨");
             daoActivity.insert(2, "200009", 5, "看韩剧");
 
-            daoActSta.insert(1, time + 13000, time + 16000);
+            daoActSta.insert(1, time + 13000, time + 16000,"学习使我快乐",1);
             daoActSta.insert(1, time+ 121000, time + 123000);
             daoActSta.insert(2, time + 310000, time + 320000);
             daoActSta.insert(2, time + 900000, time + 906000);
@@ -134,7 +134,7 @@ public class FakeData {
             daoBoxContent.insert(4, "硬盘", 2);
             daoBoxContent.insert(4, "迷你优盘", 1);
 
-            daoMoment.insert(2,1, "加个好友吧", 0);
+            daoMoment.insert(2,1, "加个好友吧", 1);
             daoMoment.insert(2, 3, "我们也加个好友吧", 0);
             daoMoment.insert(3,1,"我喜欢你 我们一起跑步吧", 0);
             daoMoment.insert(3,2,"我不喜欢你 但是我想加你好友",0);
@@ -144,6 +144,9 @@ public class FakeData {
             daoFriend.insert(4,1);
             daoFriend.insert(3,4);
             daoFriend.insert(4,3);
+            daoFriend.insert(1,2);
+            daoFriend.insert(1,3);
+            daoFriend.insert(2,1);
         }
 
      
