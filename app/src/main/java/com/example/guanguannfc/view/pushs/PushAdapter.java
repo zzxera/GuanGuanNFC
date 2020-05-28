@@ -62,9 +62,9 @@ public class PushAdapter extends ArrayAdapter {
         TextView tv_push_content=contentView.findViewById(R.id.tv_push_content);
         TextView tv_push_pinlun=contentView.findViewById(R.id.tv_push_pinlun);
         tv_push_title.setText(title);
-        tv_push_author.setText(Author);
+        tv_push_author.setText("作者："+Author);
         tv_push_content.setText(content);
-        tv_push_pinlun.setText(pinlun);
+        tv_push_pinlun.setText("评论:"+pinlun);
         View rootview = LayoutInflater.from(getContext()).inflate(R.layout.fragment_push,null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }

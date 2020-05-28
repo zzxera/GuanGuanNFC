@@ -40,7 +40,7 @@ public class PushFragment extends Fragment {
 
 //        Toast.makeText(getActivity(),"用户名"+userName,Toast.LENGTH_LONG).show();
         lv_pushs= view.findViewById(R.id.lv_pushs);
-        push=new UserInfo(context);
+        push=new UserInfo(getActivity());
         pushlist=push.Push();
         initPushs(pushs1);
         pushAdapter = new PushAdapter(getActivity(),R.layout.item_push,pushItemList);

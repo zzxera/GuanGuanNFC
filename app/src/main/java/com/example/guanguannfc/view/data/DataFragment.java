@@ -81,6 +81,7 @@ public class DataFragment extends Fragment {
     //    分享
     private ShareDialog shareDialog;
     private String text_content;
+    private long shareStartTime;
     private UserInfo userInfo;
 
     @Override
@@ -640,7 +641,11 @@ public class DataFragment extends Fragment {
         lv_allactlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                shareStartTime = Long.valueOf(ob_actShow[i][6]);
+//                Toast.makeText(getActivity(),"第"+i+"个活动"+getTime.transString(actStartTime)[0][0]+getTime.transString(actStartTime)[0][1],Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),actStartTime+"",Toast.LENGTH_LONG).show();
                 shareDialog.show();
+
                 return false;
 
             }
@@ -683,13 +688,13 @@ public class DataFragment extends Fragment {
             @Override
             public void onConfirm(ShareDialog dialog) {
                 text_content=shareDialog.getEditText().getText().toString();
-//                boolean isShared = userInfo.updateact(userName,text_content);
-//                if (isShared){
-//                    Toast.makeText(getActivity(),"分享成功",Toast.LENGTH_LONG).show();
-//                }
-//                else {
-//                    Toast.makeText(getActivity(),"分享失败",Toast.LENGTH_LONG).show();
-//                }
+                boolean isShared = userInfo.updateact(userName,shareStartTime,text_content);
+                if (isShared){
+                    Toast.makeText(getActivity(),"分享成功",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getActivity(),"分享失败",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

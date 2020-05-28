@@ -93,7 +93,8 @@ public class Allactivity {
         }
 
     }
-    public boolean insertdata(String username,String actType,String actName,Long date,Long startTime,Long endTime){
+
+    public boolean insertdata(String username,String actName,Long startTime,Long endTime){
         return DS.insert(username,actName,startTime,endTime);
     }
 
