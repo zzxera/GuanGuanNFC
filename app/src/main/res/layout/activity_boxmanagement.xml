@@ -71,7 +71,7 @@
 
         <GridView
             android:id="@+id/box"
-            android:layout_width="357dp"
+            android:layout_width="320dp"
             android:layout_height="285dp"
             android:layout_marginTop="48dp"
             android:numColumns="2"
