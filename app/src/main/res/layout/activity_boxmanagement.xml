@@ -71,8 +71,8 @@
 
         <GridView
             android:id="@+id/box"
-            android:layout_width="329dp"
-            android:layout_height="217dp"
+            android:layout_width="357dp"
+            android:layout_height="285dp"
             android:layout_marginTop="48dp"
             android:numColumns="2"
             android:horizontalSpacing="0dp"
@@ -138,8 +138,8 @@
 
         <ExpandableListView
             android:id="@+id/expand_list_id"
-            android:layout_width="405dp"
-            android:layout_height="350dp"
+            android:layout_width="match_parent"
+            android:layout_height="357dp"
             android:layout_marginTop="13dp"
             android:groupIndicator="@null"
             app:layout_constraintEnd_toEndOf="parent"
