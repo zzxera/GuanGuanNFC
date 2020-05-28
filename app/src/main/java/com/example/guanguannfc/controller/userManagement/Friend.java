@@ -70,7 +70,6 @@ public class Friend {
     }
     public String[][] friendapply(String username){
         List<HelperApplication> list = new ArrayList<>();
-        list = DM.query(username);
         if (list!= null){
             int n = list.size();
             String[][] arr = new String[n][3];
