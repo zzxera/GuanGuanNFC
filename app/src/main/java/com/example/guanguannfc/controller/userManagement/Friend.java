@@ -41,7 +41,7 @@ public class Friend {
         list = DF.queryFriendAct(username);
         if (list!=null){
             int n=list.size();
-            String arr1[][] = new String[n][7];
+            String arr1[][] = new String[n][8];
             for (int i=0;i<n;i++){
                 arr1[i][0]=list.get(i).getFriend_name();
                 arr1[i][1]=String.valueOf(list.get(i).getLevel());
@@ -50,6 +50,7 @@ public class Friend {
                 arr1[i][4]=gt.transString1(list.get(i).getLen_time());
                 arr1[i][5]=list.get(i).getActivity_type();
                 arr1[i][6]=list.get(i).getMoment_text();
+                arr1[i][7]=gt.transString(list.get(i).getShared_time())[0][0];
             }
             return arr1;
         }
