@@ -31,10 +31,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class DataQueryTest extends AppCompatActivity implements View.OnClickListener {
-    Button mButton2,mButton3,mButton4,mButton5,mButton6,mButton7,mButton8,mButton9,mButton10;
+    Button mButton2,mButton3,mButton4,mButton5,mButton6,mButton7,mButton8,mButton9,mButton10,mButton11;
+    EditText from,to;
     DaoActSta mActSta = new DaoActSta(this);
     DaoActivityType mDaoActivityType = new DaoActivityType(this);
     DaoBox mDaoBox = new DaoBox(this);
+    DaoMoment mDaoMoment = new DaoMoment(this);
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,9 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
         mButton8 = findViewById(R.id.friend_act);
         mButton9 = findViewById(R.id.application);
         mButton10 = findViewById(R.id.allFriends);
+        mButton11 = findViewById(R.id.switchMoment);
+        from = findViewById(R.id.from);
+        to = findViewById(R.id.to);
         FakeData fakeData = new FakeData(this);
         fakeData.insert();
 
@@ -68,6 +73,7 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
         mButton8.setOnClickListener(this);
         mButton9.setOnClickListener(this);
         mButton10.setOnClickListener(this);
+        mButton11.setOnClickListener(this);
     }
 
     @Override
@@ -125,7 +131,7 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.application:
                 DaoMoment daoMoment = new DaoMoment(this);
-                List<HelperApplication> helperApplications = daoMoment.query("aaa");
+                List<HelperApplication> helperApplications = daoMoment.query("bbb");
                 for(HelperApplication helperApplication:helperApplications){
                     Log.v("",helperApplication.toString());
                 }
@@ -136,6 +142,11 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
                 for (HelperFriend helperFriend:helperFriends){
                     Log.v("",helperFriend.toString());
                 }
+            case R.id.switchMoment:
+                String from1 = from.getText().toString();
+                String to1 = to.getText().toString();
+                mDaoMoment.update(from1,to1);
+                break;
 
         }
     }

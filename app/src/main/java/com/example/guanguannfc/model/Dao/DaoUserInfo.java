@@ -118,6 +118,7 @@ public class DaoUserInfo {
         db.execSQL(sql,new String[]{username});
         return true;
     }
+
 //    获取用户的等级（数组中的第一个元素）、活跃天数：需要给定用户名称
     public String[] personMessage(String username){
         String[] str = new String[2];
@@ -130,6 +131,7 @@ public class DaoUserInfo {
                 str[1] = cursor.getInt(1)+"";
                 return str;
             }
+
 
         }
         return str;

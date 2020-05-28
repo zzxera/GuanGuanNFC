@@ -94,8 +94,7 @@ public class DaoActivity {
         while(cursor.moveToNext()){
             activity[0] = cursor.getString(0);
         }
-
-        String sql1="select type_ID from  Activity where nfc=?";
+        String sql1="select act_type from Activity_type where _id=(select type_id from activity where nfc=?)";
         Cursor cursor1=db.rawQuery(sql1,new String[]{nfc});
         while(cursor1.moveToNext()){
             activity[1] = cursor1.getString(0);

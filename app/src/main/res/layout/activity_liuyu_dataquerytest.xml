@@ -68,6 +68,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="所有好友"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/switchMoment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="改变好友申请状态"/>
+        <EditText
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="from"
+            />
+        <EditText
+            android:id="@+id/to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="to"
+            />
+    </LinearLayout>
+
 
 
 </LinearLayout>
