@@ -41,11 +41,7 @@ public class ActivityManage {
         ArrayList<String> list = hashMap.get(bigActivity);
         if(list == null) return null;
 
-//         String array[] = new String[0];//更新小类活动名称string[list.size()];
-
-
-        String array[] = new String[list.size()];//更新小类活动名称ring[list.size()];
-
+        String array[] = new String[list.size()];//更新小类活动名称string[list.size()];
 
         for (int i = 0; i< list.size(); i++){
             array[i] = list.get(i);
@@ -53,10 +49,12 @@ public class ActivityManage {
         return array;
     }
 
+
     //根据NFC标签字符串查询活动
-    public String queryActivityByNFC(String nfcNumber){
-        return daoActivity.queryActivityByNFC(nfcNumber);
-    }
+//    public String queryActivityByNFC(String nfcNumber){
+//        return daoActivity.queryActivityByNFC(nfcNumber);
+//    }
+
 
     //判断小类活动名称是否存在
     public boolean isSmallActivityExist(String smallActivityName){

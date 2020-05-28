@@ -1,6 +1,5 @@
 package com.example.guanguannfc.view.management;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,13 +8,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.example.guanguannfc.R;
-import com.example.guanguannfc.view.HomePageActivity;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -35,7 +35,8 @@ import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
 import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
-import com.example.guanguannfc.view.HomePageActivity;
+import com.example.guanguannfc.controller.userManagement.UserInfo;
+import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -72,15 +73,20 @@ public class DataFragment extends Fragment {
     private ListView actlist;
     private DataShowAdapter dataShowAdapter;
     private List<ActShow> actShowList = new ArrayList<ActShow>();
-    private ListView lv_allactlist = null;
+    private ListView lv_allactlist;
     private ActShowAdapter actShowAdapter;
     private ConstraintLayout.LayoutParams layoutParams;
     private boolean isCount;
 
+    //    分享
+    private ShareDialog shareDialog;
+    private String text_content;
+    private UserInfo userInfo;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view= inflater.inflate(R.layout.activity_data, container, false);
+        view= inflater.inflate(R.layout.fragment_data, container, false);
         Bundle bundle = this.getArguments();
         if(bundle!=null){
             userName = bundle.getString("username");
@@ -97,6 +103,7 @@ public class DataFragment extends Fragment {
 
         initSpinner();
         initWebView();
+        initShareDialog();
         checkClick();
 
 //        Toast.makeText(getActivity(),"onCreate",Toast.LENGTH_LONG).show();
@@ -147,6 +154,9 @@ public class DataFragment extends Fragment {
         allActName=allactivity.allacttype(userName);
         ArrayAdapter<String> actAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,allActName);
         spinner_acts.setAdapter(actAdapter);
+
+//      分享
+        userInfo = new UserInfo(getActivity());
 
 
 
@@ -427,9 +437,49 @@ public class DataFragment extends Fragment {
             }
         });
 
+        spinner_types.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    Class<?> clazz = AdapterView.class;
+                    Field field = clazz.getDeclaredField("mOldSelectedPosition");
+                    field.setAccessible(true);
+                    field.setInt(spinner_types,AdapterView.INVALID_POSITION);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
 
-
-
+        spinner_acts.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    Class<?> clazz = AdapterView.class;
+                    Field field = clazz.getDeclaredField("mOldSelectedPosition");
+                    field.setAccessible(true);
+                    field.setInt(spinner_acts,AdapterView.INVALID_POSITION);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
+        spinner_sorts.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    Class<?> clazz = AdapterView.class;
+                    Field field = clazz.getDeclaredField("mOldSelectedPosition");
+                    field.setAccessible(true);
+                    field.setInt(spinner_sorts,AdapterView.INVALID_POSITION);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -522,7 +572,7 @@ public class DataFragment extends Fragment {
                 intent3.setClass(getActivity(), ClockActivity.class);
                 intent3.putExtra("username",userName);
 //                intent3.putExtra("isfirst","false");
-                startActivityForResult (intent3, 2);
+                startActivityForResult (intent3, 1);
             }
         });
 
@@ -586,6 +636,15 @@ public class DataFragment extends Fragment {
                 return false;
             }
         });
+
+        lv_allactlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                shareDialog.show();
+                return false;
+
+            }
+        });
     }
 
 
@@ -593,12 +652,11 @@ public class DataFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getActivity(),isCount+"",Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(),isCount+"",Toast.LENGTH_LONG).show();
 
         switch (requestCode){
 
             case 1:
-            case 2:
                 String result = data.getStringExtra("result");
                 if (result.equals("计时继续")){
                     tv_prompt.setVisibility(View.VISIBLE);
@@ -610,6 +668,30 @@ public class DataFragment extends Fragment {
                 }
                 break;
         }
+    }
+
+    private void initShareDialog(){
+        shareDialog=new ShareDialog(getActivity());
+        shareDialog.setCancel(new ShareDialog.IOnCancelListener() {
+            @Override
+            public void onCancel(ShareDialog dialog) {
+
+            }
+
+        });
+        shareDialog.setConfirm(new ShareDialog.IOnConfirmListener() {
+            @Override
+            public void onConfirm(ShareDialog dialog) {
+                text_content=shareDialog.getEditText().getText().toString();
+//                boolean isShared = userInfo.updateact(userName,text_content);
+//                if (isShared){
+//                    Toast.makeText(getActivity(),"分享成功",Toast.LENGTH_LONG).show();
+//                }
+//                else {
+//                    Toast.makeText(getActivity(),"分享失败",Toast.LENGTH_LONG).show();
+//                }
+            }
+        });
     }
 
     public void WriteSysFile() {

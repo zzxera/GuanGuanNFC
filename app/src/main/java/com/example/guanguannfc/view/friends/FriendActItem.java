@@ -15,6 +15,7 @@ public class FriendActItem {
         this.len=infor[7];
         this.shareDate=infor[8];
         this.imageId=Integer.parseInt(infor[9]);
+
     }
 
     public String getFriendName(){
