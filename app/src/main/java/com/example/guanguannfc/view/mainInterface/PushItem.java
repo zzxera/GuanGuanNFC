@@ -6,10 +6,10 @@ public class PushItem {
     private int imageId;
 
     public PushItem(String[] array){
-        this.title=array[0];
-        this.author=array[1];
+        this.title=array[1];
+        this.author=array[0];
         this.content=array[2];
-        this.imageId=Integer.parseInt(array[3]);
+        //this.imageId=Integer.parseInt(array[3]);
     }
     public String getTitle(){
         return title;
@@ -20,7 +20,7 @@ public class PushItem {
     public String getContent(){
         return content;
     }
-    public int getImageId(){
-        return imageId;
-    }
+    //public int getImageId(){
+        //return imageId;
+   // }
 }
