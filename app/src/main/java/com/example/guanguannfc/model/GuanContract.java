@@ -80,6 +80,7 @@ public class GuanContract {
         public static final String COLUMN_END_TIME = "end_time";
         public static final String COLUMN_MOMENT_TEXT = "moment_text";
         public static final String COLUMN_IS_SHARED = "is_shared";
+        public static final String COLUMN_SHARED_TIME = "shared_time";
         public static final String COLUMN_CREATED_TIME = "created_time";
         public static final String COLUMN_UPDATED_TIME = "updated_time";
         public static final String SQL_CREATE_TABLE = "CREATE TABLE "
@@ -90,6 +91,7 @@ public class GuanContract {
                 ActSta.COLUMN_END_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_MOMENT_TEXT + TEXT_TYPE + " default ''" + COMMA_SEP +
                 ActSta.COLUMN_IS_SHARED + INT_TYPE + " default 0" + COMMA_SEP +
+                ActSta.COLUMN_SHARED_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_CREATED_TIME + INT_TYPE + COMMA_SEP +
                 ActSta.COLUMN_UPDATED_TIME + INT_TYPE + COMMA_SEP +
                 " FOREIGN KEY (" + ActSta.COLUMN_ACT_ID + ") REFERENCES " + Activity.TABLE_NAME + "(" + Activity._ID + ")"
