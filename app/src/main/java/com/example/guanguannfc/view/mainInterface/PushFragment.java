@@ -31,8 +31,6 @@ public class PushFragment extends Fragment {
     private Context context;
     private String [][] pushlist;
     private String [] pushl;
-    private String[]push2;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
