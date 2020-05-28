@@ -34,7 +34,7 @@ public class PushAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        PushItem pushItem =(PushItem)getItem(position);
+        final PushItem pushItem =(PushItem)getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
         ImageView imageView = view.findViewById(R.id.img_back);
         TextView tv_title = view.findViewById(R.id.tv_title);
@@ -47,17 +47,24 @@ public class PushAdapter extends ArrayAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showpush();
+                showpush(pushItem.getTitle(),pushItem.getAuthor(),pushItem.getContent(),pushItem.getPinlun());
             }
         });
 
 
         return view;
     }
-    private void showpush(){
+    private void showpush(String title,String Author,String content,String pinlun){
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_push_show, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-
+        TextView tv_push_title=contentView.findViewById(R.id.tv_push_title);
+        TextView tv_push_author=contentView.findViewById(R.id.tv_push_author);
+        TextView tv_push_content=contentView.findViewById(R.id.tv_push_content);
+        TextView tv_push_pinlun=contentView.findViewById(R.id.tv_push_pinlun);
+        tv_push_title.setText(title);
+        tv_push_author.setText(Author);
+        tv_push_content.setText(content);
+        tv_push_pinlun.setText(pinlun);
         View rootview = LayoutInflater.from(getContext()).inflate(R.layout.fragment_push,null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
