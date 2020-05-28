@@ -8,15 +8,17 @@
 
     <LinearLayout
         android:id="@+id/lay_showpush"
-        android:layout_width="364dp"
-        android:layout_height="742dp"
+        android:layout_width="370dp"
+        android:layout_height="599dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="70dp"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -24,38 +26,38 @@
             android:id="@+id/tv_push_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
             android:text="标题"
             android:textSize="30sp"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            app:layout_constraintHorizontal_bias="0.5"/>
+            app:layout_constraintHorizontal_bias="0.5" />
+
         <TextView
             android:id="@+id/tv_push_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="作者"
-            android:textSize="20sp"
             android:gravity="center"
-            ></TextView>
+            android:text="作者"
+            android:textSize="20sp"></TextView>
+
         <TextView
             android:id="@+id/tv_push_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="内容"
             android:layout_marginTop="20dp"
-            android:textSize="20sp"
             android:gravity="center"
-            ></TextView>
+            android:text="内容"
+            android:textSize="20sp"></TextView>
+
         <TextView
             android:id="@+id/tv_push_pinlun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="内容"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
-            ></TextView>
+            android:text="内容"
+            android:textSize="20sp"></TextView>
 
 
     </LinearLayout>
