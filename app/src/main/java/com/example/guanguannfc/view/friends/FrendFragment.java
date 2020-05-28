@@ -94,7 +94,7 @@ public class FrendFragment extends Fragment {
     }
 
     private void getFriends(){
-        friendList = friend.friendlist(userName);
+       // friendList = friend.friendlist(userName);
     }
 
     private void initFriendAct(String[][] array){
