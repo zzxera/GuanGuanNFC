@@ -53,7 +53,7 @@ public class PushFragment extends Fragment {
         pushItemList.clear();
         for(int i=0;i<pushlist.length;i++){
             pushl=pushlist[i];
-            PushItem pushItem2 = new PushItem(pushl,Integer.toString(R.drawable.img_time1));
+            PushItem pushItem2 = new PushItem(pushlist[i],Integer.toString(R.drawable.img_time1));
             pushItemList.add(pushItem2);
         }
     }
