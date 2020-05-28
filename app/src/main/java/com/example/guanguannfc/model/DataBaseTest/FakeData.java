@@ -7,6 +7,7 @@ import com.example.guanguannfc.model.Dao.DaoActivity;
 import com.example.guanguannfc.model.Dao.DaoActivityType;
 import com.example.guanguannfc.model.Dao.DaoBox;
 import com.example.guanguannfc.model.Dao.DaoBoxContent;
+import com.example.guanguannfc.model.Dao.DaoPush;
 import com.example.guanguannfc.model.Dao.DaoUserInfo;
 import com.example.guanguannfc.model.Dao.DaoFriend;
 import com.example.guanguannfc.model.Dao.DaoMoment;
@@ -34,6 +35,7 @@ public class FakeData {
         DaoBoxContent daoBoxContent = new DaoBoxContent(context);
         DaoMoment daoMoment = new DaoMoment(context);
         DaoFriend daoFriend = new DaoFriend(context);
+        DaoPush daoPush = new DaoPush(context);
 
 
         if(daoUserInfo.registrationQuery("aaa") != true){
@@ -147,6 +149,12 @@ public class FakeData {
             daoFriend.insert(1,2);
             daoFriend.insert(1,3);
             daoFriend.insert(2,1);
+
+            daoPush.insert(1,"学习计划","我又学习了","我学习了高数学习了英语学习了啥都学习了");
+            daoPush.insert(1,"工作计划","我又工作了","我做了PPT做了WORD做了EXCEL");
+            daoPush.insert(2,"游戏计划","我又玩游戏了","我玩了王者荣耀玩了和平精英");
+            daoPush.insert(2,"睡觉计划","我又睡觉了","我睡午觉了睡晚觉了");
+
         }
 
      
