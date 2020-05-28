@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:descendantFocusability="blocksDescendants">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,6 +36,7 @@
             android:layout_alignTop="@+id/img_head"
             android:layout_toEndOf="@+id/img_head"
             ></TextView>
+
         <TextView
             android:id="@+id/tv_remark"
             android:layout_width="wrap_content"
@@ -46,10 +48,10 @@
             ></TextView>
 
         <Button
-            android:id="@+id/btn_agree"
+            android:id="@+id/btn_refuse"
             android:layout_width="70dp"
             android:layout_height="40dp"
-            android:layout_toStartOf="@+id/btn_refuse"
+            android:layout_toStartOf="@+id/btn_agree"
 
             android:text="拒绝"
             android:layout_centerVertical="true"
@@ -57,7 +59,7 @@
             ></Button>
 
         <Button
-            android:id="@+id/btn_refuse"
+            android:id="@+id/btn_agree"
             android:layout_width="70dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"

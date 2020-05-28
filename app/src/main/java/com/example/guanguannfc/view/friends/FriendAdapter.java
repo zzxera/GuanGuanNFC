@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.view.data.DataShow;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class FriendAdapter extends ArrayAdapter {
@@ -31,8 +33,10 @@ public class FriendAdapter extends ArrayAdapter {
         View view= LayoutInflater.from(getContext()).inflate(resourceId, null);
         ImageView friendHead=view.findViewById(R.id.img_friendHead);
         TextView friendName = view.findViewById(R.id.tv_friendName);
+        TextView friendLevel = view.findViewById(R.id.tv_friendLevel);
         friendHead.setImageResource(friendItem.getImageId());
         friendName.setText(friendItem.getFriendName());
+        friendLevel.setText(friendItem.getFriendLevel());
         return view;
     }
 }
