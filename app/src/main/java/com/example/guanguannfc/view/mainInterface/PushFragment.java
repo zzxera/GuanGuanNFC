@@ -31,6 +31,7 @@ public class PushFragment extends Fragment {
     private Context context;
     private String [][] pushlist;
     private String [] pushl;
+    private String[]push2;
 
 
     @Override
@@ -43,7 +44,6 @@ public class PushFragment extends Fragment {
         lv_pushs= view.findViewById(R.id.lv_pushs);
         push=new UserInfo(context);
         pushlist=push.Push();
-
         initPushs(pushs1);
         pushAdapter = new PushAdapter(getActivity(),R.layout.item_push,pushItemList);
         lv_pushs.setAdapter(pushAdapter);
