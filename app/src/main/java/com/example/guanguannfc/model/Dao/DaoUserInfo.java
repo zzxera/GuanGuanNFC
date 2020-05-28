@@ -118,6 +118,19 @@ public class DaoUserInfo {
         db.execSQL(sql,new String[]{username});
         return true;
     }
+    //获取用户的等级(数组中的第一个元素)、活跃天数：需要给定用户名称
+    public String[] personMessage(String username){
+        String[] str = new String[2];
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="select active_day/2,active_day from user_info where user_name=?";
+        Cursor cursor=db.rawQuery(sql,new String[]{username});
+        if (cursor.getCount() != 0){
+            str[0] = cursor.getInt(0)+"";
+            str[1] = cursor.getInt(1)+"";
+            return str;
+        }
+        return str;
+    }
 
     //md5加密
     public static String md5(String string) {
