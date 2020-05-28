@@ -68,4 +68,9 @@ public boolean updateact(String username,long starttime, String context){
 public boolean updateact(String username, String text){
     return DA.update(username,text);
 }
+
+public String[] getUserInfo(String username){
+    return DU.personMessage(username);
+}
+
 }
