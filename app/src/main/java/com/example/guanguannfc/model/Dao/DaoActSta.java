@@ -57,21 +57,21 @@ public class DaoActSta {
     //更新一条活动记录（用于分享活动，非计时界面）：需给定用户名、活动开始时间戳、分享文本
     public boolean update(String username,long start_time,String moment_text ){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update Act_Sta set moment_text=?,is_shared=1,updated_time=? where start_time=? and act_id in (select _id from activity where user_id=(select _id from user_info where user_name=?))";
+        String sql="update Act_Sta set moment_text=?,is_shared=1,updated_time=?,shared_time=? where start_time=? and act_id in (select _id from activity where user_id=(select _id from user_info where user_name=?))";
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{moment_text,currentTime,start_time,username});
+        db.execSQL(sql,new Object[]{moment_text,currentTime,currentTime,start_time,username});
         db.close();
         return true;
     }
     //更新一条活动记录（用于分享活动，计时界面分享需要执行）：需给定用户名、分享文本
     public boolean update(String username,String moment_text ){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update Act_Sta set moment_text=?,is_shared=1,updated_time=? " +
+        String sql="update Act_Sta set moment_text=?,is_shared=1,updated_time=? ,shared_time=?" +
                 " where end_time=(select max(end_time) from act_sta where act_id in (select _id from activity where user_id=(select _id from user_info where user_name=?)) group by end_time)";
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{moment_text,currentTime,username});
+        db.execSQL(sql,new Object[]{moment_text,currentTime,currentTime,username});
         db.close();
         return true;
     }
