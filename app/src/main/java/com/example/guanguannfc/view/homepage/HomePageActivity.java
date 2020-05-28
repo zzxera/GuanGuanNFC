@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,20 +34,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guanguannfc.R;
-import com.example.guanguannfc.controller.dataManagement.ActivityManage;
 import com.example.guanguannfc.controller.dataManagement.ThingManage;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 import com.example.guanguannfc.controller.nfcManagement.BaseNfcActivity;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
-import com.example.guanguannfc.controller.userManagement.Friend;
 import com.example.guanguannfc.view.data.ClockActivity;
 import com.example.guanguannfc.view.data.ClockService;
 import com.example.guanguannfc.view.data.DataFragment;
 import com.example.guanguannfc.view.friends.FrendFragment;
 import com.example.guanguannfc.view.friends.FriendRequestActivity;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
-import com.example.guanguannfc.view.pushs.PushFragment;
+import com.example.guanguannfc.view.mainInterface.PushFragment;
 import com.example.guanguannfc.view.management.ManageFragment;
 
 import java.io.BufferedWriter;
@@ -75,9 +74,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private View popupView;
 //    添加好友
     private AddFriendDialog addFriendDialog;
-    private String addName,addRemark;
+    private String addName;
     PopupWindow addWindow;
-    private Friend friend;
     
     private DataFragment dataFragment;
     private PushFragment pushFragment;
@@ -115,7 +113,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private String addActType,addActName;
     private String[] allActs;
     private Allactivity allactivity;
-    private ActivityManage activityManage;
 
 //    擦除NFC
     private boolean isDelete=false;
@@ -219,10 +216,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         popupView = HomePageActivity.this.getLayoutInflater().inflate(R.layout.item_addwindow, null);
         lv_add = (ListView) popupView.findViewById(R.id.lv_add);
         oneTextAdapter = new OneTextAdapter(this,R.layout.item_onetext,oneTextItemList);
-        activityManage = new ActivityManage(userName,this);
-
-//        添加好友
-        friend = new Friend(this);
 
 
 //       NFC
@@ -252,17 +245,9 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             @Override
             public void onConfirm(AddFriendDialog dialog) {
                 addName=addFriendDialog.getName().getText().toString();
-                addRemark=addFriendDialog.getRemark().getText().toString();
                 addFriendDialog.getName().setText("");
                 addFriendDialog.getRemark().setText("");
-                boolean isSend = friend.apply(userName,addName,addRemark);
-                if (isSend) {
-                    Toast.makeText(HomePageActivity.this,"请求已发送",Toast.LENGTH_LONG).show();
-
-                }
-                else {
-                    Toast.makeText(HomePageActivity.this,"请求发送失败",Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(HomePageActivity.this,"请求已发送",Toast.LENGTH_LONG).show();
 
             }
         });
@@ -431,7 +416,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                         case 0:
 //                            添加好友
                             addFriendDialog.show();
-
                             addWindow.dismiss();
                             break;
                         case 1:
@@ -664,12 +648,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         dialog.show();//显示对话框
         return view;
     }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-////        Toast.makeText(HomePageActivity.this,"onResume"+isCount,Toast.LENGTH_LONG).show();
-//    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Toast.makeText(HomePageActivity.this,"onResume"+isCount,Toast.LENGTH_LONG).show();
+    }
 
 
 //    检测NFC
@@ -687,98 +671,64 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             mTagText = NFCManage.readNfcTag(intent);
             String isNFCExist = NFCManage.isNFCExist(mTagText);
             if (isNFCExist==null){
-
                 if (isAddBox){
-                    boolean isBoxExist = thingManage.isBoxExist(boxName);
-                    if (isBoxExist){
-                        Toast.makeText(HomePageActivity.this,"已存在重名的盒子",Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Boolean success = nfcManage.setNFCNumberForBox(boxName,boxPosition,detectedTag);
-                        if (success){
-                            for (int i=0;i<goodsName.size();i++){
-                                thingManage.addThings(boxName,goodsName.get(i),goodsNum.get(i));
-                            }
-                            isAddBox = false;
-                            scanNFCDialog.dismiss();
-                            Toast.makeText(HomePageActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
+                    Boolean success = nfcManage.setNFCNumberForBox(boxName,boxPosition,detectedTag);
+                    if (success){
+                        for (int i=0;i<goodsName.size();i++){
+                            thingManage.addThings(boxName,goodsName.get(i),goodsNum.get(i));
                         }
+                        isAddBox = false;
+                        scanNFCDialog.dismiss();
+                        Toast.makeText(HomePageActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
                     }
+
+
                 }
                 else if (isAddAct){
-                    boolean isActExist = activityManage.isSmallActivityExist(addActName);
-                    if (isActExist){
-                        Toast.makeText(HomePageActivity.this,"此活动已存在",Toast.LENGTH_SHORT).show();
+                    Boolean success = nfcManage.setNFCNumberForAct(addActType,addActName,detectedTag);
+                    if (success){
+                        isAddAct = false;
+                        scanNFCDialog.dismiss();
+                        Toast.makeText(HomePageActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
                     }
-                    else {
-                        Boolean success = nfcManage.setNFCNumberForAct(addActType,addActName,detectedTag);
-                        if (success){
-                            isAddAct = false;
-                            scanNFCDialog.dismiss();
-                            Toast.makeText(HomePageActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
 
                 }
                 else {
                     Toast.makeText(HomePageActivity.this,"空标签",Toast.LENGTH_SHORT).show();
+
                 }
+
+
             }
             else if (isNFCExist.equals("Act")){
-                if (isAddAct || isAddBox){
-                    Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    //            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
-                    String[] actInfo = nfcManage.nfcForActivity(mTagText);
-                    if (actInfo[1]!=null){
-                        isCount=true;
-                        actType=allActs[Integer.parseInt(actInfo[1])];
-                        actName=actInfo[0];
-//                        Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
-//            开始计时
-                        binder.starTimer();
-                        Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
-                        startIntent.putExtra("username",userName);
-                        startActivityForResult(startIntent,1);
-                    }
-                    else {
-                        Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();
-                    }
+//            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
+                String[] actInfo = nfcManage.nfcForActivity(mTagText);
+            isCount=true;
+//            跳转传值
+//
+            actType=allActs[Integer.parseInt(actInfo[1])-1];
+            actName=actInfo[0];
+                Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
 
-                }
-
-
+            binder.starTimer();
+            Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
+            startIntent.putExtra("username",userName);
+            startActivityForResult(startIntent,1);
             }
             else if (isNFCExist.equals("Box")){
-                if (isAddBox || isAddAct){
-                    Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    //            Toast.makeText(HomePageActivity.this,"Box",Toast.LENGTH_SHORT).show();
-                    String getBoxName = nfcManage.nfcForBox(mTagText);
-                    if (getBoxName!=null){
-                        Bundle bundle_manage = new Bundle();
-                        bundle_manage.putString("username",userName);
-                        bundle_manage.putString("getboxname",getBoxName);
-                        manageFragment.setArguments(bundle_manage);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
-                        setSelectStatus(2);
-                    }
-                    else {
-                        Toast.makeText(HomePageActivity.this,"盒子不存在",Toast.LENGTH_SHORT).show();
-                    }
-
+//            Toast.makeText(HomePageActivity.this,"Box",Toast.LENGTH_SHORT).show();
+                String getBoxName = nfcManage.nfcForBox(mTagText);
+                Bundle bundle_manage = new Bundle();
+                bundle_manage.putString("username",userName);
+                bundle_manage.putString("getboxname",getBoxName);
+                manageFragment.setArguments(bundle_manage);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
+                setSelectStatus(2);
 //            Toast.makeText(HomePageActivity.this,getBoxName,Toast.LENGTH_SHORT).show();
-                }
-
             }
-            else if (isNFCExist.equals("Something is exist!")){
-                nfcManage.setNFCNll(detectedTag);
-                Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(HomePageActivity.this,"无法识别此NFC内容",Toast.LENGTH_SHORT).show();
             }
-
         }
 
     }
