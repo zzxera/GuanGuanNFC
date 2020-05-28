@@ -1,4 +1,4 @@
-package com.example.guanguannfc.view.mainInterface;
+package com.example.guanguannfc.view.pushs;
 
 import android.content.Context;
 import android.view.LayoutInflater;
