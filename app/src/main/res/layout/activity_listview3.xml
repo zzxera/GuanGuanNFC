@@ -20,19 +20,17 @@
         android:paddingLeft="5dp"
         android:text="子项目" />
 
-    <Button
+    <ImageView
         android:id="@+id/btn_change_num"
         android:layout_width="77dp"
-        android:layout_height="33dp"
-        android:text="修改物品数量"
-        android:textSize="8sp" />
+        android:layout_height="40dp"
+        android:src="@drawable/img_change" />
 
-    <Button
+    <ImageView
         android:id="@+id/btn_delet"
         android:layout_width="45dp"
-        android:layout_height="33dp"
-        android:text="删除物品"
-        android:textSize="8sp" />
+        android:layout_height="40dp"
+        android:src="@drawable/img_arrow_delet"/>
 
 
 </LinearLayout>

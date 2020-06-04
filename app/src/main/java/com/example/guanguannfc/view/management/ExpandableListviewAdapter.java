@@ -97,9 +97,9 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
         groupViewHolder.parent_textview_id.setText(groups[groupPosition]);
         //如果是展开状态，
         if (isExpanded){
-            groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.img_arrow_down));
+            groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.img_down));
         }else{
-            groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.img_arrow_right));
+            groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.img_right));
         }
         return convertView;
     }
@@ -117,7 +117,7 @@ public class ExpandableListviewAdapter extends BaseExpandableListAdapter {
         }
         childViewHolder.chidren_item.setText(childsq.get(groupPosition).getAct()[childPosition]);
         final String old=childViewHolder.chidren_item.getText().toString();
-        final Button btn1 =convertView.findViewById(R.id.btn_change_actname);
+        final ImageView btn1 =convertView.findViewById(R.id.btn_change_actname);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
