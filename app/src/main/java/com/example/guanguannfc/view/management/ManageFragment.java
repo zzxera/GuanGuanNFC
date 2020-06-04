@@ -74,12 +74,12 @@ public class ManageFragment extends Fragment {
     private String name2;
     private String num2;
     private String boxlocation;
+    private String [] searchthings;
 
 //    NFC获取的值
     private String getBoxName="" ;
     private int boxIndex;
-
-
+    private int z;
 
     private View view;
     Context ctx;
@@ -113,13 +113,6 @@ public class ManageFragment extends Fragment {
 
         getact=new ActivityManage(username,ctx);
         initView();
-        ImageView addact = view.findViewById(R.id.iv_addact);
-        addact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showaddact();
-            }
-        });
 
 
         gridView1= view.findViewById(R.id.box);
@@ -134,16 +127,16 @@ public class ManageFragment extends Fragment {
                 }
             });
         }
-        TextView tv_boxmanage=view.findViewById(R.id.tv_boxmanage);
-        tv_boxmanage.setOnClickListener(new View.OnClickListener() {
+        ImageView s=view.findViewById(R.id.s);
+        s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 box=null;
                 box=boxget.boxAndPosition();
                 if (box != null){
                     boxnames= box[0];
-                    GridviewAdapter gridviewAdapter=new GridviewAdapter(getActivity(),boxnames);
-                    gridView1.setAdapter(gridviewAdapter);
+                    GridviewAdapter gridviewAdapter2=new GridviewAdapter(getActivity(),boxnames);
+                    gridView1.setAdapter(gridviewAdapter2);
                     gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -159,21 +152,29 @@ public class ManageFragment extends Fragment {
         lay_time.setVisibility(View.INVISIBLE);
         lay_search=view.findViewById(R.id.layout_search);
         lay_search.setVisibility(View.INVISIBLE);
-        ListView lv_search = (ListView) view.findViewById(R.id.lv_search);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData20(),
-                R.layout.activity_listview2,
-                new String[]{"tvName","tv_shuliang"},
-                new int[]{R.id.tvName,R.id.tv_shuliang});
-        lv_search.setAdapter(mSimpleAdapter);
+        final ListView lv_search = (ListView) view.findViewById(R.id.lv_search);
 
         SearchView sv=view.findViewById(R.id.sv);
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //输入完成后，提交时触发的方法，一般情况是点击输入法中的搜索按钮才会触发，表示现在正式提交了
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(final String query) {
                 if (TextUtils.isEmpty(query)) {
                     Toast.makeText(getActivity(), "请输入查找内容！", Toast.LENGTH_SHORT).show();
                 } else {
-
+                    searchthings=boxget.searchThing(query);
+                    SearchAdapter SearchAdapter=new SearchAdapter(getActivity(),searchthings,boxnames);
+                    lv_search.setAdapter(SearchAdapter);
+                    lv_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            for(int i=0;i<boxnames.length;i++){
+                                if(boxnames[i]==searchthings[position]){
+                                    z=i;
+                                }
+                            }
+                            showbox(z);
+                        }
+                    });
                 }
                 return true;
             }
@@ -314,7 +315,7 @@ public class ManageFragment extends Fragment {
               goodsnum=thing[1];}
         MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum, boxname,boxget,mPopWindow);
         listView.setAdapter(mSimpleAdapter);
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        ImageView btn2 =contentView.findViewById(R.id.btb_addgoods);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -459,7 +460,6 @@ public class ManageFragment extends Fragment {
         expand_list_id.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                showToastShort(childs[groupPosition][childPosition]);
                 return true;
             }
         });
