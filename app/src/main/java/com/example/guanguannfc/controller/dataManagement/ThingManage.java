@@ -1,11 +1,8 @@
 package com.example.guanguannfc.controller.dataManagement;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 
 import com.example.guanguannfc.model.Dao.DaoBox;
-import com.example.guanguannfc.model.Dao.DaoActivityType;
 import com.example.guanguannfc.model.Dao.DaoBoxContent;
 import com.example.guanguannfc.model.Helper.HelperBox;
 import com.example.guanguannfc.model.Helper.HelperBoxContent;
@@ -25,6 +22,19 @@ public class ThingManage {
         this.context = context;
         daoBox = new DaoBox(context);
         mDaoBoxContent = new DaoBoxContent(context);
+    }
+
+    //搜索物品,返回盒子集合
+    public String[] searchThing(String thingname){
+        ArrayList list = daoBox.queryBox(username, thingname);
+        if (list  == null){
+            return null;
+        }
+        String[] array = new String[list.size()];
+        for (int i = 0; i< list.size(); i++){
+            array[i] = (String) list.get(i);
+        }
+        return array;
     }
 
     //张浦鑫需要的

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -106,8 +107,8 @@ public class MsimpleAdapter extends BaseAdapter {
     static class ViewHolder {
         TextView tv_goods_name;
         TextView tv_goods_shuliang;
-        Button btn_change_num;
-        Button btn_delet;
+        ImageView btn_change_num;
+        ImageView btn_delet;
         Button btn_change_goods;
     }
 
