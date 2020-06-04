@@ -40,6 +40,8 @@ import com.example.guanguannfc.controller.nfcManagement.BaseNfcActivity;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.controller.userManagement.Friend;
+import com.example.guanguannfc.controller.userManagement.UserInfo;
+import com.example.guanguannfc.model.Dao.DaoUserInfo;
 import com.example.guanguannfc.view.data.ClockActivity;
 import com.example.guanguannfc.view.data.ClockService;
 import com.example.guanguannfc.view.data.DataFragment;
@@ -54,6 +56,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
@@ -92,6 +95,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
    ClockService.MyBinder binder;
    Handler handler;
    Button btn_start;
+    public static int actId;
 
 //   添加盒子
     private NFCManage nfcManage;
@@ -120,6 +124,10 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //    擦除NFC
     private boolean isDelete=false;
 
+//    个人信息
+    private UserInfo userInfo;
+    private String[] myInfo;
+    private TextView tv_userLevel,tv_userActDays;
 
 
     ServiceConnection conn = new ServiceConnection() {
@@ -235,6 +243,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         for (int t=1;t<arry.length;t++){
             allActs[t-1]=arry[t];
         }
+
+//        个人信息
+        userInfo = new UserInfo(this);
+        tv_userLevel = findViewById(R.id.text_userLevel);
+        tv_userActDays = findViewById(R.id.text_actDays);
+
     }
 
 //    创建弹窗
@@ -371,6 +385,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             public void onClick(View view) {
                 ctl_person.setVisibility(View.VISIBLE);
                 ll_container.setVisibility(View.VISIBLE);
+                getUserInfo();
             }
         });
         ll_container.setOnTouchListener(new View.OnTouchListener() {
@@ -552,15 +567,21 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                         public void onClick(View view) {
                                             EditText et1=addGoodView.findViewById(R.id.et_goodName);
                                             EditText et2=addGoodView.findViewById(R.id.et_goodNum);
-                                            goodsName.add(et1.getText().toString());
-                                            goodsNum.add(Integer.valueOf(et2.getText().toString()) );
+                                            boolean isgoodsContains = Arrays.asList(goodsName).contains(et2.getText().toString());
+                                            if(isgoodsContains){
+                                                Toast.makeText(HomePageActivity.this, "物品已存在", Toast.LENGTH_SHORT ).show();
+                                            }
+                                            else {
+                                                goodsName.add(et1.getText().toString());
+                                                goodsNum.add(Integer.valueOf(et2.getText().toString()) );
 
-                                            String[] arr={et1.getText().toString(),et2.getText().toString()};
+                                                String[] arr={et1.getText().toString(),et2.getText().toString()};
 
-                                            GoodItem goodItem = new GoodItem(arr);
-                                            goodItemList.add(goodItem);
-                                            lv_goods.setAdapter(goodAdapter);
-                                            addGoodDialog.dismiss();
+                                                GoodItem goodItem = new GoodItem(arr);
+                                                goodItemList.add(goodItem);
+                                                lv_goods.setAdapter(goodAdapter);
+                                                addGoodDialog.dismiss();
+                                            }
                                         }
                                     });
                                 }
@@ -592,13 +613,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                         scanNFCDialog.show();//显示对话框
                                         scanNFCDialog.setCanceledOnTouchOutside(false);
                                         scanNFCDialog.setCancelable(false);
-
                                         scanNFCView.findViewById(R.id.btn_box_nfc).setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 isAddBox = false;
                                                 scanNFCDialog.dismiss();
                                                 addBoxDialog.show();
+
 //                                                Toast.makeText( HomePageActivity.this, isAddBox+"", Toast.LENGTH_SHORT ).show();
                                             }
                                         });
@@ -734,7 +755,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     String[] actInfo = nfcManage.nfcForActivity(mTagText);
                     if (actInfo[1]!=null){
                         isCount=true;
-                        actType=allActs[Integer.parseInt(actInfo[1])];
+                        actId=Integer.valueOf(actInfo[1]);
                         actName=actInfo[0];
 //                        Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
 //            开始计时
@@ -810,6 +831,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
     }
 
+    private void getUserInfo(){
+        myInfo = userInfo.getUserInfo(userName);
+        tv_userLevel.setText(myInfo[0]+"级");
+        tv_userActDays.setText("已活跃"+myInfo[1]+"天");
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -828,5 +855,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             //                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
         }
     }
+
 
 }
