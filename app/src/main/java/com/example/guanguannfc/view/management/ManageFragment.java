@@ -33,8 +33,10 @@ import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataManagement.ActivityManage;
 import com.example.guanguannfc.controller.dataManagement.ThingManage;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
+import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,9 +132,26 @@ public class ManageFragment extends Fragment {
                     showbox(position);
                 }
             });
-
         }
-
+        TextView tv_boxmanage=view.findViewById(R.id.tv_boxmanage);
+        tv_boxmanage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                box=null;
+                box=boxget.boxAndPosition();
+                if (box != null){
+                    boxnames= box[0];
+                    GridviewAdapter gridviewAdapter=new GridviewAdapter(getActivity(),boxnames);
+                    gridView1.setAdapter(gridviewAdapter);
+                    gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            showbox(position);
+                        }
+                    });
+                }
+            }
+        });
         lay_box=view.findViewById(R.id.layout_boxmanagement);
 //      lay_box.setVisibility(View.VISIBLE);
         lay_time=view.findViewById(R.id.layout_timemanagement);
@@ -266,6 +285,8 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         final TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][num]);
+        final TextView tv_position=contentView.findViewById(R.id.tv_position);
+        tv_position.setText(box[1][num]);
         final String boxname=tv_boxname.getText().toString();
         String [][] thing=boxget.thingAndNumberInBox(box[0][num]);
         if(thing==null){
@@ -282,7 +303,7 @@ public class ManageFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle=new Bundle();
                 bundle.putString("boxname",boxname);
-                showaddgoods(boxname);
+                showaddgoods(boxname,num,mPopWindow);
             }
         });
         //显示PopupWindow
@@ -291,7 +312,7 @@ public class ManageFragment extends Fragment {
     }
 
 
-    private void showaddgoods(final String boxname){
+    private void showaddgoods(final String boxname, final int num2, final PopupWindow sPopWindow){
         final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addgoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         Button btn_add_goods=contentView.findViewById(R.id.btn_add_goods);
@@ -302,12 +323,38 @@ public class ManageFragment extends Fragment {
                 EditText ed_num=contentView.findViewById(R.id.ed_num);
                 name=ed_name.getText().toString();
                 String i=ed_num.getText().toString();
-                boxName=boxname;
-                num=Integer.valueOf(i).intValue();
-                boxget.addThings(boxName,name,num);
-                mPopWindow.dismiss();
+                if(name.equals("")){
+                    Toast.makeText(getActivity(), "物品名称不能为空", Toast.LENGTH_SHORT ).show();
+                }
+                else {
+                    if(i.equals("")){
+                        Toast.makeText(getActivity(), "物品数量不能为空", Toast.LENGTH_SHORT ).show();
+                    }
+                    else {
+                        boxName=boxname;
+                        num=Integer.valueOf(i).intValue();
+                        String [][] thing=boxget.thingAndNumberInBox(box[0][num2]);
+                        String [] goodsname=thing[0];
+                        boolean isContains = Arrays.asList(goodsname).contains(name);
+                        if(isContains){
+                            shownoname();
+                        }
+                        else {
+                            boxget.addThings(boxName,name,num);
+                            mPopWindow.dismiss();
+                            sPopWindow.dismiss();
+                        }
+                    }
+                }
             }
         });
+        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void shownoname(){
+        final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_noname, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
