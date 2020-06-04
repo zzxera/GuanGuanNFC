@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -165,7 +166,23 @@ public class ManageFragment extends Fragment {
                 new int[]{R.id.tvName,R.id.tv_shuliang});
         lv_search.setAdapter(mSimpleAdapter);
 
+        SearchView sv=view.findViewById(R.id.sv);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            //输入完成后，提交时触发的方法，一般情况是点击输入法中的搜索按钮才会触发，表示现在正式提交了
+            public boolean onQueryTextSubmit(String query) {
+                if (TextUtils.isEmpty(query)) {
+                    Toast.makeText(getActivity(), "请输入查找内容！", Toast.LENGTH_SHORT).show();
+                } else {
 
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
 
         ImageView addbox = view.findViewById(R.id.iv_addbox);
