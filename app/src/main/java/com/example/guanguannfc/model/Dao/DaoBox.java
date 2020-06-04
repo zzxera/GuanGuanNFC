@@ -158,6 +158,22 @@ public class DaoBox {
 
         return hashMap;
     }
+    //根据用户名和物品名称查盒子名称（返回一个String集合）
+    public ArrayList<String> queryBox(String user_name,String thing_name){
+        ArrayList<String> arrayList = new ArrayList<>();
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="select box_name from Box where user_ID=(select _id from User_Info where user_name=?) and _id in (select box_id from box_content where thing_name=?)";
+        Cursor cursor=db.rawQuery(sql,new String[]{user_name,thing_name});
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()){
+                arrayList.add(cursor.getString(0));
+
+            }
+        }
+        return arrayList;
+    }
+
+
 
 
 }
