@@ -27,6 +27,11 @@ public class ThingManage {
         mDaoBoxContent = new DaoBoxContent(context);
     }
 
+    //搜索物品
+    public String[] searchThing(String thingName){
+        String[] boxlist = new String[2];
+        return boxlist;
+    }
     //张浦鑫需要的
     public String[][] thingAndNumberInBox(String boxName){
         HashMap<String, ArrayList<HelperBoxContent>> hashMap = new HashMap<String, ArrayList<HelperBoxContent>>();
