@@ -44,6 +44,38 @@ public class DaoActSta {
         db.close();
         return true;
     }
+    //插入一条活动记录：需要给定活动id、开始活动时间、结束活动时间、评价、分享状态
+    public boolean insert(int act_ID,long start_time,long end_time,String moment_text,int is_shared){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="insert into Act_Sta (act_ID,start_time,end_time,moment_text,is_shared,created_time,updated_time) values(?,?,?,?,?,?,?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{act_ID,start_time,end_time,moment_text,is_shared,currentTime,currentTime});
+        db.close();
+        return true;
+    }
+    //更新一条活动记录（用于分享活动，非计时界面）：需给定用户名、活动开始时间戳、分享文本
+    public boolean update(String username,long start_time,String moment_text ){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="update Act_Sta set moment_text=?,is_shared=1,updated_time=?,shared_time=? where start_time=? and act_id in (select _id from activity where user_id=(select _id from user_info where user_name=?))";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{moment_text,currentTime,currentTime,start_time,username});
+        db.close();
+        return true;
+    }
+    //更新一条活动记录（用于分享活动，计时界面分享需要执行）：需给定用户名、分享文本
+    public boolean update(String username,String moment_text ){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="update Act_Sta set moment_text=?,is_shared=1,updated_time=? ,shared_time=?" +
+                " where end_time=(select max(end_time) from act_sta where act_id in (select _id from activity where user_id=(select _id from user_info where user_name=?)) group by end_time)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{moment_text,currentTime,currentTime,username});
+        db.close();
+        return true;
+    }
+
     //根据活动ID删除和该活动所有时间记录：需给定活动ID
     public boolean delete(long act_ID){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();

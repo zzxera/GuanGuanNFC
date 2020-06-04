@@ -4,17 +4,17 @@ public class FriendActItem {
 
     private String friendName,actType,date,startTime,endTime,len,shareContent,level,shareDate;
     private int imageId;
-    public FriendActItem(String[] infor){
+    public FriendActItem(String[] infor,int id){
         this.friendName=infor[0];
         this.level=infor[1];
-        this.shareContent=infor[2];
-        this.actType=infor[3];
-        this.date=infor[4];
-        this.startTime=infor[5];
-        this.endTime=infor[6];
-        this.len=infor[7];
-        this.shareDate=infor[8];
-        this.imageId=Integer.parseInt(infor[9]);
+        this.shareContent=infor[6];
+        this.actType=infor[5];
+        this.date=infor[8];
+        this.startTime=infor[2];
+        this.endTime=infor[3];
+        this.len=infor[4];
+        this.shareDate=infor[7];
+        this.imageId=id;
     }
 
     public String getFriendName(){

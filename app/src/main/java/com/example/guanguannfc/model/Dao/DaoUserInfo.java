@@ -90,7 +90,54 @@ public class DaoUserInfo {
             return false;
         }
     }
-    //md5加密
+    //更改用户表最后一次活动记录时间:需给定用户名、最后一次活动时间（2020年5月12日）
+    public boolean updateLastAct(String username,String last_act){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="update user_info set last_act=?,updated_time=? where _id=(select _id from user_info where user_name=?)";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{last_act,currentTime,username});
+        db.close();
+        return true;
+    }
+    //比较给定日期是否和用户最后活动日期相同，相同为true、不同为false：需给定用户民和比较日期（2020年5月12日）
+    public boolean queryLastActDate(String username,String last_act_date){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="select last_act from user_info where user_name=? and last_act=?";
+        Cursor cursor=db.rawQuery(sql,new String[]{username,last_act_date});
+        if(cursor.getCount()!=0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    //活跃天数加一:给定用户名
+    public boolean updateActiveDay(String username){
+        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
+        String sql=" update user_info set active_day=active_day+1 where user_name=?";
+        db.execSQL(sql,new String[]{username});
+        return true;
+    }
+
+//    获取用户的等级（数组中的第一个元素）、活跃天数：需要给定用户名称
+    public String[] personMessage(String username){
+        String[] str = new String[2];
+        SQLiteDatabase db = mDataBaseHelper.getWritableDatabase();
+        String sql = "select active_day/2,active_day from user_info where user_name=?";
+        Cursor cursor = db.rawQuery(sql,new String[]{username});
+        if (cursor.getCount() != 0) {
+            while (cursor.moveToNext()){
+                str[0] = cursor.getInt(0)+"";
+                str[1] = cursor.getInt(1)+"";
+                return str;
+            }
+
+
+        }
+        return str;
+    }
+
+//md5加密
     public static String md5(String string) {
         if (TextUtils.isEmpty(string)) {
             return "";

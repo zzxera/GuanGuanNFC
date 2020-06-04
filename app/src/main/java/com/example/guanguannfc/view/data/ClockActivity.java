@@ -25,6 +25,7 @@ import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 import com.example.guanguannfc.controller.nfcManagement.BaseNfcActivity;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
+import com.example.guanguannfc.controller.userManagement.UserInfo;
 import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 import java.io.BufferedReader;
@@ -37,7 +38,7 @@ import java.io.InputStreamReader;
 public class ClockActivity  extends BaseNfcActivity {
     private Button btn_share,btn_stop;
     private TextView tv_start_time,tv_now_time,tv_distance,tv_duration,tv_event_type;
-    private String startTime,nowTime,duration,isFirst,userName,actType,actName;
+    private String startTime,nowTime,duration,isFirst,userName,actName;
     private Long lstartTime,date,endTime;
     private Boolean iscount;
     private GetTime getTime;
@@ -52,11 +53,15 @@ public class ClockActivity  extends BaseNfcActivity {
     LocalBroadcastManager lbm;
     ClockService.MyBinder binder;
     IntentFilter intentFilter;
+    private int actId;
 
 //NFC
     private NFCManage nfcManage;
     private String mTagText;
     private String[] allActs;
+
+//    更新个人信息
+    private UserInfo userInfo;
 
 
 
@@ -97,13 +102,13 @@ public class ClockActivity  extends BaseNfcActivity {
         lbm.registerReceiver(receiver,intentFilter);
 //        Toast.makeText(this,userName,Toast.LENGTH_LONG).show();
 
-        btn_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareDialog.show();
-
-            }
-        });
+//        btn_share.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
 
     }
 
@@ -115,9 +120,10 @@ public class ClockActivity  extends BaseNfcActivity {
         tv_duration=findViewById(R.id.tv_duration);
         tv_event_type=findViewById(R.id.tv_event_type);
         allactivity = new Allactivity(this);
-        actType = HomePageActivity.actType;
+
+        actId = HomePageActivity.actId;
         actName = HomePageActivity.actName;
-        tv_event_type.setText(actType);
+        tv_event_type.setText(actName);
         date=1111111l;
 
         iscount=true;
@@ -127,6 +133,8 @@ public class ClockActivity  extends BaseNfcActivity {
         for (int t=1;t<arry.length;t++){
             allActs[t-1]=arry[t];
         }
+
+        userInfo=new UserInfo(this);
     }
 
     private void initDialog(){
@@ -142,7 +150,13 @@ public class ClockActivity  extends BaseNfcActivity {
             @Override
             public void onConfirm(ShareDialog dialog) {
                 text_content=shareDialog.getEditText().getText().toString();
-                Toast.makeText(ClockActivity.this,"分享成功",Toast.LENGTH_LONG).show();
+                boolean isShared = userInfo.updateact(userName,text_content);
+                if (isShared){
+                    Toast.makeText(ClockActivity.this,"分享成功",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(ClockActivity.this,"分享失败",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -151,22 +165,10 @@ public class ClockActivity  extends BaseNfcActivity {
         int id=v.getId();
         switch (id){
             case R.id.btn_stop:
-
-                iscount = false;
-                HomePageActivity.isCount=false;
-                binder.stopTimer();
-                endTime=getTime.getStartTime();
-                Boolean isSuccess= allactivity.insertdata(userName,actType,actName,date, lstartTime,endTime);
-
-                if (isSuccess) {
-                    Toast.makeText(this,"计时结束",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(this,"数据记录失败",Toast.LENGTH_SHORT).show();
-                }
+                stopCount();
                 break;
             case R.id.btn_share:
-
+                shareDialog.show();
 
                 break;
 
@@ -240,27 +242,41 @@ public class ClockActivity  extends BaseNfcActivity {
         Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         mTagText = NFCManage.readNfcTag(intent);
         String isNFCExist = NFCManage.isNFCExist(mTagText);
-        if (isNFCExist.equals("Act")){
+        if (isNFCExist==null){
+                Toast.makeText(ClockActivity.this,"空标签",Toast.LENGTH_SHORT).show();
+        }
+        else if (isNFCExist.equals("Act")){
             String[] actInfo = nfcManage.nfcForActivity(mTagText);
-            String newActType=allActs[Integer.parseInt(actInfo[1])-1];
-            String newActName=actInfo[0];
+            if(actInfo[0]!=null){
+                int newActID=Integer.parseInt(actInfo[1]);
+                String newActName=actInfo[0];
 //            如果正在计时
-            if (iscount){
+                if (iscount){
 //                如果刷的是同一张贴纸
-                if (actType.equals(newActType) && actName.equals(newActName)){
-                    stopCount();
-                }
+                    if (actId==newActID && actName.equals(newActName)){
+                        stopCount();
+                    }
 //                如果刷了不同贴纸
+                    else {
+                        stopCount();
+                        startNewCount(newActID,newActName);
+                    }
+                }
+
                 else {
-                    stopCount();
-                    startNewCount(newActType,newActName);
+                    startNewCount(newActID,newActName);
                 }
             }
-
             else {
-                startNewCount(newActType,newActName);
+                Toast.makeText(this,"活动不存在",Toast.LENGTH_SHORT).show();
             }
-
+        }
+        else if (isNFCExist.equals("Box")){
+            Toast.makeText(ClockActivity.this,"请退回主页扫描盒子贴纸",Toast.LENGTH_SHORT).show();
+        }
+        else if (isNFCExist.equals("Something is exist!")){
+            nfcManage.setNFCNll(detectedTag);
+            Toast.makeText(ClockActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -269,33 +285,38 @@ public class ClockActivity  extends BaseNfcActivity {
         HomePageActivity.isCount=false;
         binder.stopTimer();
         endTime=getTime.getStartTime();
-        Boolean isSuccess= allactivity.insertdata(userName,actType,actName,date, lstartTime,endTime);
+        Boolean isSuccess= allactivity.insertdata(userName,actName, lstartTime,endTime);
 
         if (isSuccess) {
-            Toast.makeText(this,"计时结束",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,"计时结束",Toast.LENGTH_SHORT).show();
+            String[][] today_date = getTime.transString(endTime);
+            Boolean isActive = userInfo.updateActDay(userName,today_date[0][0]);
+            if (isActive){
+                Toast.makeText(this,"打卡成功",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this,"今日已打卡",Toast.LENGTH_SHORT).show();
+            }
         }
         else {
             Toast.makeText(this,"数据记录失败",Toast.LENGTH_SHORT).show();
         }
+
     }
 
-    private void startNewCount(String newtype,String newname){
+    private void startNewCount(int newID,String newname){
 
         iscount = true;
         HomePageActivity.isCount=true;
-        actType = newtype;
+        actId = newID;
         actName = newname;
-        HomePageActivity.actType = newtype;
+        HomePageActivity.actId = newID;
         HomePageActivity.actName = newname;
 
-        tv_event_type.setText(actType);
+        tv_event_type.setText(actName);
         binder.starTimer();
         Toast.makeText(this,"开始计时",Toast.LENGTH_SHORT).show();
 //      获取service数值
         lbm.registerReceiver(receiver,intentFilter);
-
-
     }
-
-
 }

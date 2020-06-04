@@ -35,6 +35,7 @@ import com.example.guanguannfc.controller.dataVisualization.datadisplay;
 import com.example.guanguannfc.controller.dataVisualization.EchartOptionUtil;
 import com.example.guanguannfc.controller.dataVisualization.EchartView;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
+import com.example.guanguannfc.controller.userManagement.UserInfo;
 import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 import java.io.BufferedWriter;
@@ -72,15 +73,21 @@ public class DataFragment extends Fragment {
     private ListView actlist;
     private DataShowAdapter dataShowAdapter;
     private List<ActShow> actShowList = new ArrayList<ActShow>();
-    private ListView lv_allactlist = null;
+    private ListView lv_allactlist;
     private ActShowAdapter actShowAdapter;
     private ConstraintLayout.LayoutParams layoutParams;
     private boolean isCount;
 
+    //    分享
+    private ShareDialog shareDialog;
+    private String text_content;
+    private long shareStartTime;
+    private UserInfo userInfo;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view= inflater.inflate(R.layout.activity_data, container, false);
+        view= inflater.inflate(R.layout.fragment_data, container, false);
         Bundle bundle = this.getArguments();
         if(bundle!=null){
             userName = bundle.getString("username");
@@ -97,6 +104,7 @@ public class DataFragment extends Fragment {
 
         initSpinner();
         initWebView();
+        initShareDialog();
         checkClick();
 
 //        Toast.makeText(getActivity(),"onCreate",Toast.LENGTH_LONG).show();
@@ -147,6 +155,9 @@ public class DataFragment extends Fragment {
         allActName=allactivity.allacttype(userName);
         ArrayAdapter<String> actAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,allActName);
         spinner_acts.setAdapter(actAdapter);
+
+//      分享
+        userInfo = new UserInfo(getActivity());
 
 
 
@@ -626,6 +637,19 @@ public class DataFragment extends Fragment {
                 return false;
             }
         });
+
+        lv_allactlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                shareStartTime = Long.valueOf(ob_actShow[i][6]);
+//                Toast.makeText(getActivity(),"第"+i+"个活动"+getTime.transString(actStartTime)[0][0]+getTime.transString(actStartTime)[0][1],Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),actStartTime+"",Toast.LENGTH_LONG).show();
+                shareDialog.show();
+
+                return false;
+
+            }
+        });
     }
 
 
@@ -649,6 +673,30 @@ public class DataFragment extends Fragment {
                 }
                 break;
         }
+    }
+
+    private void initShareDialog(){
+        shareDialog=new ShareDialog(getActivity());
+        shareDialog.setCancel(new ShareDialog.IOnCancelListener() {
+            @Override
+            public void onCancel(ShareDialog dialog) {
+
+            }
+
+        });
+        shareDialog.setConfirm(new ShareDialog.IOnConfirmListener() {
+            @Override
+            public void onConfirm(ShareDialog dialog) {
+                text_content=shareDialog.getEditText().getText().toString();
+                boolean isShared = userInfo.updateact(userName,shareStartTime,text_content);
+                if (isShared){
+                    Toast.makeText(getActivity(),"分享成功",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getActivity(),"分享失败",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void WriteSysFile() {

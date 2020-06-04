@@ -105,7 +105,7 @@
         </activity> <!-- model测试入口 -->
         <activity android:name=".model.DataBaseTest.LiuYuTest" />
         <activity android:name=".model.DataBaseTest.UserInfo" />
-        <activity android:name=".model.DataBaseTest.DataQueryTest" />
+        <activity android:name=".model.DataBaseTest.DataQueryTest" ></activity>
 
         <service
             android:name=".view.data.ClockService"

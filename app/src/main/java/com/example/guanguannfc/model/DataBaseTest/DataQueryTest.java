@@ -14,9 +14,14 @@ import com.example.guanguannfc.model.Dao.DaoActSta;
 import com.example.guanguannfc.model.Dao.DaoActivity;
 import com.example.guanguannfc.model.Dao.DaoActivityType;
 import com.example.guanguannfc.model.Dao.DaoBox;
+import com.example.guanguannfc.model.Dao.DaoFriend;
+import com.example.guanguannfc.model.Dao.DaoMoment;
 import com.example.guanguannfc.model.GuanContract;
+import com.example.guanguannfc.model.Helper.HelperApplication;
 import com.example.guanguannfc.model.Helper.HelperBox;
 import com.example.guanguannfc.model.Helper.HelperBoxContent;
+import com.example.guanguannfc.model.Helper.HelperFriend;
+import com.example.guanguannfc.model.Helper.HelperFriendAct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,10 +31,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class DataQueryTest extends AppCompatActivity implements View.OnClickListener {
-    Button mButton2,mButton3,mButton4,mButton5,mButton6,mButton7;
+    Button mButton2,mButton3,mButton4,mButton5,mButton6,mButton7,mButton8,mButton9,mButton10,mButton11;
+    EditText from,to;
     DaoActSta mActSta = new DaoActSta(this);
     DaoActivityType mDaoActivityType = new DaoActivityType(this);
     DaoBox mDaoBox = new DaoBox(this);
+    DaoMoment mDaoMoment = new DaoMoment(this);
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +52,14 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
         mButton5 = findViewById(R.id.all_box);
         mButton6 = findViewById(R.id.all_boxAndContent);
         mButton7 = findViewById(R.id.insertTest);
+        mButton8 = findViewById(R.id.friend_act);
+        mButton9 = findViewById(R.id.application);
+        mButton10 = findViewById(R.id.allFriends);
+        mButton11 = findViewById(R.id.switchMoment);
+        from = findViewById(R.id.from);
+        to = findViewById(R.id.to);
+        FakeData fakeData = new FakeData(this);
+        fakeData.insert();
 
     }
 
@@ -55,6 +70,10 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
         mButton5.setOnClickListener(this);
         mButton6.setOnClickListener(this);
         mButton7.setOnClickListener(this);
+        mButton8.setOnClickListener(this);
+        mButton9.setOnClickListener(this);
+        mButton10.setOnClickListener(this);
+        mButton11.setOnClickListener(this);
     }
 
     @Override
@@ -102,6 +121,32 @@ public class DataQueryTest extends AppCompatActivity implements View.OnClickList
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+                break;
+            case R.id.friend_act:
+                DaoFriend daoFriend = new DaoFriend(this);
+                List<HelperFriendAct> helperFriendActs = daoFriend.queryFriendAct("ddd");
+                for (HelperFriendAct helperFriendAct:helperFriendActs){
+                    Log.v("",helperFriendAct.toString());
+                }
+                break;
+            case R.id.application:
+                DaoMoment daoMoment = new DaoMoment(this);
+                List<HelperApplication> helperApplications = daoMoment.query("bbb");
+                for(HelperApplication helperApplication:helperApplications){
+                    Log.v("",helperApplication.toString());
+                }
+                break;
+            case R.id.allFriends:
+                DaoFriend daoFriend1 = new DaoFriend(this);
+                List<HelperFriend> helperFriends = daoFriend1.query("aaa");
+                for (HelperFriend helperFriend:helperFriends){
+                    Log.v("",helperFriend.toString());
+                }
+            case R.id.switchMoment:
+                String from1 = from.getText().toString();
+                String to1 = to.getText().toString();
+                mDaoMoment.update(from1,to1);
+                break;
 
         }
     }

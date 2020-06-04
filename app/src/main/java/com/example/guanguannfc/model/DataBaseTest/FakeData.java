@@ -7,6 +7,7 @@ import com.example.guanguannfc.model.Dao.DaoActivity;
 import com.example.guanguannfc.model.Dao.DaoActivityType;
 import com.example.guanguannfc.model.Dao.DaoBox;
 import com.example.guanguannfc.model.Dao.DaoBoxContent;
+import com.example.guanguannfc.model.Dao.DaoPush;
 import com.example.guanguannfc.model.Dao.DaoUserInfo;
 import com.example.guanguannfc.model.Dao.DaoFriend;
 import com.example.guanguannfc.model.Dao.DaoMoment;
@@ -34,6 +35,7 @@ public class FakeData {
         DaoBoxContent daoBoxContent = new DaoBoxContent(context);
         DaoMoment daoMoment = new DaoMoment(context);
         DaoFriend daoFriend = new DaoFriend(context);
+        DaoPush daoPush = new DaoPush(context);
 
 
         if(daoUserInfo.registrationQuery("aaa") != true){
@@ -67,7 +69,7 @@ public class FakeData {
             daoActivity.insert(2, "200008", 4, "吃披萨");
             daoActivity.insert(2, "200009", 5, "看韩剧");
 
-            daoActSta.insert(1, time + 13000, time + 16000);
+            daoActSta.insert(1, time + 13000, time + 16000,"学习使我快乐",1);
             daoActSta.insert(1, time+ 121000, time + 123000);
             daoActSta.insert(2, time + 310000, time + 320000);
             daoActSta.insert(2, time + 900000, time + 906000);
@@ -134,7 +136,7 @@ public class FakeData {
             daoBoxContent.insert(4, "硬盘", 2);
             daoBoxContent.insert(4, "迷你优盘", 1);
 
-            daoMoment.insert(2,1, "加个好友吧", 0);
+            daoMoment.insert(2,1, "加个好友吧", 1);
             daoMoment.insert(2, 3, "我们也加个好友吧", 0);
             daoMoment.insert(3,1,"我喜欢你 我们一起跑步吧", 0);
             daoMoment.insert(3,2,"我不喜欢你 但是我想加你好友",0);
@@ -144,6 +146,15 @@ public class FakeData {
             daoFriend.insert(4,1);
             daoFriend.insert(3,4);
             daoFriend.insert(4,3);
+            daoFriend.insert(1,2);
+            daoFriend.insert(1,3);
+            daoFriend.insert(2,1);
+
+            daoPush.insert(1,"学习计划","我又学习了","我学习了高数学习了英语学习了啥都学习了");
+            daoPush.insert(1,"工作计划","我又工作了","我做了PPT做了WORD做了EXCEL");
+            daoPush.insert(2,"游戏计划","我又玩游戏了","我玩了王者荣耀玩了和平精英");
+            daoPush.insert(2,"睡觉计划","我又睡觉了","我睡午觉了睡晚觉了");
+
         }
 
      
