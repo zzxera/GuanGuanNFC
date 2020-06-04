@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.NfcAdapter;
@@ -18,6 +19,7 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,8 +61,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
-
-    public static String userName,actType,actName;
+    public static String userName;
+    public static String actType,actName;
     private RelativeLayout main_body;
     private LinearLayout main_bottom_bar;
     private RelativeLayout bottom_bar_1_btn,bottom_bar_2_btn,bottom_bar_3_btn,bottom_bar_4_btn;
@@ -128,6 +130,10 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private String[] myInfo;
     private TextView tv_userLevel,tv_userActDays;
 
+// 登录
+    SharedPreferences sprfMain;
+    SharedPreferences.Editor editorMain;
+
 
     ServiceConnection conn = new ServiceConnection() {
         @Override
@@ -148,25 +154,34 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_home_page);
 
-//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.homepage_title_bar);
-        Bundle bundle = this.getIntent().getExtras();
-        if(bundle!=null){
-            userName=bundle.getString("userName");
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain=sprfMain.edit();
+        userName = sprfMain.getString("userName","未登录");
+
+        if (userName.equals("未登录")){
+            Toast.makeText(this,userName,Toast.LENGTH_LONG).show();
         }
+        else {
+            //        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.homepage_title_bar);
+            Bundle bundle = this.getIntent().getExtras();
+            if(bundle!=null){
+                userName=bundle.getString("userName");
+            }
+//        sprfMain.getString("userName");
 
 //        Toast.makeText(this,"用户名"+userName,Toast.LENGTH_LONG).show();
 
-        initView();
-        setMain();
-        checkClick();
-        initDialog();
+            initView();
+            setMain();
+            checkClick();
+            initDialog();
 
 
 
-        Intent intent = new Intent(this,ClockService.class);
-        bindService(intent,conn,Context.BIND_AUTO_CREATE);
-        handler = new Handler();
-
+            Intent intent = new Intent(this,ClockService.class);
+            bindService(intent,conn,Context.BIND_AUTO_CREATE);
+//            handler = new Handler();
+        }
 
     }
 
@@ -177,6 +192,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //            tv_prompt = dataView.findViewById(R.id.text_prompt);
 //            lay_actshow=dataView.findViewById(R.id.layout_allact);
 //            layoutParams = (ConstraintLayout.LayoutParams) lay_actshow.getLayoutParams();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbindService(conn);
+        super.onDestroy();
 
     }
 
@@ -372,6 +394,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 //                退出登录
+                editorMain.putBoolean("main",false);
+                editorMain.commit();
                 Intent intent2 = new Intent();
                 intent2.setClass(HomePageActivity.this, LoginActivity.class);
                 intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -411,7 +435,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 // TODO: 2016/5/17 构建一个popupwindow的布局
-
+                oneTextItemList.clear();
 //                lv_add.setAdapter(new ArrayAdapter<String>(HomePageActivity.this, R.layout.item_onetext, getResources().getStringArray(R.array.add)));
                 String[] al = getResources().getStringArray(R.array.add);
                 for (int i = 0;i<al.length;i++){
@@ -747,15 +771,44 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     //            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
                     String[] actInfo = nfcManage.nfcForActivity(mTagText);
                     if (actInfo[1]!=null){
-                        isCount=true;
-                        actId=Integer.valueOf(actInfo[1]);
-                        actName=actInfo[0];
+                        int newActID=Integer.parseInt(actInfo[1]);
+                        String newActName=actInfo[0];
 //                        Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
-//            开始计时
-                        binder.starTimer();
                         Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
                         startIntent.putExtra("username",userName);
-                        startActivityForResult(startIntent,1);
+                        //            如果正在计时
+                        if (isCount){
+//                如果刷的是同一张贴纸
+                            if (actId==newActID){
+                                actId = newActID;
+                                actType=actInfo[2];
+                                actName = newActName;
+//                                binder.starTimer();
+                                startIntent.putExtra("countState","sameID");
+                                startActivityForResult(startIntent,1);
+                            }
+//                如果刷了不同贴纸
+                            else {
+                                actId = newActID;
+                                actName = newActName;
+                                actType=actInfo[2];
+//                                binder.starTimer();
+                                startIntent.putExtra("countState","difID");
+                                startActivityForResult(startIntent,1);
+                            }
+                        }
+//                      未在计时
+                        else {
+                            Toast.makeText(HomePageActivity.this,"未在计时",Toast.LENGTH_SHORT).show();
+                            isCount=true;
+                            actId=Integer.valueOf(actInfo[1]);
+                            actName=actInfo[0];
+                            actType=actInfo[2];
+                            //            开始计时
+                            binder.starTimer();
+                            startIntent.putExtra("countState","startCount");
+                            startActivityForResult(startIntent,1);
+                        }
                     }
                     else {
                         Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();

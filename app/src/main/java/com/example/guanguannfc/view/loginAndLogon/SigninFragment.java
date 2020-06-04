@@ -3,7 +3,9 @@ package com.example.guanguannfc.view.loginAndLogon;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +29,24 @@ public class SigninFragment extends Fragment {
 
     Button button_signin;
     Context ctx;
+
+    SharedPreferences sprfMain;
+    SharedPreferences.Editor editorMain;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin, container, false);
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(getActivity());
+        editorMain=sprfMain.edit();
         ctx=getActivity();
         edit_username=view.findViewById(R.id.edit_username);
         edit_psw=view.findViewById(R.id.edit_psw);
         button_signin = (Button) view.findViewById(R.id.button_signin_confirm);
+
+        username = sprfMain.getString("userName","");
+        psw = sprfMain.getString("psw","");
+        edit_username.setText(username);
+        edit_psw.setText(psw);
 
         login=new Login(ctx);
 
@@ -77,6 +89,11 @@ public class SigninFragment extends Fragment {
 //                        intent.putExtras(bundle);
 //                        startActivity(intent);
                         Intent intent = new Intent(getActivity(), HomePageActivity.class);
+                        editorMain.putBoolean("main",true);
+                        editorMain.putString("userName",username);
+                        editorMain.putString("psw",psw);
+                        editorMain.commit();
+
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         Bundle bundle=new Bundle();
                         bundle.putString("userName",username);
