@@ -17,17 +17,22 @@ import com.example.guanguannfc.R;
 public class SearchAdapter extends BaseAdapter {
     private Context context;
     private String [] boxnames;
-    public SearchAdapter(Context context ,String boxnames){
-
+    private PopupWindow mPopwindow;
+    private String [] svboxnames;
+    private int z;
+    public SearchAdapter(Context context ,String[] svboxnames,String [] boxnames){
+        this.context=context;
+        this.svboxnames=svboxnames;
+        this.boxnames=boxnames;
     }
     @Override
     public int getCount() {
-        return boxnames.length;
+        return svboxnames.length;
     }
 
     @Override
     public Object getItem(int i) {
-        return boxnames[i];
+        return svboxnames[i];
     }
 
     @Override
@@ -47,8 +52,19 @@ public class SearchAdapter extends BaseAdapter {
         }else {
             ViewHolder = (ViewHolder) convertView.getTag();
         }
-        ViewHolder.tv_goods_name.setText(goodsname[position]);
-        ViewHolder.tv_goods_shuliang.setText(goodsnum[position]);
+        ViewHolder.tv_sv_boxname.setText(svboxnames[position]);
+        for(int s=0;s<boxnames.length;s++){
+            if(boxnames[s]==svboxnames[position]){
+                z=s;
+            }
+        }
+        ViewHolder.tv_sv_boxname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return convertView;
     }
     static class ViewHolder {
