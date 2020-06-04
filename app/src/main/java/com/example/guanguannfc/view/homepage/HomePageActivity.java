@@ -56,6 +56,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
@@ -566,15 +567,21 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                         public void onClick(View view) {
                                             EditText et1=addGoodView.findViewById(R.id.et_goodName);
                                             EditText et2=addGoodView.findViewById(R.id.et_goodNum);
-                                            goodsName.add(et1.getText().toString());
-                                            goodsNum.add(Integer.valueOf(et2.getText().toString()) );
+                                            boolean isgoodsContains = Arrays.asList(goodsName).contains(et2.getText().toString());
+                                            if(isgoodsContains){
+                                                Toast.makeText(HomePageActivity.this, "物品已存在", Toast.LENGTH_SHORT ).show();
+                                            }
+                                            else {
+                                                goodsName.add(et1.getText().toString());
+                                                goodsNum.add(Integer.valueOf(et2.getText().toString()) );
 
-                                            String[] arr={et1.getText().toString(),et2.getText().toString()};
+                                                String[] arr={et1.getText().toString(),et2.getText().toString()};
 
-                                            GoodItem goodItem = new GoodItem(arr);
-                                            goodItemList.add(goodItem);
-                                            lv_goods.setAdapter(goodAdapter);
-                                            addGoodDialog.dismiss();
+                                                GoodItem goodItem = new GoodItem(arr);
+                                                goodItemList.add(goodItem);
+                                                lv_goods.setAdapter(goodAdapter);
+                                                addGoodDialog.dismiss();
+                                            }
                                         }
                                     });
                                 }
@@ -606,13 +613,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                         scanNFCDialog.show();//显示对话框
                                         scanNFCDialog.setCanceledOnTouchOutside(false);
                                         scanNFCDialog.setCancelable(false);
-
                                         scanNFCView.findViewById(R.id.btn_box_nfc).setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 isAddBox = false;
                                                 scanNFCDialog.dismiss();
                                                 addBoxDialog.show();
+
 //                                                Toast.makeText( HomePageActivity.this, isAddBox+"", Toast.LENGTH_SHORT ).show();
                                             }
                                         });
