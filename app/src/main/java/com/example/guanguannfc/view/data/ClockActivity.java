@@ -37,8 +37,8 @@ import java.io.InputStreamReader;
 
 public class ClockActivity  extends BaseNfcActivity {
     private Button btn_share,btn_stop;
-    private TextView tv_start_time,tv_now_time,tv_distance,tv_duration,tv_event_type;
-    private String startTime,nowTime,duration,isFirst,userName,actName;
+    private TextView tv_start_time,tv_now_time,tv_distance,tv_duration,tv_event_type,tv_event_name;
+    private String startTime,nowTime,duration,isFirst,userName,actName,actType;
     private Long lstartTime,date,endTime;
     private Boolean iscount;
     private GetTime getTime;
@@ -54,6 +54,7 @@ public class ClockActivity  extends BaseNfcActivity {
     ClockService.MyBinder binder;
     IntentFilter intentFilter;
     private int actId;
+    private String countState;
 
 //NFC
     private NFCManage nfcManage;
@@ -67,17 +68,7 @@ public class ClockActivity  extends BaseNfcActivity {
 
 
 
-    ServiceConnection conn = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            binder = (ClockService.MyBinder) service;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-
-        }
-    };
+    ServiceConnection conn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,26 +81,47 @@ public class ClockActivity  extends BaseNfcActivity {
 //      获取传入数值
         Intent mainIntent=getIntent();
         userName=mainIntent.getStringExtra("username");
-
+        countState=mainIntent.getStringExtra("countState");
         initDialog();
 
 //      获取service数值
+        conn = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder service) {
+                binder = (ClockService.MyBinder) service;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        };
         Intent intent = new Intent(this,ClockService.class);
         bindService(intent,conn, Context.BIND_AUTO_CREATE);
         lbm = LocalBroadcastManager.getInstance(this);
         intentFilter = new IntentFilter();
         intentFilter.addAction("clock");
         lbm.registerReceiver(receiver,intentFilter);
+
+
 //        Toast.makeText(this,userName,Toast.LENGTH_LONG).show();
 
-//        btn_share.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (countState != null) {
+            if (countState.equals("sameID")) {
+                Toast.makeText(ClockActivity.this, "刷的是同一张贴纸", Toast.LENGTH_SHORT).show();
+//                stopCount();
+            } else if (countState.equals("difID")) {
+                Toast.makeText(ClockActivity.this, "刷了不同贴纸", Toast.LENGTH_SHORT).show();
+//                startNewCount(actId, actName);
+//                stopCount();
+            }
+        }
     }
 
     private void initView(){
@@ -119,11 +131,15 @@ public class ClockActivity  extends BaseNfcActivity {
         tv_now_time=findViewById(R.id.tv_now_time);
         tv_duration=findViewById(R.id.tv_duration);
         tv_event_type=findViewById(R.id.tv_event_type);
+        tv_event_name=findViewById(R.id.tv_event_name);
+
         allactivity = new Allactivity(this);
 
         actId = HomePageActivity.actId;
         actName = HomePageActivity.actName;
-        tv_event_type.setText(actName);
+        actType=HomePageActivity.actType;
+        tv_event_type.setText(actType);
+        tv_event_name.setText(actName);
         date=1111111l;
 
         iscount=true;
@@ -150,7 +166,7 @@ public class ClockActivity  extends BaseNfcActivity {
             @Override
             public void onConfirm(ShareDialog dialog) {
                 text_content=shareDialog.getEditText().getText().toString();
-                boolean isShared = userInfo.updateact(userName,text_content);
+                boolean isShared = userInfo.updateact(userName,lstartTime,text_content);
                 if (isShared){
                     Toast.makeText(ClockActivity.this,"分享成功",Toast.LENGTH_LONG).show();
                 }
@@ -179,13 +195,13 @@ public class ClockActivity  extends BaseNfcActivity {
         if(iscount){
             Intent intent = new Intent();
             intent.putExtra("result","计时继续");
-            this.setResult(2,intent);
+            this.setResult(1,intent);
             this.finish();
         }
         else {
             Intent intent = new Intent();
             intent.putExtra("result","计时结束");
-            this.setResult(2,intent);
+            this.setResult(1,intent);
             this.finish();
         }
     }

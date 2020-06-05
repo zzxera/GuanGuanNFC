@@ -9,8 +9,8 @@ public class FriendActItem {
         this.level=infor[1];
         this.shareContent=infor[6];
         this.actType=infor[5];
-        this.date=infor[8];
-        this.startTime=infor[2];
+        this.date=infor[2];
+        this.startTime=infor[8];
         this.endTime=infor[3];
         this.len=infor[4];
         this.shareDate=infor[7];
