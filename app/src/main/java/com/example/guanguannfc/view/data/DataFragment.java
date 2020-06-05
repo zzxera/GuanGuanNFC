@@ -117,6 +117,8 @@ public class DataFragment extends Fragment {
         dataShowAdapter = new DataShowAdapter(getActivity(),R.layout.item_datashow,dataShowList);
         actShowAdapter = new ActShowAdapter(getActivity(),R.layout.item_actshow,actShowList);
         myWebView=view.findViewById(R.id.webview_acts);
+//        myWebView.getSettings().setUseWideViewPort(true);
+//        myWebView.getSettings().setLoadWithOverviewMode(true);
         spinner_times=view.findViewById(R.id.spinner_time);
         spinner_types=view.findViewById(R.id.spinner_type);
         spinner_acts=view.findViewById(R.id.spinner_acttype);

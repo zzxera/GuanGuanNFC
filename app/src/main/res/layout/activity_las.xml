@@ -20,33 +20,72 @@
 
         ></ImageView>
 
-    <Button
-        android:id="@+id/button_signin"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_logBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
         android:layout_marginTop="30dp"
-        android:onClick="click"
-        android:text="登录"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_logo"
-        tools:ignore="MissingConstraints,OnClick"
+        app:layout_constraintTop_toBottomOf="@+id/image_logo">
+
+        <TextView
+            android:id="@+id/button_signin"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="登录"
+            android:textSize="20sp"
+            android:textColor="@color/colorRedDark"
+            android:onClick="click"
+
+            ></TextView>
+
+        <TextView
+            android:id="@+id/button_logon"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="注册"
+            android:textSize="20sp"
+            android:onClick="click"
+
+            ></TextView>
+
+    </LinearLayout>
+
+<!--    <Button-->
+<!--        android:id="@+id/button_signin"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="80dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:onClick="click"-->
+<!--        android:text="登录"-->
+
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/image_logo"-->
+<!--        tools:ignore="MissingConstraints,OnClick"-->
 
 
-        ></Button>
+<!--        ></Button>-->
 
-    <Button
-        android:id="@+id/button_logon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:onClick="click"
-        android:text="注册"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_signin"
+<!--    <Button-->
+<!--        android:id="@+id/button_logon"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="80dp"-->
+<!--        android:onClick="click"-->
+<!--        android:text="注册"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/button_signin"-->
 
-        tools:ignore="MissingConstraints,OnClick"></Button>
+<!--        tools:ignore="MissingConstraints,OnClick"></Button>-->
 
     <LinearLayout
         android:id="@+id/logandsign"
@@ -55,7 +94,7 @@
         android:layout_marginTop="30dp"
 
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/button_logon"
+        app:layout_constraintTop_toBottomOf="@+id/ll_logBtn"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"></LinearLayout>
 
