@@ -20,7 +20,7 @@
         android:layout_marginEnd="30dp"
         android:gravity="center"
         android:text="Hello"
-        android:textColor="#FF0000"
+        android:textColor="@color/colorbBlack"
         android:textSize="30dp"
         app:layout_constraintEnd_toStartOf="@+id/grid_IV_Id"
         app:layout_constraintHorizontal_bias="0.302"

@@ -12,13 +12,11 @@
         android:paddingLeft="10dp"
         android:text="子项目" />
 
-    <Button
+    <ImageView
         android:id="@+id/btn_change_actname"
         android:layout_width="114dp"
-        android:layout_height="33dp"
-        android:text="修改活动名称"
-        android:textSize="8sp"
-        android:visibility="visible" />
+        android:layout_height="40dp"
+        android:src="@drawable/img_change"/>
 
 
 </LinearLayout>

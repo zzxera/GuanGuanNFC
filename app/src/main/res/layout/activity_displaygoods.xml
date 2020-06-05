@@ -12,7 +12,7 @@
         android:layout_height="321dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="124dp"
-        android:background="#B8B4B4"
+        android:background="#E3E3E3"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,9 +25,9 @@
             android:id="@+id/linearLayout3"
             android:layout_width="209dp"
             android:layout_height="48dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.506"
@@ -39,20 +39,19 @@
                 android:id="@+id/tv_boxname"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_marginTop="0dp"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="化妆品"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:layout_constraintHorizontal_bias="0.508" />
 
-            <Button
+            <ImageView
                 android:id="@+id/btb_addgoods"
                 android:layout_width="40dp"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="20dp"
-                android:gravity="center_horizontal"
-                android:text="添加物品"
-                android:textSize="8sp" />
+                android:src="@drawable/img_add_goods" />
 
         </LinearLayout>
 
@@ -60,15 +59,17 @@
             android:id="@+id/tv_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="下面是一些。。。。"
-            android:textSize="16sp" />
+            android:text="下面是一些"
+            android:textSize="16sp"
+            app:layout_constraintHorizontal_bias="0.5" />
 
         <ListView
             android:id="@+id/listview"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

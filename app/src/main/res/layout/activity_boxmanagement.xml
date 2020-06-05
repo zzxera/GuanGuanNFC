@@ -69,11 +69,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/s"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/img_s"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv_goods" />
+
         <GridView
             android:id="@+id/box"
-            android:layout_width="320dp"
+            android:layout_width="300dp"
             android:layout_height="285dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="80dp"
             android:numColumns="2"
             android:horizontalSpacing="0dp"
             android:verticalSpacing="0dp"
@@ -147,15 +158,6 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_shuaxin"></ExpandableListView>
 
 
-        <ImageView
-            android:id="@+id/iv_addact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expand_list_id"
-            android:src="@drawable/img_addact" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_search"
