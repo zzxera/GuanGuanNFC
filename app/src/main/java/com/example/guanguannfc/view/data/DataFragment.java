@@ -77,6 +77,8 @@ public class DataFragment extends Fragment {
     private ActShowAdapter actShowAdapter;
     private ConstraintLayout.LayoutParams layoutParams;
     private boolean isCount;
+    // 获取颜色资源文件
+    int colorgray,colorRedDark;
 
     //    分享
     private ShareDialog shareDialog;
@@ -161,6 +163,9 @@ public class DataFragment extends Fragment {
 //      分享
         userInfo = new UserInfo(getActivity());
 
+//      颜色
+        colorgray = getResources().getColor(R.color.colorgray);
+        colorRedDark = getResources().getColor(R.color.colorRedDark);
 
 
     }
@@ -494,8 +499,8 @@ public class DataFragment extends Fragment {
             public void onClick(View view) {
                 lay_datashow.setVisibility(View.VISIBLE);
                 lay_actshow.setVisibility(View.INVISIBLE);
-                tv_data.setTextColor(Color.RED);
-                tv_allact.setTextColor(R.color.colorgray);
+                tv_data.setTextColor(colorRedDark);
+                tv_allact.setTextColor(colorgray);
             }
         });
         view.findViewById(R.id.text_allact).setOnClickListener(new View.OnClickListener() {
@@ -504,8 +509,8 @@ public class DataFragment extends Fragment {
             public void onClick(View view) {
                 lay_datashow.setVisibility(View.INVISIBLE);
                 lay_actshow.setVisibility(View.VISIBLE);
-                tv_data.setTextColor(R.color.colorgray);
-                tv_allact.setTextColor(Color.RED);
+                tv_data.setTextColor(colorgray);
+                tv_allact.setTextColor(colorRedDark);
             }
         });
         view.findViewById(R.id.button_starttime).setOnClickListener(new View.OnClickListener() {
