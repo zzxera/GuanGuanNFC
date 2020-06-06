@@ -76,7 +76,6 @@ public class ClockActivity  extends BaseNfcActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
 
-        initView();
 
 //      获取传入数值
         Intent mainIntent=getIntent();
@@ -96,6 +95,8 @@ public class ClockActivity  extends BaseNfcActivity {
 
             }
         };
+        initView();
+
         Intent intent = new Intent(this,ClockService.class);
         bindService(intent,conn, Context.BIND_AUTO_CREATE);
         lbm = LocalBroadcastManager.getInstance(this);

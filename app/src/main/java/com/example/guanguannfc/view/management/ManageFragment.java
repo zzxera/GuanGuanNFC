@@ -59,6 +59,9 @@ public class ManageFragment extends Fragment {
     private String name;
     private int num;
     private GridView gridView1;
+    TextView tv_box,tv_time;
+    // 获取颜色资源文件
+    int colorgray,colorRedDark;
     //Model：定义的数据
 
 
@@ -92,7 +95,8 @@ public class ManageFragment extends Fragment {
             username = bundle.getString("username");
             getBoxName = bundle.getString("getboxname");
         }
-
+        tv_box=view.findViewById(R.id.tv_boxmanage);
+        tv_time=view.findViewById(R.id.tv_timemanagement);
 //        Toast.makeText(getActivity(),getBoxName,Toast.LENGTH_SHORT).show();
         ctx = getActivity();
         checkClick();
@@ -420,6 +424,8 @@ public class ManageFragment extends Fragment {
     }
 
     private void initView() {
+        colorgray = getResources().getColor(R.color.colorgray);
+        colorRedDark = getResources().getColor(R.color.colorRedDark);
         groups=getact.getBigActivity(getActivity());
         for (int i =0;i<groups.length;i++){
             if (groups.length>1){
@@ -498,6 +504,8 @@ public class ManageFragment extends Fragment {
                 lay_box.setVisibility(View.VISIBLE);
                 lay_time.setVisibility(View.INVISIBLE);
                 lay_search.setVisibility(View.INVISIBLE);
+                tv_box.setTextColor(colorRedDark);
+                tv_time.setTextColor(colorgray);
             }
         });
         view.findViewById(R.id.tv_timemanagement).setOnClickListener(new View.OnClickListener() {
@@ -507,6 +515,8 @@ public class ManageFragment extends Fragment {
                 lay_box.setVisibility(View.INVISIBLE);
                 lay_time.setVisibility(View.VISIBLE);
                 lay_search.setVisibility(View.INVISIBLE);
+                tv_box.setTextColor(colorgray);
+                tv_time.setTextColor(colorRedDark);
             }
         });
         view.findViewById(R.id.sv_goods).setOnClickListener(new View.OnClickListener() {
