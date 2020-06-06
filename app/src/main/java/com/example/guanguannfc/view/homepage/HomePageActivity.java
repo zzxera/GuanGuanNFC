@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -204,6 +205,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     }
 
     private void initView(){
+
 //        主体
         main_body=findViewById(R.id.main_body);
 //       个人设置
@@ -563,6 +565,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //                            添加盒子
                             addWindow.dismiss();
 
+                            goodsName=new ArrayList<String>();
+                            goodsNum=new ArrayList<Integer>();
                             LayoutInflater inflater=LayoutInflater.from(HomePageActivity.this);
                             addBoxView=inflater.inflate(R.layout.item_addbox,null);//引用自定义布局
                             AlertDialog.Builder builder=new AlertDialog.Builder(HomePageActivity.this);
@@ -591,21 +595,17 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                         public void onClick(View view) {
                                             EditText et1=addGoodView.findViewById(R.id.et_goodName);
                                             EditText et2=addGoodView.findViewById(R.id.et_goodNum);
-                                            boolean isgoodsContains = Arrays.asList(goodsName).contains(et2.getText().toString());
-                                            if(isgoodsContains){
-                                                Toast.makeText(HomePageActivity.this, "物品已存在", Toast.LENGTH_SHORT ).show();
-                                            }
-                                            else {
+
                                                 goodsName.add(et1.getText().toString());
                                                 goodsNum.add(Integer.valueOf(et2.getText().toString()) );
 
                                                 String[] arr={et1.getText().toString(),et2.getText().toString()};
-
+                                                Log.i("gy", String.valueOf(arr));
                                                 GoodItem goodItem = new GoodItem(arr);
                                                 goodItemList.add(goodItem);
                                                 lv_goods.setAdapter(goodAdapter);
                                                 addGoodDialog.dismiss();
-                                            }
+
                                         }
                                     });
                                 }

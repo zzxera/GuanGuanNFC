@@ -23,12 +23,12 @@ public class UserInfo {
     }
     public boolean updateActDay(String username,String last_actday){
         boolean a = DU.queryLastActDate(username, last_actday);
-        if (a = true){
+        if (a){
             return false;
         }
         else {
             boolean b = DU.updateLastAct(username,last_actday);
-            if (b=true){
+            if (b){
                 boolean c = DU.updateActiveDay(username);
                 return c;
             }

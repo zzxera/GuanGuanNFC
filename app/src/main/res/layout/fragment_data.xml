@@ -184,34 +184,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_datashow"></com.example.guanguannfc.controller.dataVisualization.EchartView>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:background="@color/colorbBlack"
-            android:gravity="center"
-            android:text="数据展示"
+<!--        <TextView-->
+<!--            android:id="@+id/textView2"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:background="@color/colorbBlack"-->
+<!--            android:gravity="center"-->
+<!--            android:text="数据展示"-->
 
-            android:textColor="@color/colorWhite"
+<!--            android:textColor="@color/colorWhite"-->
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/listview_actlist"
-            android:layout_marginTop="20dp"
-            ></TextView>
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/listview_actlist"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            ></TextView>-->
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+<!--        <TextView-->
+<!--            android:id="@+id/textView12"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
 
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/no_mean"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"></TextView>
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:text="@string/no_mean"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView2"></TextView>-->
 
 <!--        <Button-->
 <!--            android:id="@+id/btn_start"-->

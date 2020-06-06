@@ -11,7 +11,7 @@
         android:layout_height="224dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="180dp"
-        android:background="#9E8686"
+        android:background="@color/colorlight"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
