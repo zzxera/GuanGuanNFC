@@ -171,8 +171,8 @@ public class ManageFragment extends Fragment {
                                 if(boxnames[i]==searchthings[position]){
                                     z=i;
                                 }
+                                showbox(i);
                             }
-                            showbox(z);
                         }
                     });
                 }
