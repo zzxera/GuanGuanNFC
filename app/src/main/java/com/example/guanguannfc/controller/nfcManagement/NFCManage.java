@@ -35,6 +35,10 @@ public class NFCManage extends BaseNfcActivity{
         mDaoBoxContent = new DaoBoxContent(context);
     }
 
+    //判断NFC是否属于当前用户
+    public boolean isNFCBelongToM(String mTagText){
+       return daoBox.queryNFC(mTagText, username);
+    }
     //判断NFC存在与否：是空的，还是活动的，还是盒子的，或者一些别的字符串。
     public static String isNFCExist(String mTagText){
         String string;
