@@ -1018,21 +1018,28 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //            Toast.makeText(HomePageActivity.this,"Box",Toast.LENGTH_SHORT).show();
-                    String getBoxName = nfcManage.nfcForBox(mTagText);
-                    if (getBoxName!=null){
-                        Bundle bundle_manage = new Bundle();
-                        bundle_manage.putString("username",userName);
-                        bundle_manage.putString("getboxname",getBoxName);
-                        manageFragment.setArguments(bundle_manage);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
-                        setSelectStatus(2);
+                    boolean isme=nfcManage.isNFCBelongToM(mTagText);
+                    if (isme){
+                        //            Toast.makeText(HomePageActivity.this,"Box",Toast.LENGTH_SHORT).show();
+                        String getBoxName = nfcManage.nfcForBox(mTagText);
+                        if (getBoxName!=null){
+                            Bundle bundle_manage = new Bundle();
+                            bundle_manage.putString("username",userName);
+                            bundle_manage.putString("getboxname",getBoxName);
+                            manageFragment.setArguments(bundle_manage);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
+                            setSelectStatus(2);
+                        }
+                        else {
+                            Toast.makeText(HomePageActivity.this,"盒子不存在",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                     else {
-                        Toast.makeText(HomePageActivity.this,"盒子不存在",Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(HomePageActivity.this,"这不是你的标签哦~",Toast.LENGTH_SHORT).show();
                     }
 
-//            Toast.makeText(HomePageActivity.this,getBoxName,Toast.LENGTH_SHORT).show();
                 }
 
             }
