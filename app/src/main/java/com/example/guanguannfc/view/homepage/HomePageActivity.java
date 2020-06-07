@@ -126,6 +126,9 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
 //    擦除NFC
     private boolean isDelete=false;
+    private boolean isDeleteBox= false;
+    private boolean isDeleteAct=false;
+    String delActName,delBoxName;
 
 //    个人信息
     private UserInfo userInfo;
@@ -720,17 +723,195 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //    检测NFC
     @SuppressLint("MissingSuperCall")
     public void onNewIntent(Intent intent) {
-        Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        final Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        mTagText = NFCManage.readNfcTag(intent);
+        String isNFCExist = NFCManage.isNFCExist(mTagText);
         if (isDelete){
-//            清空标签
-            Boolean success = nfcManage.setNFCNll(detectedTag);
-            if (success){
-                Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
+            if (isNFCExist!=null){
+                if (isNFCExist.equals("Act")){
+                    delActName = nfcManage.nfcForActivity(mTagText)[0];
+                    if (delActName!=null){
+
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                        //获取AlertDialog对象
+                        dialog.setTitle("提示");//设置标题
+                        dialog.setMessage("是否删除  "+delActName+"   活动？");//设置信息具体内容
+                        dialog.setCancelable(false);//设置是否可取消
+                        dialog.setPositiveButton("确认并再次扫描", new DialogInterface.OnClickListener() {
+                            @Override//设置ok的事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此处写入ok的逻辑
+//                            删除数据库的标签
+                                isDeleteAct=true;
+                                isDelete=false;
+
+                            }
+                        });
+                        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override//设置取消事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此写入取消的事件
+                            }
+                        });
+                        dialog.show();
+                    }
+                    else {
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                        //获取AlertDialog对象
+                        dialog.setTitle("提示");//设置标题
+                        dialog.setMessage("此活动不存在或已删除，是否擦除贴纸内容？");//设置信息具体内容
+                        dialog.setCancelable(false);//设置是否可取消
+                        dialog.setPositiveButton("确认并再次扫描", new DialogInterface.OnClickListener() {
+                            @Override//设置ok的事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此处写入ok的逻辑
+                                isDelete=false;
+                                isDeleteAct=true;
+                            }
+                        });
+                        final AlertDialog.Builder 取消 = dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override//设置取消事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此写入取消的事件
+                            }
+                        });
+                        dialog.show();
+                    }
+
+                }
+                else if (isNFCExist.equals("Box")){
+                    delBoxName = nfcManage.nfcForBox(mTagText);
+                    if (delBoxName!=null){
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                        //获取AlertDialog对象
+                        dialog.setTitle("提示");//设置标题
+                        dialog.setMessage("是否删除  "+delBoxName+"   盒子？");//设置信息具体内容
+                        dialog.setCancelable(false);//设置是否可取消
+                        dialog.setPositiveButton("确认并再次扫描", new DialogInterface.OnClickListener() {
+                            @Override//设置ok的事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此处写入ok的逻辑
+                                isDelete=false;
+                                isDeleteBox=true;
+                            }
+                        });
+                        final AlertDialog.Builder 取消 = dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override//设置取消事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此写入取消的事件
+                            }
+                        });
+                        dialog.show();
+                    }
+                    else {
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                        //获取AlertDialog对象
+                        dialog.setTitle("提示");//设置标题
+                        dialog.setMessage("此盒子不存在或已删除，是否擦除贴纸内容？");//设置信息具体内容
+                        dialog.setCancelable(false);//设置是否可取消
+                        dialog.setPositiveButton("确认并再次扫描", new DialogInterface.OnClickListener() {
+                            @Override//设置ok的事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此处写入ok的逻辑
+                                isDelete=false;
+                                isDeleteBox=true;
+
+                            }
+                        });
+                        final AlertDialog.Builder 取消 = dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override//设置取消事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此写入取消的事件
+                            }
+                        });
+                        dialog.show();
+                    }
+
+                }
+                else {
+                    //            清空标签
+                    Boolean success = nfcManage.setNFCNll(detectedTag);
+                    if (success){
+                        Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
+
+            }
+
+        else if (isDeleteAct){
+            if (delActName!=null){
+                boolean success=activityManage.deletSmallActivity(delActName);
+                if (success){
+                    //                          清空标签
+                    Boolean success1 = nfcManage.setNFCNll(detectedTag);
+                    if (success1){
+                        Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
+                        scanNFCDialog.dismiss();
+                        isDeleteAct=false;
+                    }
+                    else {
+                        Toast.makeText(HomePageActivity.this,"擦除失败",Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                else {
+                    Toast.makeText(HomePageActivity.this,"数据库连接失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                Boolean success1 = nfcManage.setNFCNll(detectedTag);
+                if (success1){
+                    Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
+                    scanNFCDialog.dismiss();
+                    isDeleteAct=false;
+                }
+                else {
+                    Toast.makeText(HomePageActivity.this,"擦除失败",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+
         }
+        else if (isDeleteBox){
+            if (delBoxName!=null){
+
+//                            删除数据库的标签
+                boolean success = thingManage.deleteBox(delBoxName);
+                if (success) {
+                    //                          清空标签
+                    Boolean success1 = nfcManage.setNFCNll(detectedTag);
+                    if (success1) {
+                        Toast.makeText(HomePageActivity.this, "擦除成功", Toast.LENGTH_SHORT).show();
+                        scanNFCDialog.dismiss();
+                        isDeleteBox=false;
+                    } else {
+                        Toast.makeText(HomePageActivity.this, "擦除失败", Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(HomePageActivity.this, "数据库连接失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                //                          清空标签
+                Boolean success1 = nfcManage.setNFCNll(detectedTag);
+                if (success1) {
+                    Toast.makeText(HomePageActivity.this, "擦除成功", Toast.LENGTH_SHORT).show();
+                    scanNFCDialog.dismiss();
+
+                    isDeleteBox=false;
+                } else {
+                    Toast.makeText(HomePageActivity.this, "擦除失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+
+
         else {
-            mTagText = NFCManage.readNfcTag(intent);
-            String isNFCExist = NFCManage.isNFCExist(mTagText);
+//添加贴纸
             if (isNFCExist==null){
 
                 if (isAddBox){
@@ -775,51 +956,58 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
-                    String[] actInfo = nfcManage.nfcForActivity(mTagText);
-                    if (actInfo[1]!=null){
-                        int newActID=Integer.parseInt(actInfo[1]);
-                        String newActName=actInfo[0];
+                    boolean isme=nfcManage.isNFCBelongToM(mTagText);
+                    if (isme){
+                        //            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
+                        String[] actInfo = nfcManage.nfcForActivity(mTagText);
+                        if (actInfo[1]!=null){
+                            int newActID=Integer.parseInt(actInfo[1]);
+                            String newActName=actInfo[0];
 //                        Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
-                        Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
-                        startIntent.putExtra("username",userName);
-                        //            如果正在计时
-                        if (isCount){
+                            Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
+                            startIntent.putExtra("username",userName);
+                            //            如果正在计时
+                            if (isCount){
 //                如果刷的是同一张贴纸
-                            if (actId==newActID){
-                                actId = newActID;
-                                actType=actInfo[2];
-                                actName = newActName;
+                                if (actId==newActID){
+                                    actId = newActID;
+                                    actType=actInfo[2];
+                                    actName = newActName;
 //                                binder.starTimer();
-                                startIntent.putExtra("countState","sameID");
-                                startActivityForResult(startIntent,1);
-                            }
+                                    startIntent.putExtra("countState","sameID");
+                                    startActivityForResult(startIntent,1);
+                                }
 //                如果刷了不同贴纸
-                            else {
-                                actId = newActID;
-                                actName = newActName;
-                                actType=actInfo[2];
+                                else {
+                                    actId = newActID;
+                                    actName = newActName;
+                                    actType=actInfo[2];
 //                                binder.starTimer();
-                                startIntent.putExtra("countState","difID");
+                                    startIntent.putExtra("countState","difID");
+                                    startActivityForResult(startIntent,1);
+                                }
+                            }
+//                      未在计时
+                            else {
+                                Toast.makeText(HomePageActivity.this,"未在计时",Toast.LENGTH_SHORT).show();
+                                isCount=true;
+                                actId=Integer.valueOf(actInfo[1]);
+                                actName=actInfo[0];
+                                actType=actInfo[2];
+                                //            开始计时
+                                binder.starTimer();
+                                startIntent.putExtra("countState","startCount");
                                 startActivityForResult(startIntent,1);
                             }
                         }
-//                      未在计时
                         else {
-                            Toast.makeText(HomePageActivity.this,"未在计时",Toast.LENGTH_SHORT).show();
-                            isCount=true;
-                            actId=Integer.valueOf(actInfo[1]);
-                            actName=actInfo[0];
-                            actType=actInfo[2];
-                            //            开始计时
-                            binder.starTimer();
-                            startIntent.putExtra("countState","startCount");
-                            startActivityForResult(startIntent,1);
+                            Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();
                         }
                     }
                     else {
-                        Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomePageActivity.this,"这不是你的标签哦~",Toast.LENGTH_SHORT).show();
                     }
+
 
                 }
 
@@ -849,7 +1037,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
             }
             else if (isNFCExist.equals("Something is exist!")){
-                nfcManage.setNFCNll(detectedTag);
+
                 Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
             }
 

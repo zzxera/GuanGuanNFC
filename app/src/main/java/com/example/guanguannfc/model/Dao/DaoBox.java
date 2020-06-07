@@ -49,10 +49,11 @@ public class DaoBox {
     //删除盒子：需给定用户名、盒子名称
     public boolean delete(String user_name,String box_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql = "delete from Box where user_ID=(select _id from User_Info where user_name=?) and box_name=?";
-        db.execSQL(sql,new Object[]{user_name,box_name});
         String sql1 = "delete from box_content where box_id=(select _id from box  where user_ID=(select _id from User_Info where user_name=?) and box_name=? )";
         db.execSQL(sql1,new Object[]{user_name,box_name});
+        String sql = "delete from Box where user_ID=(select _id from User_Info where user_name=?) and box_name=?";
+        db.execSQL(sql,new Object[]{user_name,box_name});
+
         db.close();
         return true;
     }
