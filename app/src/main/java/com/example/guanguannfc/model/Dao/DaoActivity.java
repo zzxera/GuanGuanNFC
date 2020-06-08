@@ -46,10 +46,11 @@ public class DaoActivity {
     //根据活动名称删除整个活动：给定用户名、要删除的活动名称
     public boolean delete(String user_name,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql = "delete from Activity where act_name=? and user_ID=(select _id from User_Info where user_name=?)";
-        db.execSQL(sql,new Object[]{act_name,user_name});
+
         String sql1 = "delete from act_sta where act_id=(select _id from activity where act_name=? and user_ID=(select _id from User_Info where user_name=?))";
         db.execSQL(sql1,new Object[]{act_name,user_name});
+        String sql = "delete from Activity where act_name=? and user_ID=(select _id from User_Info where user_name=?)";
+        db.execSQL(sql,new Object[]{act_name,user_name});
         db.close();
         return true;
 

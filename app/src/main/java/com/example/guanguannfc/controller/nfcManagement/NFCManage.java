@@ -37,8 +37,10 @@ public class NFCManage extends BaseNfcActivity{
 
     //判断NFC是否属于当前用户
     public boolean isNFCBelongToM(String mTagText){
+
        return daoBox.queryNFC(mTagText, username);
     }
+
     //判断NFC存在与否：是空的，还是活动的，还是盒子的，或者一些别的字符串。
     public static String isNFCExist(String mTagText){
         String string;
@@ -62,12 +64,12 @@ public class NFCManage extends BaseNfcActivity{
 
     //根据username和NFC的编码返回活动名称
     public String[] nfcForActivity(String mTagText){
-        return daoActivity.queryActivityByNFC(mTagText);
+        return daoActivity.queryActivityByNFC(mTagText,username);
     }
 
     //根据username和NFC的编码返回盒子名称
     public String nfcForBox(String mTagText){
-        return daoBox.queryBoxByNFC(mTagText);
+        return daoBox.queryBoxByNFC(mTagText,username);
     }
 
     //对没有进行使用过的NFC进行号码编写
