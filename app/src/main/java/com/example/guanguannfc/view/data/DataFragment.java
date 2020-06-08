@@ -134,6 +134,9 @@ public class DataFragment extends Fragment {
 //        lay_personset.setVisibility(View.INVISIBLE);
         bt_starttime=view.findViewById(R.id.button_starttime);
         bt_endtime=view.findViewById(R.id.button_endtime);
+        long nowTime = getTime.getStartTime();
+        bt_starttime.setText(getTime.getYearByTimeStamp(nowTime)+"-"+getTime.getMonthByTimeStamp(nowTime)+"-"+getTime.getDayByTimeStamp(nowTime));
+        bt_endtime.setText(getTime.getYearByTimeStamp(nowTime)+"-"+getTime.getMonthByTimeStamp(nowTime)+"-"+getTime.getDayByTimeStamp(nowTime));
         bt_acttype=view.findViewById(R.id.button_acttype);
         bt_confirmtime=view.findViewById(R.id.button_time_confirm);
 //        bt_person=view.findViewById(R.id.button_personset);

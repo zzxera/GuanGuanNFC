@@ -49,8 +49,11 @@ public class DaoBox {
     //删除盒子：需给定用户名、盒子名称
     public boolean delete(String user_name,String box_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql1 = "delete from box_content where box_id=(select _id from box  where user_ID=(select _id from User_Info where user_name=?) and box_name=? )";
+        db.execSQL(sql1,new Object[]{user_name,box_name});
         String sql = "delete from Box where user_ID=(select _id from User_Info where user_name=?) and box_name=?";
         db.execSQL(sql,new Object[]{user_name,box_name});
+
         db.close();
         return true;
     }
@@ -88,10 +91,10 @@ public class DaoBox {
         }
     }
     //查询表中是否包含给定nfc，包含返回true，不包含返回false：需要给定nfc
-    public boolean query(String nfc){
+    public boolean queryNFC(String nfc,String username){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select * from " + GuanContract.Box.TABLE_NAME + " where nfc=?";
-        Cursor cursor=db.rawQuery(sql,new String[]{nfc});
+        String sql="select * from " + GuanContract.Box.TABLE_NAME + " where nfc=? and user_id=(select _id from user_info where user_name=?)";
+        Cursor cursor=db.rawQuery(sql,new String[]{nfc,username});
         if(cursor.getCount()!=0){
             return true;
         }else {
@@ -99,11 +102,11 @@ public class DaoBox {
         }
     }
     //根据nfc查询盒子名称
-    public String queryBoxByNFC(String nfc){
+    public String queryBoxByNFC(String nfc,String username){
         String boxName = null;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select box_name from  Box where nfc=?";
-        Cursor cursor=db.rawQuery(sql,new String[]{nfc});
+        String sql="select box_name from  Box where nfc=? and user_id=(select _id from user_info where user_name=?)";
+        Cursor cursor=db.rawQuery(sql,new String[]{nfc,username});
         while(cursor.moveToNext()){
             boxName = cursor.getString(0);
         }

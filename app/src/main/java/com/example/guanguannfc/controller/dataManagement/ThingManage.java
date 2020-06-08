@@ -67,7 +67,7 @@ public class ThingManage {
 
     //根据nfc查询盒子名称
     public String queryBoxNameByNfc(String NFCNumber){
-        return daoBox.queryBoxByNFC(NFCNumber);
+        return daoBox.queryBoxByNFC(NFCNumber,username);
     }
 
     //判断盒子是否存在或重复

@@ -46,6 +46,9 @@ public class DaoActivity {
     //根据活动名称删除整个活动：给定用户名、要删除的活动名称
     public boolean delete(String user_name,String act_name){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+
+        String sql1 = "delete from act_sta where act_id=(select _id from activity where act_name=? and user_ID=(select _id from User_Info where user_name=?))";
+        db.execSQL(sql1,new Object[]{act_name,user_name});
         String sql = "delete from Activity where act_name=? and user_ID=(select _id from User_Info where user_name=?)";
         db.execSQL(sql,new Object[]{act_name,user_name});
         db.close();
@@ -74,10 +77,10 @@ public class DaoActivity {
         }
     }
     //查询表中是否包含给定nfc，包含返回true，不包含返回false：需要给定nfc
-    public boolean query(String nfc){
+    public boolean queryNFC(String nfc,String username){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select * from " + GuanContract.Activity.TABLE_NAME + " where nfc=?";
-        Cursor cursor=db.rawQuery(sql,new String[]{nfc});
+        String sql="select * from " + GuanContract.Activity.TABLE_NAME + " where nfc=? and user_id=(select _id from user_info where user_name=?";
+        Cursor cursor=db.rawQuery(sql,new String[]{nfc,username});
         if(cursor.getCount()!=0){
             return true;
         }else {
@@ -86,16 +89,16 @@ public class DaoActivity {
     }
 
     //根据nfc查询活动名称
-    public String[] queryActivityByNFC(String nfc){
+    public String[] queryActivityByNFC(String nfc,String username){
         String[] activity = new String[3];
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select act_name from  Activity where nfc=?";
-        Cursor cursor=db.rawQuery(sql,new String[]{nfc});
+        String sql="select act_name from  Activity where nfc=? and user_id=(select _id from user_info where user_name=?)";
+        Cursor cursor=db.rawQuery(sql,new String[]{nfc,username});
         while(cursor.moveToNext()){
             activity[0] = cursor.getString(0);
         }
-        String sql1="select _id,act_type from Activity_type where _id=(select type_id from activity where nfc=?)";
-        Cursor cursor1=db.rawQuery(sql1,new String[]{nfc});
+        String sql1="select _id,act_type from Activity_type where _id=(select type_id from activity where nfc=? and user_id=(select _id from user_info where user_name=?))";
+        Cursor cursor1=db.rawQuery(sql1,new String[]{nfc,username});
         while(cursor1.moveToNext()){
             activity[1] = cursor1.getInt(0)+"";
             activity[2] = cursor1.getString(1);

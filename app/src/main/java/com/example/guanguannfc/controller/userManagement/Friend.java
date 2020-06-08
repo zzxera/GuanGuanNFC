@@ -46,7 +46,7 @@ public class Friend {
                 arr1[i][0]=list.get(i).getFriend_name();
                 arr1[i][1]=String.valueOf(list.get(i).getLevel());
                 arr1[i][2]=gt.transString(list.get(i).getBegin_time())[0][0];
-                arr1[i][3]=gt.transString(list.get(i).getEnd_time())[0][1];
+                arr1[i][3]=gt.transString(list.get(i).getEnd_time())[0][0];
                 arr1[i][4]=gt.transString1(list.get(i).getLen_time());
                 arr1[i][5]=list.get(i).getActivity_type();
                 arr1[i][6]=list.get(i).getMoment_text();
