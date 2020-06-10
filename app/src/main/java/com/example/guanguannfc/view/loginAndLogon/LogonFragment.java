@@ -98,6 +98,8 @@ public class LogonFragment extends Fragment {
                                     .addToBackStack(null)
                                     .replace(R.id.logandsign,new SigninFragment())
                                     .commit();
+                            LoginActivity loginActivity = (LoginActivity) getActivity();
+                            loginActivity.changeColor();
                         }
                         else{
                             Toast.makeText(ctx,"账号已存在",Toast.LENGTH_LONG).show();

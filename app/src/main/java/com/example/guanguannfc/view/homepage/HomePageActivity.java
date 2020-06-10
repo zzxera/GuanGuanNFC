@@ -678,6 +678,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                 @Override
                                 public void onClick(View view) {
                                     isDelete = false;
+                                    isDeleteAct=false;
+                                    isDeleteBox=false;
                                     scanNFCDialog.dismiss();
 //                                                Toast.makeText( HomePageActivity.this, isAddBox+"", Toast.LENGTH_SHORT ).show();
                                 }
@@ -815,7 +817,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                 //在此处写入ok的逻辑
                                 isDelete=false;
                                 isDeleteBox=true;
-
                             }
                         });
                         final AlertDialog.Builder 取消 = dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -957,7 +958,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 }
                 else {
                     boolean isme=nfcManage.isNFCBelongToM(mTagText);
-                    if (isme){
+//                    if (isme){
                         //            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
                         String[] actInfo = nfcManage.nfcForActivity(mTagText);
                         if (actInfo[1]!=null){
@@ -979,17 +980,18 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                 }
 //                如果刷了不同贴纸
                                 else {
-                                    actId = newActID;
-                                    actName = newActName;
-                                    actType=actInfo[2];
-//                                binder.starTimer();
-                                    startIntent.putExtra("countState","difID");
-                                    startActivityForResult(startIntent,1);
+                                    Toast.makeText(HomePageActivity.this,"一个活动正在进行，请停止后再开始新的",Toast.LENGTH_SHORT).show();
+//                                    actId = newActID;
+//                                    actName = newActName;
+//                                    actType=actInfo[2];
+////                                binder.starTimer();
+//                                    startIntent.putExtra("countState","difID");
+//                                    startActivityForResult(startIntent,1);
                                 }
                             }
 //                      未在计时
                             else {
-                                Toast.makeText(HomePageActivity.this,"未在计时",Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(HomePageActivity.this,"未在计时",Toast.LENGTH_SHORT).show();
                                 isCount=true;
                                 actId=Integer.valueOf(actInfo[1]);
                                 actName=actInfo[0];
@@ -1003,10 +1005,10 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                         else {
                             Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else {
-                        Toast.makeText(HomePageActivity.this,"这不是你的标签哦~",Toast.LENGTH_SHORT).show();
-                    }
+//                    }
+//                    else {
+//                        Toast.makeText(HomePageActivity.this,"这不是你的标签哦~",Toast.LENGTH_SHORT).show();
+//                    }
 
 
                 }

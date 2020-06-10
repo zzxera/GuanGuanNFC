@@ -115,10 +115,10 @@ public class ClockActivity  extends BaseNfcActivity {
         super.onResume();
         if (countState != null) {
             if (countState.equals("sameID")) {
-                Toast.makeText(ClockActivity.this, "刷的是同一张贴纸", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ClockActivity.this, "刷的是同一张贴纸", Toast.LENGTH_SHORT).show();
 //                stopCount();
             } else if (countState.equals("difID")) {
-                Toast.makeText(ClockActivity.this, "刷了不同贴纸", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ClockActivity.this, "刷了不同贴纸", Toast.LENGTH_SHORT).show();
 //                startNewCount(actId, actName);
 //                stopCount();
             }
@@ -185,7 +185,12 @@ public class ClockActivity  extends BaseNfcActivity {
                 stopCount();
                 break;
             case R.id.btn_share:
-                shareDialog.show();
+                if (!iscount){
+                    shareDialog.show();
+                }
+                else {
+                    Toast.makeText(ClockActivity.this,"请结束计时后再分享",Toast.LENGTH_LONG).show();
+                }
 
                 break;
 
@@ -266,22 +271,23 @@ public class ClockActivity  extends BaseNfcActivity {
             String[] actInfo = nfcManage.nfcForActivity(mTagText);
             if(actInfo[0]!=null){
                 int newActID=Integer.parseInt(actInfo[1]);
+                String newActType=actInfo[2];
                 String newActName=actInfo[0];
 //            如果正在计时
                 if (iscount){
 //                如果刷的是同一张贴纸
-                    if (actId==newActID && actName.equals(newActName)){
+                    if (actId==newActID){
                         stopCount();
                     }
 //                如果刷了不同贴纸
                     else {
                         stopCount();
-                        startNewCount(newActID,newActName);
+                        startNewCount(newActID,newActName,newActType);
                     }
                 }
 
                 else {
-                    startNewCount(newActID,newActName);
+                    startNewCount(newActID,newActName,newActType);
                 }
             }
             else {
@@ -321,16 +327,18 @@ public class ClockActivity  extends BaseNfcActivity {
 
     }
 
-    private void startNewCount(int newID,String newname){
+    private void startNewCount(int newID,String newname,String newtype){
 
         iscount = true;
         HomePageActivity.isCount=true;
         actId = newID;
         actName = newname;
+        actType=newtype;
         HomePageActivity.actId = newID;
         HomePageActivity.actName = newname;
 
-        tv_event_type.setText(actName);
+        tv_event_type.setText(actType);
+        tv_event_name.setText(actName);
         binder.starTimer();
         Toast.makeText(this,"开始计时",Toast.LENGTH_SHORT).show();
 //      获取service数值

@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private LogonFragment frag_logon = new LogonFragment();
     Login login = new Login(this);
     public static String username,psw;
-    private TextView tv_sign,tv_log;
+    public TextView tv_sign,tv_log;
 
     private EditText edit_username,edit_psw;
 
@@ -110,6 +110,12 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void changeColor(){
+        tv_sign.setTextColor(colorRedDark);
+        tv_log.setTextColor(colorgray);
+        getFragmentManager().beginTransaction().replace(R.id.logandsign,frag_signin).commit();
     }
 
 //    public void init(){
