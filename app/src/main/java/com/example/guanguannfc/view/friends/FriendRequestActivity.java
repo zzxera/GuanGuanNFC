@@ -41,8 +41,6 @@ public class FriendRequestActivity extends AppCompatActivity {
 
         getRequestList();
         initList();
-        friendRequestAdapter = new FriendRequestAdapter(FriendRequestActivity.this,R.layout.item_friendrequest,friendRequestItemsList);
-        lv_friendRequest.setAdapter(friendRequestAdapter);
 
         checkClick();
     }
@@ -61,6 +59,8 @@ public class FriendRequestActivity extends AppCompatActivity {
                 FriendRequestItem friendRequestItem = new FriendRequestItem(arr_request[i]);
                 friendRequestItemsList.add(friendRequestItem);
             }
+            friendRequestAdapter = new FriendRequestAdapter(FriendRequestActivity.this,R.layout.item_friendrequest,friendRequestItemsList);
+            lv_friendRequest.setAdapter(friendRequestAdapter);
         }
 
         else {
