@@ -356,15 +356,22 @@ public class ManageFragment extends Fragment {
                         boxName=boxname;
                         num=Integer.valueOf(i).intValue();
                         String [][] thing=boxget.thingAndNumberInBox(box[0][num2]);
-                        String [] goodsname=thing[0];
-                        boolean isContains = Arrays.asList(goodsname).contains(name);
-                        if(isContains){
-                            shownoname();
-                        }
-                        else {
+                        if(thing==null){
                             boxget.addThings(boxName,name,num);
                             mPopWindow.dismiss();
                             sPopWindow.dismiss();
+                        }
+                        else {
+                            String [] goodsname=thing[0];
+                            boolean isContains = Arrays.asList(goodsname).contains(name);
+                            if(isContains){
+                                shownoname();
+                            }
+                            else {
+                                boxget.addThings(boxName,name,num);
+                                mPopWindow.dismiss();
+                                sPopWindow.dismiss();
+                            }
                         }
                     }
                 }
