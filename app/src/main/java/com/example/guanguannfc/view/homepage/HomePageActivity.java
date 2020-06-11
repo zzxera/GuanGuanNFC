@@ -2,6 +2,7 @@ package com.example.guanguannfc.view.homepage;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.NfcAdapter;
@@ -18,6 +20,8 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +44,8 @@ import com.example.guanguannfc.controller.nfcManagement.BaseNfcActivity;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.controller.userManagement.Friend;
+import com.example.guanguannfc.controller.userManagement.UserInfo;
+import com.example.guanguannfc.model.Dao.DaoUserInfo;
 import com.example.guanguannfc.view.data.ClockActivity;
 import com.example.guanguannfc.view.data.ClockService;
 import com.example.guanguannfc.view.data.DataFragment;
@@ -54,11 +60,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
-
-    public static String userName,actType,actName;
+    public static String userName;
+    public static String actType,actName;
+    public static int pagenum;
     private RelativeLayout main_body;
     private LinearLayout main_bottom_bar;
     private RelativeLayout bottom_bar_1_btn,bottom_bar_2_btn,bottom_bar_3_btn,bottom_bar_4_btn;
@@ -92,6 +100,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
    ClockService.MyBinder binder;
    Handler handler;
    Button btn_start;
+    public static int actId;
 
 //   添加盒子
     private NFCManage nfcManage;
@@ -119,7 +128,18 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
 //    擦除NFC
     private boolean isDelete=false;
+    private boolean isDeleteBox= false;
+    private boolean isDeleteAct=false;
+    String delActName,delBoxName;
 
+//    个人信息
+    private UserInfo userInfo;
+    private String[] myInfo;
+    private TextView tv_userLevel,tv_userActDays;
+
+// 登录
+    SharedPreferences sprfMain;
+    SharedPreferences.Editor editorMain;
 
 
     ServiceConnection conn = new ServiceConnection() {
@@ -141,25 +161,34 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_home_page);
 
-//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.homepage_title_bar);
-        Bundle bundle = this.getIntent().getExtras();
-        if(bundle!=null){
-            userName=bundle.getString("userName");
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain=sprfMain.edit();
+        userName = sprfMain.getString("userName","未登录");
+
+        if (userName.equals("未登录")){
+            Toast.makeText(this,userName,Toast.LENGTH_LONG).show();
         }
+        else {
+            //        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.homepage_title_bar);
+            Bundle bundle = this.getIntent().getExtras();
+            if(bundle!=null){
+                userName=bundle.getString("userName");
+            }
+//        sprfMain.getString("userName");
 
 //        Toast.makeText(this,"用户名"+userName,Toast.LENGTH_LONG).show();
 
-        initView();
-        setMain();
-        checkClick();
-        initDialog();
+            initView();
+            setMain();
+            checkClick();
+            initDialog();
 
 
 
-        Intent intent = new Intent(this,ClockService.class);
-        bindService(intent,conn,Context.BIND_AUTO_CREATE);
-        handler = new Handler();
-
+            Intent intent = new Intent(this,ClockService.class);
+            bindService(intent,conn,Context.BIND_AUTO_CREATE);
+//            handler = new Handler();
+        }
 
     }
 
@@ -173,7 +202,15 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
     }
 
+    @Override
+    protected void onDestroy() {
+        unbindService(conn);
+        super.onDestroy();
+
+    }
+
     private void initView(){
+
 //        主体
         main_body=findViewById(R.id.main_body);
 //       个人设置
@@ -235,6 +272,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         for (int t=1;t<arry.length;t++){
             allActs[t-1]=arry[t];
         }
+
+//        个人信息
+        userInfo = new UserInfo(this);
+        tv_userLevel = findViewById(R.id.text_userLevel);
+        tv_userActDays = findViewById(R.id.text_actDays);
+
     }
 
 //    创建弹窗
@@ -326,6 +369,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 pushFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,pushFragment).commit();
                 setSelectStatus(0);
+                pagenum=0;
+
                 break;
             case R.id.bottom_bar_2_btn:
                 Bundle bundle2 = new Bundle();
@@ -334,6 +379,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 dataFragment.setArguments(bundle2);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
                 setSelectStatus(1);
+                pagenum=1;
+
                 break;
             case R.id.bottom_bar_3_btn:
                 Bundle bundle3 = new Bundle();
@@ -342,6 +389,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 manageFragment.setArguments(bundle3);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
                 setSelectStatus(2);
+                pagenum=2;
+
                 break;
             case R.id.bottom_bar_4_btn:
                 Bundle bundle4 = new Bundle();
@@ -349,6 +398,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 frendFragment.setArguments(bundle4);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,frendFragment).commit();
                 setSelectStatus(3);
+                pagenum=3;
+
                 break;
 
         }
@@ -359,6 +410,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 //                退出登录
+                editorMain.putBoolean("main",false);
+                editorMain.commit();
                 Intent intent2 = new Intent();
                 intent2.setClass(HomePageActivity.this, LoginActivity.class);
                 intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -371,6 +424,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             public void onClick(View view) {
                 ctl_person.setVisibility(View.VISIBLE);
                 ll_container.setVisibility(View.VISIBLE);
+                getUserInfo();
             }
         });
         ll_container.setOnTouchListener(new View.OnTouchListener() {
@@ -397,7 +451,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 // TODO: 2016/5/17 构建一个popupwindow的布局
-
+                oneTextItemList.clear();
 //                lv_add.setAdapter(new ArrayAdapter<String>(HomePageActivity.this, R.layout.item_onetext, getResources().getStringArray(R.array.add)));
                 String[] al = getResources().getStringArray(R.array.add);
                 for (int i = 0;i<al.length;i++){
@@ -524,6 +578,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //                            添加盒子
                             addWindow.dismiss();
 
+                            goodsName=new ArrayList<String>();
+                            goodsNum=new ArrayList<Integer>();
                             LayoutInflater inflater=LayoutInflater.from(HomePageActivity.this);
                             addBoxView=inflater.inflate(R.layout.item_addbox,null);//引用自定义布局
                             AlertDialog.Builder builder=new AlertDialog.Builder(HomePageActivity.this);
@@ -552,15 +608,17 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                         public void onClick(View view) {
                                             EditText et1=addGoodView.findViewById(R.id.et_goodName);
                                             EditText et2=addGoodView.findViewById(R.id.et_goodNum);
-                                            goodsName.add(et1.getText().toString());
-                                            goodsNum.add(Integer.valueOf(et2.getText().toString()) );
 
-                                            String[] arr={et1.getText().toString(),et2.getText().toString()};
+                                                goodsName.add(et1.getText().toString());
+                                                goodsNum.add(Integer.valueOf(et2.getText().toString()) );
 
-                                            GoodItem goodItem = new GoodItem(arr);
-                                            goodItemList.add(goodItem);
-                                            lv_goods.setAdapter(goodAdapter);
-                                            addGoodDialog.dismiss();
+                                                String[] arr={et1.getText().toString(),et2.getText().toString()};
+                                                Log.i("gy", String.valueOf(arr));
+                                                GoodItem goodItem = new GoodItem(arr);
+                                                goodItemList.add(goodItem);
+                                                lv_goods.setAdapter(goodAdapter);
+                                                addGoodDialog.dismiss();
+
                                         }
                                     });
                                 }
@@ -592,13 +650,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                         scanNFCDialog.show();//显示对话框
                                         scanNFCDialog.setCanceledOnTouchOutside(false);
                                         scanNFCDialog.setCancelable(false);
-
                                         scanNFCView.findViewById(R.id.btn_box_nfc).setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 isAddBox = false;
                                                 scanNFCDialog.dismiss();
                                                 addBoxDialog.show();
+
 //                                                Toast.makeText( HomePageActivity.this, isAddBox+"", Toast.LENGTH_SHORT ).show();
                                             }
                                         });
@@ -630,6 +688,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                 @Override
                                 public void onClick(View view) {
                                     isDelete = false;
+                                    isDeleteAct=false;
+                                    isDeleteBox=false;
                                     scanNFCDialog.dismiss();
 //                                                Toast.makeText( HomePageActivity.this, isAddBox+"", Toast.LENGTH_SHORT ).show();
                                 }
@@ -652,6 +712,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         dataFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
         setSelectStatus(1);
+        pagenum=1;
 
     }
 
@@ -675,17 +736,194 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //    检测NFC
     @SuppressLint("MissingSuperCall")
     public void onNewIntent(Intent intent) {
-        Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        final Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        mTagText = NFCManage.readNfcTag(intent);
+        String isNFCExist = NFCManage.isNFCExist(mTagText);
         if (isDelete){
-//            清空标签
-            Boolean success = nfcManage.setNFCNll(detectedTag);
-            if (success){
-                Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
+            if (isNFCExist!=null){
+                if (isNFCExist.equals("Act")){
+                    delActName = nfcManage.nfcForActivity(mTagText)[0];
+                    if (delActName!=null){
+
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                        //获取AlertDialog对象
+                        dialog.setTitle("提示");//设置标题
+                        dialog.setMessage("是否删除  "+delActName+"   活动？");//设置信息具体内容
+                        dialog.setCancelable(false);//设置是否可取消
+                        dialog.setPositiveButton("确认并再次扫描", new DialogInterface.OnClickListener() {
+                            @Override//设置ok的事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此处写入ok的逻辑
+//                            删除数据库的标签
+                                isDeleteAct=true;
+                                isDelete=false;
+
+                            }
+                        });
+                        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override//设置取消事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此写入取消的事件
+                            }
+                        });
+                        dialog.show();
+                    }
+                    else {
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                        //获取AlertDialog对象
+                        dialog.setTitle("提示");//设置标题
+                        dialog.setMessage("此活动不存在或已删除，是否擦除贴纸内容？");//设置信息具体内容
+                        dialog.setCancelable(false);//设置是否可取消
+                        dialog.setPositiveButton("确认并再次扫描", new DialogInterface.OnClickListener() {
+                            @Override//设置ok的事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此处写入ok的逻辑
+                                isDelete=false;
+                                isDeleteAct=true;
+                            }
+                        });
+                        final AlertDialog.Builder 取消 = dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override//设置取消事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此写入取消的事件
+                            }
+                        });
+                        dialog.show();
+                    }
+
+                }
+                else if (isNFCExist.equals("Box")){
+                    delBoxName = nfcManage.nfcForBox(mTagText);
+                    if (delBoxName!=null){
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                        //获取AlertDialog对象
+                        dialog.setTitle("提示");//设置标题
+                        dialog.setMessage("是否删除  "+delBoxName+"   盒子？");//设置信息具体内容
+                        dialog.setCancelable(false);//设置是否可取消
+                        dialog.setPositiveButton("确认并再次扫描", new DialogInterface.OnClickListener() {
+                            @Override//设置ok的事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此处写入ok的逻辑
+                                isDelete=false;
+                                isDeleteBox=true;
+                            }
+                        });
+                        final AlertDialog.Builder 取消 = dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override//设置取消事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此写入取消的事件
+                            }
+                        });
+                        dialog.show();
+                    }
+                    else {
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+                        //获取AlertDialog对象
+                        dialog.setTitle("提示");//设置标题
+                        dialog.setMessage("此盒子不存在或已删除，是否擦除贴纸内容？");//设置信息具体内容
+                        dialog.setCancelable(false);//设置是否可取消
+                        dialog.setPositiveButton("确认并再次扫描", new DialogInterface.OnClickListener() {
+                            @Override//设置ok的事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此处写入ok的逻辑
+                                isDelete=false;
+                                isDeleteBox=true;
+                            }
+                        });
+                        final AlertDialog.Builder 取消 = dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override//设置取消事件
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //在此写入取消的事件
+                            }
+                        });
+                        dialog.show();
+                    }
+
+                }
+                else {
+                    //            清空标签
+                    Boolean success = nfcManage.setNFCNll(detectedTag);
+                    if (success){
+                        Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
+
+            }
+
+        else if (isDeleteAct){
+            if (delActName!=null){
+                boolean success=activityManage.deletSmallActivity(delActName);
+                if (success){
+                    //                          清空标签
+                    Boolean success1 = nfcManage.setNFCNll(detectedTag);
+                    if (success1){
+                        Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
+                        scanNFCDialog.dismiss();
+                        isDeleteAct=false;
+                    }
+                    else {
+                        Toast.makeText(HomePageActivity.this,"擦除失败",Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                else {
+                    Toast.makeText(HomePageActivity.this,"数据库连接失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                Boolean success1 = nfcManage.setNFCNll(detectedTag);
+                if (success1){
+                    Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
+                    scanNFCDialog.dismiss();
+                    isDeleteAct=false;
+                }
+                else {
+                    Toast.makeText(HomePageActivity.this,"擦除失败",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+
         }
+        else if (isDeleteBox){
+            if (delBoxName!=null){
+
+//                            删除数据库的标签
+                boolean success = thingManage.deleteBox(delBoxName);
+                if (success) {
+                    //                          清空标签
+                    Boolean success1 = nfcManage.setNFCNll(detectedTag);
+                    if (success1) {
+                        Toast.makeText(HomePageActivity.this, "擦除成功", Toast.LENGTH_SHORT).show();
+                        scanNFCDialog.dismiss();
+                        isDeleteBox=false;
+                    } else {
+                        Toast.makeText(HomePageActivity.this, "擦除失败", Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(HomePageActivity.this, "数据库连接失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                //                          清空标签
+                Boolean success1 = nfcManage.setNFCNll(detectedTag);
+                if (success1) {
+                    Toast.makeText(HomePageActivity.this, "擦除成功", Toast.LENGTH_SHORT).show();
+                    scanNFCDialog.dismiss();
+
+                    isDeleteBox=false;
+                } else {
+                    Toast.makeText(HomePageActivity.this, "擦除失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+
+
         else {
-            mTagText = NFCManage.readNfcTag(intent);
-            String isNFCExist = NFCManage.isNFCExist(mTagText);
+//添加贴纸
             if (isNFCExist==null){
 
                 if (isAddBox){
@@ -730,22 +968,59 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
-                    String[] actInfo = nfcManage.nfcForActivity(mTagText);
-                    if (actInfo[1]!=null){
-                        isCount=true;
-                        actType=allActs[Integer.parseInt(actInfo[1])];
-                        actName=actInfo[0];
+                    boolean isme=nfcManage.isNFCBelongToM(mTagText);
+//                    if (isme){
+                        //            Toast.makeText(HomePageActivity.this,"Act",Toast.LENGTH_SHORT).show();
+                        String[] actInfo = nfcManage.nfcForActivity(mTagText);
+                        if (actInfo[1]!=null){
+                            int newActID=Integer.parseInt(actInfo[1]);
+                            String newActName=actInfo[0];
 //                        Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
-//            开始计时
-                        binder.starTimer();
-                        Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
-                        startIntent.putExtra("username",userName);
-                        startActivityForResult(startIntent,1);
-                    }
-                    else {
-                        Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();
-                    }
+                            Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
+                            startIntent.putExtra("username",userName);
+                            //            如果正在计时
+                            if (isCount){
+//                如果刷的是同一张贴纸
+                                if (actId==newActID){
+                                    actId = newActID;
+                                    actType=actInfo[2];
+                                    actName = newActName;
+//                                binder.starTimer();
+                                    startIntent.putExtra("countState","sameID");
+                                    startActivityForResult(startIntent,1);
+                                }
+//                如果刷了不同贴纸
+                                else {
+                                    Toast.makeText(HomePageActivity.this,"一个活动正在进行，请停止后再开始新的",Toast.LENGTH_SHORT).show();
+//                                    actId = newActID;
+//                                    actName = newActName;
+//                                    actType=actInfo[2];
+////                                binder.starTimer();
+//                                    startIntent.putExtra("countState","difID");
+//                                    startActivityForResult(startIntent,1);
+                                }
+                            }
+//                      未在计时
+                            else {
+//                                Toast.makeText(HomePageActivity.this,"未在计时",Toast.LENGTH_SHORT).show();
+                                isCount=true;
+                                actId=Integer.valueOf(actInfo[1]);
+                                actName=actInfo[0];
+                                actType=actInfo[2];
+                                //            开始计时
+                                binder.starTimer();
+                                startIntent.putExtra("countState","startCount");
+                                startActivityForResult(startIntent,1);
+                            }
+                        }
+                        else {
+                            Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();
+                        }
+//                    }
+//                    else {
+//                        Toast.makeText(HomePageActivity.this,"这不是你的标签哦~",Toast.LENGTH_SHORT).show();
+//                    }
+
 
                 }
 
@@ -756,26 +1031,43 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //            Toast.makeText(HomePageActivity.this,"Box",Toast.LENGTH_SHORT).show();
-                    String getBoxName = nfcManage.nfcForBox(mTagText);
-                    if (getBoxName!=null){
-                        Bundle bundle_manage = new Bundle();
-                        bundle_manage.putString("username",userName);
-                        bundle_manage.putString("getboxname",getBoxName);
-                        manageFragment.setArguments(bundle_manage);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
-                        setSelectStatus(2);
-                    }
-                    else {
-                        Toast.makeText(HomePageActivity.this,"盒子不存在",Toast.LENGTH_SHORT).show();
-                    }
+//                    boolean isme=nfcManage.isNFCBelongToM(mTagText);
+//                    if (isme){
+                        //            Toast.makeText(HomePageActivity.this,"Box",Toast.LENGTH_SHORT).show();
+                        String getBoxName = nfcManage.nfcForBox(mTagText);
+                        if (getBoxName!=null){
 
-//            Toast.makeText(HomePageActivity.this,getBoxName,Toast.LENGTH_SHORT).show();
+                            if (pagenum!=2){
+                                Bundle bundle_manage = new Bundle();
+                                bundle_manage.putString("username",userName);
+                                bundle_manage.putString("getboxname",getBoxName);
+                                manageFragment.setArguments(bundle_manage);
+                                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
+                                setSelectStatus(2);
+                                pagenum=2;
+                            }
+                            else {
+                                manageFragment.showScanBox(getBoxName);
+                            }
+
+
+
+                        }
+                        else {
+                            Toast.makeText(HomePageActivity.this,"盒子不存在",Toast.LENGTH_SHORT).show();
+                        }
+
+//                    }
+//                    else {
+//
+//                        Toast.makeText(HomePageActivity.this,"这不是你的标签哦~",Toast.LENGTH_SHORT).show();
+//                    }
+
                 }
 
             }
             else if (isNFCExist.equals("Something is exist!")){
-                nfcManage.setNFCNll(detectedTag);
+
                 Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
             }
 
@@ -810,6 +1102,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
     }
 
+    private void getUserInfo(){
+        myInfo = userInfo.getUserInfo(userName);
+        tv_userLevel.setText(myInfo[0]+"级");
+        tv_userActDays.setText("已活跃"+myInfo[1]+"天");
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -828,5 +1126,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             //                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
         }
     }
+
 
 }

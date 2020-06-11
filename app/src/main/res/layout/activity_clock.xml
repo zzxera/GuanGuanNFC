@@ -6,67 +6,106 @@
     android:layout_height="match_parent"
     tools:context=".view.data.ClockActivity">
 
+    <LinearLayout
+        android:id="@+id/ll_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <include
+            android:id="@+id/include"
+            layout="@layout/item_topbar" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:visibility="gone"
 
         android:layout_marginTop="30dp"
         android:background="@drawable/img_clock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/ll_topbar"></ImageView>
 
-    <TextView
-        android:id="@+id/tv_start_time"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_time"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-
-
-        android:layout_marginEnd="65dp"
-        android:text=""
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        >
+        <TextView
+            android:id="@+id/tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/colorbBlack"
+            android:textSize="20sp"
+            android:layout_weight="10"
+            android:gravity="right"
+          ></TextView>
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textColor="@color/colorbBlack"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:gravity="center"
+           ></TextView>
+        <TextView
+            android:id="@+id/tv_now_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:text=""
+            android:textColor="@color/colorbBlack"
+            android:textSize="20sp"
+            android:gravity="left"
+           ></TextView>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_now_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="65dp"
-
-        android:layout_marginTop="20dp"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"></TextView>
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
 
 
-        android:layout_height="wrap_content"
-        android:text="-"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_start_time"></TextView>
 
-    <TextView
-        android:id="@+id/tv_event_type"
+
+
+    <LinearLayout
+        android:id="@+id/ll_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_time"
+        android:background="@color/colorWhite"
+        >
+        <TextView
+        android:id="@+id/tv_event_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="工作"
         android:textSize="18sp"
-
-
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/textView10"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_start_time"></TextView>
+        android:layout_weight="1"
+       ></TextView>
+        <TextView
+            android:id="@+id/tv_event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上网课"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            ></TextView>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/textView10"
@@ -78,7 +117,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginRight="80dp"
-        app:layout_constraintTop_toTopOf="@+id/tv_event_type"></TextView>
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/ll_txt"></TextView>
 
     <TextView
         android:id="@+id/tv_duration"
@@ -91,79 +131,62 @@
 
         app:layout_constraintStart_toEndOf="@+id/textView10"
         android:layout_marginStart="10dp"
-        app:layout_constraintTop_toTopOf="@+id/tv_event_type"
+        app:layout_constraintTop_toTopOf="@+id/textView10"
 
         ></TextView>
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+<!--    <TextView-->
+<!--        android:id="@+id/textView15"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
 
-        android:layout_marginEnd="10dp"
-        android:text="距离最高记录"
-        app:layout_constraintEnd_toStartOf="@+id/tv_top"
-        app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:text="距离最高记录"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/tv_top"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>-->
 
-    <TextView
-        android:id="@+id/tv_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+<!--    <TextView-->
+<!--        android:id="@+id/tv_top"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
 
-        android:layout_marginTop="30dp"
-        android:text="2小时25分18秒"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_event_type"></TextView>
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:text="2小时25分18秒"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginEnd="40dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_event_type"></TextView>-->
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+<!--    <TextView-->
+<!--        android:id="@+id/textView14"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
 
-        android:text="还有"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_top"
-        app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>
+<!--        android:text="还有"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/tv_top"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>-->
 
-    <TextView
-        android:id="@+id/tv_distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+<!--    <TextView-->
+<!--        android:id="@+id/tv_distance"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
 
-        android:text="1小时28分14秒"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView14"
-        android:layout_marginStart="10dp"
-        app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>
+<!--        android:text="1小时28分14秒"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView14"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/tv_top"></TextView>-->
 
 
-    <Button
-        android:id="@+id/btn_suspend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="70dp"
-        android:onClick="click"
-        android:background="@drawable/button_fillet"
-        android:backgroundTint="@color/colorDark"
-        android:text="暂停计时"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-
-        app:layout_constraintTop_toBottomOf="@+id/tv_top"></Button>
 
     <Button
         android:id="@+id/btn_stop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="70dp"
         android:background="@drawable/button_fillet"
         android:backgroundTint="@color/colorgray"
@@ -174,7 +197,7 @@
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_suspend"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
         tools:ignore="OnClick"></Button>
 
     <TextView
@@ -198,7 +221,7 @@
         android:layout_marginEnd="70dp"
 
         android:background="@drawable/button_fillet"
-        android:backgroundTint="@color/design_default_color_primary_dark"
+        android:backgroundTint="@color/colorgray"
         android:textColor="@color/colorWhite"
         android:onClick="click"
         app:layout_constraintEnd_toEndOf="parent"

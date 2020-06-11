@@ -77,10 +77,13 @@ public class DataFragment extends Fragment {
     private ActShowAdapter actShowAdapter;
     private ConstraintLayout.LayoutParams layoutParams;
     private boolean isCount;
+    // 获取颜色资源文件
+    int colorgray,colorRedDark;
 
     //    分享
     private ShareDialog shareDialog;
     private String text_content;
+    private long shareStartTime;
     private UserInfo userInfo;
 
     @Override
@@ -116,6 +119,8 @@ public class DataFragment extends Fragment {
         dataShowAdapter = new DataShowAdapter(getActivity(),R.layout.item_datashow,dataShowList);
         actShowAdapter = new ActShowAdapter(getActivity(),R.layout.item_actshow,actShowList);
         myWebView=view.findViewById(R.id.webview_acts);
+//        myWebView.getSettings().setUseWideViewPort(true);
+//        myWebView.getSettings().setLoadWithOverviewMode(true);
         spinner_times=view.findViewById(R.id.spinner_time);
         spinner_types=view.findViewById(R.id.spinner_type);
         spinner_acts=view.findViewById(R.id.spinner_acttype);
@@ -129,6 +134,9 @@ public class DataFragment extends Fragment {
 //        lay_personset.setVisibility(View.INVISIBLE);
         bt_starttime=view.findViewById(R.id.button_starttime);
         bt_endtime=view.findViewById(R.id.button_endtime);
+        long nowTime = getTime.getStartTime();
+        bt_starttime.setText(getTime.getYearByTimeStamp(nowTime)+"-"+getTime.getMonthByTimeStamp(nowTime)+"-"+getTime.getDayByTimeStamp(nowTime));
+        bt_endtime.setText(getTime.getYearByTimeStamp(nowTime)+"-"+getTime.getMonthByTimeStamp(nowTime)+"-"+getTime.getDayByTimeStamp(nowTime));
         bt_acttype=view.findViewById(R.id.button_acttype);
         bt_confirmtime=view.findViewById(R.id.button_time_confirm);
 //        bt_person=view.findViewById(R.id.button_personset);
@@ -158,6 +166,9 @@ public class DataFragment extends Fragment {
 //      分享
         userInfo = new UserInfo(getActivity());
 
+//      颜色
+        colorgray = getResources().getColor(R.color.colorgray);
+        colorRedDark = getResources().getColor(R.color.colorRedDark);
 
 
     }
@@ -491,8 +502,8 @@ public class DataFragment extends Fragment {
             public void onClick(View view) {
                 lay_datashow.setVisibility(View.VISIBLE);
                 lay_actshow.setVisibility(View.INVISIBLE);
-                tv_data.setTextColor(Color.RED);
-                tv_allact.setTextColor(R.color.colorgray);
+                tv_data.setTextColor(colorRedDark);
+                tv_allact.setTextColor(colorgray);
             }
         });
         view.findViewById(R.id.text_allact).setOnClickListener(new View.OnClickListener() {
@@ -501,8 +512,8 @@ public class DataFragment extends Fragment {
             public void onClick(View view) {
                 lay_datashow.setVisibility(View.INVISIBLE);
                 lay_actshow.setVisibility(View.VISIBLE);
-                tv_data.setTextColor(R.color.colorgray);
-                tv_allact.setTextColor(Color.RED);
+                tv_data.setTextColor(colorgray);
+                tv_allact.setTextColor(colorRedDark);
             }
         });
         view.findViewById(R.id.button_starttime).setOnClickListener(new View.OnClickListener() {
@@ -640,7 +651,11 @@ public class DataFragment extends Fragment {
         lv_allactlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                shareStartTime = Long.valueOf(ob_actShow[i][6]);
+//                Toast.makeText(getActivity(),"第"+i+"个活动"+getTime.transString(actStartTime)[0][0]+getTime.transString(actStartTime)[0][1],Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),actStartTime+"",Toast.LENGTH_LONG).show();
                 shareDialog.show();
+
                 return false;
 
             }
@@ -683,13 +698,13 @@ public class DataFragment extends Fragment {
             @Override
             public void onConfirm(ShareDialog dialog) {
                 text_content=shareDialog.getEditText().getText().toString();
-//                boolean isShared = userInfo.updateact(userName,text_content);
-//                if (isShared){
-//                    Toast.makeText(getActivity(),"分享成功",Toast.LENGTH_LONG).show();
-//                }
-//                else {
-//                    Toast.makeText(getActivity(),"分享失败",Toast.LENGTH_LONG).show();
-//                }
+                boolean isShared = userInfo.updateact(userName,shareStartTime,text_content);
+                if (isShared){
+                    Toast.makeText(getActivity(),"分享成功",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getActivity(),"分享失败",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

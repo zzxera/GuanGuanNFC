@@ -48,7 +48,7 @@ public class DaoPush {
         List<HelperPush> list = new ArrayList<HelperPush>();
         HelperPush helperPush;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select user_name,title,summary,contents,created_time from push_note inner join user_info on push_note.author_id=user_info._id";
+        String sql="select user_name,title,summary,contents,push_note.created_time from push_note inner join user_info on push_note.author_id=user_info._id";
         Cursor cursor=db.rawQuery(sql,new String[]{});
         if(cursor.getCount()!=0){
             while(cursor.moveToNext()){

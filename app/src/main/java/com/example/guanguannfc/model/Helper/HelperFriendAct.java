@@ -8,8 +8,9 @@ public class HelperFriendAct {
     private long end_time;
     private long len_time;
     private String moment_text;
+    private long shared_time;
 
-    public HelperFriendAct(String friend_name, int level, String activity_type, long begin_time, long end_time, long len_time, String moment_text) {
+    public HelperFriendAct(String friend_name, int level, String activity_type, long begin_time, long end_time, long len_time, String moment_text, long shared_time) {
         this.friend_name = friend_name;
         this.level = level;
         this.activity_type = activity_type;
@@ -17,6 +18,15 @@ public class HelperFriendAct {
         this.end_time = end_time;
         this.len_time = len_time;
         this.moment_text = moment_text;
+        this.shared_time = shared_time;
+    }
+
+    public long getShared_time() {
+        return shared_time;
+    }
+
+    public void setShared_time(long shared_time) {
+        this.shared_time = shared_time;
     }
 
     public String getFriend_name() {

@@ -1,38 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <TextView
+            android:id="@+id/tv_goods_name"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:text="子项目" />
 
-    <TextView
-        android:id="@+id/tv_goods_name"
-        android:layout_width="69dp"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="子项目" />
-
-    <TextView
-        android:id="@+id/tv_goods_shuliang"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="子项目" />
-
-    <Button
-        android:id="@+id/btn_change_num"
-        android:layout_width="77dp"
-        android:layout_height="33dp"
-        android:text="修改物品数量"
-        android:textSize="8sp" />
-
-    <Button
-        android:id="@+id/btn_delet"
-        android:layout_width="45dp"
-        android:layout_height="33dp"
-        android:text="删除物品"
-        android:textSize="8sp" />
+        <TextView
+            android:id="@+id/tv_goods_shuliang"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:layout_weight="1"
+            android:text="子项目" />
 
 
-</LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_change_num"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+
+            android:src="@drawable/img_change" />
+
+        <ImageView
+            android:id="@+id/btn_delet"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+
+            android:src="@drawable/img_arrow_delet"/>
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,7 +34,8 @@ public class FrendFragment extends Fragment {
     private FriendAdapter friendAdapter;
     private FriendActAdapter friendActAdapter;
     private String[][] act2;
-    private String[] friendList;
+    private String[][] friendList;
+    private String[][] friendActList;
 
     private Friend friend;
     private String del_name;
@@ -59,7 +60,11 @@ public class FrendFragment extends Fragment {
         if (friendList!=null){
             initFriends(friendList);
         }
-        initFriendAct(act2);
+        getFriendAct();
+        if (friendActList != null) {
+            initFriendAct(friendActList);
+        }
+
         friendAdapter = new FriendAdapter(getActivity(),R.layout.item_friend,friendItemsList);
         lv_friends.setAdapter(friendAdapter);
         friendActAdapter = new FriendActAdapter(getActivity(),R.layout.item_friendact,friendActItemList);
@@ -67,6 +72,24 @@ public class FrendFragment extends Fragment {
         return view;
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFriends();
+        if (friendList!=null){
+            initFriends(friendList);
+        }
+        lv_friends.setAdapter(friendAdapter);
+
+        getFriendAct();
+        if (friendActList != null) {
+            initFriendAct(friendActList);
+        }
+        lv_friendAct.setAdapter(friendActAdapter);
+
+    }
+
     private void initView(){
         cl_friend=view.findViewById(R.id.cl_frinds);
         cl_friendAct=view.findViewById(R.id.cl_frindAct);
@@ -80,7 +103,7 @@ public class FrendFragment extends Fragment {
 
     }
 
-    private void initFriends(String[] array){
+    private void initFriends(String[][] array){
         friendItemsList.clear();
 //        for (int i = 0;i<20;i++){
 //            FriendItem friendItem=new FriendItem("好朋友"+(i+1),R.drawable.img_head);
@@ -90,30 +113,29 @@ public class FrendFragment extends Fragment {
             FriendItem friendItem=new FriendItem(array[i],R.drawable.img_head);
             friendItemsList.add(friendItem);
         }
-
     }
 
     private void getFriends(){
-        friendList = friend.friendlist(userName);
+       friendList = friend.friendlist(userName);
     }
 
     private void initFriendAct(String[][] array){
-//        friendActItemList.clear();
-//        for(int i=0;i<array.length;i++){
-//            FriendActItem friendActItem = new FriendActItem(array[i]);
-//            friendActItemList.add(friendActItem);
-//        }
-
-        for (int i = 0;i<10;i++){
-            String[][] act1={{"好朋友"+(i+1),5+"","记录生活的点点滴滴","工作","2020-5-11","15时47分3秒","16时47分3秒","1时0分0秒","2020-05-21",Integer.toString(R.drawable.img_head)}};
-            FriendActItem friendActItem = new FriendActItem(act1[0]);
+        friendActItemList.clear();
+        for(int i=0;i<array.length;i++){
+            FriendActItem friendActItem = new FriendActItem(array[i],R.drawable.img_head);
             friendActItemList.add(friendActItem);
         }
+
+//        for (int i = 0;i<10;i++){
+//            String[][] act1={{"好朋友"+(i+1),5+"","记录生活的点点滴滴","工作","2020-5-11","15时47分3秒","16时47分3秒","1时0分0秒","2020-05-21",Integer.toString(R.drawable.img_head)}};
+//            FriendActItem friendActItem = new FriendActItem(act1[0]);
+//            friendActItemList.add(friendActItem);
+//        }
 
 
     }
     private void getFriendAct(){
-
+        friendActList = friend.friendact(userName);
     }
 
     private void checkClick(){
@@ -135,6 +157,12 @@ public class FrendFragment extends Fragment {
                 cl_friendAct.setVisibility(View.VISIBLE);
                 tv_friendAct.setTextColor(Color.RED);
                 tv_friend.setTextColor(R.color.colorgray);
+                getFriendAct();
+                if (friendActList != null) {
+                    initFriendAct(friendActList);
+                }
+                lv_friendAct.setAdapter(friendActAdapter);
+
             }
         });
 
@@ -142,7 +170,7 @@ public class FrendFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());
-                del_name = friendList[i];
+                del_name = friendList[i][0];
                 //获取AlertDialog对象
                 dialog.setTitle("提示");//设置标题
                 dialog.setMessage("是否删除好友？");//设置信息具体内容
@@ -157,8 +185,6 @@ public class FrendFragment extends Fragment {
                             initFriends(friendList);
                         }
                         lv_friends.setAdapter(friendAdapter);
-
-
                     }
                 });
                 dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {

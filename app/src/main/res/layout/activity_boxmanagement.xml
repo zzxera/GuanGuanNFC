@@ -11,7 +11,7 @@
         android:layout_width="434dp"
         android:layout_height="52dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,23 +20,30 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/tv_timemanagement"
-            android:layout_width="165dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:onClick="click2"
-            android:text="时间管理"
-            android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/tv_boxmanage"
-            android:layout_width="151dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:onClick="click2"
-            android:text="物品管理"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tv_timemanagement"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:padding="10dp"
+                android:onClick="click2"
+                android:text="时间管理"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_boxmanage"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:onClick="click2"
+                android:text="物品管理"
+                android:layout_weight="1"
+                android:textColor="@color/colorRedDark"
+                android:textSize="20sp" />
+
+
 
         <TextView
             android:id="@+id/textView2"
@@ -49,9 +56,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_boxmanagement"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="100dp"
+        android:visibility="visible"
         >
 
 
@@ -62,25 +71,53 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="11dp"
             android:layout_marginBottom="48dp"
-            android:background="#B8A5A5"
+            android:background="@color/colorlight"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/ll_boxshuaxin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            app:layout_constraintStart_toStartOf="@id/sv_goods"
+            app:layout_constraintTop_toBottomOf="@+id/sv_goods"
+            >
+            <ImageView
+                android:id="@+id/s"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_shuaxin"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点此刷新"
+                android:layout_gravity="center"
+                ></TextView>
+
+        </LinearLayout>
+
+
+
         <GridView
             android:id="@+id/box"
-            android:layout_width="329dp"
-            android:layout_height="217dp"
-            android:layout_marginTop="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="120dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:numColumns="2"
             android:horizontalSpacing="0dp"
             android:verticalSpacing="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sv_goods" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_boxshuaxin" />
 
 
 
@@ -102,67 +139,65 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_timemanagement"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="90dp"
+        android:layout_marginBottom="100dp"
         android:visibility="invisible"
         >
+        <LinearLayout
+            android:id="@+id/ll_shuaxin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="74dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="271dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="center"
-            android:text="活动类型"
-            app:layout_constraintBottom_toTopOf="@+id/expand_list_id"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
 
-        <ImageView
-            android:id="@+id/btn_shuaxin"
-            android:layout_width="38dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="236dp"
-            android:layout_marginBottom="13dp"
-            android:src="@drawable/img_shuaxin"
-            app:layout_constraintBottom_toTopOf="@+id/expand_list_id"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toTopOf="parent" />
+            >
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="活动类型"
+                android:gravity="center"
+                />
+            <ImageView
+                android:id="@+id/btn_shuaxin"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/img_shuaxin"
+
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+
+
+
 
 
         <ExpandableListView
             android:id="@+id/expand_list_id"
-            android:layout_width="405dp"
-            android:layout_height="350dp"
-            android:layout_marginTop="13dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:groupIndicator="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_shuaxin"></ExpandableListView>
+            app:layout_constraintTop_toBottomOf="@+id/ll_shuaxin"></ExpandableListView>
 
 
-        <ImageView
-            android:id="@+id/iv_addact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expand_list_id"
-            android:src="@drawable/img_addact" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="70dp"
         >
 
         <SearchView

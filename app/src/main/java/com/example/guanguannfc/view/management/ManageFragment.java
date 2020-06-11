@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +34,10 @@ import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataManagement.ActivityManage;
 import com.example.guanguannfc.controller.dataManagement.ThingManage;
 import com.example.guanguannfc.controller.nfcManagement.NFCManage;
+import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +45,7 @@ import java.util.Map;
 public class ManageFragment extends Fragment {
     public static boolean actisnfc=false;
     public static boolean boxisnfc=false;
-    private PopupWindow mPopWindow;
+    public PopupWindow mPopWindow;
     private String username;
     private ThingManage boxget;
     private String[][] box;
@@ -56,6 +59,9 @@ public class ManageFragment extends Fragment {
     private String name;
     private int num;
     private GridView gridView1;
+    TextView tv_box,tv_time;
+    // 获取颜色资源文件
+    int colorgray,colorRedDark;
     //Model：定义的数据
 
 
@@ -71,12 +77,12 @@ public class ManageFragment extends Fragment {
     private String name2;
     private String num2;
     private String boxlocation;
+    private String [] searchthings;
 
 //    NFC获取的值
     private String getBoxName="" ;
     private int boxIndex;
-
-
+    private int z;
 
     private View view;
     Context ctx;
@@ -89,7 +95,8 @@ public class ManageFragment extends Fragment {
             username = bundle.getString("username");
             getBoxName = bundle.getString("getboxname");
         }
-
+        tv_box=view.findViewById(R.id.tv_boxmanage);
+        tv_time=view.findViewById(R.id.tv_timemanagement);
 //        Toast.makeText(getActivity(),getBoxName,Toast.LENGTH_SHORT).show();
         ctx = getActivity();
         checkClick();
@@ -110,13 +117,6 @@ public class ManageFragment extends Fragment {
 
         getact=new ActivityManage(username,ctx);
         initView();
-        ImageView addact = view.findViewById(R.id.iv_addact);
-        addact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showaddact();
-            }
-        });
 
 
         gridView1= view.findViewById(R.id.box);
@@ -130,23 +130,67 @@ public class ManageFragment extends Fragment {
                     showbox(position);
                 }
             });
-
         }
-
+        ImageView s=view.findViewById(R.id.s);
+        s.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                box=null;
+                box=boxget.boxAndPosition();
+                if (box != null){
+                    boxnames= box[0];
+                    GridviewAdapter gridviewAdapter2=new GridviewAdapter(getActivity(),boxnames);
+                    gridView1.setAdapter(gridviewAdapter2);
+                    gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            showbox(position);
+                        }
+                    });
+                }
+            }
+        });
         lay_box=view.findViewById(R.id.layout_boxmanagement);
 //      lay_box.setVisibility(View.VISIBLE);
         lay_time=view.findViewById(R.id.layout_timemanagement);
         lay_time.setVisibility(View.INVISIBLE);
         lay_search=view.findViewById(R.id.layout_search);
         lay_search.setVisibility(View.INVISIBLE);
-        ListView lv_search = (ListView) view.findViewById(R.id.lv_search);
-        SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), this.getData20(),
-                R.layout.activity_listview2,
-                new String[]{"tvName","tv_shuliang"},
-                new int[]{R.id.tvName,R.id.tv_shuliang});
-        lv_search.setAdapter(mSimpleAdapter);
+        final ListView lv_search = (ListView) view.findViewById(R.id.lv_search);
 
+        SearchView sv=view.findViewById(R.id.sv);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            //输入完成后，提交时触发的方法，一般情况是点击输入法中的搜索按钮才会触发，表示现在正式提交了
+            public boolean onQueryTextSubmit(final String query) {
+                if (TextUtils.isEmpty(query)) {
+                    Toast.makeText(getActivity(), "请输入查找内容！", Toast.LENGTH_SHORT).show();
+                } else {
+                    searchthings=boxget.searchThing(query);
+                    SearchAdapter SearchAdapter=new SearchAdapter(getActivity(),searchthings,boxnames);
+                    lv_search.setAdapter(SearchAdapter);
+                    lv_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            int ss=1;
+                            for(int i=0;i<boxnames.length;i++){
+                                if(boxnames[i].equals(searchthings[position])){
+                                    ss=i;
+                                }else {
+                                }
+                            }
+                            showbox(ss);
 
+                        }
+                    });
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
 
         ImageView addbox = view.findViewById(R.id.iv_addbox);
@@ -266,6 +310,8 @@ public class ManageFragment extends Fragment {
         ListView listView =contentView.findViewById(R.id.listview);
         final TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
         tv_boxname.setText(box[0][num]);
+        final TextView tv_position=contentView.findViewById(R.id.tv_position);
+        tv_position.setText(box[1][num]);
         final String boxname=tv_boxname.getText().toString();
         String [][] thing=boxget.thingAndNumberInBox(box[0][num]);
         if(thing==null){
@@ -276,13 +322,13 @@ public class ManageFragment extends Fragment {
               goodsnum=thing[1];}
         MsimpleAdapter mSimpleAdapter = new MsimpleAdapter(getActivity(),goodsname,goodsnum, boxname,boxget,mPopWindow);
         listView.setAdapter(mSimpleAdapter);
-        Button btn2 =contentView.findViewById(R.id.btb_addgoods);
+        ImageView btn2 =contentView.findViewById(R.id.btb_addgoods);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle=new Bundle();
                 bundle.putString("boxname",boxname);
-                showaddgoods(boxname);
+                showaddgoods(boxname,num,mPopWindow);
             }
         });
         //显示PopupWindow
@@ -291,7 +337,7 @@ public class ManageFragment extends Fragment {
     }
 
 
-    private void showaddgoods(final String boxname){
+    private void showaddgoods(final String boxname, final int num2, final PopupWindow sPopWindow){
         final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_addgoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         Button btn_add_goods=contentView.findViewById(R.id.btn_add_goods);
@@ -302,12 +348,45 @@ public class ManageFragment extends Fragment {
                 EditText ed_num=contentView.findViewById(R.id.ed_num);
                 name=ed_name.getText().toString();
                 String i=ed_num.getText().toString();
-                boxName=boxname;
-                num=Integer.valueOf(i).intValue();
-                boxget.addThings(boxName,name,num);
-                mPopWindow.dismiss();
+                if(name.equals("")){
+                    Toast.makeText(getActivity(), "物品名称不能为空", Toast.LENGTH_SHORT ).show();
+                }
+                else {
+                    if(i.equals("")){
+                        Toast.makeText(getActivity(), "物品数量不能为空", Toast.LENGTH_SHORT ).show();
+                    }
+                    else {
+                        boxName=boxname;
+                        num=Integer.valueOf(i).intValue();
+                        String [][] thing=boxget.thingAndNumberInBox(box[0][num2]);
+                        if(thing==null){
+                            boxget.addThings(boxName,name,num);
+                            mPopWindow.dismiss();
+                            sPopWindow.dismiss();
+                        }
+                        else {
+                            String [] goodsname=thing[0];
+                            boolean isContains = Arrays.asList(goodsname).contains(name);
+                            if(isContains){
+                                shownoname();
+                            }
+                            else {
+                                boxget.addThings(boxName,name,num);
+                                mPopWindow.dismiss();
+                                sPopWindow.dismiss();
+                            }
+                        }
+                    }
+                }
             }
         });
+        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
+        mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+    }
+    private void shownoname(){
+        final View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_noname, null);
+        mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
@@ -355,6 +434,8 @@ public class ManageFragment extends Fragment {
     }
 
     private void initView() {
+        colorgray = getResources().getColor(R.color.colorgray);
+        colorRedDark = getResources().getColor(R.color.colorRedDark);
         groups=getact.getBigActivity(getActivity());
         for (int i =0;i<groups.length;i++){
             if (groups.length>1){
@@ -395,7 +476,6 @@ public class ManageFragment extends Fragment {
         expand_list_id.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                showToastShort(childs[groupPosition][childPosition]);
                 return true;
             }
         });
@@ -434,6 +514,8 @@ public class ManageFragment extends Fragment {
                 lay_box.setVisibility(View.VISIBLE);
                 lay_time.setVisibility(View.INVISIBLE);
                 lay_search.setVisibility(View.INVISIBLE);
+                tv_box.setTextColor(colorRedDark);
+                tv_time.setTextColor(colorgray);
             }
         });
         view.findViewById(R.id.tv_timemanagement).setOnClickListener(new View.OnClickListener() {
@@ -443,6 +525,8 @@ public class ManageFragment extends Fragment {
                 lay_box.setVisibility(View.INVISIBLE);
                 lay_time.setVisibility(View.VISIBLE);
                 lay_search.setVisibility(View.INVISIBLE);
+                tv_box.setTextColor(colorgray);
+                tv_time.setTextColor(colorRedDark);
             }
         });
         view.findViewById(R.id.sv_goods).setOnClickListener(new View.OnClickListener() {
@@ -508,6 +592,19 @@ public class ManageFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         // TODO Auto-generated method stub
         super.onHiddenChanged(hidden);
+    }
+
+    public void showScanBox(String boxname){
+        int boxnum=0;
+        for (int i=0;i<box[0].length;i++){
+            if (boxname.equals(box[0][i])){
+                boxnum=i;
+                break;
+            }
+        }
+        showbox(boxnum);
+
+
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.guanguannfc.view.pushs;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -26,9 +27,10 @@ public class PushFragment extends Fragment {
     private ListView lv_pushs;
     private String[][] pushs1;
     private PushAdapter pushAdapter;
-    private UserInfo userInfo;
-
-
+    private UserInfo push;
+    private Context context;
+    private String [][] pushlist;
+    private String [] pushl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,34 +39,20 @@ public class PushFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_push, container, false);
 
 //        Toast.makeText(getActivity(),"用户名"+userName,Toast.LENGTH_LONG).show();
-
-        Bundle bundle = this.getArguments();
-        if(bundle!=null){
-            userName = bundle.getString("username");
-//            isCount = bundle.getBoolean("isCount");
-        }
-
         lv_pushs= view.findViewById(R.id.lv_pushs);
-        getPushs();
+        push=new UserInfo(getActivity());
+        pushlist=push.Push();
         initPushs(pushs1);
-
         pushAdapter = new PushAdapter(getActivity(),R.layout.item_push,pushItemList);
         lv_pushs.setAdapter(pushAdapter);
         return view;
     }
     private void initPushs(String[][] array){
         pushItemList.clear();
-//        String[] push1 ={"时间管理的重要性","爱吃肉","当下社会的生活节奏越来越快，掌握好的事件间管理方式能够为大家带来以下好处...",Integer.toString(R.drawable.img_time1)};
-        for (int i = 0;i< array.length;i++){
-            PushItem pushItem1 = new PushItem(array[i],R.drawable.img_time1);
-            pushItemList.add(pushItem1);
-        }
-
-
-    }
-    private void getPushs(){
-        if (userInfo.Push()!=null){
-            pushs1 = userInfo.Push();
+        for(int i=0;i<pushlist.length;i++){
+            pushl=pushlist[i];
+            PushItem pushItem2 = new PushItem(pushlist[i],Integer.toString(R.drawable.img_time1));
+            pushItemList.add(pushItem2);
         }
     }
 }

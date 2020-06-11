@@ -75,7 +75,7 @@ public class Allactivity {
 
         if(list!=null){
             int n = list.size();
-            String[][] arr1 = new String[n][6];
+            String[][] arr1 = new String[n][7];
             for (int i=0; i<n; i++){
                 arr1[i][0]=list.get(i).getActivity_type();
                 arr1[i][1]=gt.transString(list.get(i).getBegin_time())[0][0];
@@ -83,6 +83,7 @@ public class Allactivity {
                 arr1[i][3]=gt.transString(list.get(i).getEnd_time())[0][1];
                 arr1[i][4]=gt.transString1(list.get(i).getLen_time());
                 arr1[i][5]=list.get(i).getActivity_name();
+                arr1[i][6]=String.valueOf(list.get(i).getBegin_time());
             }
             return arr1;
         }
@@ -92,7 +93,8 @@ public class Allactivity {
         }
 
     }
-    public boolean insertdata(String username,String actType,String actName,Long date,Long startTime,Long endTime){
+
+    public boolean insertdata(String username,String actName,Long startTime,Long endTime){
         return DS.insert(username,actName,startTime,endTime);
     }
 
