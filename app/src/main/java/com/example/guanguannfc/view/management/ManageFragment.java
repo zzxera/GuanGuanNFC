@@ -45,7 +45,7 @@ import java.util.Map;
 public class ManageFragment extends Fragment {
     public static boolean actisnfc=false;
     public static boolean boxisnfc=false;
-    private PopupWindow mPopWindow;
+    public PopupWindow mPopWindow;
     private String username;
     private ThingManage boxget;
     private String[][] box;
@@ -171,12 +171,15 @@ public class ManageFragment extends Fragment {
                     lv_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            int ss=1;
                             for(int i=0;i<boxnames.length;i++){
-                                if(boxnames[i]==searchthings[position]){
-                                    z=i;
+                                if(boxnames[i].equals(searchthings[position])){
+                                    ss=i;
+                                }else {
                                 }
-                                showbox(i);
                             }
+                            showbox(ss);
+
                         }
                     });
                 }
@@ -589,6 +592,19 @@ public class ManageFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         // TODO Auto-generated method stub
         super.onHiddenChanged(hidden);
+    }
+
+    public void showScanBox(String boxname){
+        int boxnum=0;
+        for (int i=0;i<box[0].length;i++){
+            if (boxname.equals(box[0][i])){
+                boxnum=i;
+                break;
+            }
+        }
+        showbox(boxnum);
+
+
     }
 
 }

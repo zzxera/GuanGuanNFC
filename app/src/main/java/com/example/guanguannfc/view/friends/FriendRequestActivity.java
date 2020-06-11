@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ public class FriendRequestActivity extends AppCompatActivity {
     private Friend friend;
     private String[][] arr_request;
 
+    private ImageView img_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,7 @@ public class FriendRequestActivity extends AppCompatActivity {
         userName=mainIntent.getStringExtra("username");
 
         lv_friendRequest = findViewById(R.id.lv_friendRequest);
+        img_back=findViewById(R.id.btn_back);
 
         getRequestList();
         initList();
@@ -71,7 +75,7 @@ public class FriendRequestActivity extends AppCompatActivity {
 
     private void getRequestList() {
         friend = new Friend(this);
-        arr_request = friend.friendapply("aaa");
+        arr_request = friend.friendapply(userName);
 //        if (arr_request!=null){
 //            Toast.makeText(FriendRequestActivity.this,arr_request[0][0],Toast.LENGTH_LONG).show();
 //        }
@@ -106,6 +110,15 @@ public class FriendRequestActivity extends AppCompatActivity {
             }
         });
 
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
+
+
 
 }
