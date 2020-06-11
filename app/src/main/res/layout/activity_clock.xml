@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".view.data.ClockActivity">
 
+    <LinearLayout
+        android:id="@+id/ll_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <include
+            android:id="@+id/include"
+            layout="@layout/item_topbar" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -17,7 +27,7 @@
         android:background="@drawable/img_clock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/ll_topbar"></ImageView>
 
     <LinearLayout
         android:id="@+id/ll_time"
@@ -211,7 +221,7 @@
         android:layout_marginEnd="70dp"
 
         android:background="@drawable/button_fillet"
-        android:backgroundTint="@color/design_default_color_primary_dark"
+        android:backgroundTint="@color/colorgray"
         android:textColor="@color/colorWhite"
         android:onClick="click"
         app:layout_constraintEnd_toEndOf="parent"

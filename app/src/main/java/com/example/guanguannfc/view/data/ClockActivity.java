@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.media.Image;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ public class ClockActivity  extends BaseNfcActivity {
     private String TimeInfo;
     private String[] infos;
     private Allactivity allactivity;
+    private ImageView img_back;
 
 //    分享
     private ShareDialog shareDialog;
@@ -133,6 +136,7 @@ public class ClockActivity  extends BaseNfcActivity {
         tv_duration=findViewById(R.id.tv_duration);
         tv_event_type=findViewById(R.id.tv_event_type);
         tv_event_name=findViewById(R.id.tv_event_name);
+        img_back=findViewById(R.id.btn_back);
 
         allactivity = new Allactivity(this);
 
@@ -192,6 +196,9 @@ public class ClockActivity  extends BaseNfcActivity {
                     Toast.makeText(ClockActivity.this,"请结束计时后再分享",Toast.LENGTH_LONG).show();
                 }
 
+                break;
+            case R.id.btn_back:
+                onBackPressed();
                 break;
 
         }
