@@ -71,7 +71,7 @@ public class FriendRequestActivity extends AppCompatActivity {
 
     private void getRequestList() {
         friend = new Friend(this);
-        arr_request = friend.friendapply("aaa");
+        arr_request = friend.friendapply(userName);
 //        if (arr_request!=null){
 //            Toast.makeText(FriendRequestActivity.this,arr_request[0][0],Toast.LENGTH_LONG).show();
 //        }
