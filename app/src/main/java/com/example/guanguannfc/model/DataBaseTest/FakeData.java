@@ -37,6 +37,14 @@ public class FakeData {
         DaoFriend daoFriend = new DaoFriend(context);
         DaoPush daoPush = new DaoPush(context);
 
+        String sum1 = "人生在世，俯仰之间，自当追求卓越，但有尽其所能";
+        String pas1 = "时间比水流失的还快，所以想做的事情就去努力，人这辈子，至少自己得对得起自己。";
+        String sum2 = "得意时不要得瑟，落魄时不要堕落";
+        String pas2 = "时间如流水，逝去了岁月，领悟了生活，顿悟了人生！珍惜当下的每一天，好好生活，静静领悟。昨天，删去。今天，留着。明天，争取。对的，坚持。错的，放弃。你再优秀也会有人对你不屑一顾，你再不堪也会有人把你视若生命。";
+        String sum3 = "自律可以改变人生";
+        String pas3 = "自律一词，我认为用心在律，应从自身出发，正人先正己。加强自我修养，提升自身素质，因为事物普遍联系的，不要指望为了自律而自律，全面提升自己修养时对自己加以自律教育，不觉间你已养成自律精神。";
+        String sum4 = "我要改变";
+        String pas4 = "跑步是个特别痛苦的过程，有几个关键的坎儿很那超越，我是了解自己的，停下一次我就再也坚持不下去，这种逼迫的方式后来却带给我彻头彻尾的改变，我不再抵触，反而爱上了这种整日与惰性做斗争的快感，享受一次次超越自己的过程。我终于明白，我的态度决定了生活的质量。";
 
         if(daoUserInfo.registrationQuery("aaa") != true){
             daoUserInfo.insert("aaa", "123123");
@@ -150,10 +158,10 @@ public class FakeData {
             daoFriend.insert(1,3);
             daoFriend.insert(2,1);
 
-            daoPush.insert(1,"学习计划","我又学习了","我学习了高数学习了英语学习了啥都学习了");
-            daoPush.insert(1,"工作计划","我又工作了","我做了PPT做了WORD做了EXCEL");
-            daoPush.insert(2,"游戏计划","我又玩游戏了","我玩了王者荣耀玩了和平精英");
-            daoPush.insert(2,"睡觉计划","我又睡觉了","我睡午觉了睡晚觉了");
+            daoPush.insert(1,"时间鸡汤",sum1,pas1);
+            daoPush.insert(1,"时间鸭汤",sum2,pas2);
+            daoPush.insert(2,"自律鸡汤",sum3,pas3);
+            daoPush.insert(2,"自律鸭汤",sum4,pas4);
 
         }
 
