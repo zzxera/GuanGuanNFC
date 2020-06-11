@@ -82,6 +82,12 @@ public class FrendFragment extends Fragment {
         }
         lv_friends.setAdapter(friendAdapter);
 
+        getFriendAct();
+        if (friendActList != null) {
+            initFriendAct(friendActList);
+        }
+        lv_friendAct.setAdapter(friendActAdapter);
+
     }
 
     private void initView(){
@@ -151,6 +157,12 @@ public class FrendFragment extends Fragment {
                 cl_friendAct.setVisibility(View.VISIBLE);
                 tv_friendAct.setTextColor(Color.RED);
                 tv_friend.setTextColor(R.color.colorgray);
+                getFriendAct();
+                if (friendActList != null) {
+                    initFriendAct(friendActList);
+                }
+                lv_friendAct.setAdapter(friendActAdapter);
+
             }
         });
 
