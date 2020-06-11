@@ -58,7 +58,7 @@ public class DaoMoment {
         String sql="update moment_list set is_processed=1,updated_time=? where from_id=(select _id from user_info where user_name=?) and to_id=(select _id from user_info where user_name=?)";
         Date date = new Date();
         long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{currentTime,user_name,friend_name});
+        db.execSQL(sql,new Object[]{currentTime,friend_name,user_name});
         db.close();
         return true;
     }
