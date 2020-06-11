@@ -171,12 +171,15 @@ public class ManageFragment extends Fragment {
                     lv_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            int ss=1;
                             for(int i=0;i<boxnames.length;i++){
-                                if(boxnames[i]==searchthings[position]){
-                                    z=i;
+                                if(boxnames[i].equals(searchthings[position])){
+                                    ss=i;
+                                }else {
                                 }
-                                showbox(i);
                             }
+                            showbox(ss);
+
                         }
                     });
                 }
