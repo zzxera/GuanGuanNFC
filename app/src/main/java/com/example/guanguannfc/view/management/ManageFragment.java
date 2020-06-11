@@ -45,7 +45,7 @@ import java.util.Map;
 public class ManageFragment extends Fragment {
     public static boolean actisnfc=false;
     public static boolean boxisnfc=false;
-    private PopupWindow mPopWindow;
+    public PopupWindow mPopWindow;
     private String username;
     private ThingManage boxget;
     private String[][] box;
@@ -589,6 +589,19 @@ public class ManageFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         // TODO Auto-generated method stub
         super.onHiddenChanged(hidden);
+    }
+
+    public void showScanBox(String boxname){
+        int boxnum=0;
+        for (int i=0;i<box[0].length;i++){
+            if (boxname.equals(box[0][i])){
+                boxnum=i;
+                break;
+            }
+        }
+        showbox(boxnum);
+
+
     }
 
 }

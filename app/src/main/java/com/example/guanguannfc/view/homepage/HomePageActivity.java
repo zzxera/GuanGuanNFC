@@ -2,6 +2,7 @@ package com.example.guanguannfc.view.homepage;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -65,6 +66,7 @@ import java.util.List;
 public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
     public static String userName;
     public static String actType,actName;
+    public static int pagenum;
     private RelativeLayout main_body;
     private LinearLayout main_bottom_bar;
     private RelativeLayout bottom_bar_1_btn,bottom_bar_2_btn,bottom_bar_3_btn,bottom_bar_4_btn;
@@ -367,6 +369,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 pushFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,pushFragment).commit();
                 setSelectStatus(0);
+                pagenum=0;
+
                 break;
             case R.id.bottom_bar_2_btn:
                 Bundle bundle2 = new Bundle();
@@ -375,6 +379,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 dataFragment.setArguments(bundle2);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
                 setSelectStatus(1);
+                pagenum=1;
+
                 break;
             case R.id.bottom_bar_3_btn:
                 Bundle bundle3 = new Bundle();
@@ -383,6 +389,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 manageFragment.setArguments(bundle3);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
                 setSelectStatus(2);
+                pagenum=2;
+
                 break;
             case R.id.bottom_bar_4_btn:
                 Bundle bundle4 = new Bundle();
@@ -390,6 +398,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 frendFragment.setArguments(bundle4);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body,frendFragment).commit();
                 setSelectStatus(3);
+                pagenum=3;
+
                 break;
 
         }
@@ -702,6 +712,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         dataFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
         setSelectStatus(1);
+        pagenum=1;
 
     }
 
@@ -1020,27 +1031,37 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    boolean isme=nfcManage.isNFCBelongToM(mTagText);
-                    if (isme){
+//                    boolean isme=nfcManage.isNFCBelongToM(mTagText);
+//                    if (isme){
                         //            Toast.makeText(HomePageActivity.this,"Box",Toast.LENGTH_SHORT).show();
                         String getBoxName = nfcManage.nfcForBox(mTagText);
                         if (getBoxName!=null){
-                            Bundle bundle_manage = new Bundle();
-                            bundle_manage.putString("username",userName);
-                            bundle_manage.putString("getboxname",getBoxName);
-                            manageFragment.setArguments(bundle_manage);
-                            getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
-                            setSelectStatus(2);
+
+                            if (pagenum!=2){
+                                Bundle bundle_manage = new Bundle();
+                                bundle_manage.putString("username",userName);
+                                bundle_manage.putString("getboxname",getBoxName);
+                                manageFragment.setArguments(bundle_manage);
+                                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,manageFragment).commit();
+                                setSelectStatus(2);
+                                pagenum=2;
+                            }
+                            else {
+                                manageFragment.showScanBox(getBoxName);
+                            }
+
+
+
                         }
                         else {
                             Toast.makeText(HomePageActivity.this,"盒子不存在",Toast.LENGTH_SHORT).show();
                         }
 
-                    }
-                    else {
-
-                        Toast.makeText(HomePageActivity.this,"这不是你的标签哦~",Toast.LENGTH_SHORT).show();
-                    }
+//                    }
+//                    else {
+//
+//                        Toast.makeText(HomePageActivity.this,"这不是你的标签哦~",Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
 
