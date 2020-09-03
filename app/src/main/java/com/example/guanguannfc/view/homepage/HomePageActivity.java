@@ -3,24 +3,32 @@ package com.example.guanguannfc.view.homepage;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.loader.content.CursorLoader;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -46,6 +54,9 @@ import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.controller.userManagement.Friend;
 import com.example.guanguannfc.controller.userManagement.UserInfo;
 import com.example.guanguannfc.model.Dao.DaoUserInfo;
+import com.example.guanguannfc.model.util.BitmapUtil;
+import com.example.guanguannfc.model.util.HttpUtil;
+import com.example.guanguannfc.model.util.PermisionUtil;
 import com.example.guanguannfc.view.data.ClockActivity;
 import com.example.guanguannfc.view.data.ClockService;
 import com.example.guanguannfc.view.data.DataFragment;
@@ -56,8 +67,11 @@ import com.example.guanguannfc.view.pushs.PushFragment;
 import com.example.guanguannfc.view.management.ManageFragment;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +86,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private RelativeLayout bottom_bar_1_btn,bottom_bar_2_btn,bottom_bar_3_btn,bottom_bar_4_btn;
     private TextView bottom_bar_text_1,bottom_bar_text_2,bottom_bar_text_3,bottom_bar_text_4;
     private TextView tv_userName,tv_prompt;
-    private ImageView bottom_bar_image_1,bottom_bar_image_2,bottom_bar_image_3,bottom_bar_image_4;
+    private ImageView bottom_bar_image_1,bottom_bar_image_2,bottom_bar_image_3,bottom_bar_image_4,img_head;
     private ConstraintLayout ctl_person,lay_actshow;
     private ConstraintLayout.LayoutParams layoutParams;
     private LinearLayout ll_container;
@@ -81,6 +95,10 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private GetTime getTime;
     private ListView lv_add;
     private View popupView;
+    private Drawable drawable;
+    int RESULT_LOAD_IMG = 2;
+    String img_src;
+    Bitmap bitmap;
 //    添加好友
     private AddFriendDialog addFriendDialog;
     private String addName,addRemark;
@@ -191,6 +209,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             bindService(intent,conn,Context.BIND_AUTO_CREATE);
 //            handler = new Handler();
         }
+        PermisionUtil.verifyStoragePermissions(this);
 
     }
 
@@ -228,6 +247,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         bottom_bar_2_btn=findViewById(R.id.bottom_bar_2_btn);
         bottom_bar_3_btn=findViewById(R.id.bottom_bar_3_btn);
         bottom_bar_4_btn=findViewById(R.id.bottom_bar_4_btn);
+        img_head = findViewById(R.id.img_head);
         bottom_bar_text_1=findViewById(R.id.bottom_bar_text_1);
         bottom_bar_text_2=findViewById(R.id.bottom_bar_text_2);
         bottom_bar_text_3=findViewById(R.id.bottom_bar_text_3);
@@ -243,6 +263,22 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         bottom_bar_2_btn.setOnClickListener(this);
         bottom_bar_3_btn.setOnClickListener(this);
         bottom_bar_4_btn.setOnClickListener(this);
+        img_head.setOnClickListener(this);
+        //加载头像
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                drawable = HttpUtil.getImg("img_head_"+userName);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        img_head.setImageDrawable(drawable);
+                    }
+                });
+
+            }
+        }).start();
+
 
 //        子fragment
         pushFragment = new PushFragment();
@@ -381,8 +417,18 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 changePage(3);
 
                 break;
+            case R.id.img_head:
+                loadImage();
+                break;
 
         }
+    }
+    //相册选择图片
+    public void loadImage() {
+        //这里就写了从相册中选择图片，相机拍照的就略过了
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
     }
 
     private void changePage(int p){
@@ -1147,6 +1193,59 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
 
             //                Toast.makeText(HomePageActivity.this,result,Toast.LENGTH_LONG).show();
+            //照片选择返回结果
+            case 2:
+                if (data != null) {
+                    Uri uri = data.getData();
+                    img_src = uri.getPath();//这是本机的图片路径
+
+                    ContentResolver cr = getContentResolver();
+                    try {
+                        InputStream inputStream = cr.openInputStream(uri);
+                        bitmap = BitmapFactory.decodeStream(inputStream);
+                        try {
+                            inputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        String[] proj = {MediaStore.Images.Media.DATA};
+                        CursorLoader loader = new CursorLoader(HomePageActivity.this, uri, proj, null, null, null);
+                        Cursor cursor = loader.loadInBackground();
+                        if (cursor != null) {
+                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                            cursor.moveToFirst();
+
+                            img_src = cursor.getString(column_index);//图片实际路径
+
+
+                            img_head.setImageBitmap(bitmap);
+                            final String path = BitmapUtil.saveMyBitmap(this, bitmap, "img_head_"+userName);
+
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    final String result = HttpUtil.uploadFile(new File(path), "img_head_" + userName);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(HomePageActivity.this, result, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }).start();
+
+
+                        }
+                        cursor.close();
+
+                    } catch (FileNotFoundException e) {
+                        Log.e("Exception", e.getMessage(), e);
+                    }
+                }
+
+                break;
         }
     }
 
