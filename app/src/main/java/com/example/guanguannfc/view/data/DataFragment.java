@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -57,7 +58,7 @@ public class DataFragment extends Fragment {
     private TextView tv_prompt,tv_noInfo,tv_noActInfo,tv_acttype;
     private String userName,txt_timeType,txt_showType,txt_startTime,txt_endTime,txt_actType;
     public String txt_showActType,txt_sortType;
-    private TextView tv_data,tv_allact;
+    private ImageView tv_allact,tv_data;
     private String[] allActName;
     private String[][] actAndTime;
     private Object[] ob_dataShow;
@@ -78,7 +79,7 @@ public class DataFragment extends Fragment {
     private ConstraintLayout.LayoutParams layoutParams;
     private boolean isCount;
     // 获取颜色资源文件
-    int colorgray,colorRedDark;
+    int colorgray,colorDark;
 
     //    分享
     private ShareDialog shareDialog;
@@ -146,7 +147,7 @@ public class DataFragment extends Fragment {
         tv_noInfo=view.findViewById(R.id.text_noInfo);
         tv_noActInfo=view.findViewById(R.id.text_noActInfo);
         tv_data=view.findViewById(R.id.text_show);
-        tv_allact =view.findViewById(R.id.text_allact);
+        tv_allact = view.findViewById(R.id.text_allact);
         ll_container = view.findViewById(R.id.ll_container);
         layoutParams = (ConstraintLayout.LayoutParams) lay_actshow.getLayoutParams();
 //        userName="aaa";
@@ -168,7 +169,7 @@ public class DataFragment extends Fragment {
 
 //      颜色
         colorgray = getResources().getColor(R.color.colorgray);
-        colorRedDark = getResources().getColor(R.color.colorRedDark);
+        colorDark = getResources().getColor(R.color.colorDark);
 
 
     }
@@ -502,8 +503,8 @@ public class DataFragment extends Fragment {
             public void onClick(View view) {
                 lay_datashow.setVisibility(View.VISIBLE);
                 lay_actshow.setVisibility(View.INVISIBLE);
-                tv_data.setTextColor(colorRedDark);
-                tv_allact.setTextColor(colorgray);
+                tv_data.setImageDrawable(getResources().getDrawable((R.drawable.img_datadisplay)));
+                tv_allact.setImageDrawable(getResources().getDrawable((R.drawable.img_noallact)));
             }
         });
         view.findViewById(R.id.text_allact).setOnClickListener(new View.OnClickListener() {
@@ -512,8 +513,8 @@ public class DataFragment extends Fragment {
             public void onClick(View view) {
                 lay_datashow.setVisibility(View.INVISIBLE);
                 lay_actshow.setVisibility(View.VISIBLE);
-                tv_data.setTextColor(colorgray);
-                tv_allact.setTextColor(colorRedDark);
+                tv_data.setImageDrawable(getResources().getDrawable((R.drawable.img_nodatadisplay)));
+                tv_allact.setImageDrawable(getResources().getDrawable((R.drawable.img_allact)));
             }
         });
         view.findViewById(R.id.button_starttime).setOnClickListener(new View.OnClickListener() {
