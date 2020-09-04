@@ -65,7 +65,7 @@ public class FrendFragment extends Fragment {
             initFriendAct(friendActList);
         }
 
-        friendAdapter = new FriendAdapter(getActivity(),R.layout.item_friend,friendItemsList);
+        friendAdapter = new FriendAdapter(getActivity(),R.layout.item_friend,friendItemsList,this);
         lv_friends.setAdapter(friendAdapter);
         friendActAdapter = new FriendActAdapter(getActivity(),R.layout.item_friendact,friendActItemList);
         lv_friendAct.setAdapter(friendActAdapter);

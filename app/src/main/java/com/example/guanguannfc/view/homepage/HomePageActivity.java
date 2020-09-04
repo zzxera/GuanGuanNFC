@@ -56,6 +56,7 @@ import com.example.guanguannfc.controller.userManagement.UserInfo;
 import com.example.guanguannfc.model.Dao.DaoUserInfo;
 import com.example.guanguannfc.model.util.BitmapUtil;
 import com.example.guanguannfc.model.util.HttpUtil;
+import com.example.guanguannfc.model.util.ImgNameUtil;
 import com.example.guanguannfc.model.util.PermisionUtil;
 import com.example.guanguannfc.view.data.ClockActivity;
 import com.example.guanguannfc.view.data.ClockService;
@@ -268,13 +269,16 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         new Thread(new Runnable() {
             @Override
             public void run() {
-                drawable = HttpUtil.getImg("img_head_"+userName);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        img_head.setImageDrawable(drawable);
-                    }
-                });
+                drawable = HttpUtil.getImg(ImgNameUtil.getImgHeadName(userName));
+                if(drawable != null){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            img_head.setImageDrawable(drawable);
+                        }
+                    });
+                }
+
 
             }
         }).start();
@@ -1221,12 +1225,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
 
                             img_head.setImageBitmap(bitmap);
-                            final String path = BitmapUtil.saveMyBitmap(this, bitmap, "img_head_"+userName);
+                            final String path = BitmapUtil.saveMyBitmap(this, bitmap, ImgNameUtil.getImgHeadName(userName));
 
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    final String result = HttpUtil.uploadFile(new File(path), "img_head_" + userName);
+                                    final String result = HttpUtil.uploadFile(new File(path), ImgNameUtil.getImgHeadName(userName));
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
