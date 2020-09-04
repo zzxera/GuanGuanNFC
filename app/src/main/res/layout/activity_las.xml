@@ -9,14 +9,14 @@
 
     <ImageView
         android:id="@+id/image_logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="410dp"
+        android:layout_height="255dp"
 
         android:src="@drawable/img_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="0dp"
 
         ></ImageView>
 
@@ -97,5 +97,6 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_logBtn"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"></LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
