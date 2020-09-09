@@ -165,6 +165,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         editorMain=sprfMain.edit();
         userName = sprfMain.getString("userName","未登录");
 
+        pagenum = sprfMain.getInt("pagenum",1);
+
         if (userName.equals("未登录")){
             Toast.makeText(this,userName,Toast.LENGTH_LONG).show();
         }
@@ -179,7 +181,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //        Toast.makeText(this,"用户名"+userName,Toast.LENGTH_LONG).show();
 
             initView();
-            setMain();
+            setMain(pagenum);
             checkClick();
             initDialog();
 
@@ -364,6 +366,28 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.bottom_bar_1_btn:
+                changePage(0);
+
+                break;
+            case R.id.bottom_bar_2_btn:
+                changePage(1);
+
+                break;
+            case R.id.bottom_bar_3_btn:
+                changePage(2);
+
+                break;
+            case R.id.bottom_bar_4_btn:
+                changePage(3);
+
+                break;
+
+        }
+    }
+
+    private void changePage(int p){
+        switch (p){
+            case 0:
                 Bundle bundle = new Bundle();
                 bundle.putString("username",userName);
                 pushFragment.setArguments(bundle);
@@ -372,7 +396,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 pagenum=0;
 
                 break;
-            case R.id.bottom_bar_2_btn:
+            case 1:
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("username",userName);
                 bundle2.putBoolean("isCount",isCount);
@@ -382,7 +406,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 pagenum=1;
 
                 break;
-            case R.id.bottom_bar_3_btn:
+            case 2:
                 Bundle bundle3 = new Bundle();
                 bundle3.putString("username",userName);
                 bundle3.putString("getboxname","");
@@ -392,7 +416,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 pagenum=2;
 
                 break;
-            case R.id.bottom_bar_4_btn:
+            case 3:
                 Bundle bundle4 = new Bundle();
                 bundle4.putString("username",userName);
                 frendFragment.setArguments(bundle4);
@@ -401,7 +425,6 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 pagenum=3;
 
                 break;
-
         }
     }
 
@@ -704,16 +727,16 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
     }
 
-    private void setMain() {
+    private void setMain(int p) {
         //getSupportFragmentManager() -> beginTransaction() -> add -> (R.id.main_boy,显示课程 new CourseFragment()
-        Bundle bundle = new Bundle();
-        bundle.putString("username",userName);
-        bundle.putBoolean("isCount",isCount);
-        dataFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
-        setSelectStatus(1);
-        pagenum=1;
-
+//        Bundle bundle = new Bundle();
+//        bundle.putString("username",userName);
+//        bundle.putBoolean("isCount",isCount);
+//        dataFragment.setArguments(bundle);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.main_body,dataFragment).commit();
+//        setSelectStatus(1);
+//        pagenum=1;
+        changePage(p);
     }
 
     private View showDialog(Dialog dialog, View view, int layout){
