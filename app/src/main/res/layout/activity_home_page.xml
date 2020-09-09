@@ -119,13 +119,13 @@
             app:layout_constraintTop_toBottomOf="@+id/img_head"></ListView>
 
         <Button
-            android:id="@+id/appearance"
+            android:id="@+id/btn_jifen"
             android:layout_width="107dp"
             android:layout_height="58dp"
             android:layout_marginStart="-10dp"
             android:layout_marginTop="100dp"
             android:background="@drawable/img_actback"
-            android:text="外观设置"
+            android:text="查看积分"
             android:textColor="@color/colorWhite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_head"
