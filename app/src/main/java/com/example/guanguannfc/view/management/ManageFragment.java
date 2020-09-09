@@ -112,7 +112,6 @@ public class ManageFragment extends Fragment {
                 }
             }
             showbox(boxIndex);
-
         }
 
         getact=new ActivityManage(username,ctx);
