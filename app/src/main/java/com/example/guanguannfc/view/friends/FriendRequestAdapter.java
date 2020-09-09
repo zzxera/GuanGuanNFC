@@ -60,7 +60,6 @@ public class FriendRequestAdapter extends ArrayAdapter {
                 }
             }
         }).start();
-
         imageView.setImageResource(R.drawable.img_head);
         name.setText(friendRequestItem.getName());
         remark.setText(friendRequestItem.getRemark());

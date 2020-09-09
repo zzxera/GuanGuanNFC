@@ -35,11 +35,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".controller.EnergyTree.EnergyTreeTest">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".view.friends.FriendRequestActivity">
 
@@ -115,13 +110,17 @@
         <activity android:name=".view.management.AddactActivity" />
         <activity android:name=".view.loginAndLogon.Forgetkey" />
 
-        <activity android:name=".view.loginAndLogon.LoginActivity"/>
         <activity android:name=".view.data.tree">
+
+        </activity>
+
+        <activity android:name=".view.loginAndLogon.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- model测试入口 -->
+        </activity>
+        <!-- model测试入口 -->
         <activity android:name=".model.DataBaseTest.LiuYuTest" />
         <activity android:name=".model.DataBaseTest.UserInfo" />
         <activity android:name=".model.DataBaseTest.DataQueryTest" />

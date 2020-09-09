@@ -141,7 +141,7 @@ public class DaoActSta {
         List<HelperActivity> list = new ArrayList<HelperActivity>();
         HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time,is_ranked,act_sta._id" +
                 " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
                 " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
                 " where user_ID=(select _id from User_Info where user_name=?) " +
@@ -152,7 +152,7 @@ public class DaoActSta {
             while (cursor.moveToNext()){
                 helperActivity = new HelperActivity(cursor.getString(0),
                         cursor.getString(1),cursor.getLong(2),
-                        cursor.getLong(3),cursor.getLong(4));
+                        cursor.getLong(3),cursor.getLong(4),cursor.getInt(5),cursor.getInt(6));
                 list.add(helperActivity);
             }
             return (ArrayList<HelperActivity>) list;
@@ -166,7 +166,7 @@ public class DaoActSta {
         List<HelperActivity> list = new ArrayList<HelperActivity>();
         HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time,is_rankes,act_sta._id " +
                 " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
                 " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
                 " where user_ID=(select _id from User_Info where user_name=?) " +
@@ -177,7 +177,7 @@ public class DaoActSta {
             while (cursor.moveToNext()){
                 helperActivity = new HelperActivity(cursor.getString(0),
                         cursor.getString(1),cursor.getLong(2),
-                        cursor.getLong(3),cursor.getLong(4));
+                        cursor.getLong(3),cursor.getLong(4),cursor.getInt(5),cursor.getInt(6));
                 list.add(helperActivity);
             }
             return (ArrayList<HelperActivity>) list;
@@ -191,7 +191,7 @@ public class DaoActSta {
         List<HelperActivity> list = new ArrayList<HelperActivity>();
         HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time,is_ranked,act_sta._id " +
                 " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
                 " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
                 " where user_ID=(select _id from User_Info where user_name=?) " +
@@ -202,7 +202,7 @@ public class DaoActSta {
             while (cursor.moveToNext()){
                 helperActivity = new HelperActivity(cursor.getString(0),
                         cursor.getString(1),cursor.getLong(2),
-                        cursor.getLong(3),cursor.getLong(4));
+                        cursor.getLong(3),cursor.getLong(4),cursor.getInt(5),cursor.getInt(6));
                 list.add(helperActivity);
             }
             return (ArrayList<HelperActivity>) list;
@@ -216,7 +216,7 @@ public class DaoActSta {
         List<HelperActivity> list = new ArrayList<HelperActivity>();
         HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time,is_ranked,act_sta._id " +
                 " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
                 " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
                 " where user_ID=(select _id from User_Info where user_name=?) " +
@@ -227,7 +227,7 @@ public class DaoActSta {
             while (cursor.moveToNext()){
                 helperActivity = new HelperActivity(cursor.getString(0),
                         cursor.getString(1),cursor.getLong(2),
-                        cursor.getLong(3),cursor.getLong(4));
+                        cursor.getLong(3),cursor.getLong(4),cursor.getInt(5),cursor.getInt(6));
                 list.add(helperActivity);
             }
             return (ArrayList<HelperActivity>) list;
@@ -246,7 +246,7 @@ public class DaoActSta {
         List<HelperActivity> list = new ArrayList<HelperActivity>();
         HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time,is_ranked,act_sta._id " +
                 " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
                 " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
                 " where user_ID=(select _id from User_Info where user_name=?) " +
@@ -258,7 +258,7 @@ public class DaoActSta {
             while (cursor.moveToNext()){
                 helperActivity = new HelperActivity(cursor.getString(0),
                         cursor.getString(1),cursor.getLong(2),
-                        cursor.getLong(3),cursor.getLong(4));
+                        cursor.getLong(3),cursor.getLong(4),cursor.getInt(5),cursor.getInt(6));
                 list.add(helperActivity);
             }
             return (ArrayList<HelperActivity>) list;
@@ -272,7 +272,7 @@ public class DaoActSta {
         List<HelperActivity> list = new ArrayList<HelperActivity>();
         HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time,is_ranked,act_sta._id " +
                 " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
                 " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
                 " where user_ID=(select _id from User_Info where user_name=?) " +
@@ -284,7 +284,7 @@ public class DaoActSta {
             while (cursor.moveToNext()){
                 helperActivity = new HelperActivity(cursor.getString(0),
                         cursor.getString(1),cursor.getLong(2),
-                        cursor.getLong(3),cursor.getLong(4));
+                        cursor.getLong(3),cursor.getLong(4),cursor.getInt(5),cursor.getInt(6));
                 list.add(helperActivity);
             }
             return (ArrayList<HelperActivity>) list;
@@ -298,7 +298,7 @@ public class DaoActSta {
         List<HelperActivity> list = new ArrayList<HelperActivity>();
         HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time,is_ranked,act_sta._id " +
                 " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
                 " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
                 " where user_ID=(select _id from User_Info where user_name=?) " +
@@ -310,7 +310,7 @@ public class DaoActSta {
             while (cursor.moveToNext()){
                 helperActivity = new HelperActivity(cursor.getString(0),
                         cursor.getString(1),cursor.getLong(2),
-                        cursor.getLong(3),cursor.getLong(4));
+                        cursor.getLong(3),cursor.getLong(4),cursor.getInt(5),cursor.getInt(6));
                 list.add(helperActivity);
             }
             return (ArrayList<HelperActivity>) list;
@@ -324,7 +324,7 @@ public class DaoActSta {
         List<HelperActivity> list = new ArrayList<HelperActivity>();
         HelperActivity helperActivity;
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time " +
+        String sql=" select act_type,act_name,start_time,end_time,end_time-start_time,is_ranked,act_sta._id " +
                 " from Act_Sta inner join Activity on Activity._id=Act_Sta.act_ID " +
                 " inner join Activity_Type on Activity_Type._id=Activity.type_ID " +
                 " where user_ID=(select _id from User_Info where user_name=?) " +
@@ -336,7 +336,7 @@ public class DaoActSta {
             while (cursor.moveToNext()){
                 helperActivity = new HelperActivity(cursor.getString(0),
                         cursor.getString(1),cursor.getLong(2),
-                        cursor.getLong(3),cursor.getLong(4));
+                        cursor.getLong(3),cursor.getLong(4),cursor.getInt(5),cursor.getInt(6));
                 list.add(helperActivity);
             }
             return (ArrayList<HelperActivity>) list;
