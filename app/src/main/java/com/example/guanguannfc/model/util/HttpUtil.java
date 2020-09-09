@@ -15,8 +15,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HttpUtil {
-    private static String urls = "http://192.168.43.222:8080/file/getImg";
-    private static String urls_1 = "http://192.168.43.222:8080/file/upload";
+    private static String urls = "http://39.97.66.19:8070/file/getImg";
+    private static String urls_1 = "http://39.97.66.19:8070/file/upload";
     public static String uploadFile(File file, String imgName) {
         String end = "\r\n";
         String twoHyphens = "--";
