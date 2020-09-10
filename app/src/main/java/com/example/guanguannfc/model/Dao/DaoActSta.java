@@ -54,6 +54,18 @@ public class DaoActSta {
         db.close();
         return true;
     }
+
+    //活动访问位 置0/1
+    public boolean update(int id,int is_ranked ){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="update Act_Sta set is_ranked=?,updated_time=? where _id=?";
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{is_ranked, currentTime, id});
+        db.close();
+        return true;
+    }
+
     //更新一条活动记录（用于分享活动，非计时界面）：需给定用户名、活动开始时间戳、分享文本
     public boolean update(String username,long start_time,String moment_text ){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
