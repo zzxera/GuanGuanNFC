@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.userManagement.UserInfo;
+import com.example.guanguannfc.model.Helper.HelperUserInfo;
 import com.example.guanguannfc.view.homepage.HomePageActivity;
 import com.example.guanguannfc.controller.userManagement.Login;
 import com.example.guanguannfc.view.lead.LeadActivity;
@@ -30,7 +31,8 @@ public class SigninFragment extends Fragment {
     private Login login ;
     private UserInfo leadupdate;
     private Boolean lead;
-
+    private HelperUserInfo leads;
+    private int id;
     Button button_signin;
     Context ctx;
 
@@ -51,11 +53,11 @@ public class SigninFragment extends Fragment {
         psw = sprfMain.getString("psw","");
         edit_username.setText(username);
         edit_psw.setText(psw);
-
         login=new Login(ctx);
         leadupdate = new UserInfo(ctx);
-        //lead=leadupdate.leadupdate(username);
-
+        leads =leadupdate.getlead(username);
+        id=leads.getIs_studied();
+        lead=leadupdate.leadupdate(username,id);
 //        View rootView = inflater.inflate(R.layout.signin, null); // 先解析file.xml布局，得到一个view
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +96,7 @@ public class SigninFragment extends Fragment {
 //                        bundle.putString("userName",username);
 //                        intent.putExtras(bundle);
 //                        startActivity(intent);
-                        //if(lead) {
+                        if(lead) {
                             Intent intent = new Intent(getActivity(), LeadActivity.class);
                             editorMain.putBoolean("main", true);
                             editorMain.putString("userName", username);
@@ -105,19 +107,19 @@ public class SigninFragment extends Fragment {
                             bundle.putString("userName", username);
                             intent.putExtras(bundle);
                             startActivity(intent);
-                        //}
-                       // else {
-                       //     Intent intent = new Intent(getActivity(), HomePageActivity.class);
-                       //     editorMain.putBoolean("main", true);
-                       //     editorMain.putString("userName", username);
-                       //     editorMain.putString("psw", psw);
-                       //     editorMain.commit();
-                           // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                          //  Bundle bundle = new Bundle();
-                          //  bundle.putString("userName", username);
-                         //   intent.putExtras(bundle);
-                        //    startActivity(intent);
-                        //}
+                        }
+                        else {
+                            Intent intent = new Intent(getActivity(), HomePageActivity.class);
+                            editorMain.putBoolean("main", true);
+                            editorMain.putString("userName", username);
+                            editorMain.putString("psw", psw);
+                            editorMain.commit();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("userName", username);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
                     }
 
                 }
