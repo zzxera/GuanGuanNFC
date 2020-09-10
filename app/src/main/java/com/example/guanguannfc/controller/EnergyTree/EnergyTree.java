@@ -60,9 +60,6 @@ public class EnergyTree extends FrameLayout{
 
     //设置小球数量
     public void setModelList(final List<BallModel> ballList, final List<TipsModel> tipsList) {
-        if (ballList == null || ballList.isEmpty()) {
-            return;
-        }
         removeAllViews();
         post(new Runnable() {
             @Override
