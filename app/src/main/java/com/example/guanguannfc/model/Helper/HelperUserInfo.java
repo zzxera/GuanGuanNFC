@@ -9,7 +9,7 @@ public class HelperUserInfo {
     private int rank;
     private int is_studied;
     private long created_time;
-    private long updateed_time;
+    private long updated_time;
 
     public HelperUserInfo() {
     }
@@ -23,7 +23,7 @@ public class HelperUserInfo {
         this.rank = rank;
         this.is_studied = is_studied;
         this.created_time = created_time;
-        this.updateed_time = updateed_time;
+        this.updated_time = updateed_time;
     }
 
     public int getId() {
@@ -91,11 +91,11 @@ public class HelperUserInfo {
     }
 
     public long getUpdateed_time() {
-        return updateed_time;
+        return updated_time;
     }
 
     public void setUpdateed_time(long updateed_time) {
-        this.updateed_time = updateed_time;
+        this.updated_time = updateed_time;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class HelperUserInfo {
                 ", rank=" + rank +
                 ", is_studied=" + is_studied +
                 ", created_time=" + created_time +
-                ", updateed_time=" + updateed_time +
+                ", updated_time=" + updated_time +
                 '}';
     }
 }
