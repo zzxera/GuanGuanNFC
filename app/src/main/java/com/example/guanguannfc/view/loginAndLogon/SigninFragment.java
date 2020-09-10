@@ -57,7 +57,6 @@ public class SigninFragment extends Fragment {
         leadupdate = new UserInfo(ctx);
         leads =leadupdate.getlead(username);
         id=leads.getIs_studied();
-        lead=leadupdate.leadupdate(username,id);
 //        View rootView = inflater.inflate(R.layout.signin, null); // 先解析file.xml布局，得到一个view
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +95,7 @@ public class SigninFragment extends Fragment {
 //                        bundle.putString("userName",username);
 //                        intent.putExtras(bundle);
 //                        startActivity(intent);
-                        if(lead) {
+                        if(id == 0) {
                             Intent intent = new Intent(getActivity(), LeadActivity.class);
                             editorMain.putBoolean("main", true);
                             editorMain.putString("userName", username);
@@ -106,6 +105,7 @@ public class SigninFragment extends Fragment {
                             Bundle bundle = new Bundle();
                             bundle.putString("userName", username);
                             intent.putExtras(bundle);
+                            lead=leadupdate.leadupdate(username,1);
                             startActivity(intent);
                         }
                         else {
