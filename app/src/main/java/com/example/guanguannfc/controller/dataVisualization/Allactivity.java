@@ -77,7 +77,7 @@ public class Allactivity {
 
         if(list!=null){
             int n = list.size();
-            String[][] arr1 = new String[n][7];
+            String[][] arr1 = new String[n][8];
             for (int i=0; i<n; i++){
                 arr1[i][0]=list.get(i).getActivity_type();
                 arr1[i][1]=gt.transString(list.get(i).getBegin_time())[0][0];
@@ -138,7 +138,7 @@ public class Allactivity {
 
         if (list != null) {
             int n = list.size();
-            String[][] arr1 = new String[n][7];
+            String[][] arr1 = new String[n][8];
             for (int i = 0; i < n; i++) {
                 arr1[i][0] = list.get(i).getActivity_type();
                 arr1[i][1] = gt.transString(list.get(i).getBegin_time())[0][0];

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -27,6 +28,8 @@ public class TreeAdapter  extends ArrayAdapter<TreeView> {
         TextView endtime= view.findViewById(R.id.text_endttime1);
         TextView len= view.findViewById(R.id.text_long1);
         TextView isselected = view.findViewById(R.id.text_isselected);
+
+        RelativeLayout relativeLayout = view.findViewById(R.id.listcolor);
         actType.setText(treeView.getActType());
         starttime.setText(treeView.getStartTime());
         endtime.setText(treeView.getEndTime());
@@ -35,10 +38,10 @@ public class TreeAdapter  extends ArrayAdapter<TreeView> {
 
         String p = treeView.getIsselected();
         if("已被获取".equals(p)){
-            convertView.setBackgroundColor(Color.parseColor("#66ffff"));
+            relativeLayout.setBackgroundColor(Color.parseColor("#70DB93"));
         }
         else {
-            convertView.setBackgroundColor(Color.parseColor("#ffffff"));
+            relativeLayout.setBackgroundColor(Color.parseColor("ffffff"));
         }
 
         return view;
