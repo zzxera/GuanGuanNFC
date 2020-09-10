@@ -67,8 +67,9 @@ public class EnergyTreeTest extends AppCompatActivity {
                 @Override
             public void onItemClick(BallModel ballModel) {
                 //Toast.makeText(EnergyTreeTest.this,"获得了"+ballModel.getValue()+"积分",Toast.LENGTH_SHORT).show();
-                Toast.makeText(EnergyTreeTest.this,"获得了"+ballModel.getID()+"积分",Toast.LENGTH_SHORT).show();
+                Toast.makeText(EnergyTreeTest.this,"获得了"+ballModel.getValue()+"积分",Toast.LENGTH_SHORT).show();
 
+                daoActSta.update(ballModel.getID(),1);
                 //需要给活动记录插入一条已使用过的标记
             }
         });
