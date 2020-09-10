@@ -53,7 +53,7 @@ public class DaoUserInfo {
     //更新引导页位置，
     public boolean updateStudy(String username,int is_studied){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update " + GuanContract.UserInfo.TABLE_NAME + " set is_studird=? , updated_time=? where user_name=?";
+        String sql="update " + GuanContract.UserInfo.TABLE_NAME + " set is_studied=? , updated_time=? where user_name=?";
 
         Date date = new Date();
         long currentTime = date.getTime();
