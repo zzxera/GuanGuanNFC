@@ -2,6 +2,7 @@ package com.example.guanguannfc.controller.EnergyTree;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,11 @@ import com.example.guanguannfc.controller.EnergyTree.model.TipsModel;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.model.Dao.DaoActSta;
+import com.example.guanguannfc.model.Dao.DaoBox;
+import com.example.guanguannfc.model.Dao.DaoBoxContent;
 import com.example.guanguannfc.model.DataBaseTest.FakeData;
+import com.example.guanguannfc.model.Helper.HelperActivity;
+import com.example.guanguannfc.model.Helper.HelperActivityType;
 import com.example.guanguannfc.model.Initialization;
 
 import java.util.ArrayList;
@@ -26,11 +31,13 @@ public class EnergyTreeTest extends AppCompatActivity {
     private EnergyTree mWaterFlake;
     private List<BallModel> mBallList;
     private List<TipsModel> mTipsList;
-    private String username;
 
-    String [][] Data;
-    private Allactivity allactivity = new Allactivity(this);
-    private DaoActSta daoActSta;
+    private String username;
+    private Context context;
+
+    DaoActSta daoActSta = new  DaoActSta(this);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +66,8 @@ public class EnergyTreeTest extends AppCompatActivity {
         mWaterFlake.setOnBallItemListener(new EnergyTree.OnBallItemListener() {
                 @Override
             public void onItemClick(BallModel ballModel) {
-                Toast.makeText(EnergyTreeTest.this,"获得了"+ballModel.getValue()+"积分",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EnergyTreeTest.this,"获得了"+ballModel.getValue()+"积分",Toast.LENGTH_SHORT).show();
+                Toast.makeText(EnergyTreeTest.this,"获得了"+ballModel.getID()+"积分",Toast.LENGTH_SHORT).show();
 
                 //需要给活动记录插入一条已使用过的标记
             }
@@ -75,37 +83,25 @@ public class EnergyTreeTest extends AppCompatActivity {
 
     private void initData() {
         mBallList = new ArrayList<>();
-//        daoActSta.queryByTimeDesc(username,"学习");
-//        daoActSta.queryByTimeDesc(username,"工作");
-//        daoActSta.queryByTimeDesc(username,"锻炼");
-
-        //需要的是大类Data[][0]，以及时间长度Data[][4]
-        Data = allactivity.sortedactivity1("aaa","全部","最新活动在前");
-
-        Log.d(TAG,"本条活动记录为:"+ Data[8][0]);
-        Log.d(TAG,"本条活动记录为:"+ Data[9][1]);
-        Log.d(TAG,"本条活动记录为:"+ Data[10][2]);
-//        Log.d(TAG,"本条活动记录为:"+ Data[1][3]);
-//        Log.d(TAG,"本条活动记录为:"+ Integer.toString(StudyPoint("18000000")));
-//        Log.d(TAG,"本条活动记录为:"+ Data[1][5]);
-//        Log.d(TAG,"本条活动记录为:"+ Data[1][6]);
-
-//        Log.d(TAG, "本条活动记录为: " + daoActSta.queryByTimeDesc(username,"学习"));
-        for (int n = 0; n <= 23; n++){
-            if (Data[n][0].equals("学习")){
-                String point = Integer.toString(StudyPoint(Data[n][4]));
-                Log.d(TAG,"本条活动记录为:"+ point);
-                mBallList.add(new BallModel("积分",point));
-            }else if(Data[n][0].equals("工作")){
-                String point = Integer.toString(WEPoint(Data[n][4]));
-                Log.d(TAG,"本条活动记录为:"+ point);
-                mBallList.add(new BallModel("积分",point));
-
-            }else if(Data[n][0].equals("锻炼")){
-                String point = Integer.toString(WEPoint(Data[n][4]));
-                Log.d(TAG,"本条活动记录为:"+ point);
-                mBallList.add(new BallModel("积分",point));
+        ArrayList<HelperActivity> helperActivities = daoActSta.queryByLengthDesc("bbb");
+        for (HelperActivity activity : helperActivities) {
+            int ranked = activity.getIs_ranked();
+            long time = activity.getLen_time();
+            int id = activity.getId();
+            if (ranked == 0 && WEPoint(time+"") > 0){
+                String type = activity.getActivity_type();
+                if (type.equals("学习")) {
+                    String point = Integer.toString(StudyPoint(time+""));
+                    mBallList.add(new BallModel("积分",point,id));
+                }else if (type.equals("工作")){
+                    String point = Integer.toString(WEPoint(time+""));
+                    mBallList.add(new BallModel("积分",point,id));
+                }else if(type.equals("锻炼")){
+                    String point = Integer.toString(WEPoint(time+""));
+                    mBallList.add(new BallModel("积分",point,id));
+                }
             }
+
         }
 
         //提示：积分规则
@@ -113,7 +109,7 @@ public class EnergyTreeTest extends AppCompatActivity {
         mTipsList.add(new TipsModel(" 学习半小时2分！"));
         mTipsList.add(new TipsModel(" 锻炼半小时1分！"));
         mTipsList.add(new TipsModel(" 工作半小时1分！"));
-        mTipsList.add(new TipsModel(" 积分球最多攒8个！"));
+        mTipsList.add(new TipsModel(" 养成良好的习惯！"));
     }
 
     private int StudyPoint(String time){
