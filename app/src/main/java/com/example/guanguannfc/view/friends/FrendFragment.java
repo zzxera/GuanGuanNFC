@@ -66,7 +66,7 @@ public class FrendFragment extends Fragment {
             initFriendAct(friendActList);
         }
 
-        friendAdapter = new FriendAdapter(getActivity(),R.layout.item_friend,friendItemsList);
+        friendAdapter = new FriendAdapter(getActivity(),R.layout.item_friend,friendItemsList,this);
         lv_friends.setAdapter(friendAdapter);
         friendActAdapter = new FriendActAdapter(getActivity(),R.layout.item_friendact,friendActItemList);
         lv_friendAct.setAdapter(friendActAdapter);
@@ -156,8 +156,8 @@ public class FrendFragment extends Fragment {
             public void onClick(View view) {
                 cl_friend.setVisibility(View.INVISIBLE);
                 cl_friendAct.setVisibility(View.VISIBLE);
-                tv_friendAct.setImageDrawable(getResources().getDrawable((R.drawable.img_nofriend1)));
-                tv_friend.setImageDrawable(getResources().getDrawable((R.drawable.img_friend2)));
+                tv_friendAct.setImageDrawable(getResources().getDrawable((R.drawable.img_friend1)));
+                tv_friend.setImageDrawable(getResources().getDrawable((R.drawable.img_nofriend2)));
                 getFriendAct();
                 if (friendActList != null) {
                     initFriendAct(friendActList);
