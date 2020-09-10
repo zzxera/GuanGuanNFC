@@ -8,6 +8,7 @@ import com.example.guanguannfc.model.Dao.DaoMoment;
 import com.example.guanguannfc.model.Dao.DaoPush;
 import com.example.guanguannfc.model.Dao.DaoUserInfo;
 import com.example.guanguannfc.model.Helper.HelperPush;
+import com.example.guanguannfc.model.Helper.HelperUserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,9 @@ public class UserInfo {
         else {
             return false;
         }
+    }
+    public HelperUserInfo getlead(String username){
+        return DU.queryUser(username);
     }
 
 /*public String [][] Userinfor(String username){
