@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.guanguannfc.model.GuanContract;
 import com.example.guanguannfc.model.GuanSQLHelper;
+import com.example.guanguannfc.model.Helper.HelperUserInfo;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,6 +27,8 @@ public class DaoUserInfo {
         mDataBaseHelper=new GuanSQLHelper(context);
 
     }
+    //
+
     //插入一个用户：需要给定用户名和密码
     public boolean insert(String username,String password){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
@@ -50,14 +53,13 @@ public class DaoUserInfo {
     //更新引导页位置，
     public boolean updateStudy(String username,int is_studied){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="update " + GuanContract.UserInfo.TABLE_NAME + " set is_studird=? , updated_time=? where user_name=?";
+        String sql="update " + GuanContract.UserInfo.TABLE_NAME + " set is_studied=? , updated_time=? where user_name=?";
 
         Date date = new Date();
         long currentTime = date.getTime();
         db.execSQL(sql,new Object[]{is_studied,currentTime,username});
         db.close();
         return true;
-
     }
 
     //删除一个用户：需要给定用户名
@@ -81,6 +83,30 @@ public class DaoUserInfo {
         return true;
 
     }
+    //根据用户名查询得到用户的全部信息
+    public HelperUserInfo queryUser(String username){
+        HelperUserInfo helperUserInfo = new HelperUserInfo();
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="select * from " + GuanContract.UserInfo.TABLE_NAME + " where user_name=?";
+        Cursor cursor=db.rawQuery(sql,new String[]{username});
+        //Cursor cursor=db.query(Constants.TABLE_NAME,new String[]{"username","password"},"username=? and password=?",new String[]{username,password},null,null,null);
+        if(cursor.getCount()!=0){
+            while (cursor.moveToNext()) {
+                helperUserInfo.setId(cursor.getInt(0));
+                helperUserInfo.setUser_name(cursor.getString(1));
+                helperUserInfo.setPassword(cursor.getString(2));
+                helperUserInfo.setActive_day(cursor.getInt(3));
+                helperUserInfo.setLast_act(cursor.getString(4));
+                helperUserInfo.setRank(cursor.getInt(5));
+                helperUserInfo.setIs_studied(cursor.getInt(6));
+                helperUserInfo.setCreated_time(cursor.getLong(7));
+                helperUserInfo.setUpdateed_time(cursor.getLong(8));
+            }
+        }
+        return helperUserInfo;
+
+    }
+
     //登录查询：需要给定用户名和密码
     public boolean loadQuery(String username,String password){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();

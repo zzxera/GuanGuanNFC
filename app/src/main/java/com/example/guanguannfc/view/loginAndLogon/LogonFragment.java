@@ -33,7 +33,6 @@ public class LogonFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_logon, container, false);
         ctx=getActivity();
         register=new Register(ctx);
-
         btn_logon=view.findViewById(R.id.button_logon_confirm);
         edit_username=view.findViewById(R.id.edit_username);
         edit_psw=view.findViewById(R.id.edit_psw);

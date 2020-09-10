@@ -8,6 +8,7 @@ import com.example.guanguannfc.model.Dao.DaoMoment;
 import com.example.guanguannfc.model.Dao.DaoPush;
 import com.example.guanguannfc.model.Dao.DaoUserInfo;
 import com.example.guanguannfc.model.Helper.HelperPush;
+import com.example.guanguannfc.model.Helper.HelperUserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,18 @@ public class UserInfo {
                 return false;
             }
         }
+    }
+    public boolean leadupdate(String username,int is_studied){
+        boolean a= DU.updateStudy(username,is_studied);
+        if(a){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public HelperUserInfo getlead(String username){
+        return DU.queryUser(username);
     }
 
 /*public String [][] Userinfor(String username){
