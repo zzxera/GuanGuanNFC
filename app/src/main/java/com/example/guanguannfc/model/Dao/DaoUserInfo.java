@@ -46,6 +46,19 @@ public class DaoUserInfo {
         return true;
 
     }
+
+    //更新引导页位置，
+    public boolean updateStudy(String username,int is_studied){
+        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+        String sql="update " + GuanContract.UserInfo.TABLE_NAME + " set is_studird=? , updated_time=? where user_name=?";
+
+        Date date = new Date();
+        long currentTime = date.getTime();
+        db.execSQL(sql,new Object[]{is_studied,currentTime,username});
+        db.close();
+        return true;
+    }
+
     //删除一个用户：需要给定用户名
     public boolean delete(String username){
         SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
