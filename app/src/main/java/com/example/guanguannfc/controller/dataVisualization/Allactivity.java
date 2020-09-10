@@ -77,7 +77,7 @@ public class Allactivity {
 
         if(list!=null){
             int n = list.size();
-            String[][] arr1 = new String[n][7];
+            String[][] arr1 = new String[n][8];
             for (int i=0; i<n; i++){
                 arr1[i][0]=list.get(i).getActivity_type();
                 arr1[i][1]=gt.transString(list.get(i).getBegin_time())[0][0];
@@ -138,7 +138,7 @@ public class Allactivity {
 
         if (list != null) {
             int n = list.size();
-            String[][] arr1 = new String[n][7];
+            String[][] arr1 = new String[n][8];
             for (int i = 0; i < n; i++) {
                 arr1[i][0] = list.get(i).getActivity_type();
                 arr1[i][1] = gt.transString(list.get(i).getBegin_time())[0][0];
@@ -147,6 +147,7 @@ public class Allactivity {
                 arr1[i][4] = String.valueOf(list.get(i).getLen_time());
                 arr1[i][5] = list.get(i).getActivity_name();
                 arr1[i][6] = String.valueOf(list.get(i).getBegin_time());
+                arr1[i][7] = String.valueOf(list.get(i).getIs_ranked());
             }
             return arr1;
         } else {

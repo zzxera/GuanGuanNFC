@@ -64,9 +64,18 @@ public class tree extends AppCompatActivity {
     public void initView(){
         Data = allactivity.sortedactivity1("aaa","全部","最新活动在前");
         for (int a= 0; a<10; a++){
-            double f = Math.ceil(Integer.parseInt(Data[a][4])/50000);
-            TreeView t = new TreeView(Data[a][0],Data[a][1],Data[a][2],String.valueOf(f));
-            tl.add(t);
+            //double f = Math.ceil(Integer.parseInt(Data[a][4])/50000);
+            if(Data[a][0] .equals("学习")|| Data[a][0].equals("工作")){
+                if(Data[a][7].equals("0")){
+                    TreeView t = new TreeView(Data[a][0],Data[a][1],Data[a][2],String.valueOf(2*Integer.parseInt(Data[a][4])/(30*60*10)),"未被收取");
+                    tl.add(t);
+                }
+                else {
+                    TreeView t2 = new TreeView(Data[a][0],Data[a][1],Data[a][2],String.valueOf(2*Integer.parseInt(Data[a][4])/(30*60*10)),"已被收取");
+                    tl.add(t2);
+                }
+            }
+
         }
     }
 
