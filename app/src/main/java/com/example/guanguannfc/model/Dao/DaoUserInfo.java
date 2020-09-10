@@ -60,7 +60,6 @@ public class DaoUserInfo {
         db.execSQL(sql,new Object[]{is_studied,currentTime,username});
         db.close();
         return true;
-
     }
 
     //删除一个用户：需要给定用户名

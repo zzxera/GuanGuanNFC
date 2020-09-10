@@ -34,12 +34,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+        <activity android:name=".controller.EnergyTree.EnergyTreeTest"></activity>
+
         <activity android:name=".controller.EnergyTree.EnergyTreeTest">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
+
         <activity android:name=".view.friends.FriendRequestActivity">
 
         </activity>
@@ -113,12 +114,14 @@
         <activity android:name=".view.management.BoxtipActivity" />
         <activity android:name=".view.management.AddactActivity" />
         <activity android:name=".view.loginAndLogon.Forgetkey" />
-
-        <activity android:name=".view.data.tree">
-
-        </activity>
+        <activity android:name=".view.data.tree"></activity>
 
         <activity android:name=".view.loginAndLogon.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <!-- model测试入口 -->

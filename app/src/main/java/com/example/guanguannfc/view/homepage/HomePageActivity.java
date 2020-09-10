@@ -45,6 +45,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guanguannfc.R;
+import com.example.guanguannfc.controller.EnergyTree.EnergyTreeTest;
 import com.example.guanguannfc.controller.dataManagement.ActivityManage;
 import com.example.guanguannfc.controller.dataManagement.ThingManage;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
@@ -96,6 +97,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private GetTime getTime;
     private ListView lv_add;
     private View popupView;
+    private Button btn_jifen;
     private Drawable drawable;
     int RESULT_LOAD_IMG = 2;
     String img_src;
@@ -241,7 +243,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         ll_container=findViewById(R.id.ll_container);
         tv_userName=findViewById(R.id.text_userName);
         tv_userName.setText(userName);
-
+        btn_jifen=findViewById(R.id.btn_jifen);
 //        底部导航栏
         main_bottom_bar=findViewById(R.id.main_bottom_bar);
         bottom_bar_1_btn=findViewById(R.id.bottom_bar_1_btn);
@@ -520,6 +522,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             }
         });
 
+        btn_jifen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(HomePageActivity.this, EnergyTreeTest.class);
+                startActivity(intent);
+            }
+        });
         img_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
