@@ -1,18 +1,22 @@
 package com.example.guanguannfc.model.Helper;
 
 public class HelperActivity {
-
+    private int id;
     private String activity_type;
     private String activity_name;
     private long begin_time;
     private long end_time;
     private long len_time;
-    public HelperActivity(String activity_type,String activity_name, long begin_time, long end_time, long len_time) {
+    private int is_ranked;
+
+    public HelperActivity(String activity_type, String activity_name, long begin_time, long end_time, long len_time, int is_ranked,int id) {
+        this.id = id;
         this.activity_type = activity_type;
         this.activity_name = activity_name;
         this.begin_time = begin_time;
         this.end_time = end_time;
         this.len_time = len_time;
+        this.is_ranked = is_ranked;
     }
 
     public String getActivity_type() {
@@ -55,13 +59,19 @@ public class HelperActivity {
         this.len_time = len_time;
     }
 
-    @Override
-    public String toString() {
-        String str = "activity_type"+this.getActivity_type()+"\n"+
-                "activity_name"+this.getActivity_name()+"\n"+
-                "begin_time"+this.getBegin_time()+"\n"+
-                "end_time"+this.getEnd_time()+"\n"+
-                "len_time"+this.getLen_time()+"\n";
-        return str;
+    public int getIs_ranked() {
+        return is_ranked;
+    }
+
+    public void setIs_ranked(int is_ranked) {
+        this.is_ranked = is_ranked;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
