@@ -3,6 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.guanguannfc">
 
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,9 +34,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".controller.EnergyTree.EnergyTreeTest">
-
-        </activity>
+        <activity android:name=".controller.EnergyTree.EnergyTreeTest"></activity>
         <activity android:name=".view.friends.FriendRequestActivity">
 
         </activity>
@@ -89,13 +109,15 @@
         <activity android:name=".view.management.AddactActivity" />
         <activity android:name=".view.loginAndLogon.Forgetkey" />
         <activity android:name=".view.data.tree"></activity>
+
         <activity android:name=".view.loginAndLogon.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- model测试入口 -->
+        </activity>
+        <!-- model测试入口 -->
         <activity android:name=".model.DataBaseTest.LiuYuTest" />
         <activity android:name=".model.DataBaseTest.UserInfo" />
         <activity android:name=".model.DataBaseTest.DataQueryTest" />
