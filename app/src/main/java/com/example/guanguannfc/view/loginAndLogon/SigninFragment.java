@@ -107,7 +107,6 @@ public class SigninFragment extends Fragment {
                             intent.putExtras(bundle);
                             lead=leadupdate.leadupdate(username,1);
                             startActivity(intent);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         }
                         else {
                             Intent intent = new Intent(getActivity(), HomePageActivity.class);
