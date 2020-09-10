@@ -63,7 +63,7 @@ public class FriendRequestActivity extends AppCompatActivity {
                 FriendRequestItem friendRequestItem = new FriendRequestItem(arr_request[i]);
                 friendRequestItemsList.add(friendRequestItem);
             }
-            friendRequestAdapter = new FriendRequestAdapter(FriendRequestActivity.this,R.layout.item_friendrequest,friendRequestItemsList);
+            friendRequestAdapter = new FriendRequestAdapter(FriendRequestActivity.this,R.layout.item_friendrequest,friendRequestItemsList,this);
             lv_friendRequest.setAdapter(friendRequestAdapter);
         }
 
