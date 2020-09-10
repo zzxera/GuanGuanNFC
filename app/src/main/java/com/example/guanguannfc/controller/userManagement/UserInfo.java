@@ -37,6 +37,15 @@ public class UserInfo {
             }
         }
     }
+    public boolean leadupdate(String username,int is_studied){
+        boolean a= DU.updateStudy(username,is_studied);
+        if(a){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
 /*public String [][] Userinfor(String username){
 
