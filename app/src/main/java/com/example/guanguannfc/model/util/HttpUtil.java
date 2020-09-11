@@ -133,7 +133,7 @@ public class HttpUtil {
     public static String get(String urls, String params) {
         try {
             // 1. 获取访问地址URL
-            URL url = new URL(urls + params);
+            URL url = new URL(urls + "?" + params);
             // 2. 创建HttpURLConnection对象
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
@@ -177,6 +177,77 @@ public class HttpUtil {
             e.printStackTrace();
         }
         return "网络故障";
+
+    }
+
+
+    public static String post(String urls, String params) {
+        OutputStream out = null;
+        BufferedReader bufferedReader = null;
+        try {
+
+            // 1. 获取访问地址URL
+            URL url = new URL(urls);
+            // 2. 创建HttpURLConnection对象
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            /* 3. 设置请求参数等 */
+            // 请求方式
+            connection.setRequestMethod("POST");
+            // 超时时间
+            connection.setConnectTimeout(200);
+            // 设置是否输出
+            connection.setDoOutput(true);
+            // 设置是否读入
+            connection.setDoInput(true);
+            // 设置是否使用缓存
+            connection.setUseCaches(true);
+            // 设置此 HttpURLConnection 实例是否应该自动执行 HTTP 重定向
+            connection.setInstanceFollowRedirects(true);
+            // 设置使用标准编码格式编码参数的名-值对
+            connection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+            // 连接(有问题)
+//            connection.connect();
+
+            int code = connection.getResponseCode();
+            if (code == 200) {
+                /* 4. 处理输入输出 */
+                // 写入参数到请求中
+                out = connection.getOutputStream();
+                out.write(params.getBytes());
+
+                // 从连接中读取响应信息
+                bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String temp = null;
+                StringBuffer stringBuffer = new StringBuffer();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(temp);
+                }
+                return stringBuffer.toString();
+
+            }
+            // 5. 断开连接
+            connection.disconnect();
+
+            // 处理结果
+            return "网络错误";
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                out.flush();
+                out.close();
+                bufferedReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                return "网络错误";
+            }
+        }
+
 
     }
 }

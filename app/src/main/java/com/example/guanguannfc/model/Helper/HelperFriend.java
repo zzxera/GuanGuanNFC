@@ -2,11 +2,14 @@ package com.example.guanguannfc.model.Helper;
 
 public class HelperFriend {
     private String user_name;
-    private int level;
+    private int active_day;
 
-    public HelperFriend(String user_name, int level) {
+    public HelperFriend() {
+    }
+
+    public HelperFriend(String user_name, int active_day) {
         this.user_name = user_name;
-        this.level = level;
+        this.active_day = active_day;
     }
 
     public String getUser_name() {
@@ -17,19 +20,19 @@ public class HelperFriend {
         this.user_name = user_name;
     }
 
-    public int getLevel() {
-        return level;
+    public int getActive_day() {
+        return active_day;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setActive_day(int active_day) {
+        this.active_day = active_day;
     }
 
     @Override
     public String toString() {
         return "HelperFriend{" +
                 "user_name='" + user_name + '\'' +
-                ", level=" + level +
+                ", active_day=" + active_day +
                 '}';
     }
 }
