@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.SoundPool;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -84,9 +85,18 @@ public class ManageFragment extends Fragment {
     private String getBoxName="" ;
     private int boxIndex;
     private int z;
-
+    private SoundPool mSoundPool = null;
+    private HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();//声明HashMap来存放声音文件
     private View view;
     Context ctx;
+    private void initSoundPool() throws Exception{//初始化声音池
+        SoundPool.Builder spb = new SoundPool.Builder();
+        spb.setMaxStreams(10);
+        //spb.setAudioAttributes(null);    //转换音频格式
+        mSoundPool = spb.build();
+        //加载声音文件，并且设置为1号声音放入hm中
+        hm.put(1, mSoundPool.load(getActivity(), R.raw.drawer_guan, 1));
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -101,6 +111,11 @@ public class ManageFragment extends Fragment {
 //        Toast.makeText(getActivity(),getBoxName,Toast.LENGTH_SHORT).show();
         ctx = getActivity();
         checkClick();
+        try {
+            initSoundPool();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        Toast.makeText(getActivity(),"用户名"+username,Toast.LENGTH_LONG).show();
         boxget =new ThingManage(username,ctx);
         box=boxget.boxAndPosition();
@@ -144,6 +159,7 @@ public class ManageFragment extends Fragment {
                     gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                             showbox(position);
                         }
                     });
