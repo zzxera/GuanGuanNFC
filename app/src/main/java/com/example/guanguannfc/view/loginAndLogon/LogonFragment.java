@@ -2,6 +2,7 @@ package com.example.guanguannfc.view.loginAndLogon;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.example.guanguannfc.controller.userManagement.Register;
 
 import com.example.guanguannfc.R;
 
+import java.util.HashMap;
+
 public class LogonFragment extends Fragment {
 
     private EditText edit_username,edit_psw,edit_psw_confirm;
@@ -26,9 +29,19 @@ public class LogonFragment extends Fragment {
     private Context ctx;
     private Button btn_logon;
     private Register register;
+    private SoundPool mSoundPool = null;
+    private HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();//声明HashMap来存放声音文件
 
     @Nullable
-    @Override
+    private void initSoundPool() throws Exception{//初始化声音池
+        SoundPool.Builder spb = new SoundPool.Builder();
+        spb.setMaxStreams(10);
+        //spb.setAudioAttributes(null);    //转换音频格式
+        mSoundPool = spb.build();
+        //加载声音文件，并且设置为1号声音放入hm中
+        hm.put(1, mSoundPool.load(getActivity(), R.raw.button_guan, 1));
+        hm.put(2,mSoundPool.load(getActivity(),R.raw.button2_guan,1));
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_logon, container, false);
         ctx=getActivity();
@@ -38,7 +51,11 @@ public class LogonFragment extends Fragment {
         edit_psw=view.findViewById(R.id.edit_psw);
         edit_psw_confirm=view.findViewById(R.id.edit_psw_confirm);
         checkBox=view.findViewById(R.id.checkBox);
-
+        try {
+            initSoundPool();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -89,6 +106,7 @@ public class LogonFragment extends Fragment {
                     else {
                         if(register.ISRegisterSuccess(username,pasword)){
                             Toast.makeText(getActivity(),"注册成功",Toast.LENGTH_LONG).show();
+                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                             edit_username.setText("");
                             edit_psw.setText("");
                             edit_psw_confirm.setText("");
@@ -102,6 +120,7 @@ public class LogonFragment extends Fragment {
                         }
                         else{
                             Toast.makeText(ctx,"账号已存在",Toast.LENGTH_LONG).show();
+                            mSoundPool.play(hm.get(2), 1, 1, 0, 0, 1);
                         }
 
 
