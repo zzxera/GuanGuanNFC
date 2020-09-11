@@ -21,6 +21,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -77,6 +79,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
@@ -99,6 +102,8 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private View popupView;
     private Button btn_jifen;
     private Drawable drawable;
+    private SoundPool mSoundPool = null;
+    private HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();//声明HashMap来存放声音文件
     int RESULT_LOAD_IMG = 2;
     String img_src;
     Bitmap bitmap;
@@ -213,7 +218,11 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //            handler = new Handler();
         }
         PermisionUtil.verifyStoragePermissions(this);
-
+        try {
+            initSoundPool();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -485,6 +494,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 //                退出登录
+                mSoundPool.play(hm.get(3), 1, 1, 0, 0, 1);
                 editorMain.putBoolean("main",false);
                 editorMain.commit();
                 Intent intent2 = new Intent();
@@ -926,6 +936,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     //            清空标签
                     Boolean success = nfcManage.setNFCNll(detectedTag);
                     if (success){
+                        mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -940,27 +951,32 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     //                          清空标签
                     Boolean success1 = nfcManage.setNFCNll(detectedTag);
                     if (success1){
+                        mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
                         scanNFCDialog.dismiss();
                         isDeleteAct=false;
                     }
                     else {
+                        mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"擦除失败",Toast.LENGTH_SHORT).show();
 
                     }
                 }
                 else {
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"数据库连接失败",Toast.LENGTH_SHORT).show();
                 }
             }
             else {
                 Boolean success1 = nfcManage.setNFCNll(detectedTag);
                 if (success1){
+                    mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
                     scanNFCDialog.dismiss();
                     isDeleteAct=false;
                 }
                 else {
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"擦除失败",Toast.LENGTH_SHORT).show();
 
                 }
@@ -977,10 +993,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     //                          清空标签
                     Boolean success1 = nfcManage.setNFCNll(detectedTag);
                     if (success1) {
+                        mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this, "擦除成功", Toast.LENGTH_SHORT).show();
                         scanNFCDialog.dismiss();
                         isDeleteBox=false;
                     } else {
+                        mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this, "擦除失败", Toast.LENGTH_SHORT).show();
 
                     }
@@ -992,11 +1010,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 //                          清空标签
                 Boolean success1 = nfcManage.setNFCNll(detectedTag);
                 if (success1) {
+                    mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this, "擦除成功", Toast.LENGTH_SHORT).show();
                     scanNFCDialog.dismiss();
 
                     isDeleteBox=false;
                 } else {
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this, "擦除失败", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -1011,6 +1031,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 if (isAddBox){
                     boolean isBoxExist = thingManage.isBoxExist(boxName);
                     if (isBoxExist){
+                        mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"已存在重名的盒子",Toast.LENGTH_SHORT).show();
                     }
                     else {
@@ -1021,6 +1042,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                             }
                             isAddBox = false;
                             scanNFCDialog.dismiss();
+                            mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                             Toast.makeText(HomePageActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -1028,6 +1050,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 else if (isAddAct){
                     boolean isActExist = activityManage.isSmallActivityExist(addActName);
                     if (isActExist){
+                        mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"此活动已存在",Toast.LENGTH_SHORT).show();
                     }
                     else {
@@ -1035,6 +1058,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                         if (success){
                             isAddAct = false;
                             scanNFCDialog.dismiss();
+                            mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                             Toast.makeText(HomePageActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -1042,11 +1066,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
                 }
                 else {
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"空标签",Toast.LENGTH_SHORT).show();
                 }
             }
             else if (isNFCExist.equals("Act")){
                 if (isAddAct || isAddBox){
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -1058,6 +1084,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                             int newActID=Integer.parseInt(actInfo[1]);
                             String newActName=actInfo[0];
 //                        Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
+                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                             Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
                             startIntent.putExtra("username",userName);
                             //            如果正在计时
@@ -1069,11 +1096,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                     actName = newActName;
 //                                binder.starTimer();
                                     startIntent.putExtra("countState","sameID");
+                                    mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                                     startActivityForResult(startIntent,1);
                                 }
 //                如果刷了不同贴纸
                                 else {
                                     Toast.makeText(HomePageActivity.this,"一个活动正在进行，请停止后再开始新的",Toast.LENGTH_SHORT).show();
+                                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
 //                                    actId = newActID;
 //                                    actName = newActName;
 //                                    actType=actInfo[2];
@@ -1091,11 +1120,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                 actType=actInfo[2];
                                 //            开始计时
                                 binder.starTimer();
+                                mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                                 startIntent.putExtra("countState","startCount");
                                 startActivityForResult(startIntent,1);
                             }
                         }
                         else {
+                            mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                             Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();
                         }
 //                    }
@@ -1110,6 +1141,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             }
             else if (isNFCExist.equals("Box")){
                 if (isAddBox || isAddAct){
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -1120,6 +1152,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                         if (getBoxName!=null){
 
                             if (pagenum!=2){
+                                mSoundPool.play(hm.get(2), 1, 1, 0, 0, 1);
                                 Bundle bundle_manage = new Bundle();
                                 bundle_manage.putString("username",userName);
                                 bundle_manage.putString("getboxname",getBoxName);
@@ -1136,6 +1169,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
                         }
                         else {
+                            mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                             Toast.makeText(HomePageActivity.this,"盒子不存在",Toast.LENGTH_SHORT).show();
                         }
 
@@ -1151,6 +1185,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             else if (isNFCExist.equals("Something is exist!")){
 
                 Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
+                mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
             }
 
         }
@@ -1188,6 +1223,18 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         myInfo = userInfo.getUserInfo(userName);
         tv_userLevel.setText(myInfo[0]+"级");
         tv_userActDays.setText("已活跃"+myInfo[1]+"天");
+    }
+    private void initSoundPool() {//初始化声音池
+        SoundPool.Builder spb = new SoundPool.Builder();
+        spb.setMaxStreams(10);
+        //spb.setAudioAttributes(null);    //转换音频格式
+        mSoundPool = spb.build();
+        //加载声音文件，并且设置为1号声音放入hm中
+        System.out.println(mSoundPool.load(this, R.raw.activity_guan, 1));
+        hm.put(1, mSoundPool.load(this, R.raw.activity_guan, 1));
+        hm.put(2,mSoundPool.load(this,R.raw.drawer_guan,1));
+        hm.put(3,mSoundPool.load(this,R.raw.button2_guan,1));
+        hm.put(4,mSoundPool.load(this,R.raw.nfc_guan,1));
     }
 
     @Override
