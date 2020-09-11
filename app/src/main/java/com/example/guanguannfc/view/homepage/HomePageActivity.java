@@ -62,6 +62,7 @@ import com.example.guanguannfc.model.util.PermisionUtil;
 import com.example.guanguannfc.view.data.ClockActivity;
 import com.example.guanguannfc.view.data.ClockService;
 import com.example.guanguannfc.view.data.DataFragment;
+import com.example.guanguannfc.view.data.tree;
 import com.example.guanguannfc.view.friends.FrendFragment;
 import com.example.guanguannfc.view.friends.FriendRequestActivity;
 import com.example.guanguannfc.view.loginAndLogon.LoginActivity;
@@ -525,7 +526,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         btn_jifen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(HomePageActivity.this, EnergyTreeTest.class);
+                Intent intent=new Intent(HomePageActivity.this, tree.class);
                 startActivity(intent);
             }
         });

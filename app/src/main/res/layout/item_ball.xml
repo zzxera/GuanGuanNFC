@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:text="3g"
     android:gravity="center"
-    android:textColor="#F3A5C2"
+    android:textColor="@color/colorBlackgreen"
     android:background="@mipmap/ball"
     >
 
