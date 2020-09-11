@@ -1,5 +1,6 @@
 package com.example.guanguannfc.view.homepage;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -98,6 +99,9 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private View popupView;
     private Drawable drawable;
     int RESULT_LOAD_IMG = 2;
+    int REQUESTCODE_CUTTING = 3;
+    File file;
+    Uri mImageUri;
     String img_src;
     Bitmap bitmap;
 //    添加好友
@@ -215,6 +219,11 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 //            View dataView = dataFragment.getView();
@@ -232,6 +241,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     }
 
     private void initView(){
+
 
 //        主体
         main_body=findViewById(R.id.main_body);
@@ -1201,56 +1211,70 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             case 2:
                 if (data != null) {
                     Uri uri = data.getData();
-                    img_src = uri.getPath();//这是本机的图片路径
 
-                    ContentResolver cr = getContentResolver();
-                    try {
-                        InputStream inputStream = cr.openInputStream(uri);
-                        bitmap = BitmapFactory.decodeStream(inputStream);
-                        try {
-                            inputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        String[] proj = {MediaStore.Images.Media.DATA};
-                        CursorLoader loader = new CursorLoader(HomePageActivity.this, uri, proj, null, null, null);
-                        Cursor cursor = loader.loadInBackground();
-                        if (cursor != null) {
-                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                            cursor.moveToFirst();
-
-                            img_src = cursor.getString(column_index);//图片实际路径
-
-
-                            img_head.setImageBitmap(bitmap);
-                            final String path = BitmapUtil.saveMyBitmap(this, bitmap, ImgNameUtil.getImgHeadName(userName));
-
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    final String result = HttpUtil.uploadFile(new File(path), ImgNameUtil.getImgHeadName(userName));
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(HomePageActivity.this, result, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }).start();
-
-
-                        }
-                        cursor.close();
-
-                    } catch (FileNotFoundException e) {
-                        Log.e("Exception", e.getMessage(), e);
+                    String sdCardDir = getExternalCacheDir().toString();
+                    File appDir = new File(sdCardDir, "/GuanGuan/");
+                    if (!appDir.exists()) {
+                        System.out.println(appDir.mkdir());
                     }
+                    file = new File(appDir, ImgNameUtil.getImgHeadName(userName)+".jpg");
+                    mImageUri = Uri.fromFile(file);
+                    startPhotoZoom(uri);
+
+
+
                 }
 
                 break;
+            case 3:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final String result = HttpUtil.uploadFile(file, ImgNameUtil.getImgHeadName(userName));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(HomePageActivity.this, result, Toast.LENGTH_SHORT).show();
+                                try {
+                                    img_head.setImageBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(),mImageUri));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                }).start();
+                break;
         }
+    }
+    //裁剪图片
+    public void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        // crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高，这里可以将宽高作为参数传递进来
+        intent.putExtra("outputX", 600);
+        intent.putExtra("outputY", 600);
+
+        // 其实加上下面这两句就可以实现基本功能，
+        //但是这样做我们会直接得到图片的数据，以bitmap的形式返回，在Intent中。而Intent传递数据大小有限制，1kb=1024字节，这样就对最后的图片的像素有限制。
+        //intent.putExtra("return-data", true);
+        //intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+
+        // 解决不能传图片，Intent传递数据大小有限制，1kb=1024字节
+        // 方法：裁剪后的数据不以bitmap的形式返回，而是放到磁盘中，更方便上传和本地缓存
+        // 设置裁剪后的数据不以bitmap的形式返回，剪切后图片的位置，图片是否压缩等
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true);
+
+        // 调用系统的图片剪切
+        startActivityForResult(intent, REQUESTCODE_CUTTING);
     }
 
 
