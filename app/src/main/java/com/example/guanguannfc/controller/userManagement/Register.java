@@ -44,7 +44,7 @@ public class Register {
     }
 
 
-    interface Message{
+    public interface Message{
         void getLoadMessage(String str);
     }
 }

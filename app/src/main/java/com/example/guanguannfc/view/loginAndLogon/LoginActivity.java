@@ -22,13 +22,13 @@ import com.example.guanguannfc.model.DataBaseTest.FakeData;
 import com.example.guanguannfc.model.Initialization;
 import com.example.guanguannfc.view.homepage.HomePageActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements Login.Message {
 
     SharedPreferences sprfMain;
     SharedPreferences.Editor editorMain;
     private SigninFragment frag_signin = new SigninFragment();
     private LogonFragment frag_logon = new LogonFragment();
-    Login login = new Login(this);
+    Login login = new Login(this,this);
     public static String username,psw;
     public TextView tv_sign,tv_log;
 
@@ -118,6 +118,11 @@ public class LoginActivity extends AppCompatActivity {
         tv_sign.setTextColor(colorRedDark);
         tv_log.setTextColor(colorgray);
         getFragmentManager().beginTransaction().replace(R.id.logandsign,frag_signin).commit();
+    }
+
+    @Override
+    public void getLoadMessage(String str) {
+
     }
 
 //    public void init(){

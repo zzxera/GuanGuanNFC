@@ -56,7 +56,7 @@ public class Login {
         }).start();
     }
 
-    interface Message{
+    public interface Message{
         void getLoadMessage(String str);
     }
 

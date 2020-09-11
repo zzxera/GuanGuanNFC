@@ -23,7 +23,7 @@ import com.example.guanguannfc.controller.userManagement.Friend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrendFragment extends Fragment {
+public class FrendFragment extends Fragment implements Friend.Message{
 
     private View view;
     private String userName;
@@ -40,6 +40,8 @@ public class FrendFragment extends Fragment {
 
     private Friend friend;
     private String del_name;
+
+    private int mark=0;
 
 
 
@@ -100,7 +102,7 @@ public class FrendFragment extends Fragment {
         lv_friends = view.findViewById(R.id.lv_friendList);
         lv_friendAct=view.findViewById(R.id.lv_friendActList);
 
-        friend = new Friend(getActivity());
+        friend = new Friend(getActivity(),this);
 
     }
 
@@ -117,7 +119,8 @@ public class FrendFragment extends Fragment {
     }
 
     private void getFriends(){
-       friendList = friend.friendlist(userName);
+        mark=1;
+        friend.friendlist(userName);
     }
 
     private void initFriendAct(String[][] array){
@@ -136,7 +139,8 @@ public class FrendFragment extends Fragment {
 
     }
     private void getFriendAct(){
-        friendActList = friend.friendact(userName);
+        mark=2;
+        friend.friendact(userName);
     }
 
     private void checkClick(){
@@ -201,4 +205,30 @@ public class FrendFragment extends Fragment {
     }
 
 
+    @Override
+    public void getLoadMessage(boolean bl) {
+
+    }
+
+    @Override
+    public void getLoadMessage1(final String[][] arr) {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (mark==1) {
+                    friendList =arr;
+                    mark=0;
+
+                }else if (mark==2){
+                    friendActList =arr;
+                    mark=0;
+
+                }
+
+            }
+        });
+
+    }
 }

@@ -120,5 +120,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_agree"></Button>
 
+    <RelativeLayout
+        android:id="@+id/rela_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/button_signin_confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edit_username">
 
+        <ImageView
+            android:id="@+id/load_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/liuyu_load" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
