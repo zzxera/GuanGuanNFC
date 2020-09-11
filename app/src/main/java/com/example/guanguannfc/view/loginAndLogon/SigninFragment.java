@@ -4,6 +4,9 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -23,6 +26,8 @@ import com.example.guanguannfc.view.homepage.HomePageActivity;
 import com.example.guanguannfc.controller.userManagement.Login;
 import com.example.guanguannfc.view.lead.LeadActivity;
 
+import java.util.HashMap;
+
 
 public class SigninFragment extends Fragment {
 
@@ -33,11 +38,21 @@ public class SigninFragment extends Fragment {
     private Boolean lead;
     private HelperUserInfo leads;
     private int id;
+    private SoundPool mSoundPool = null;
+    private HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();//声明HashMap来存放声音文件
     Button button_signin;
     Context ctx;
 
     SharedPreferences sprfMain;
     SharedPreferences.Editor editorMain;
+    private void initSoundPool() throws Exception{//初始化声音池
+        SoundPool.Builder spb = new SoundPool.Builder();
+        spb.setMaxStreams(10);
+        //spb.setAudioAttributes(null);    //转换音频格式
+        mSoundPool = spb.build();
+        //加载声音文件，并且设置为1号声音放入hm中
+        hm.put(1, mSoundPool.load(getActivity(), R.raw.button_guan, 1));
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,9 +72,14 @@ public class SigninFragment extends Fragment {
         leadupdate = new UserInfo(ctx);
         leads =leadupdate.getlead(username);
         id=leads.getIs_studied();
+        try {
+            initSoundPool();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        View rootView = inflater.inflate(R.layout.signin, null); // 先解析file.xml布局，得到一个view
         button_signin.setOnClickListener(new View.OnClickListener() {
-            @Override
+
             public void onClick(View v) {
 //                Toast.makeText(getApplicationContext(),"登录",Toast.LENGTH_LONG).show();
                 username = edit_username.getText().toString();
@@ -96,6 +116,7 @@ public class SigninFragment extends Fragment {
 //                        intent.putExtras(bundle);
 //                        startActivity(intent);
                         if(id == 0) {
+                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                             Intent intent = new Intent(getActivity(), LeadActivity.class);
                             editorMain.putBoolean("main", true);
                             editorMain.putString("userName", username);
@@ -109,6 +130,7 @@ public class SigninFragment extends Fragment {
                             startActivity(intent);
                         }
                         else {
+                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                             Intent intent = new Intent(getActivity(), HomePageActivity.class);
                             editorMain.putBoolean("main", true);
                             editorMain.putString("userName", username);
@@ -142,6 +164,7 @@ public class SigninFragment extends Fragment {
 
 
     }
+
 
 //    public void getContex(Context context){
 //        ctx = context;
