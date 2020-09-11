@@ -1,4 +1,4 @@
-package com.example.guanguannfc.model.broadcastTest;
+package com.example.guanguannfc.view;
 
 import com.example.guanguannfc.model.util.HttpUtil;
 
@@ -25,7 +25,7 @@ public class TestController {
 
     }
     //定义一个内部接口，Activity实现这个接口
-    public interface Message{
+    interface Message{
         //Activity实现接口后需要重写这个回调方法，这个回调方法会在上面的load方法中被调用
         void getLoadMessage(String str);
     }

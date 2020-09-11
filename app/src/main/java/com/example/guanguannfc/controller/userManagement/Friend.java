@@ -152,7 +152,7 @@ public class Friend {
         }).start();
     }
 
-    interface Message{
+    public interface Message{
         void getLoadMessage(boolean bl);
         void getLoadMessage1(String[][] arr);
     }

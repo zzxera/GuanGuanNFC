@@ -19,7 +19,7 @@ import com.example.guanguannfc.controller.userManagement.Friend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendRequestActivity extends AppCompatActivity {
+public class FriendRequestActivity extends AppCompatActivity implements Friend.Message{
     private String userName;
 
     private List<FriendRequestItem> friendRequestItemsList = new ArrayList<FriendRequestItem>();
@@ -30,6 +30,9 @@ public class FriendRequestActivity extends AppCompatActivity {
     private String[][] arr_request;
 
     private ImageView img_back;
+
+    private boolean isRefuse,isAgree;
+    private int mark=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +77,9 @@ public class FriendRequestActivity extends AppCompatActivity {
     }
 
     private void getRequestList() {
-        friend = new Friend(this);
-        arr_request = friend.friendapply(userName);
+        friend = new Friend(this,this);
+
+        friend.friendapply(userName);
 //        if (arr_request!=null){
 //            Toast.makeText(FriendRequestActivity.this,arr_request[0][0],Toast.LENGTH_LONG).show();
 //        }
@@ -86,7 +90,8 @@ public class FriendRequestActivity extends AppCompatActivity {
             @Override
             public void onRefuseClick(int i) {
                 final String friendName = arr_request[i][0];
-                boolean isRefuse = friend.updateapply(userName,friendName);
+                mark=1;
+               friend.updateapply(userName,friendName);
                 if (isRefuse) {
                     Toast.makeText(FriendRequestActivity.this,"已拒绝"+friendName+"的好友请求",Toast.LENGTH_LONG).show();
                 }
@@ -100,7 +105,8 @@ public class FriendRequestActivity extends AppCompatActivity {
             @Override
             public void onAgreeClick(int i) {
                 final String friendName = arr_request[i][0];
-                boolean isAgree = friend.insert(userName,friendName);
+                mark=2;
+                friend.insert(userName,friendName);
                 if (isAgree) {
                     Toast.makeText(FriendRequestActivity.this,"成功添加"+friendName+"为好友",Toast.LENGTH_LONG).show();
                 }
@@ -120,5 +126,32 @@ public class FriendRequestActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void getLoadMessage(final boolean bl) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+               if (mark==1){
+                   isRefuse =bl;
+                   mark=0;
+               }
+               else if (mark==2){
+                   isAgree =bl;
+               }
+            }
+        });
 
+    }
+
+    @Override
+    public void getLoadMessage1(final String[][] arr) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                arr_request =arr;
+            }
+        });
+
+
+    }
 }

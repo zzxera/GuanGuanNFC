@@ -19,10 +19,12 @@ import com.example.guanguannfc.controller.EnergyTree.EnergyTreeTest;
 import com.example.guanguannfc.controller.EnergyTree.model.BallModel;
 import com.example.guanguannfc.controller.EnergyTree.model.TipsModel;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
+
 import com.example.guanguannfc.controller.timeManagement.GetTime;
 import com.example.guanguannfc.model.Dao.DaoActSta;
 import com.example.guanguannfc.model.DataBaseTest.FakeData;
 import com.example.guanguannfc.model.Helper.HelperActivity;
+
 import com.example.guanguannfc.model.Initialization;
 
 import java.util.ArrayList;
@@ -118,6 +120,9 @@ public class tree extends AppCompatActivity {
     }
 
     public void initView(){
+        Initialization.initialization(this);
+        FakeData fakeData = new FakeData(this);
+        fakeData.insert();
         Data = allactivity.sortedactivity1("aaa","全部","最新活动在前");
         if (Data != null) {
             for (int a= 0; a<Math.min(10,Data.length); a++){

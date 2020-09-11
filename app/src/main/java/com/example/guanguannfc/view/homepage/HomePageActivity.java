@@ -84,7 +84,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener {
+public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener,Friend.Message {
     public static String userName;
     public static String actType,actName;
     public static int pagenum;
@@ -122,7 +122,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private PushFragment pushFragment;
     private ManageFragment manageFragment;
     private FrendFragment frendFragment;
-
+    boolean isSend;
     List<OneTextItem> oneTextItemList = new ArrayList<OneTextItem>();
     OneTextAdapter oneTextAdapter;
 
@@ -323,7 +323,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         activityManage = new ActivityManage(userName,this);
 
 //        添加好友
-        friend = new Friend(this);
+        friend = new Friend(this,this);
 
 
 //       NFC
@@ -362,7 +362,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 addRemark=addFriendDialog.getRemark().getText().toString();
                 addFriendDialog.getName().setText("");
                 addFriendDialog.getRemark().setText("");
-                boolean isSend = friend.apply(userName,addName,addRemark);
+                friend.apply(userName,addName,addRemark);
                 if (isSend) {
                     Toast.makeText(HomePageActivity.this,"请求已发送",Toast.LENGTH_LONG).show();
 
@@ -1335,4 +1335,20 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     }
 
 
+    @Override
+    public void getLoadMessage(final boolean bl) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                isSend =bl;
+            }
+        });
+
+
+    }
+
+    @Override
+    public void getLoadMessage1(String[][] arr) {
+
+    }
 }
