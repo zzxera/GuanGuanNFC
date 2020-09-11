@@ -8,7 +8,6 @@
         android:id="@+id/linearLayout10"
         android:layout_width="350dp"
         android:layout_height="200dp"
-        android:alpha="0.5"
         android:layout_marginTop="20dp"
         android:background="@drawable/img_whiteback"
         app:layout_constraintEnd_toEndOf="parent"

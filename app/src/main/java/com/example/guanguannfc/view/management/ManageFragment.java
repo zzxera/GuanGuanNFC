@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,7 +113,6 @@ public class ManageFragment extends Fragment {
                 }
             }
             showbox(boxIndex);
-
         }
 
         getact=new ActivityManage(username,ctx);
@@ -302,10 +302,16 @@ public class ManageFragment extends Fragment {
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
     }
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getActivity().getWindow().setAttributes(lp);
+    }
     private void showbox(final int num) {
         //设置contentView
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_displaygoods, null);
         mPopWindow = new PopupWindow(contentView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        mPopWindow.setAnimationStyle(R.style.popup_window_anim);
         //设置各个控件的点击响应
         ListView listView =contentView.findViewById(R.id.listview);
         final TextView tv_boxname=contentView.findViewById(R.id.tv_boxname);
@@ -334,6 +340,7 @@ public class ManageFragment extends Fragment {
         //显示PopupWindow
         View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_boxmanagement, null);
         mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+
     }
 
 
