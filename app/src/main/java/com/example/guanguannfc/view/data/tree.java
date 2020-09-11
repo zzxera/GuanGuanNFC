@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guanguannfc.R;
 import com.example.guanguannfc.controller.dataVisualization.Allactivity;
+import com.example.guanguannfc.model.DataBaseTest.FakeData;
+import com.example.guanguannfc.model.Initialization;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,6 +64,9 @@ public class tree extends AppCompatActivity {
 
     }
     public void initView(){
+        Initialization.initialization(this);
+        FakeData fakeData = new FakeData(this);
+        fakeData.insert();
         Data = allactivity.sortedactivity1("aaa","全部","最新活动在前");
         for (int a= 0; a<10; a++){
             //double f = Math.ceil(Integer.parseInt(Data[a][4])/50000);
