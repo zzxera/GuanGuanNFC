@@ -41,7 +41,7 @@ public class TreeAdapter  extends ArrayAdapter<TreeView> {
             relativeLayout.setBackgroundColor(Color.parseColor("#70DB93"));
         }
         else {
-            relativeLayout.setBackgroundColor(Color.parseColor("ffffff"));
+            relativeLayout.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
         return view;
