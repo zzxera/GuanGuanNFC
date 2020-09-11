@@ -16,7 +16,7 @@ import com.example.guanguannfc.view.homepage.HomePageActivity;
 
 public class LeadActivity extends AppCompatActivity {
     private  int[]  arrayPicture=new int[]{
-            R.drawable.img_lead1,R.drawable.img_lead2,R.drawable.img_lead3,R.drawable.img_lead4,R.drawable.img_lead5,R.drawable.img_lead6};
+            R.drawable.img_lead1,R.drawable.img_lead2,R.drawable.img_lead3,R.drawable.img_lead4,R.drawable.img_lead5};
     private ImageSwitcher imageSwitcher;
     private int  index;
     private  float touchDownX;
@@ -35,7 +35,7 @@ public class LeadActivity extends AppCompatActivity {
             public View makeView() {
                 ImageView  imageView=new ImageView(LeadActivity.this);
                 imageView.setImageResource(arrayPicture[index]);//设置显示图片（利用下标）
-                if(index == 5){
+                if(index == 4){
                     btn_ok.setVisibility(View.VISIBLE);
                 }
                 else {
@@ -65,18 +65,18 @@ public class LeadActivity extends AppCompatActivity {
                     if(touchUpX-touchDownX>100){
                         //判断是不是第一张图片 是就将索引变成最后一张图片索引，
                         // 不是则当前索引减一
-                        index=index==0?arrayPicture.length-1:index-1;
+                        index=index==0?0:index-1;
                         //使用自带的淡入淡出
                         imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(LeadActivity.this,android.R.anim.fade_in));
                         imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(LeadActivity.this,android.R.anim.fade_out));
                         imageSwitcher.setImageResource(arrayPicture[index]);
                     }else if(touchDownX-touchUpX>100){
-                        index=index==arrayPicture.length-1?0:index+1;//注意这里下标是从0开始的，所以应该是长度减1
+                        index=index==arrayPicture.length-1?4:index+1;//注意这里下标是从0开始的，所以应该是长度减1
                         imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(LeadActivity.this,android.R.anim.fade_in));
                         imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(LeadActivity.this,android.R.anim.fade_out));
                         imageSwitcher.setImageResource(arrayPicture[index]);
                     }
-                    if(index == 5){
+                    if(index == 4){
                         btn_ok.setVisibility(View.VISIBLE);
                     }
                     else {

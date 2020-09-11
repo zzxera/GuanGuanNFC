@@ -1,5 +1,6 @@
 package com.example.guanguannfc.view.homepage;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -78,6 +81,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class HomePageActivity extends BaseNfcActivity implements View.OnClickListener,Friend.Message {
@@ -100,7 +104,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     private View popupView;
     private Button btn_jifen;
     private Drawable drawable;
+    private SoundPool mSoundPool = null;
+    private HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();//声明HashMap来存放声音文件
     int RESULT_LOAD_IMG = 2;
+    int REQUESTCODE_CUTTING = 3;
+    File file;
+    Uri mImageUri;
     String img_src;
     Bitmap bitmap;
 //    添加好友
@@ -214,7 +223,16 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 //            handler = new Handler();
         }
         PermisionUtil.verifyStoragePermissions(this);
+        try {
+            initSoundPool();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -235,6 +253,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
     }
 
     private void initView(){
+
 
 //        主体
         main_body=findViewById(R.id.main_body);
@@ -486,6 +505,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 //                退出登录
+                mSoundPool.play(hm.get(3), 1, 1, 0, 0, 1);
                 editorMain.putBoolean("main",false);
                 editorMain.commit();
                 Intent intent2 = new Intent();
@@ -927,6 +947,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     //            清空标签
                     Boolean success = nfcManage.setNFCNll(detectedTag);
                     if (success){
+                        mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -941,27 +962,32 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     //                          清空标签
                     Boolean success1 = nfcManage.setNFCNll(detectedTag);
                     if (success1){
+                        mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
                         scanNFCDialog.dismiss();
                         isDeleteAct=false;
                     }
                     else {
+                        mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"擦除失败",Toast.LENGTH_SHORT).show();
 
                     }
                 }
                 else {
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"数据库连接失败",Toast.LENGTH_SHORT).show();
                 }
             }
             else {
                 Boolean success1 = nfcManage.setNFCNll(detectedTag);
                 if (success1){
+                    mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"擦除成功",Toast.LENGTH_SHORT).show();
                     scanNFCDialog.dismiss();
                     isDeleteAct=false;
                 }
                 else {
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"擦除失败",Toast.LENGTH_SHORT).show();
 
                 }
@@ -978,10 +1004,12 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                     //                          清空标签
                     Boolean success1 = nfcManage.setNFCNll(detectedTag);
                     if (success1) {
+                        mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this, "擦除成功", Toast.LENGTH_SHORT).show();
                         scanNFCDialog.dismiss();
                         isDeleteBox=false;
                     } else {
+                        mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this, "擦除失败", Toast.LENGTH_SHORT).show();
 
                     }
@@ -993,11 +1021,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 //                          清空标签
                 Boolean success1 = nfcManage.setNFCNll(detectedTag);
                 if (success1) {
+                    mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this, "擦除成功", Toast.LENGTH_SHORT).show();
                     scanNFCDialog.dismiss();
 
                     isDeleteBox=false;
                 } else {
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this, "擦除失败", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -1012,6 +1042,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 if (isAddBox){
                     boolean isBoxExist = thingManage.isBoxExist(boxName);
                     if (isBoxExist){
+                        mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"已存在重名的盒子",Toast.LENGTH_SHORT).show();
                     }
                     else {
@@ -1022,6 +1053,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                             }
                             isAddBox = false;
                             scanNFCDialog.dismiss();
+                            mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                             Toast.makeText(HomePageActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -1029,6 +1061,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                 else if (isAddAct){
                     boolean isActExist = activityManage.isSmallActivityExist(addActName);
                     if (isActExist){
+                        mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                         Toast.makeText(HomePageActivity.this,"此活动已存在",Toast.LENGTH_SHORT).show();
                     }
                     else {
@@ -1036,6 +1069,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                         if (success){
                             isAddAct = false;
                             scanNFCDialog.dismiss();
+                            mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                             Toast.makeText(HomePageActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -1043,11 +1077,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
                 }
                 else {
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"空标签",Toast.LENGTH_SHORT).show();
                 }
             }
             else if (isNFCExist.equals("Act")){
                 if (isAddAct || isAddBox){
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -1059,6 +1095,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                             int newActID=Integer.parseInt(actInfo[1]);
                             String newActName=actInfo[0];
 //                        Toast.makeText(HomePageActivity.this,actType+actName,Toast.LENGTH_SHORT).show();
+                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                             Intent startIntent = new Intent(HomePageActivity.this, ClockActivity.class);
                             startIntent.putExtra("username",userName);
                             //            如果正在计时
@@ -1070,11 +1107,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                     actName = newActName;
 //                                binder.starTimer();
                                     startIntent.putExtra("countState","sameID");
+                                    mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                                     startActivityForResult(startIntent,1);
                                 }
 //                如果刷了不同贴纸
                                 else {
                                     Toast.makeText(HomePageActivity.this,"一个活动正在进行，请停止后再开始新的",Toast.LENGTH_SHORT).show();
+                                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
 //                                    actId = newActID;
 //                                    actName = newActName;
 //                                    actType=actInfo[2];
@@ -1092,11 +1131,13 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                                 actType=actInfo[2];
                                 //            开始计时
                                 binder.starTimer();
+                                mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
                                 startIntent.putExtra("countState","startCount");
                                 startActivityForResult(startIntent,1);
                             }
                         }
                         else {
+                            mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                             Toast.makeText(HomePageActivity.this,"活动不存在",Toast.LENGTH_SHORT).show();
                         }
 //                    }
@@ -1111,6 +1152,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             }
             else if (isNFCExist.equals("Box")){
                 if (isAddBox || isAddAct){
+                    mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                     Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -1121,6 +1163,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
                         if (getBoxName!=null){
 
                             if (pagenum!=2){
+                                mSoundPool.play(hm.get(2), 1, 1, 0, 0, 1);
                                 Bundle bundle_manage = new Bundle();
                                 bundle_manage.putString("username",userName);
                                 bundle_manage.putString("getboxname",getBoxName);
@@ -1137,6 +1180,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
 
                         }
                         else {
+                            mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
                             Toast.makeText(HomePageActivity.this,"盒子不存在",Toast.LENGTH_SHORT).show();
                         }
 
@@ -1152,6 +1196,7 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             else if (isNFCExist.equals("Something is exist!")){
 
                 Toast.makeText(HomePageActivity.this,"标签不为空，请擦除内容后再写入",Toast.LENGTH_SHORT).show();
+                mSoundPool.play(hm.get(4), 1, 1, 0, 0, 1);
             }
 
         }
@@ -1190,6 +1235,18 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
         tv_userLevel.setText(myInfo[0]+"级");
         tv_userActDays.setText("已活跃"+myInfo[1]+"天");
     }
+    private void initSoundPool() {//初始化声音池
+        SoundPool.Builder spb = new SoundPool.Builder();
+        spb.setMaxStreams(10);
+        //spb.setAudioAttributes(null);    //转换音频格式
+        mSoundPool = spb.build();
+        //加载声音文件，并且设置为1号声音放入hm中
+        System.out.println(mSoundPool.load(this, R.raw.activity_guan, 1));
+        hm.put(1, mSoundPool.load(this, R.raw.activity_guan, 1));
+        hm.put(2,mSoundPool.load(this,R.raw.drawer_guan,1));
+        hm.put(3,mSoundPool.load(this,R.raw.button2_guan,1));
+        hm.put(4,mSoundPool.load(this,R.raw.nfc_guan,1));
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -1211,56 +1268,70 @@ public class HomePageActivity extends BaseNfcActivity implements View.OnClickLis
             case 2:
                 if (data != null) {
                     Uri uri = data.getData();
-                    img_src = uri.getPath();//这是本机的图片路径
 
-                    ContentResolver cr = getContentResolver();
-                    try {
-                        InputStream inputStream = cr.openInputStream(uri);
-                        bitmap = BitmapFactory.decodeStream(inputStream);
-                        try {
-                            inputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        String[] proj = {MediaStore.Images.Media.DATA};
-                        CursorLoader loader = new CursorLoader(HomePageActivity.this, uri, proj, null, null, null);
-                        Cursor cursor = loader.loadInBackground();
-                        if (cursor != null) {
-                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                            cursor.moveToFirst();
-
-                            img_src = cursor.getString(column_index);//图片实际路径
-
-
-                            img_head.setImageBitmap(bitmap);
-                            final String path = BitmapUtil.saveMyBitmap(this, bitmap, ImgNameUtil.getImgHeadName(userName));
-
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    final String result = HttpUtil.uploadFile(new File(path), ImgNameUtil.getImgHeadName(userName));
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(HomePageActivity.this, result, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }).start();
-
-
-                        }
-                        cursor.close();
-
-                    } catch (FileNotFoundException e) {
-                        Log.e("Exception", e.getMessage(), e);
+                    String sdCardDir = getExternalCacheDir().toString();
+                    File appDir = new File(sdCardDir, "/GuanGuan/");
+                    if (!appDir.exists()) {
+                        System.out.println(appDir.mkdir());
                     }
+                    file = new File(appDir, ImgNameUtil.getImgHeadName(userName)+".jpg");
+                    mImageUri = Uri.fromFile(file);
+                    startPhotoZoom(uri);
+
+
+
                 }
 
                 break;
+            case 3:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final String result = HttpUtil.uploadFile(file, ImgNameUtil.getImgHeadName(userName));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(HomePageActivity.this, result, Toast.LENGTH_SHORT).show();
+                                try {
+                                    img_head.setImageBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(),mImageUri));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                }).start();
+                break;
         }
+    }
+    //裁剪图片
+    public void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        // crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高，这里可以将宽高作为参数传递进来
+        intent.putExtra("outputX", 600);
+        intent.putExtra("outputY", 600);
+
+        // 其实加上下面这两句就可以实现基本功能，
+        //但是这样做我们会直接得到图片的数据，以bitmap的形式返回，在Intent中。而Intent传递数据大小有限制，1kb=1024字节，这样就对最后的图片的像素有限制。
+        //intent.putExtra("return-data", true);
+        //intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+
+        // 解决不能传图片，Intent传递数据大小有限制，1kb=1024字节
+        // 方法：裁剪后的数据不以bitmap的形式返回，而是放到磁盘中，更方便上传和本地缓存
+        // 设置裁剪后的数据不以bitmap的形式返回，剪切后图片的位置，图片是否压缩等
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true);
+
+        // 调用系统的图片剪切
+        startActivityForResult(intent, REQUESTCODE_CUTTING);
     }
 
 

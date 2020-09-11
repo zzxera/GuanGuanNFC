@@ -170,10 +170,11 @@ public class BitmapUtil {
     //保存文件到指定路径
     public static String saveMyBitmap(Context context, Bitmap bitmap,String fileName) {
         FileOutputStream fos = null;
-        String sdCardDir = Environment.getExternalStorageDirectory() + "/DCIM/";
-        File appDir = new File(sdCardDir, "GuanGuan");
+        String sdCardDir = context.getExternalCacheDir().toString();
+        System.out.println(new File(sdCardDir).exists());
+        File appDir = new File(sdCardDir, "/GuanGuan/");
         if (!appDir.exists()) {
-            appDir.mkdir();
+            System.out.println(appDir.mkdir());
         }
         File f = new File(appDir, fileName+".jpg");
         try {
@@ -201,7 +202,7 @@ public class BitmapUtil {
         Uri uri = Uri.fromFile(f);
         intent.setData(uri);
         context.sendBroadcast(intent);
-        String path = sdCardDir+"GuanGuan/"+fileName+".jpg";
+        String path = sdCardDir+"/GuanGuan/"+fileName+".jpg";
 
         return path;
     }

@@ -25,33 +25,13 @@ public class Login {
         //this.message = message;
     }
 
-    public boolean LIsExistUserName(String userName) {
-        boolean hasUserName = DD.registrationQuery(userName);
-        return hasUserName;
-    }
-    public boolean isloginSuccess(String username,String password){
-        boolean loginresult =  DD.loadQuery(username,password);
-        return loginresult;
-    }
 
     public void login1(final String username, final String password){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                boolean hasusername = DD.registrationQuery(username);
-                if(hasusername){
-                    boolean login = DD.loadQuery(username,password);
-                    if(login){
-                        String str = "登陆成功";
-                        message.getLoadMessage(str);
-                    }else {
-                        message.getLoadMessage("登陆失败");
-                    }
-                }
-                else {
-                    String str="账号不存在";
-                    message.getLoadMessage(str);
-                }
+                String login = DD.loadQuery(username,password);
+                message.getLoadMessage(login);
             }
         }).start();
     }

@@ -3,12 +3,15 @@ package com.example.guanguannfc.model.Helper;
 public class HelperApplication {
     String user_name;  //申请人
     String content;    //备注信息
-    long time;          //申请时间
+    long created_time;          //申请时间
 
-    public HelperApplication(String user_name, String content, long time) {
+    public HelperApplication() {
+    }
+
+    public HelperApplication(String user_name, String content, long created_time) {
         this.user_name = user_name;
         this.content = content;
-        this.time = time;
+        this.created_time = created_time;
     }
 
     public String getUser_name() {
@@ -27,12 +30,12 @@ public class HelperApplication {
         this.content = content;
     }
 
-    public long getTime() {
-        return time;
+    public long getCreated_time() {
+        return created_time;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setCreated_time(long created_time) {
+        this.created_time = created_time;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class HelperApplication {
         return "HelperApplication{" +
                 "user_name='" + user_name + '\'' +
                 ", content='" + content + '\'' +
-                ", time=" + time +
+                ", created_time=" + created_time +
                 '}';
     }
 }

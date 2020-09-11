@@ -35,7 +35,7 @@ public class Friend {
                     String [][] arr = new String[i][2];
                     for (int a=0;a<i;a++){
                         arr [a][0]= list.get(a).getUser_name();
-                        arr [a][1]= String.valueOf(list.get(a).getLevel());
+                        arr [a][1]= String.valueOf(list.get(a).getActive_day());
                     }
                     message.getLoadMessage1(arr);
                 }
@@ -127,7 +127,7 @@ public class Friend {
                     for (int i=0;i<n;i++){
                         arr[i][0] = list.get(i).getUser_name();
                         arr[i][1] = list.get(i).getContent();
-                        arr[i][2] = gt.timeStampToDate(list.get(i).getTime());
+                        arr[i][2] = gt.timeStampToDate(list.get(i).getCreated_time());
                     }
                     message.getLoadMessage1(arr);
                 }

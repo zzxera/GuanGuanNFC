@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.guanguannfc.model.GuanContract;
 import com.example.guanguannfc.model.GuanSQLHelper;
 import com.example.guanguannfc.model.Helper.HelperUserInfo;
+import com.example.guanguannfc.model.util.HttpUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -30,23 +31,24 @@ public class DaoUserInfo {
     //
 
     //插入一个用户：需要给定用户名和密码
-    public boolean insert(String username,String password){
-        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="insert into " + GuanContract.UserInfo.TABLE_NAME+ "(user_name,password,created_time,updated_time) values(?,?,?,?)";
-
-        Date date = new Date();
-        long currentTime = date.getTime();
-        try{
-            db.execSQL(sql,new Object[]{username,md5(password),currentTime,currentTime});
-        }catch (SQLiteConstraintException e){
-            Log.v("tag","插入失败");
-
-            return false;
-
-        }finally {
-            db.close();
-        }
-        return true;
+    public String insert(String username,String password){
+//        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+//        String sql="insert into " + GuanContract.UserInfo.TABLE_NAME+ "(user_name,password,created_time,updated_time) values(?,?,?,?)";
+//
+//        Date date = new Date();
+//        long currentTime = date.getTime();
+//        try{
+//            db.execSQL(sql,new Object[]{username,md5(password),currentTime,currentTime});
+//        }catch (SQLiteConstraintException e){
+//            Log.v("tag","插入失败");
+//
+//            return false;
+//
+//        }finally {
+//            db.close();
+//        }
+//        return true;
+        return HttpUtil.post("http://49.232.151.194/DaoUserInfo/insert/", "username=" + username + "&password=" + password);
 
     }
 
@@ -108,16 +110,17 @@ public class DaoUserInfo {
     }
 
     //登录查询：需要给定用户名和密码
-    public boolean loadQuery(String username,String password){
-        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select * from " + GuanContract.UserInfo.TABLE_NAME + " where user_name=? and password=?";
-        Cursor cursor=db.rawQuery(sql,new String[]{username,md5(password)});
-        //Cursor cursor=db.query(Constants.TABLE_NAME,new String[]{"username","password"},"username=? and password=?",new String[]{username,password},null,null,null);
-        if(cursor.getCount()!=0){
-            return true;
-        }else {
-            return false;
-        }
+    public String loadQuery(String username,String password){
+//        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+//        String sql="select * from " + GuanContract.UserInfo.TABLE_NAME + " where user_name=? and password=?";
+//        Cursor cursor=db.rawQuery(sql,new String[]{username,md5(password)});
+//        //Cursor cursor=db.query(Constants.TABLE_NAME,new String[]{"username","password"},"username=? and password=?",new String[]{username,password},null,null,null);
+//        if(cursor.getCount()!=0){
+//            return true;
+//        }else {
+//            return false;
+//        }
+        return HttpUtil.get("http://49.232.151.194/DaoUserInfo/loadQuery/", "username=" + username + "&password=" + password);
     }
     //注册查询用户名是否存在：需要给定用户名
     public boolean registrationQuery(String username){
