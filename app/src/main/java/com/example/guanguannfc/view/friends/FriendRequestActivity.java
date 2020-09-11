@@ -66,13 +66,13 @@ public class FriendRequestActivity extends AppCompatActivity implements Friend.M
                 FriendRequestItem friendRequestItem = new FriendRequestItem(arr_request[i]);
                 friendRequestItemsList.add(friendRequestItem);
             }
-            friendRequestAdapter = new FriendRequestAdapter(FriendRequestActivity.this,R.layout.item_friendrequest,friendRequestItemsList,this);
-            lv_friendRequest.setAdapter(friendRequestAdapter);
         }
 
         else {
             Toast.makeText(FriendRequestActivity.this,"无好友请求",Toast.LENGTH_LONG).show();
         }
+        friendRequestAdapter = new FriendRequestAdapter(FriendRequestActivity.this,R.layout.item_friendrequest,friendRequestItemsList,this);
+        lv_friendRequest.setAdapter(friendRequestAdapter);
 
     }
 

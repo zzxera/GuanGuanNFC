@@ -33,7 +33,7 @@ import java.util.List;
 
 
 public class tree extends AppCompatActivity {
-
+    private String userName;
     private View view;
     public static final String TAG = "EnergyTree";
     int color =  0xffF3A5C2;
@@ -45,7 +45,6 @@ public class tree extends AppCompatActivity {
     private EnergyTree mWaterFlake;
     private List<BallModel> mBallList;
     private List<TipsModel> mTipsList;
-    private String username;
     private Context context;
     DaoActSta daoActSta = new  DaoActSta(this);
 
@@ -87,9 +86,9 @@ public class tree extends AppCompatActivity {
             }
             });
 
-        Initialization.initialization(this);
-        FakeData fakeData = new FakeData(this);
-        fakeData.insert();
+//        Initialization.initialization(this);
+//        FakeData fakeData = new FakeData(this);
+//        fakeData.insert();
         initView();
 
         mWaterFlake = findViewById(R.id.custom_view);
@@ -120,10 +119,11 @@ public class tree extends AppCompatActivity {
     }
 
     public void initView(){
+        userName = getIntent().getStringExtra("userName");
         Initialization.initialization(this);
         FakeData fakeData = new FakeData(this);
         fakeData.insert();
-        Data = allactivity.sortedactivity1("aaa","全部","最新活动在前");
+        Data = allactivity.sortedactivity1(userName,"全部","最新活动在前");
         if (Data != null) {
             for (int a= 0; a<Math.min(10,Data.length); a++){
                 //double f = Math.ceil(Integer.parseInt(Data[a][4])/50000);
@@ -141,7 +141,7 @@ public class tree extends AppCompatActivity {
         }
 
         mBallList = new ArrayList<>();
-        ArrayList<HelperActivity> helperActivities = daoActSta.queryByLengthDesc("aaa");
+        ArrayList<HelperActivity> helperActivities = daoActSta.queryByLengthDesc(userName);
         if (helperActivities != null) {
             for (HelperActivity activity : helperActivities) {
                 int ranked = activity.getIs_ranked();

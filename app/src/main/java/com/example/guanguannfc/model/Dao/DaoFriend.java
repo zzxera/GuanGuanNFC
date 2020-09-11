@@ -84,6 +84,7 @@ public class DaoFriend {
 //            return list;
 //        }
         String get = HttpUtil.get("http://49.232.151.194/DaoFriend/query", "user_name=" + user_name);
+        if ("网络故障".equals(get)) return new ArrayList<HelperFriend>();
         List<HelperFriend> list = JSONArray.parseArray(get, HelperFriend.class);
         return list != null ? list : new ArrayList<HelperFriend>();
     }

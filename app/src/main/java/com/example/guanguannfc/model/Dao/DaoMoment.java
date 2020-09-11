@@ -88,7 +88,8 @@ public class DaoMoment {
 //        }else {
 //            return list;
 //        }
-        String get = HttpUtil.post("http://49.232.151.194/DaoMoment/query/", "user_name=" + user_name);
+        String get = HttpUtil.get("http://49.232.151.194/DaoMoment/query/", "user_name=" + user_name);
+        if ("网络故障".equals(get)) return new ArrayList<HelperApplication>();
         List<HelperApplication> list = JSONArray.parseArray(get, HelperApplication.class);
 
         return list != null ? list : new ArrayList<HelperApplication>();

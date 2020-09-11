@@ -102,13 +102,7 @@ public class SigninFragment extends Fragment implements Login.Message {
 //判断是否第一次登陆
                 leads =leadupdate.getlead(username);
                 id=leads.getIs_studied();
-//动画效果
-                animation = AnimationUtils.loadAnimation(getActivity(), R.anim.tip);
-                animation.setDuration(500);
-                animation.setRepeatCount(8);//动画的反复次数
-                animation.setFillAfter(true);//设置为true，动画转化结束后被应用
-                loadImg.startAnimation(animation);//開始动画
-                mRelativeLayout.setVisibility(View.VISIBLE);
+
 
                 if (username.equals("")){
                     Toast.makeText(ctx,"请输入账号",Toast.LENGTH_LONG).show();
@@ -118,10 +112,18 @@ public class SigninFragment extends Fragment implements Login.Message {
                 }
                 else {
                     if(psw.length()<6 | psw.length()>20){
-                    Toast.makeText(ctx,"密码长度为6-20位",Toast.LENGTH_LONG).show();
-                }
+                        Toast.makeText(ctx,"密码长度为6-20位",Toast.LENGTH_LONG).show();
+                    }
                     else {
+                        //动画效果
+                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.tip);
+                        animation.setDuration(500);
+                        animation.setRepeatCount(8);//动画的反复次数
+                        animation.setFillAfter(true);//设置为true，动画转化结束后被应用
+                        loadImg.startAnimation(animation);//開始动画
+                        mRelativeLayout.setVisibility(View.VISIBLE);
                         login.login1(username,psw);
+
 
 //                        if (){
 //
@@ -164,41 +166,41 @@ public class SigninFragment extends Fragment implements Login.Message {
 //                        Toast.makeText(ctx,"密码错误",Toast.LENGTH_LONG).show();
 
 //                    }
-                    else{
-//                        Intent intent = new Intent(getActivity(), Data.class);
-////                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        Bundle bundle=new Bundle();
-//                        bundle.putString("userName",username);
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-                        if(id == 0) {
-                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
-                            Intent intent = new Intent(getActivity(), LeadActivity.class);
-                            editorMain.putBoolean("main", true);
-                            editorMain.putString("userName", username);
-                            editorMain.putString("psw", psw);
-                            editorMain.commit();
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("userName", username);
-                            intent.putExtras(bundle);
-                            lead=leadupdate.leadupdate(username,1);
-                            startActivity(intent);
-                        }
-                        else {
-                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
-                            Intent intent = new Intent(getActivity(), HomePageActivity.class);
-                            editorMain.putBoolean("main", true);
-                            editorMain.putString("userName", username);
-                            editorMain.putString("psw", psw);
-                            editorMain.commit();
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("userName", username);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    }
+//                    else{
+////                        Intent intent = new Intent(getActivity(), Data.class);
+//////                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+////                        Bundle bundle=new Bundle();
+////                        bundle.putString("userName",username);
+////                        intent.putExtras(bundle);
+////                        startActivity(intent);
+//                        if(id == 0) {
+//                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
+//                            Intent intent = new Intent(getActivity(), LeadActivity.class);
+//                            editorMain.putBoolean("main", true);
+//                            editorMain.putString("userName", username);
+//                            editorMain.putString("psw", psw);
+//                            editorMain.commit();
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("userName", username);
+//                            intent.putExtras(bundle);
+//                            lead=leadupdate.leadupdate(username,1);
+//                            startActivity(intent);
+//                        }
+//                        else {
+//                            mSoundPool.play(hm.get(1), 1, 1, 0, 0, 1);
+//                            Intent intent = new Intent(getActivity(), HomePageActivity.class);
+//                            editorMain.putBoolean("main", true);
+//                            editorMain.putString("userName", username);
+//                            editorMain.putString("psw", psw);
+//                            editorMain.commit();
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("userName", username);
+//                            intent.putExtras(bundle);
+//                            startActivity(intent);
+//                        }
+//                    }
 
 
                 }
@@ -232,7 +234,7 @@ public class SigninFragment extends Fragment implements Login.Message {
                 loadImg.clearAnimation();
                 mRelativeLayout.setVisibility(View.GONE);
 
-                if ("登陆成功".equals(str)) {
+                if ("登录成功".equals(str)) {
                     Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
                     if(id == 0) {
                         Intent intent = new Intent(getActivity(), LeadActivity.class);
