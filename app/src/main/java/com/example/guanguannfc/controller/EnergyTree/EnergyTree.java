@@ -82,6 +82,7 @@ public class EnergyTree extends FrameLayout{
             final  TextView view;
             view = (TextView) mLayoutInflater.inflate(R.layout.item_ball, this, false);
             view.setText(ballList.get(i).getContent()+"\n"+ballList.get(i).getValue());
+            view.setTextColor(ballList.get(i).getColor());
             view.setX((float) ((mWidth * xRandom[i] * 0.1)));
             view.setY((float) ((mHeight * yRandom[i] * 0.06)));
             view.setTag(ballModel);
@@ -110,7 +111,7 @@ public class EnergyTree extends FrameLayout{
             final  TextView view;
             view = (TextView) mLayoutInflater.inflate(R.layout.item_tips, this, false);
             view.setText(tipsList.get(i).getContent());
-            view.setX((float) ((mWidth * num[i] * 0.11)));
+            view.setX((float) ((mWidth * num[i] * 0.12)));
             view.setY((float) ((mHeight * num2[i] * 0.08)));
             view.setTag(tipsModel);
             if(i==1||i==2){

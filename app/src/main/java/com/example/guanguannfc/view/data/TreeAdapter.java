@@ -1,10 +1,12 @@
 package com.example.guanguannfc.view.data;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -25,10 +27,23 @@ public class TreeAdapter  extends ArrayAdapter<TreeView> {
         TextView starttime= view.findViewById(R.id.text_starttime1);
         TextView endtime= view.findViewById(R.id.text_endttime1);
         TextView len= view.findViewById(R.id.text_long1);
+        TextView isselected = view.findViewById(R.id.text_isselected);
+
+        RelativeLayout relativeLayout = view.findViewById(R.id.listcolor);
         actType.setText(treeView.getActType());
         starttime.setText(treeView.getStartTime());
         endtime.setText(treeView.getEndTime());
         len.setText(treeView.getLen());
+        isselected.setText(treeView.getIsselected());
+
+        String p = treeView.getIsselected();
+        if("已被获取".equals(p)){
+            relativeLayout.setBackgroundColor(Color.parseColor("#70DB93"));
+        }
+        else {
+            relativeLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
         return view;
 
     }

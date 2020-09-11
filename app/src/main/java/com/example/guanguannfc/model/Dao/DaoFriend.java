@@ -4,10 +4,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.alibaba.fastjson.JSONArray;
 import com.example.guanguannfc.model.GuanContract;
 import com.example.guanguannfc.model.GuanSQLHelper;
 import com.example.guanguannfc.model.Helper.HelperFriend;
 import com.example.guanguannfc.model.Helper.HelperFriendAct;
+import com.example.guanguannfc.model.util.HttpUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,46 +40,52 @@ public class DaoFriend {
     }
     //插入一条数据(添加一个好友)：需要给定用户名和好友名字
     public boolean insert (String user_name,String friend_name){
-        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="insert into friend_list(user_id,friend_id,created_time,updated_time) values((select _id from user_info where user_name=?),(select _id from user_info where user_name=?),?,?)";
-        String sql1="insert into friend_list(user_id,friend_id,created_time,updated_time) values((select _id from user_info where user_name=?),(select _id from user_info where user_name=?),?,?)";
-        Date date = new Date();
-        long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{user_name,friend_name,currentTime,currentTime});
-        db.execSQL(sql1,new Object[]{friend_name,user_name,currentTime,currentTime});
-        db.close();
-        mDaoMoment.update(user_name,friend_name);
-        return true;
+//        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+//        String sql="insert into friend_list(user_id,friend_id,created_time,updated_time) values((select _id from user_info where user_name=?),(select _id from user_info where user_name=?),?,?)";
+//        String sql1="insert into friend_list(user_id,friend_id,created_time,updated_time) values((select _id from user_info where user_name=?),(select _id from user_info where user_name=?),?,?)";
+//        Date date = new Date();
+//        long currentTime = date.getTime();
+//        db.execSQL(sql,new Object[]{user_name,friend_name,currentTime,currentTime});
+//        db.execSQL(sql1,new Object[]{friend_name,user_name,currentTime,currentTime});
+//        db.close();
+//        mDaoMoment.update(user_name,friend_name);
+//        return true;
+        String post = HttpUtil.post("http://49.232.151.194/DaoFriend/insert2/", "user_name=" + user_name + "&friend_name=" + friend_name);
+        return "True".equals(post);
     }
     //删除一条数据(删除一个好友)：需要给定用户名和好友名字
     public boolean delete (String user_name,String friend_name){
-        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="delete from friend_list where user_id=(select _id from user_info where user_name=?) and friend_id=(select _id from user_info where user_name=?)";
-        String sql1="delete from friend_list where user_id=(select _id from user_info where user_name=?) and friend_id=(select _id from user_info where user_name=?)";
-        Date date = new Date();
-        long currentTime = date.getTime();
-        db.execSQL(sql,new Object[]{user_name,friend_name});
-        db.execSQL(sql1,new Object[]{friend_name,user_name});
-        db.close();
-        return true;
+//        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+//        String sql="delete from friend_list where user_id=(select _id from user_info where user_name=?) and friend_id=(select _id from user_info where user_name=?)";
+//        String sql1="delete from friend_list where user_id=(select _id from user_info where user_name=?) and friend_id=(select _id from user_info where user_name=?)";
+//        Date date = new Date();
+//        long currentTime = date.getTime();
+//        db.execSQL(sql,new Object[]{user_name,friend_name});
+//        db.execSQL(sql1,new Object[]{friend_name,user_name});
+//        db.close();
+//        return true;
+        String post = HttpUtil.post("http://49.232.151.194/DaoFriend/delete/","user_name=" + user_name + "&friend_name=" + friend_name);
+        return "True".equals(post);
     }
 
     //返回所有好友的用户名和等级：需要给定用户名
     public List<HelperFriend> query(String user_name){
-        List<HelperFriend> list = new ArrayList<HelperFriend>();
-        HelperFriend helperFriend;
-        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
-        String sql="select user_name,active_day from User_Info where User_Info._id in (select friend_id from friend_list where user_id=(select _id from user_info where user_name=?))";
-        Cursor cursor=db.rawQuery(sql,new String[]{user_name});
-        if(cursor.getCount()!=0){
-            while(cursor.moveToNext()){
-                helperFriend = new HelperFriend(cursor.getString(0),cursor.getInt(1));
-                list.add(helperFriend);
-            }
-            return list;
-        }else {
-            return list;
-        }
+//        HelperFriend helperFriend;
+//        SQLiteDatabase db=mDataBaseHelper.getWritableDatabase();
+//        String sql="select user_name,active_day from User_Info where User_Info._id in (select friend_id from friend_list where user_id=(select _id from user_info where user_name=?))";
+//        Cursor cursor=db.rawQuery(sql,new String[]{user_name});
+//        if(cursor.getCount()!=0){
+//            while(cursor.moveToNext()){
+//                helperFriend = new HelperFriend(cursor.getString(0),cursor.getInt(1));
+//                list.add(helperFriend);
+//            }
+//            return list;
+//        }else {
+//            return list;
+//        }
+        String get = HttpUtil.get("http://49.232.151.194/DaoFriend/query", "user_name=" + user_name);
+        List<HelperFriend> list = JSONArray.parseArray(get, HelperFriend.class);
+        return list != null ? list : new ArrayList<HelperFriend>();
     }
 
     //拿到所有好朋友分享的动态：需给定用户名

@@ -16,5 +16,8 @@
     <color name="colorlight">#CCCCCC</color>
     <color name="colorgray">#666666</color>
 
+    <color name="colorBlackgreen">#2D4D3C</color>
+    <color name="colorpink">#FF598B</color>
+
 
 </resources>

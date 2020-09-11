@@ -40,8 +40,6 @@ public class EnergyTreeTest extends AppCompatActivity {
     private HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();//声明HashMap来存放声音文件
     DaoActSta daoActSta = new  DaoActSta(this);
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,19 +54,6 @@ public class EnergyTreeTest extends AppCompatActivity {
             e.printStackTrace();
         }
         mWaterFlake = findViewById(R.id.custom_view);
-        Button mBtn = findViewById(R.id.btn);
-        mBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mWaterFlake.setModelList(mBallList,mTipsList);
-            }
-        });
-        mBtn.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaterFlake.setModelList(mBallList,mTipsList);
-            }
-        });
 
         mWaterFlake.isCollectTips(false);
         mWaterFlake.setOnBallItemListener(new EnergyTree.OnBallItemListener() {
@@ -99,23 +84,23 @@ public class EnergyTreeTest extends AppCompatActivity {
     }
     private void initData() {
         mBallList = new ArrayList<>();
-        ArrayList<HelperActivity> helperActivities = daoActSta.queryByLengthDesc("bbb");
+        ArrayList<HelperActivity> helperActivities = daoActSta.queryByLengthDesc(username);
         for (HelperActivity activity : helperActivities) {
             int ranked = activity.getIs_ranked();
             long time = activity.getLen_time();
             int id = activity.getId();
             if (ranked == 0 && WEPoint(time+"") > 0){
                 String type = activity.getActivity_type();
-                if (type.equals("学习")) {
-                    String point = Integer.toString(StudyPoint(time+""));
-                    mBallList.add(new BallModel("积分",point,id));
-                }else if (type.equals("工作")){
-                    String point = Integer.toString(WEPoint(time+""));
-                    mBallList.add(new BallModel("积分",point,id));
-                }else if(type.equals("锻炼")){
-                    String point = Integer.toString(WEPoint(time+""));
-                    mBallList.add(new BallModel("积分",point,id));
-                }
+//                if (type.equals("学习")) {
+//                    String point = Integer.toString(StudyPoint(time+""));
+//                    mBallList.add(new BallModel("积分",point,id));
+//                }else if (type.equals("工作")){
+//                    String point = Integer.toString(WEPoint(time+""));
+//                    mBallList.add(new BallModel("积分",point,id));
+//                }else if(type.equals("锻炼")){
+//                    String point = Integer.toString(WEPoint(time+""));
+//                    mBallList.add(new BallModel("积分",point,id));
+//                }
             }
 
         }

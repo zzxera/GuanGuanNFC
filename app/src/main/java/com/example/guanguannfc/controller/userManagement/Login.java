@@ -19,8 +19,9 @@ public class Login {
     DaoUserInfo DD;
     Message message;
     //public Activity activity;
-    public Login(Context context){
+    public Login(Context context, Message message){
         this.DD = new DaoUserInfo(context);
+        this.message = message;
         //this.message = message;
     }
 
@@ -33,7 +34,7 @@ public class Login {
         return loginresult;
     }
 
-/*    public void logintest(final String username, final String password){
+    public void login1(final String username, final String password){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -43,6 +44,8 @@ public class Login {
                     if(login){
                         String str = "登陆成功";
                         message.getLoadMessage(str);
+                    }else {
+                        message.getLoadMessage("登陆失败");
                     }
                 }
                 else {
@@ -51,11 +54,11 @@ public class Login {
                 }
             }
         }).start();
-    }*/
+    }
 
-/*    interface Message{
+    interface Message{
         void getLoadMessage(String str);
-    }*/
+    }
 
 
 }
